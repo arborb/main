@@ -317,7 +317,7 @@ function _OnResize(parent) {
     $NC.resizeGrid("#grdT2Sub", $("#grdT2Detail").parent().width(), container.height() - $NC.G_LAYOUT.header);
     return false;
   }
-  var hiddenOption = 53;
+  var hiddenOption = 15;
   var clientHeight = parent.height() - $NC.G_OFFSET.nonClientHeight - $NC.G_LAYOUT.border1 + hiddenOption;
   $NC.resizeContainer("#divTabView", clientWidth, clientHeight);  
   clientHeight -= ($NC.G_OFFSET.tabHeaderHeight + $NC.G_LAYOUT.border1);
