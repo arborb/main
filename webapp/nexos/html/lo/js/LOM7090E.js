@@ -2277,7 +2277,7 @@ function onGetT3Master(ajaxData) {
     }
   } else {
     $NC.setGridDisplayRows("#grdT3Master", 0, 0);
-    onGetT2Detail({
+    onGetT3Detail({
       data: null
     });
   }
