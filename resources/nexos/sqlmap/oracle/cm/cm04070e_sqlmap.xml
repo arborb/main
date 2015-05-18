@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 상품등록요청관리
+  // Author : ASETEC
+  // Date : 2014-06-24
+  // Description
+  //  CM04070E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CM04070E">
+
+  
+  <!--
+    //================================================================================================================
+    // SELECT SQLMAP
+    //================================================================================================================
+  -->
+  <!-- [S] - RS_MASTER -->
+  <parameterMap id="paramRS_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_NM"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+    { ? = call CM04070E.RS_MASTER(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_MASTER -->
+
+
+  <!-- [S] - RS_DETAIL -->
+  <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_REQ_DATE1"               mode="IN" />
+    <parameter property="P_REQ_DATE2"               mode="IN" />
+    <parameter property="P_ITEM_NM"                 mode="IN" />
+    <parameter property="P_CREATE_YN"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+    { ? = call CM04070E.RS_DETAIL(?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_DETAIL -->
+
+
+  <!--
+    //================================================================================================================
+    // INSERT/UPDATE/DELETE SQLMAP
+    //================================================================================================================
+  -->
+  <!-- [S] - INSERT_CMITEMREQ [상품등록요청마스터] -->
+  <insert id="INSERT_CMITEMREQ" parameterClass="java.util.Map">
+    INSERT INTO CMITEMREQ
+               (
+                BRAND_CD
+               ,ITEM_NM
+               ,REQ_DATE
+               ,REQ_NO
+               <isNotEmpty prepend = "," property= "P_ITEM_FULL_NM"            >ITEM_FULL_NM               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_SPEC"               >ITEM_SPEC                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_DIV"                >ITEM_DIV                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CUST_CD"                 >CUST_CD                    </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_KEEP_DIV"                >KEEP_DIV                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_BAR_CD"             >ITEM_BAR_CD                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_IN_UNIT_CD"              >IN_UNIT_CD                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_OUT_UNIT_CD"             >OUT_UNIT_CD                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_BRAND_CD#
+               ,#P_ITEM_NM#
+               ,#P_REQ_DATE#
+               ,S_CMITEM_REQ.NEXTVAL
+               <isNotEmpty prepend = "," property= "P_ITEM_FULL_NM"            >#P_ITEM_FULL_NM#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_SPEC"               >#P_ITEM_SPEC#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_DIV"                >#P_ITEM_DIV#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CUST_CD"                 >#P_CUST_CD#                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_KEEP_DIV"                >#P_KEEP_DIV#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_BAR_CD"             >#P_ITEM_BAR_CD#            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_IN_UNIT_CD"              >#P_IN_UNIT_CD#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_OUT_UNIT_CD"             >#P_OUT_UNIT_CD#            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_CMITEMREQ [상품등록요청마스터] -->
+
+
+  <!-- [S] - UPDATE_CMITEMREQ [상품등록요청마스터] -->
+  <update id="UPDATE_CMITEMREQ" parameterClass="java.util.Map">
+    UPDATE CMITEMREQ
+       SET ITEM_CD                  = #P_ITEM_CD#
+          <isNotNull prepend = "," property= "P_ITEM_FULL_NM"            >ITEM_FULL_NM             = #P_ITEM_FULL_NM#           </isNotNull>
+          <isNotNull prepend = "," property= "P_ITEM_SPEC"               >ITEM_SPEC                = #P_ITEM_SPEC#              </isNotNull>
+          <isNotNull prepend = "," property= "P_ITEM_DIV"                >ITEM_DIV                 = #P_ITEM_DIV#               </isNotNull>
+          <isNotNull prepend = "," property= "P_CUST_CD"                 >CUST_CD                  = #P_CUST_CD#                </isNotNull>
+          <isNotNull prepend = "," property= "P_KEEP_DIV"                >KEEP_DIV                 = #P_KEEP_DIV#               </isNotNull>
+          <isNotNull prepend = "," property= "P_ITEM_BAR_CD"             >ITEM_BAR_CD              = #P_ITEM_BAR_CD#            </isNotNull>
+          <isNotNull prepend = "," property= "P_IN_UNIT_CD"              >IN_UNIT_CD               = #P_IN_UNIT_CD#             </isNotNull>
+          <isNotNull prepend = "," property= "P_OUT_UNIT_CD"             >OUT_UNIT_CD              = #P_OUT_UNIT_CD#            </isNotNull>
+          <isNotNull prepend = "," property= "P_REMARK1"                 >REMARK1                  = #P_REMARK1#                </isNotNull>
+     WHERE BRAND_CD                 = #P_BRAND_CD#
+       AND ITEM_NM                  = #P_ITEM_NM#
+       AND REQ_DATE                 = #P_REQ_DATE#
+       AND REQ_NO                   = #P_REQ_NO#
+       AND CREATE_YN                = 'N'
+  </update>
+  <!-- [E] - UPDATE_CMITEMREQ [상품등록요청마스터] -->
+
+
+  <!-- [S] - DELETE_CMITEMREQ [상품등록요청마스터] -->
+  <delete id="DELETE_CMITEMREQ" parameterClass="java.util.Map">
+    DELETE 
+      FROM CMITEMREQ
+     WHERE BRAND_CD                 = #P_BRAND_CD#
+       AND ITEM_NM                  = #P_ITEM_NM#
+       AND REQ_DATE                 = #P_REQ_DATE#
+       AND REQ_NO                   = #P_REQ_NO#
+  </delete>
+  <!-- [E] - DELETE_CMITEMREQ [상품등록요청마스터] -->
+
+
+</sqlMap>

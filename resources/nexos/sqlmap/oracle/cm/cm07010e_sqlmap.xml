@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 안전재고 관리
+  // Author : ASETEC
+  // Date : 2014-03-27
+  // Description
+  //  CM07010E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CM07010E">
+
+
+  <!--
+    //================================================================================================================
+    // SELECT SQLMAP
+    //================================================================================================================
+  -->
+  <!-- [S] - RS_MASTER -->
+  <parameterMap id="paramRS_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_ZIP_CD"                  mode="IN" />
+    <parameter property="P_ADDR_NM"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+    { ? = call CM07010E.RS_MASTER(?, ?) }
+  </procedure>
+  <!-- [E] - RS_MASTER -->
+
+
+  <!--
+    //================================================================================================================
+    // INSERT/UPDATE/DELETE SQLMAP
+    //================================================================================================================
+  -->
+  <!-- [S] - INSERT_CMPOST [우편번호마스터] -->
+  <insert id="INSERT_CMPOST" parameterClass="java.util.Map">
+    INSERT INTO CMPOST
+               (
+                ZIP_CD
+               <isNotEmpty prepend = "," property= "P_ADDR_NM1"                >ADDR_NM1                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ADDR_NM2"                >ADDR_NM2                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ADDR_NM3"                >ADDR_NM3                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ADDR_DETAIL"             >ADDR_DETAIL                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_DLV_CD"               >CJ_DLV_CD                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_DLV_NM"               >CJ_DLV_NM                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_TML_CD"               >CJ_TML_CD                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_TML_SUB_CD"           >CJ_TML_SUB_CD              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_TML_NM"               >CJ_TML_NM                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_POSTMAN_NM"           >CJ_POSTMAN_NM              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_SHIP_YN"              >CJ_SHIP_YN                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_AIR_YN"               >CJ_AIR_YN                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_HJ_DLV_NM"               >HJ_DLV_NM                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_HJ_TML_CD"               >HJ_TML_CD                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_HJ_TML_NM"               >HJ_TML_NM                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_HJ_FILT_CD"              >HJ_FILT_CD                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_HJ_SHIP_FARE"            >HJ_SHIP_FARE               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_HJ_AIR_FARE"             >HJ_AIR_FARE                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EP_DLV_NM"               >EP_DLV_NM                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EP_TML_NM"               >EP_TML_NM                  </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_ZIP_CD#
+               <isNotEmpty prepend = "," property= "P_ADDR_NM1"                >#P_ADDR_NM1#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ADDR_NM2"                >#P_ADDR_NM2#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ADDR_NM3"                >#P_ADDR_NM3#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ADDR_DETAIL"             >#P_ADDR_DETAIL#            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_DLV_CD"               >#P_CJ_DLV_CD#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_DLV_NM"               >#P_CJ_DLV_NM#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_TML_CD"               >#P_CJ_TML_CD#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_TML_SUB_CD"           >#P_CJ_TML_SUB_CD#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_TML_NM"               >#P_CJ_TML_NM#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_POSTMAN_NM"           >#P_CJ_POSTMAN_NM#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_SHIP_YN"              >#P_CJ_SHIP_YN#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CJ_AIR_YN"               >#P_CJ_AIR_YN#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_HJ_DLV_NM"               >#P_HJ_DLV_NM#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_HJ_TML_CD"               >#P_HJ_TML_CD#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_HJ_TML_NM"               >#P_HJ_TML_NM#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_HJ_FILT_CD"              >#P_HJ_FILT_CD#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_HJ_SHIP_FARE"            >#P_HJ_SHIP_FARE#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_HJ_AIR_FARE"             >#P_HJ_AIR_FARE#            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EP_DLV_NM"               >#P_EP_DLV_NM#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EP_TML_NM"               >#P_EP_TML_NM#              </isNotEmpty>
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_CMPOST [우편번호마스터] -->
+
+
+  <!-- [S] - UPDATE_CMPOST [우편번호마스터] -->
+  <update id="UPDATE_CMPOST" parameterClass="java.util.Map">
+    UPDATE CMPOST
+       SET ADDR_NM1                 = #P_ADDR_NM1#
+          <isNotNull prepend = "," property= "P_ADDR_NM2"                >ADDR_NM2                 = #P_ADDR_NM2#               </isNotNull>
+          <isNotNull prepend = "," property= "P_ADDR_NM3"                >ADDR_NM3                 = #P_ADDR_NM3#               </isNotNull>
+          <isNotNull prepend = "," property= "P_ADDR_DETAIL"             >ADDR_DETAIL              = #P_ADDR_DETAIL#            </isNotNull>
+          <isNotNull prepend = "," property= "P_CJ_DLV_CD"               >CJ_DLV_CD                = #P_CJ_DLV_CD#              </isNotNull>
+          <isNotNull prepend = "," property= "P_CJ_DLV_NM"               >CJ_DLV_NM                = #P_CJ_DLV_NM#              </isNotNull>
+          <isNotNull prepend = "," property= "P_CJ_TML_CD"               >CJ_TML_CD                = #P_CJ_TML_CD#              </isNotNull>
+          <isNotNull prepend = "," property= "P_CJ_TML_SUB_CD"           >CJ_TML_SUB_CD            = #P_CJ_TML_SUB_CD#          </isNotNull>
+          <isNotNull prepend = "," property= "P_CJ_TML_NM"               >CJ_TML_NM                = #P_CJ_TML_NM#              </isNotNull>
+          <isNotNull prepend = "," property= "P_CJ_POSTMAN_NM"           >CJ_POSTMAN_NM            = #P_CJ_POSTMAN_NM#          </isNotNull>
+          <isNotNull prepend = "," property= "P_CJ_SHIP_YN"              >CJ_SHIP_YN               = #P_CJ_SHIP_YN#             </isNotNull>
+          <isNotNull prepend = "," property= "P_CJ_AIR_YN"               >CJ_AIR_YN                = #P_CJ_AIR_YN#              </isNotNull>
+          <isNotNull prepend = "," property= "P_HJ_DLV_NM"               >HJ_DLV_NM                = #P_HJ_DLV_NM#              </isNotNull>
+          <isNotNull prepend = "," property= "P_HJ_TML_CD"               >HJ_TML_CD                = #P_HJ_TML_CD#              </isNotNull>
+          <isNotNull prepend = "," property= "P_HJ_TML_NM"               >HJ_TML_NM                = #P_HJ_TML_NM#              </isNotNull>
+          <isNotNull prepend = "," property= "P_HJ_FILT_CD"              >HJ_FILT_CD               = #P_HJ_FILT_CD#             </isNotNull>
+          <isNotNull prepend = "," property= "P_HJ_SHIP_FARE"            >HJ_SHIP_FARE             = #P_HJ_SHIP_FARE#           </isNotNull>
+          <isNotNull prepend = "," property= "P_HJ_AIR_FARE"             >HJ_AIR_FARE              = #P_HJ_AIR_FARE#            </isNotNull>
+          <isNotNull prepend = "," property= "P_EP_DLV_NM"               >EP_DLV_NM                = #P_EP_DLV_NM#              </isNotNull>
+          <isNotNull prepend = "," property= "P_EP_TML_NM"               >EP_TML_NM                = #P_EP_TML_NM#              </isNotNull>
+          ,REG_USER_ID              = #P_REG_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE ZIP_CD                   = #P_ZIP_CD#
+  </update>
+  <!-- [E] - UPDATE_CMPOST [우편번호마스터] -->
+
+
+  <!-- [S] - DELETE_CMPOST [우편번호마스터] -->
+  <delete id="DELETE_CMPOST" parameterClass="java.util.Map">
+    DELETE 
+      FROM CMPOST
+     WHERE ZIP_CD                   = #P_ZIP_CD#
+  </delete>
+  <!-- [E] - DELETE_CMPOST [우편번호마스터] -->
+
+
+</sqlMap>

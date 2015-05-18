@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Request Runner</title>
+<!-- JS Library -->
+<script src="../html/common/js/jquery/jquery.js"></script>
+<script src="common-mock.js"></script>
+</head>
+
+<body>
+
+<div id="requestDiv"></div>
+<div id="responseDiv" style="border:1px solid #000; margin-top:50px; padding:10px">RESPONSE</div>
+<span><a href="http://jsbeautifier.org/" target="_blank">http://jsbeautifier.org/</a></span>
+<script type="text/javascript">
+var request = [
+	
+	// 공통
+	{
+		 it: '로그인 성공'
+		,divide: false
+		,url: '/WC/getLogin.do'
+		,data: {
+			 'P_USER_ID': 'WMS7'
+			,'P_USER_PWD': '?1'
+		}
+	},{
+		 it: '로그인 실패'
+		,divide: false
+		,url: '/WC/getLogin.do'
+		,data: {
+			 'P_USER_ID': 'WMS7'
+			,'P_USER_PWD': '?123123'
+		}
+	},{
+		 it: '공통 - 센터 읽어오기'
+		,divide: false
+		,url: '/WC/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'WC.POP_CSUSERCENTER'
+			,'P_QUERY_PARAMS': '{"P_USER_ID":"WMS7","P_CENTER_CD":"%"}'
+		}
+	},{
+		 it: '공통 - 모드 읽어오기'
+		,divide: false
+		,url: '/WC/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'WC.POP_CMCODE'
+			,'P_QUERY_PARAMS': '{"P_CODE_GRP":"INOUT_CD","P_CODE_CD":"%","P_SUB_CD1":"DM","P_SUB_CD2":""}'
+		}
+	},{
+		 it: '공통 - 주문유형 읽어오기'
+		,divide: false
+		,url: '/WC/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7090E.GET_ORDER_TYPE'
+			,'P_QUERY_PARAMS': '{}'
+		}
+	},{
+		 it: '공통 - XX 읽어오기'
+		,divide: false
+		,url: '/WC/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'WC.POP_CMCODE'
+			,'P_QUERY_PARAMS': '{"P_CODE_GRP":"DELIVERY_TYPE","P_CODE_CD":"%","P_SUB_CD1":"","P_SUB_CD2":""}'
+		}
+	},{
+		 it: '공통 - XX 읽어오기'
+		,divide: true
+		,url: '/LOM7090E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'WC.GET_PROCESS_STATE_FWBW'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_PROCESS_GRP":"LO"}'
+		}
+	},
+
+	// LOM7090E 출고작업(신규)
+	{
+		 it: 'LOM7090E 출고작업(신규) - 정책읽어오기 (LO220)'
+		,divide: false
+		,url: '/LOM7090E/callSP.do'
+		,data: {
+			 'P_QUERY_ID': 'WF.GET_POLICY_VAL'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_POLICY_CD":"LO220"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - 정책읽어오기 (LO190)'
+		,divide: false
+		,url: '/LOM7090E/callSP.do'
+		,data: {
+			 'P_QUERY_ID': 'WF.GET_POLICY_VAL'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_POLICY_CD":"LO190"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - 정책읽어오기 (LO210)'
+		,divide: false
+		,url: '/LOM7090E/callSP.do'
+		,data: {
+			 'P_QUERY_ID': 'WF.GET_POLICY_VAL'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_POLICY_CD":"LO210"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - 정책읽어오기 (LO221)'
+		,divide: false
+		,url: '/LOM7090E/callSP.do'
+		,data: {
+			 'P_QUERY_ID': 'WF.GET_POLICY_VAL'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_POLICY_CD":"LO221"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - 정책읽어오기 (LO250)'
+		,divide: false
+		,url: '/LOM7090E/callSP.do'
+		,data: {
+			 'P_QUERY_ID': 'WF.GET_POLICY_VAL'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_POLICY_CD":"LO250"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T1 예정 마스터'
+		,divide: false
+		,url: '/LOM7090E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7090E.RS_T1_MASTER'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_ORDER_DATE1":"2015-05-01","P_ORDER_DATE2":"2015-05-14","P_INOUT_CD":"%","P_OWN_BRAND_CD":"%","P_USER_ID":"WMS7","P_DEAL_ID":"%","P_ORDER_TYPE":"%"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T1 예정 디테일'
+		,divide: false
+		,url: '/LOM7090E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7090E.RS_T1_DETAIL'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_ORDER_DATE1":"2015-05-01","P_ORDER_DATE2":"2015-05-14","P_INOUT_CD":"%","P_OWN_BRAND_CD":"%","P_USER_ID":"WMS7","P_DEAL_ID":"%","P_ORDER_TYPE":"11"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T1 예정 서브'
+		,divide: false
+		,url: '/LOM7090E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7090E.RS_T1_SUB'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_ORDER_DATE":"2015-05-07","P_ORDER_NO":"000024"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T1 배송유형재적용'
+		,divide: false
+		,url: '/LOM7090E/callOrderDiv.do'
+		,data: {
+			 'P_ORDER_DIV': '1'
+			,'P_PROCESS_CD': 'A'
+			,'P_DS_MASTER': '[{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-07","P_OUTBOUND_NO":"000024"}]'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T1 출고할당량적용'
+		,divide: false
+		,url: '/LOM7090E/callOrderAdjust.do'
+		,data: {
+			 'P_DS_MASTER': '[{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_ORDER_DATE1":"2015-05-1","P_ORDER_DATE2":"2015-05-15","P_USER_ID":"WMS7"}]'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T1 진행'
+		,divide: false
+		,url: '/LOM7090E/callLOProcessing.do'
+		,data: {
+			 'P_DS_MASTER': '[{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-07","P_OUTBOUND_NO":"000024"}]'
+			,'P_PROCESS_CD': 'B1'
+			,'P_ENTRY_DATE': '2015-05-15'
+			,'P_DIRECTION': 'FW'
+			,'P_PROCESS_STATE_BW': '20'
+			,'P_PROCESS_STATE_FW': '10'
+			,'P_USER_ID': 'P_USER_ID:WMS7'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T1 진행'
+		,divide: true
+		,url: '/LOM7090E/callLOProcessing.do'
+		,data: {
+			 'P_DS_MASTER': '[{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-07","P_OUTBOUND_NO":"000024"}]'
+			,'P_PROCESS_CD': 'B1'
+			,'P_ENTRY_DATE': '2015-05-15'
+			,'P_DIRECTION': 'FW'
+			,'P_PROCESS_STATE_BW': '20'
+			,'P_PROCESS_STATE_FW': '10'
+			,'P_USER_ID': 'P_USER_ID:WMS7'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T2 출고등록 마스터'
+		,divide: false
+		,url: '/LOM7090E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7090E.RS_T2_MASTER'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE1":"2015-05-13","P_OUTBOUND_DATE2":"2015-05-15","P_INOUT_CD":"%","P_OWN_BRAND_CD":"%","P_USER_ID":"WMS7","P_DEAL_ID":"%","P_ORDER_TYPE":"%"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T2 출고등록정보 디테일'
+		,divide: false
+		,url: '/LOM7090E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7090E.RS_T2_DETAIL'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-14","P_INOUT_CD":"%","P_OWN_BRAND_CD":"%","P_USER_ID":"WMS7","P_DEAL_ID":"%","P_ORDER_TYPE":"32"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T2 출고등록상세정보 서브'
+		,divide: false
+		,url: '/LOM7090E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7090E.RS_T2_SUB'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-14","P_OUTBOUND_NO":"000582"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T2 출고등록상세정보 서브'
+		,divide: false
+		,url: '/LOM7090E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7090E.RS_T2_SUB'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-14","P_OUTBOUND_NO":"000582"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T2 배송유형재적용'
+		,divide: false
+		,url: '/LOM7090E/callOrderDiv.do'
+		,data: {
+			 'P_ORDER_DIV': '1'
+			,'P_PROCESS_CD': 'B'
+			,'P_DS_MASTER': '[{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-14","P_OUTBOUND_NO":"000582"}]'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T2 취소'
+		,divide: false
+		,url: '/LOM7090E/callLOProcessing.do'
+		,data: {
+			 'P_DS_MASTER': '[{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-14","P_OUTBOUND_NO":"000104"}]'
+			,'P_PROCESS_CD': 'B'
+			,'P_ENTRY_DATE': ''
+			,'P_DIRECTION': 'BW'
+			,'P_PROCESS_STATE_BW': '20'
+			,'P_PROCESS_STATE_FW': '10'
+			,'P_USER_ID': 'WMS7'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T2 등록'
+		,divide: true
+		,url: '/LOM7090E/callLOProcessing.do'
+		,data: {
+			 'P_DS_MASTER': '[{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-04-23","P_OUTBOUND_NO":"002031"}]'
+			,'P_PROCESS_CD': 'C'
+			,'P_ENTRY_DATE': ''
+			,'P_DIRECTION': 'FW'
+			,'P_PROCESS_STATE_BW': '30'
+			,'P_PROCESS_STATE_FW': '20'
+			,'P_USER_ID': 'WMS7'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T3 출고지시 마스터'
+		,divide: false
+		,url: '/LOM7090E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7090E.RS_T3_MASTER'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE1":"2015-05-13","P_OUTBOUND_DATE2":"2015-05-15","P_INOUT_CD":"%","P_OWN_BRAND_CD":"%","P_USER_ID":"WMS7","P_DEAL_ID":"%","P_ORDER_TYPE":"%"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T3 출고지시정보 디테일'
+		,divide: false
+		,url: '/LOM7090E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7090E.RS_T3_DETAIL'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-14","P_OUTBOUND_BATCH":"008","P_INOUT_CD":"%","P_OWN_BRAND_CD":"%","P_USER_ID":"WMS7","P_DEAL_ID":"%","P_ORDER_TYPE":"11"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T3 출고지시상세정보 서브'
+		,divide: false
+		,url: '/LOM7090E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7090E.RS_T3_SUB'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-14","P_OUTBOUND_NO":"000104"}'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T3 취소'
+		,divide: false
+		,url: '/LOM7090E/callLOProcessing.do'
+		,data: {
+			 'P_DS_MASTER': '[{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-14","P_OUTBOUND_NO":"000104"}]'
+			,'P_PROCESS_CD': 'C'
+			,'P_ENTRY_DATE': ''
+			,'P_DIRECTION': 'BW'
+			,'P_PROCESS_STATE_BW': '30'
+			,'P_PROCESS_STATE_FW': '20'
+			,'P_USER_ID': 'WMS7'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - T3 배송유형재적용'
+		,divide: true
+		,url: '/LOM7090E/callOrderDiv.do'
+		,data: {
+			 'P_ORDER_DIV': '1'
+			,'P_PROCESS_CD': 'B'
+			,'P_DS_MASTER': '[{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-14","P_OUTBOUND_NO":"000105"}]'
+		}
+	},{
+		 it: 'LOM7090E 출고작업(신규) - 출력 미리보기'
+		,divide: true
+		,url: '/LOM7090E/Cksave.do'
+		,data: {
+			 'P_DS_DETAIL': '[{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-14","P_OUTBOUND_BATCH":"013","P_OUTBOUND_NO":"000582"}]'
+			,'P_USER_ID': 'WMS7'
+		}
+	}
+
+
+	// LOM7110E 용기피킹작업
+	,{
+		 it: 'LOM7110E 용기피킹작업 - 용기스캔'
+		,divide: false
+		,url: '/LOM7110E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7110E.RS_MASTER1'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_PICK_BOX_NO":"YB0001"}'
+		}
+	},{
+		 it: 'LOM7110E 용기피킹작업 - 라벨스캔 - OPG1-5000-20150515-10000'
+		,divide: false
+		,url: '/LOM7110E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7110E.RS_MASTER'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_PICK_SEQ":"10000","P_PICK_BOX_NO":"YB0001","P_USER_ID":"WMS7"}'
+		}
+	},{
+		 it: 'LOM7110E 용기피킹작업 - 라벨스캔 - 상품바코드 - 8801008200889'
+		,divide: false
+		,url: '/LOM7110E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7110E.GET_ITEM_INFO'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_OUTBOUND_NO":"000001","P_ITEM_BAR_CD":"8801008200889"}'
+		}
+	},{
+		 it: 'LOM7110E 용기피킹작업 - 라벨스캔 - 수량 - 1'
+		,divide: true
+		,url: '/LOM7110E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7110E.GET_ITEM_INFO'
+			,'P_QUERY_PARAMS': ''
+		}
+	},{
+		 it: 'LOM7110E 용기피킹작업 - 담기완료'
+		,divide: false
+		,url: '/LOM7110E/callFWScanConfirm.do'
+		,data: {
+			 'P_DS_MASTER': '[{"P_PICK_SEQ":10003,"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_OUTBOUND_NO":"000005","P_LINE_NO":1,"P_DIRECTIONS_INFO":"GA","P_PICK_BOX_NO":"YB0003","P_CONFIRM_QTY":3,"P_USER_ID":"WMS7"}]'
+		}
+	},{
+		 it: 'LOM7110E 용기피킹작업 - 용기추가 팝업 - 용기번호조회'
+		,divide: false
+		,url: '/LOM7110E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7110E.RS_DETAIL'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_PICK_SEQ":10003}'
+		}
+	},{
+		 it: 'LOM7110E 용기피킹작업 - 용기추가 팝업 - 상품별 검수내역'
+		,divide: false
+		,url: '/LOM7110E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7110E.RS_DETAIL1'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_PICK_BOX_NO":"YB0003"}'
+		}
+	},{
+		 it: 'LOM7110E 용기피킹작업 - 용기추가 팝업 - 용기삭제'
+		,divide: true
+		,url: '/LOM7110E/callBoxDelete.do'
+		,data: {
+			 'P_DS_MASTER': '[{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_USER_ID":"WMS7"}]'
+		}
+	}
+
+	//LOM7010E 출고스캔검수
+	,{
+		 it: 'LOM7010E 출고스캔검수 - POP_CMCARRIER'
+		,divide: false
+		,url: '/WC/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'WC.POP_CMCARRIER'
+			,'P_QUERY_PARAMS': '{"P_CARRIER_CD":"0010","P_VIEW_DIV":"1"}'
+		}
+	},{
+		 it: 'LOM7010E 출고스캔검수 - 피킹검수 - OPG1-5000-20150515-10003'
+		,divide: false
+		,url: '/LOM7010E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7010E.RS_MASTER'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_PICK_SEQ":"10003"}'
+		}
+	},{
+		 it: 'LOM7010E 출고스캔검수 - 상품코드 - 90002111'
+		,divide: false
+		,url: '/LOM7010E/callSP.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7010E.GET_ITEM_INFO'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_OUTBOUND_NO":"000005","P_ITEM_BAR_CD":"90002111"}'
+		}
+	},{
+		 it: 'LOM7010E 출고스캔검수 - 수량 - 1'
+		,divide: false
+		,url: ''
+		,data: {
+			 'P_QUERY_ID': 'LOM7010E.GET_ITEM_INFO'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_OUTBOUND_NO":"000005","P_ITEM_BAR_CD":"90002111"}'
+		}
+	},{
+		 it: 'LOM7010E 출고스캔검수 - 저장'
+		,divide: false
+		,url: '/LOM7010E/callScanBoxSave.do'
+		,data: {
+			 'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_OUTBOUND_NO":"000005","P_LINE_NO":"90002111","P_CARRIER_CD":"0010","P_SCAN_QTY":1,"P_BOX_TYPE":"01","P_PROC_TYPE":"1","P_USER_ID":"WMS7"}'
+		}
+	},{
+		 it: 'LOM7010E 출고스캔검수 - 박스완료'
+		,divide: false
+		,url: '/LOM7010E/callScanBoxComplete.do'
+		,data: {
+			 'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_OUTBOUND_NO":"000005","P_LINE_NO":"90002111","P_CARRIER_CD":"0010","P_SCAN_QTY":0,"P_BOX_TYPE":"01","P_PROC_TYPE":"2","P_USER_ID":"WMS7"}'
+		}
+	},{
+		 it: 'LOM7010E 출고스캔검수 - 박스관리 - 박스내역 마스터'
+		,divide: false
+		,url: '/LOM7010E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7010E.RS_T1_MASTER'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_OUTBOUND_NO":"000005"}'
+		}
+	},{
+		 it: 'LOM7010E 출고스캔검수 - 박스관리 - 상품별 검수내역'
+		,divide: false
+		,url: '/LOM7010E/getDataSet.do'
+		,data: {
+			 'P_QUERY_ID': 'LOM7010E.RS_T1_DETAIL'
+			,'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_OUTBOUND_NO":"000005"}'
+		}
+	},{
+		 it: 'LOM7010E 출고스캔검수 - 박스관리 - 박스삭제'
+		,divide: false
+		,url: '/LOM7010E/callScanBoxDelete.do'
+		,data: {
+			 'P_DS_MASTER': '[{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_OUTBOUND_NO":"000005","P_BOX_NO":1}]'
+			,'P_USER_ID': 'WMS7'
+		}
+	},{
+		 it: 'LOM7010E 출고스캔검수 - 검수완료'
+		,divide: false
+		,url: '/LOM7010E/callScanBoxSave.do'
+		,data: {
+			 'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_OUTBOUND_NO":"000005","P_LINE_NO":"90002111","P_CARRIER_CD":"0010","P_SCAN_QTY":1,"P_BOX_TYPE":"01","P_PROC_TYPE":"1","P_USER_ID":"WMS7"}'
+		}
+	},{
+		 it: 'LOM7010E 출고스캔검수 - 검수취소'
+		,divide: false
+		,url: '/LOM7010E/callBWScanConfirm.do'
+		,data: {
+			 'P_QUERY_PARAMS': '{"P_CENTER_CD":"G1","P_BU_CD":"5000","P_OUTBOUND_DATE":"2015-05-15","P_OUTBOUND_NO":"000005","P_USER_ID":"WMS7"}'
+		}
+	}
+
+
+
+	]
+
+</script>
+
+
+
+<script type="text/javascript">
+init();
+function init() {
+	var str = ''
+	for (var i in request) {
+		var it = request[i].it
+			,url = request[i].url
+			,data = JSON.stringify(request[i].data).replace(/"/g, "'")
+
+		str += '<button style="display:block"';
+		str += '	data-url="' + url + '"';
+		str += '	data-data="' + data + '"';
+		str += '	data-button';
+		str += '>';
+		str += it;
+		str += '</button>';
+		if (request[i].divide == true) {
+			str += '<hr>';
+		}
+	}
+	$('#requestDiv').html(str);
+	$('[data-button]').on('click', function(){
+		var  url = $(this).attr('data-url')
+			,data = $(this).attr('data-data').replace(/'/g, '"')
+		if (url) {
+			callSP(url, JSON.parse(data))
+			return false;
+		}
+		alert('URL 정보가 없습니다.')
+	})
+}
+
+function callSP(url, data) {
+	$.ajax({
+		 type: 'POST'
+		,url: url
+		,data: data
+		,success: function(data){
+			data = data.replace(/\"\{/g, '{')
+						.replace(/\}\"/g, '}')
+						.replace(/\"\[/g, '[')
+						.replace(/\]\"/g, ']')
+						.replace(/\\/g, '');
+			$('#responseDiv').html(data)
+			console.log(JSON.parse(data))
+		}
+		,error: function(data){
+			$('#responseDiv').html(data)	
+		}
+	})
+}
+</script>
+</body>
+</html>

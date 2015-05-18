@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RECEIPT_LI01" pageWidth="595" pageHeight="842" columnWidth="566" leftMargin="10" rightMargin="19" topMargin="22" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT WF.DSP_COMBO (M1.CENTER_CD ,C1.CENTER_NM)     AS CENTER_CD_F
+          ,WF.DSP_COMBO (M1.BU_CD  ,B1.BU_CD)      AS BU_CD_F
+          ,TO_CHAR(M1.INBOUND_DATE ,WD.C_DATE_FORMAT)    AS INBOUND_DATE
+          ,M1.INBOUND_NO                                 AS INBOUND_NO
+          ,WF.DSP_COMBO (M1.INOUT_CD  ,C2.CODE_NM)       AS INOUT_CD_F
+          ,WF.DSP_COMBO (M1.VENDOR_CD ,V1.VENDOR_NM)     AS VENDOR_CD_F
+
+          ,M2.LINE_NO                                    AS LINE_NO
+          ,M2.ITEM_CD                                    AS ITEM_CD
+          ,T1.ITEM_NM                                    AS ITEM_NM
+          ,T1.ITEM_SPEC                                  AS ITEM_SPEC
+          ,C3.CODE_NM                                    AS ITEM_STATE_D
+          ,M2.ITEM_LOT                                   AS ITEM_LOT
+          ,T1.QTY_IN_BOX                                 AS QTY_IN_BOX
+          ,M2.CONFIRM_QTY                                AS CONFIRM_QTY
+          ,WF.GET_B_BOX (M2.CONFIRM_QTY ,T1.QTY_IN_BOX)  AS CONFIRM_BOX
+          ,WF.GET_B_EA  (M2.CONFIRM_QTY ,T1.QTY_IN_BOX)  AS CONFIRM_EA
+      FROM LI020NM M1
+           JOIN LI020ND  M2 ON M2.CENTER_CD     = M1.CENTER_CD
+                           AND M2.BU_CD      = M1.BU_CD
+                           AND M2.INBOUND_DATE  = M1.INBOUND_DATE
+                           AND M2.INBOUND_NO    = M1.INBOUND_NO
+           JOIN CMCENTER C1 ON C1.CENTER_CD     = M1.CENTER_CD
+           JOIN CMBU  B1 ON B1.BU_CD      = M1.BU_CD
+           JOIN CMVENDOR V1 ON V1.CUST_CD       = M1.CUST_CD
+                           AND V1.VENDOR_CD     = M1.VENDOR_CD
+           JOIN CMITEM   T1 ON T1.BU_CD      = M2.BU_CD
+                           AND T1.ITEM_CD       = M2.ITEM_CD
+           JOIN CMCODE   C2 ON C2.CODE_CD       = M1.INOUT_CD
+                           AND C2.CODE_GRP      = WF.GET_CODE_GRP('INOUT_CD')
+           JOIN CMCODE   C3 ON C3.CODE_CD       = M2.ITEM_STATE
+                           AND C3.CODE_GRP      = WF.GET_CODE_GRP('ITEM_STATE')
+     WHERE ROWNUM < 500
+     ORDER BY INBOUND_NO
+             ,LINE_NO]]>
+	</queryString>
+	<field name="CENTER_CD_F" class="java.lang.String"/>
+	<field name="BU_CD_F" class="java.lang.String"/>
+	<field name="INBOUND_DATE" class="java.lang.String"/>
+	<field name="INBOUND_NO" class="java.lang.String"/>
+	<field name="INOUT_CD_F" class="java.lang.String"/>
+	<field name="VENDOR_CD_F" class="java.lang.String"/>
+	<field name="LINE_NO" class="java.math.BigDecimal"/>
+	<field name="ITEM_CD" class="java.lang.String"/>
+	<field name="ITEM_NM" class="java.lang.String"/>
+	<field name="ITEM_SPEC" class="java.lang.String"/>
+	<field name="ITEM_STATE_D" class="java.lang.String"/>
+	<field name="ITEM_LOT" class="java.lang.String"/>
+	<field name="QTY_IN_BOX" class="java.math.BigDecimal"/>
+	<field name="CONFIRM_QTY" class="java.math.BigDecimal"/>
+	<field name="CONFIRM_BOX" class="java.math.BigDecimal"/>
+	<field name="CONFIRM_EA" class="java.math.BigDecimal"/>
+	<variable name="SUM_CONFIRM_QTY" class="java.math.BigDecimal" resetType="Group" resetGroup="GRP_INBOUND_NO" calculation="Sum">
+		<variableExpression><![CDATA[$F{CONFIRM_QTY}]]></variableExpression>
+	</variable>
+	<group name="GRP_INBOUND_NO" isStartNewPage="true" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{CENTER_CD_F} + $F{BU_CD_F} + $F{INBOUND_DATE} + $F{INBOUND_NO}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="145" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="566" height="40"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="맑은 고딕" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[거래명세서]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="65" width="60" height="25"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[브 랜 드]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="40" width="223" height="25"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CENTER_CD_F}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="65" width="223" height="25"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BU_CD_F}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="90" width="60" height="25"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[입고일자]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="283" y="40" width="60" height="25"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[입고구분]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="115" width="60" height="25"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[입고번호]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="115" width="223" height="25"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{INBOUND_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="60" height="25"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[물류센터]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="343" y="40" width="223" height="25"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{INOUT_CD_F}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="343" y="65" width="223" height="25"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{VENDOR_CD_F}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="90" width="223" height="25"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{INBOUND_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="283" y="65" width="60" height="25"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[공  급  처]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="566" height="25"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="38" height="25"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="112" y="0" width="181" height="25"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[상품명]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="0" width="66" height="25"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[규격]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="0" width="77" height="25"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[상태]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="436" y="0" width="74" height="25"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[입수]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="510" y="0" width="56" height="25"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[수량]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="0" width="74" height="25"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[상품코드]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="566" height="25"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="38" height="25"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{LINE_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="38" y="0" width="74" height="25"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ITEM_CD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="112" y="0" width="181" height="25"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ITEM_NM}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="293" y="0" width="66" height="25"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ITEM_SPEC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="359" y="0" width="77" height="25"/>
+				<box leftPadding="0" rightPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ITEM_STATE_D}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="436" y="0" width="74" height="25"/>
+				<box leftPadding="0" rightPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{QTY_IN_BOX}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="510" y="0" width="56" height="25"/>
+				<box leftPadding="0" rightPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{CONFIRM_QTY}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="120" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="30" width="566" height="90"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="423" y="39" width="48" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[합계수량 : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="532" y="39" width="25" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<text><![CDATA[(EA)]]></text>
+			</staticText>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement x="471" y="39" width="61" height="20"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUM_CONFIRM_QTY}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

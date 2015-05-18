@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LABEL_LOC02" columnCount="2" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="292" columnSpacing="4" leftMargin="4" rightMargin="3" topMargin="23" bottomMargin="12" uuid="c362f3db-e39f-4515-ab0d-41d873fc3856">
+	<property name="ireport.zoom" value="1.7715610000000017"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT M1.ZONE_CD
+       ,M1.BANK_CD
+       ,M1.BAY_CD
+       ,M1.LEV_CD
+       ,M1.LOCATION_CD
+       ,Z1.ZONE_NM
+       ,PUTAWAY_AREA
+       ,DECODE(M1.PUTAWAY_AREA,'4','↖','') AS PUTAWAY_AREA1
+       ,DECODE(M1.PUTAWAY_AREA,'5','↗','') AS PUTAWAY_AREA2
+       ,DECODE(M1.PUTAWAY_AREA,'1','↑','2','↓','3','↖','4','↖','5','↗','6','↗') AS PUTAWAY_AREA
+       ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.ZONE_CD ORDER BY M1.BANK_CD ,M1.BAY_CD ,M1.LEV_CD) AS ZONE_FIRST_YN
+       ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.ZONE_CD ,M1.BANK_CD ORDER BY M1.BAY_CD ,M1.LEV_CD) AS BANK_FIRST_YN
+       ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.ZONE_CD ,M1.BANK_CD ,M1.BAY_CD ORDER BY M1.LEV_CD) AS BAY_FIRST_YN
+    FROM CMLOCATION M1
+         JOIN CMZONE Z1 ON Z1.CENTER_CD = M1.CENTER_CD
+                       AND Z1.ZONE_CD   = M1.ZONE_CD
+
+  WHERE M1.LOCATION_CD IN ('A01-01-01','A01-01-02','A01-01-03','A01-01-04','A01-01-05','A01-02-01')
+ORDER BY BANK_CD
+           ,BAY_CD
+           ,LEV_CD]]>
+	</queryString>
+	<field name="ZONE_CD" class="java.lang.String"/>
+	<field name="BANK_CD" class="java.lang.String"/>
+	<field name="BAY_CD" class="java.lang.String"/>
+	<field name="LEV_CD" class="java.lang.String"/>
+	<field name="LOCATION_CD" class="java.lang.String"/>
+	<field name="ZONE_NM" class="java.lang.String"/>
+	<field name="PUTAWAY_AREA" class="java.lang.String"/>
+	<field name="PUTAWAY_AREA1" class="java.lang.String"/>
+	<field name="PUTAWAY_AREA2" class="java.lang.String"/>
+	<field name="ZONE_FIRST_YN" class="java.lang.String"/>
+	<field name="BANK_FIRST_YN" class="java.lang.String"/>
+	<field name="BAY_FIRST_YN" class="java.lang.String"/>
+	<detail>
+		<band height="84" splitType="Immediate">
+			<rectangle>
+				<reportElement key="rectangle-1" x="0" y="0" width="291" height="84" uuid="d2b01b56-1628-4e6d-b1cb-31910639e383"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="63" y="3" width="202" height="36" uuid="fd0bd074-3f60-40e0-8815-829ecf54d63e"/>
+				<box leftPadding="8">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="휴먼둥근헤드라인" size="22" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCATION_CD}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="62" y="39" width="207" height="34" uuid="245de37e-e3e2-45d5-aaa8-e3471cf00074"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="2" barHeight="50">
+					<jr:codeExpression><![CDATA[$F{LOCATION_CD}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<image>
+				<reportElement x="10" y="20" width="53" height="61" uuid="a1e5dc0c-9fe5-4862-91b4-be6f6c50d61e">
+					<printWhenExpression><![CDATA[$F{PUTAWAY_AREA}.equals( "1" )]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA["/home/jboss/EAP-6.2.0/wms-standalone/deployments/ROOT.war/WEB-INF/reports/common/1.gif"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="10" y="20" width="53" height="61" uuid="f353ea91-ac30-48f6-a294-fe9d840863fc">
+					<printWhenExpression><![CDATA[$F{PUTAWAY_AREA}.equals( "2" )]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA["/home/jboss/EAP-6.2.0/wms-standalone/deployments/ROOT.war/WEB-INF/reports/common/2.gif"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="10" y="20" width="52" height="60" uuid="9682166d-7c17-4a11-af9f-f2bb199950b5">
+					<printWhenExpression><![CDATA[$F{PUTAWAY_AREA}.equals( "6" )]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA["/home/jboss/EAP-6.2.0/wms-standalone/deployments/ROOT.war/WEB-INF/reports/common/6.gif"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="10" y="20" width="53" height="60" uuid="f5305d6a-0325-466f-9e98-51f172e664c4">
+					<printWhenExpression><![CDATA[$F{PUTAWAY_AREA}.equals( "4" )]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA["/home/jboss/EAP-6.2.0/wms-standalone/deployments/ROOT.war/WEB-INF/reports/common/4.gif"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="10" y="21" width="52" height="60" uuid="438cc892-699d-4b84-9f0e-7749296f3152">
+					<printWhenExpression><![CDATA[$F{PUTAWAY_AREA}.equals( "3" )]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA["/home/jboss/EAP-6.2.0/wms-standalone/deployments/ROOT.war/WEB-INF/reports/common/3.gif"]]></imageExpression>
+			</image>
+			<image isUsingCache="true">
+				<reportElement isPrintRepeatedValues="false" mode="Opaque" x="10" y="23" width="48" height="50" uuid="e5061778-f59f-4402-8dda-599279b48c12">
+					<printWhenExpression><![CDATA[$F{PUTAWAY_AREA}.equals("5")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA["/home/jboss/EAP-6.2.0/wms-standalone/deployments/ROOT.war/WEB-INF/reports/common/5.gif"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

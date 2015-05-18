@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LABEL_LOM03" pageWidth="432" pageHeight="432" orientation="Landscape" columnWidth="432" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="da653a23-3e4e-40db-96d3-c459e3f38269">
+	<property name="ireport.zoom" value="1.610510000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_CENTER_CD" class="java.lang.String"/>
+	<parameter name="P_BU_CD" class="java.lang.String"/>
+	<parameter name="P_HAS_DATE" class="java.lang.String"/>
+	<parameter name="P_HAS_NO" class="java.lang.String"/>
+	<parameter name="P_LINE_NO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT CENTER_CD
+         ,BU_CD
+         ,HAS_DATE
+         ,HAS_NO
+         ,LINE_NO
+         ,OUTBOUND_DATE
+         ,OUTBOUND_NO
+         ,ORDERER_NM
+         ,SHIPPER_NM
+         ,WF.GET_DECSTR(SHIPPER_TEL)          AS  SHIPPER_TEL
+         ,WF.GET_DECSTR(SHIPPER_HP)           AS  SHIPPER_HP
+         ,SHIPPER_ZIP_CD
+         ,WF.GET_DECSTR(SHIPPER_ADDR_BASIC)   AS SHIPPER_ADDR_BASIC
+         ,WF.GET_DECSTR(SHIPPER_ADDR_DETAIL)  AS SHIPPER_ADDR_DETAIL
+         ,ZONE_CD
+         ,LOCATION_CD
+         ,END_YN
+         ,DECODE(END_YN,'Y','OP'||CENTER_CD||'-'||BU_CD||'-'||TO_CHAR(OUTBOUND_DATE,'YYYYMMDD')||'-'||REMARK1,'N',NULL) AS END_YN_REMAKCK
+         ,REMARK1
+         ,REG_USER_ID
+         ,REG_DATETIME
+    FROM LOHASNM]]>
+	</queryString>
+	<field name="CENTER_CD" class="java.lang.String"/>
+	<field name="BU_CD" class="java.lang.String"/>
+	<field name="HAS_DATE" class="java.lang.String"/>
+	<field name="HAS_NO" class="java.lang.String"/>
+	<field name="LINE_NO" class="java.math.BigDecimal"/>
+	<field name="OUTBOUND_DATE" class="java.lang.String"/>
+	<field name="OUTBOUND_NO" class="java.lang.String"/>
+	<field name="ORDERER_NM" class="java.lang.String"/>
+	<field name="SHIPPER_NM" class="java.lang.String"/>
+	<field name="SHIPPER_TEL" class="java.lang.String"/>
+	<field name="SHIPPER_HP" class="java.lang.String"/>
+	<field name="SHIPPER_ZIP_CD" class="java.lang.String"/>
+	<field name="SHIPPER_ADDR_BASIC" class="java.lang.String"/>
+	<field name="SHIPPER_ADDR_DETAIL" class="java.lang.String"/>
+	<field name="ZONE_CD" class="java.lang.String"/>
+	<field name="LOCATION_CD" class="java.lang.String"/>
+	<field name="END_YN" class="java.lang.String"/>
+	<field name="END_YN_REMAKCK" class="java.lang.String"/>
+	<field name="REMARK1" class="java.lang.String"/>
+	<field name="REG_USER_ID" class="java.lang.String"/>
+	<field name="REG_DATETIME" class="java.sql.Timestamp"/>
+	<detail>
+		<band height="157" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="113" y="28" width="98" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="e44b1e23-3412-4ad9-94e2-f07bcd5d580c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HAS_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="32" y="28" width="81" height="18" uuid="1000f96b-58a2-4b36-a15f-40dd1fea037b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕 ExtraBold" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[합포장일자 :]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="292" y="28" width="134" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="4777e72b-e179-4610-acf3-ec9c118fa45a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HAS_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="211" y="28" width="81" height="18" uuid="216b9aeb-8642-4070-8bd8-409c6b0d80a5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕 ExtraBold" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[합포장번호:]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="113" y="62" width="106" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="0a026571-76e7-451d-8e22-5f328a48022b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OUTBOUND_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="32" y="62" width="81" height="18" uuid="aaedae5c-739e-4739-ae53-7c406513680d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕 ExtraBold" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[출 고 일 자  :]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="292" y="62" width="134" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="e6ed89ea-8ef1-444b-8708-7575b2de79b0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OUTBOUND_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="211" y="62" width="81" height="18" uuid="a66a7b49-6afc-4f82-870f-fc50356f4177"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕 ExtraBold" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[출고번호:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="52" y="80" width="348" height="56" uuid="086e3441-46a8-445a-b852-310c5efa3c94"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="3" barHeight="60">
+					<jr:codeExpression><![CDATA[$F{END_YN_REMAKCK}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="113" y="44" width="98" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="fe431fb0-cc99-4c7e-8451-7177195c7277"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LINE_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="32" y="46" width="81" height="18" uuid="7ef0c8ed-6b2c-46db-ac0f-2a91c14a994f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕 ExtraBold" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[LINE_NO    : ]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="292" y="44" width="134" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="7b577d1a-fa60-47da-b6bf-abc3f43b754f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCATION_CD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="211" y="44" width="81" height="18" uuid="e5f0d0ef-2c88-41d5-ba3b-b4ae2cf066ae"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕 ExtraBold" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[L  O  C 번호: ]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="90" y="139" width="250" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="610edeab-d290-4aa1-a4be-b4e43a474503"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{END_YN_REMAKCK}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="52" y="92" width="348" height="56" uuid="4c061dc1-120d-4340-af8d-0c7999f1f315"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="3" barHeight="60">
+					<jr:codeExpression><![CDATA[$F{END_YN_REMAKCK}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

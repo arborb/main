@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  //  CM01010E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CS03020E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - RS_MASTER -->
+    <parameterMap id="paramRS_MASTER" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    </parameterMap>
+    <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+        { ? = call CS03020E.RS_MASTER }
+    </procedure>
+    <!-- [E] - RS_MASTER -->
+
+
+    <!-- [S] - RS_DETAIL -->
+    <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_CENTER_CD"         mode="IN" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_PROCESS_GRP"       mode="IN" />
+    </parameterMap>
+    <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+        { ? = call CS03020E.RS_DETAIL(?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_DETAIL -->
+
+
+
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+
+
+    <!-- [S] - INSERT_CPBRANDPROCESS [브랜드프로세스마스터] -->
+    <insert id="INSERT_CPBUPROCESS" parameterClass="java.util.Map">
+        INSERT INTO CPBUPROCESS
+                   (
+                    CENTER_CD
+                   ,BU_CD
+                   ,PROCESS_GRP
+                   ,PROCESS_CD
+                   <isNotEmpty prepend = "," property= "P_PARENT_PROCESS_CD">PARENT_PROCESS_CD </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_EXEC_PROCESS_YN"  >EXEC_PROCESS_YN   </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_PROCESS_COMMENT"  >PROCESS_COMMENT   </isNotEmpty>
+                   ,REG_USER_ID
+                   ,REG_DATETIME
+                   )
+            VALUES (
+                    #P_CENTER_CD#
+                   ,#P_BU_CD#
+                   ,#P_PROCESS_GRP#
+                   ,#P_PROCESS_CD#
+                   <isNotEmpty prepend = "," property= "P_PARENT_PROCESS_CD">#P_PARENT_PROCESS_CD#</isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_EXEC_PROCESS_YN"  >#P_EXEC_PROCESS_YN# </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_PROCESS_COMMENT"  >#P_PROCESS_COMMENT# </isNotEmpty>
+                   ,#P_REG_USER_ID#
+                   ,SYSDATE
+                   )
+    </insert>
+    <!-- [E] - INSERT_CPBRANDPROCESS [브랜드프로세스마스터] -->
+
+
+    <!-- [S] - UPDATE_CPBRANDPROCESS [브랜드프로세스마스터] -->
+    <update id="UPDATE_CPBUPROCESS" parameterClass="java.util.Map">
+        UPDATE CPBUPROCESS
+           SET PARENT_PROCESS_CD        = #P_PARENT_PROCESS_CD#
+              <isNotNull prepend = "," property= "P_EXEC_PROCESS_YN"         >EXEC_PROCESS_YN          = #P_EXEC_PROCESS_YN#        </isNotNull>
+              <isNotNull prepend = "," property= "P_PROCESS_COMMENT"         >PROCESS_COMMENT          = #P_PROCESS_COMMENT#        </isNotNull>
+              ,REG_USER_ID              = #P_REG_USER_ID#
+              ,REG_DATETIME             = SYSDATE
+         WHERE CENTER_CD                = #P_CENTER_CD#
+           AND BU_CD                    = #P_BU_CD#
+           AND PROCESS_GRP              = #P_PROCESS_GRP#
+           AND PROCESS_CD               = #P_PROCESS_CD#
+    </update>
+    <!-- [E] - UPDATE_CPBRANDPROCESS [브랜드프로세스마스터] -->
+
+    <!-- [S] - DELETE_CPBRANDPROCESS [브랜드프로세스마스터] -->
+    <delete id="DELETE_CPBUPROCESS" parameterClass="java.util.Map">
+        DELETE 
+          FROM CPBUPROCESS
+         WHERE CENTER_CD                = #P_CENTER_CD#
+           AND BU_CD                    = #P_BU_CD#
+           AND PROCESS_GRP              = #P_PROCESS_GRP#
+           AND PROCESS_CD               = #P_PROCESS_CD#
+    </delete>
+    <!-- [E] - DELETE_CPBRANDPROCESS [브랜드프로세스마스터] -->
+
+
+</sqlMap>

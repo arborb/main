@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CM01010E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cm/CM02020E.css" />
+<script src="js/CM02020E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQPopup_Carrier_Cd" class="ui-lbl-condition">운송사</div>
+          <input class="ui-edt-normal" type="text" id="edtQCarrier_Cd" style="width: 70px;" />
+          <input class="ui-btn-popup" type="button" id="btnQCarrier_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQCarrier_Nm" style="width: 90px;" disabled="disabled" />
+        </td>
+        <td>
+          <div id="lblQDeal_Div" class="ui-lbl-condition">거래구분</div>
+          <div class="ui-gbox-normal">
+            <input class="ui-chk-normal" type="checkbox" name="chkQDeal_Div" id="chkQDeal_Div1" value="1" />
+            거래진행
+            <input class="ui-chk-normal" type="checkbox" name="chkQDeal_Div" id="chkQDeal_Div2" value="2" />
+            거래종료
+            <input class="ui-chk-normal" type="checkbox" name="chkQDeal_Div" id="chkQDeal_Div3" value="3" />
+            조회종료
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divLeftView" class="ui-ctnr-left">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdMaster" class="ui-grd-title">차량정보</td>
+        <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdMaster"></div>
+  </div>
+  <div id="divRightView" class="ui-ctnr-right">
+    <div class="ui-gbox-header">
+      <div class="ui-lbl-header">기본정보</div>
+    </div>
+    <div id="divMasterInfoView" class="ui-gbox-content ui-noborder">
+      <div class="ui-ctnr-row">
+        <div id="lblCar_Cd" class="ui-lbl-key">차량코드</div>
+        <input class="ui-edt-key" type="text" id="edtCar_Cd" maxlength="30" style="width: 100px; margin-left: 6px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblCar_Nm" class="ui-lbl-key">차량명</div>
+        <input class="ui-edt-key" type="text" id="edtCar_Nm" maxlength="50" style="width: 319px; margin-left: 6px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblCar_Div" class="ui-lbl-normal">차량구분</div>
+        <select id="cboCar_Div" class="ui-cbo-normal" style="width: 150px; margin-left: 6px;"></select>
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblPopup_Carrier_Cd" class="ui-lbl-normal">운송사</div>
+        <input class="ui-edt-normal" type="text" id="edtCarrier_Cd" style="width: 100px; margin-left: 6px;" />
+        <input class="ui-btn-popup" type="button" id="btnCarrier_Cd" />
+        <input class="ui-edt-display" type="text" id="edtCarrier_Nm" disabled="disabled" style="width: 180px;" />
+      </div>
+      <div class="ui-gbox-title">차량정보</div>
+      <div class="ui-gbox-content" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <div id="lblTrans_Div" class="ui-lbl-key">운송구분</div>
+          <select id="cboTrans_Div" class="ui-cbo-key" style="width: 150px;"></select>
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblCar_Ton_Div" class="ui-lbl-key">차량톤수</div>
+          <select id="cboCar_Ton_Div" class="ui-cbo-key" style="width: 150px;"></select>
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblCar_Keep_Div" class="ui-lbl-key">차량보관유형</div>
+          <select id="cboCar_Keep_Div" class="ui-cbo-key" style="width: 150px;"></select>
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblCar_Capa" class="ui-lbl-key">적재용적</div>
+          <input class="ui-edt-key" type="text" id="edtCar_Capa" style="width: 126px;" />
+          &nbsp;㎥
+        </div>
+      </div>
+      <div class="ui-gbox-title">운전자정보</div>
+      <div class="ui-gbox-content" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <div id="lblDriver_Nm" class="ui-lbl-normal">성명</div>
+          <input class="ui-edt-normal" type="text" id="edtDriver_Nm" style="width: 144px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblDriver_Hp" class="ui-lbl-normal">휴대전화</div>
+          <input class="ui-edt-normal" type="text" id="edtDriver_Hp" style="width: 144px;" />
+        </div>
+      </div>
+      <div class="ui-gbox-title">관리정보</div>
+      <div class="ui-gbox-content" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <div id="lblDeal_Div" class="ui-lbl-key">거래구분</div>
+          <div class="ui-gbox-normal" style="width: 305px;">
+            <input class="ui-rgb-normal" type="radio" name="DEAL_DIV" id="rgbDeal_Div1" value="1" />
+            거래진행
+            <input class="ui-rgb-normal" type="radio" name="DEAL_DIV" id="rgbDeal_Div2" value="2" />
+            거래종료
+            <input class="ui-rgb-normal" type="radio" name="DEAL_DIV" id="rgbDeal_Div3" value="3" />
+            조회종료
+          </div>
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblOpen_Date" class="ui-lbl-normal">거래일자</div>
+          <input class="ui-dtp-normal" type="text" id="dtpOpen_Date" style="width: 80px;" />
+          <div id="lblClose_Date" class="ui-lbl-normal" style="margin-left: 12px;">종료일자</div>
+          <input class="ui-dtp-normal" type="text" id="dtpClose_Date" style="width: 80px;" />
+        </div>
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblRemark1" class="ui-lbl-normal">비고</div>
+        <input class="ui-edt-normal" type="text" id="edtRemark1" style="width: 319px; margin-left: 6px;" />
+      </div>
+    </div>
+  </div>
+</body>
+</html>

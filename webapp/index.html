@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<title>Nexos Application</title>
+<link href="nexos/layout/common/image/favicon.ico" rel="shortcut icon" />
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="nexos/html/common/js/misc/html5shiv.js"></script>
+<script src="nexos/html/common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- JQuery JS -->
+<script src="nexos/html/common/js/jquery/jquery.js"></script>
+<script type="text/javascript">
+
+  $(document).ready(function() {
+    // 브라우저 버전 체크
+    if ($.browser.msie && $.browser.versionNumber < 9) {
+      $("#divUnspported").show();
+      $("#spnBrowserVersion").text("Browser Version : " + navigator.userAgent);
+    } else {
+      window.location.replace("nexos/html/main/main.html");
+    }
+  })
+</script>
+</head>
+<body style="padding: 0; margin: 0;">
+  <div id="divUnspported" style="position: absolute; padding: 30px; display: none;">
+    <img src="nexos/layout/common/image/icon_unsupported.png" style="vertical-align: middle;"> <span style="font-size: 12px; font-weight: bold; color: red;">지원하지 않는 인터넷 브라우저입니다. 인터넷 브라우저를 업그레이드 하십시오.</span> <br> <span id="spnBrowserVersion" style="font-size: 12px; font-weight: bold; color: black;"></span>
+  </div>
+</body>
+</html>

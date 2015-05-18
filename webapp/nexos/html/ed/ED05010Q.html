@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- ED05010Q CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/ed/ED05010Q.css" />
+<script src="js/ED05010Q.js"></script>
+</head>
+<div id="divTopLine" class="ui-top-line"></div>
+<!-- 조회 조건 -->
+<div id="divConditionView" class="ui-ctnr-condition">
+  <table class="ui-tbl-condition">
+    <tr>
+      <td>
+        <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+        <select id="cboQCenter_Cd" class="ui-cbo-key" style="width: 180px;"></select>
+      </td>
+      <td>
+        <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+        <input class="ui-edt-key" type="text" id="edtQBu_Cd" style="width: 60px;" />
+        <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+        <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
+      </td>
+      <td>
+        <div id="lblQEdi_Date" class="ui-lbl-condition">검색기간</div>
+        <input class="ui-dtp-key" type="text" id="dtpQEdi_Date1" style="width: 80px;" />
+        <span class="ui-span-normal">▶</span>
+        <input class="ui-dtp-key" type="text" id="dtpQEdi_Date2" style="width: 80px;" />
+      </td>
+    </tr>
+  </table>
+</div>
+<div id="divMasterView" style="padding: 1px;">
+  <!-- Tab Handler -->
+  <ul>
+    <li id="divTab1"><a href="#divDetailViewT1">수신현황</a></li>
+    <li id="divTab2"><a href="#divDetailViewT2">송신현황</a></li>
+  </ul>
+  <!-- 수신현황 -->
+  <div id="divDetailViewT1" style="padding: 0; border-width: 1px; border-style: solid;">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdMasterT1" class="ui-grd-title">수신현황</td>
+        <td id="divRowCount_grdMasterT1" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdMasterT1"></div>
+  </div>
+  <!-- 송신현황 -->
+  <div id="divDetailViewT2" style="padding: 0; border-width: 1px; border-style: solid;">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdMasterT2" class="ui-grd-title">송신현황</td>
+        <td id="divRowCount_grdMasterT2" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdMasterT2"></div>
+  </div>
+</div>
+<body>
+</body>
+</html>

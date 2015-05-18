@@ -1,0 +1,99 @@
+.ui-gbox-title {
+  padding: 3px 5px;
+  width: 110px;
+}
+
+.ui-gbox-content {
+  position: relative;
+  margin-top: 0;
+  padding: 5px;
+  line-height: 0;
+}
+
+.ui-ctnr-left,.ui-ctnr-right {
+  border-width: 0;
+  padding: 5px 0;
+}
+
+.ui-gbox-content > div {
+  display: inline-block;
+  position: relative;
+}
+
+.jqplot-point-label {
+  line-height: 10px;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .7);
+}
+
+.jqplot-target {
+  font-family: 'NanumGothic', 'Malgun Gothic', GulimChe, 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 12px;
+}
+
+.jqplot-title {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.jqplot-highlighter-tooltip,.jqplot-canvasOverlay-tooltip {
+  border: 1px solid #939393;
+  font-family: 'NanumGothic', 'Malgun Gothic', GulimChe, 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 20px;
+  background: rgba(253, 255, 170, 0.9);
+  padding: 2px 5px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+  z-index: 2;
+}
+
+table.jqplot-table-legend {
+  border: 0px;
+  margin: 0 10px;
+}
+
+table.jqplot-table-legend td {
+  padding: 3px;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+div.QtyBox {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  border: 1px solid #D6D6D6;
+  width: 90px;
+  height: 50px;
+}
+
+div.QtyBox > h3, div.QtyBox > p {
+  display: block;
+  position: relative;
+  margin : 0;
+  padding : 0;
+}
+
+div.QtyBox > h3 {
+  text-align: center;
+  line-height: 18px;
+  background-color: #F9F9F9;
+  color: #6B6D70;
+  border-bottom: 1px solid #D6D6D6;
+}
+
+div.QtyBox > p {
+  padding: 0 3px;
+  color: #6B6D70;
+  text-align: right;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 30px;
+}

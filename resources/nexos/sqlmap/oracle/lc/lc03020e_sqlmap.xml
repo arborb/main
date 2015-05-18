@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2013-08-13
+  // Description
+  // LC03020E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LC03020E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+  <!-- [S] - RS_T1_MASTER -->
+  <parameterMap id="paramRS_T1_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MOVE_DATE1"              mode="IN" />
+    <parameter property="P_MOVE_DATE2"              mode="IN" />
+    <parameter property="P_MOVE_DIV"                mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_NM"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_MASTER" parameterMap="paramRS_T1_MASTER" resultClass="java.util.HashMap">
+    { ? = call LC03020E.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_MASTER -->
+
+
+  <!-- [S] - RS_T1_DETAIL -->
+  <parameterMap id="paramRS_T1_DETAIL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MOVE_DATE"               mode="IN" />
+    <parameter property="P_MOVE_NO"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_DETAIL" parameterMap="paramRS_T1_DETAIL" resultClass="java.util.HashMap">
+    { ? = call LC03020E.RS_T1_DETAIL(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_DETAIL -->
+
+
+  <!-- [S] - RS_T2_MASTER -->
+  <parameterMap id="paramRS_T2_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MOVE_DATE1"              mode="IN" />
+    <parameter property="P_MOVE_DATE2"              mode="IN" />
+    <parameter property="P_MOVE_DIV"                mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_NM"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
+    { ? = call LC03020E.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T2_MASTER -->
+
+
+  <!-- [S] - RS_POP_SUB1 -->
+  <parameterMap id="paramRS_POP_SUB1" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_VALID_DATE"              mode="IN" />
+    <parameter property="P_BATCH_NO"                mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_STOCK_DATE"              mode="IN" />
+  </parameterMap>
+  <procedure id="RS_POP_SUB1" parameterMap="paramRS_POP_SUB1" resultClass="java.util.HashMap">
+    { ? = call LC03020E.RS_POP_SUB1(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_POP_SUB1 -->
+
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+  <!-- [S] - INSERT_LC030NM [재고이동마스터] -->
+  <insert id="INSERT_LC030NM" parameterClass="java.util.Map">
+    INSERT INTO LC030NM
+               (
+                CENTER_CD
+               ,BU_CD
+               ,MOVE_DATE
+               ,MOVE_NO
+               ,LINE_NO
+               <isNotEmpty prepend = "," property= "P_LOCATION_CD"             >LOCATION_CD                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_STOCK_DATE"              >STOCK_DATE                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_STOCK_IN_GRP"            >STOCK_IN_GRP               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_STOCK_ID"                >STOCK_ID                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_MOVE_DIV"                >MOVE_DIV                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_BRAND_CD"                >BRAND_CD                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_CD"                 >ITEM_CD                    </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_STATE"              >ITEM_STATE                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_LOT"                >ITEM_LOT                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_VALID_DATE"              >VALID_DATE                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_BATCH_NO"                >BATCH_NO                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_LOCATION_ID"             >LOCATION_ID                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_STOCK_QTY"               >STOCK_QTY                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_MLOCATION_CD"            >MLOCATION_CD               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_MSTOCK_ID"               >MSTOCK_ID                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_MLOCATION_ID"            >MLOCATION_ID               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_MSTOCK_QTY"              >MSTOCK_QTY                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ENTRY_USER_ID"           >ENTRY_USER_ID              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ENTRY_DATETIME"          >ENTRY_DATETIME             </isNotEmpty>
+               )
+        VALUES (
+                #P_CENTER_CD#
+               ,#P_BU_CD#
+               ,#P_MOVE_DATE#
+               ,#P_MOVE_NO#
+               ,#P_LINE_NO#
+               <isNotEmpty prepend = "," property= "P_LOCATION_CD"             >#P_LOCATION_CD#            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_STOCK_DATE"              >#P_STOCK_DATE#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_STOCK_IN_GRP"            >#P_STOCK_IN_GRP#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_STOCK_ID"                >#P_STOCK_ID#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_MOVE_DIV"                >#P_MOVE_DIV#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_BRAND_CD"                >#P_BRAND_CD#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_CD"                 >#P_ITEM_CD#                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_STATE"              >#P_ITEM_STATE#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_LOT"                >#P_ITEM_LOT#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_VALID_DATE"              >#P_VALID_DATE#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_BATCH_NO"                >#P_BATCH_NO#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_LOCATION_ID"             >#P_LOCATION_ID#            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_STOCK_QTY"               >#P_STOCK_QTY#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_MLOCATION_CD"            >#P_MLOCATION_CD#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_MSTOCK_ID"               >#P_MSTOCK_ID#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_MLOCATION_ID"            >#P_MLOCATION_ID#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_MSTOCK_QTY"              >#P_MSTOCK_QTY#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ENTRY_USER_ID"           >#P_ENTRY_USER_ID#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ENTRY_DATETIME"          >#P_ENTRY_DATETIME#         </isNotEmpty>
+               )
+  </insert>
+  <!-- [E] - INSERT_LC030NM [재고이동마스터] -->
+
+
+  <!-- [S] - UPDATE_LC030NM [재고이동마스터] -->
+  <update id="UPDATE_LC030NM" parameterClass="java.util.Map">
+    UPDATE LC030NM
+       SET LOCATION_CD              = #P_LOCATION_CD#
+          <isNotNull prepend = "," property= "P_STOCK_DATE"              >STOCK_DATE               = #P_STOCK_DATE#             </isNotNull>
+          <isNotNull prepend = "," property= "P_STOCK_IN_GRP"            >STOCK_IN_GRP             = #P_STOCK_IN_GRP#           </isNotNull>
+          <isNotNull prepend = "," property= "P_STOCK_ID"                >STOCK_ID                 = #P_STOCK_ID#               </isNotNull>
+          <isNotNull prepend = "," property= "P_MOVE_DIV"                >MOVE_DIV                 = #P_MOVE_DIV#               </isNotNull>
+          <isNotNull prepend = "," property= "P_BRAND_CD"                >BRAND_CD                 = #P_BRAND_CD#               </isNotNull>
+          <isNotNull prepend = "," property= "P_ITEM_CD"                 >ITEM_CD                  = #P_ITEM_CD#                </isNotNull>
+          <isNotNull prepend = "," property= "P_ITEM_STATE"              >ITEM_STATE               = #P_ITEM_STATE#             </isNotNull>
+          <isNotNull prepend = "," property= "P_ITEM_LOT"                >ITEM_LOT                 = #P_ITEM_LOT#               </isNotNull>
+          <isNotNull prepend = "," property= "P_VALID_DATE"              >VALID_DATE               = #P_VALID_DATE#             </isNotNull>
+          <isNotNull prepend = "," property= "P_BATCH_NO"                >BATCH_NO                 = #P_BATCH_NO#               </isNotNull>
+          <isNotNull prepend = "," property= "P_LOCATION_ID"             >LOCATION_ID              = #P_LOCATION_ID#            </isNotNull>
+          <isNotNull prepend = "," property= "P_STOCK_QTY"               >STOCK_QTY                = #P_STOCK_QTY#              </isNotNull>
+          <isNotNull prepend = "," property= "P_MLOCATION_CD"            >MLOCATION_CD             = #P_MLOCATION_CD#           </isNotNull>
+          <isNotNull prepend = "," property= "P_MSTOCK_ID"               >MSTOCK_ID                = #P_MSTOCK_ID#              </isNotNull>
+          <isNotNull prepend = "," property= "P_MLOCATION_ID"            >MLOCATION_ID             = #P_MLOCATION_ID#           </isNotNull>
+          <isNotNull prepend = "," property= "P_MSTOCK_QTY"              >MSTOCK_QTY               = #P_MSTOCK_QTY#             </isNotNull>
+          ,ORDER_USER_ID            = #P_USER_ID# 
+          ,ORDER_DATETIME           = SYSDATE
+     WHERE CENTER_CD                = #P_CENTER_CD#
+       AND BU_CD                    = #P_BU_CD#
+       AND MOVE_DATE                = #P_MOVE_DATE#
+       AND MOVE_NO                  = #P_MOVE_NO#
+       AND LINE_NO                  = #P_LINE_NO#
+  </update>
+  <!-- [E] - UPDATE_LC030NM [재고이동마스터] -->
+
+
+  <!-- [S] - DELETE_LC030NM [재고이동마스터] -->
+  <delete id="DELETE_LC030NM" parameterClass="java.util.Map">
+    DELETE 
+      FROM LC030NM
+     WHERE CENTER_CD                = #P_CENTER_CD#
+       AND BU_CD                    = #P_BU_CD#
+       AND MOVE_DATE                = #P_MOVE_DATE#
+       AND MOVE_NO                  = #P_MOVE_NO#
+       AND LINE_NO                  = #P_LINE_NO#
+       AND LOCATION_CD              = #P_LOCATION_CD#
+       AND STOCK_DATE               = #P_STOCK_DATE#
+       AND STOCK_IN_GRP             = #P_STOCK_IN_GRP#
+       AND STOCK_ID                 = #P_STOCK_ID#
+  </delete>
+  <!-- [E] - DELETE_LC030NM [재고이동마스터] -->
+
+
+</sqlMap>

@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PAPER_RI" pageWidth="595" pageHeight="842" columnWidth="567" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="0338a896-cca7-42fa-b46c-03b411b3f478">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="P_SYSDATE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2008-01-01 01:01:01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_USER_ID" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_USER_NM" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="Title" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="FSUBTOTAL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="FTOTAL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="HPRINTTIME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="HPUSER" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="HPAGE" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT WF.DSP_COMBO(M1.CENTER_CD   ,C1.CENTER_NM)     AS CENTER_CD_F
+        ,WF.DSP_COMBO(M1.BU_CD       ,B1.BU_NM)         AS BU_CD_F
+        ,M1.INBOUND_DATE
+        ,M1.INBOUND_NO
+        ,WF.DSP_COMBO(M1.INOUT_CD    ,C2.CODE_NM)       AS INOUT_CD_F
+        ,WF.DSP_COMBO(D1.DELIVERY_CD ,D1.DELIVERY_NM)   AS DELIVERY_CD_F
+        ,M1.PUTAWAY_LOCATION_CD
+        ,M1.BRAND_CD
+        ,B2.BRAND_NM
+        ,M1.ITEM_CD
+        ,T1.ITEM_NM
+        ,T1.ITEM_SPEC
+        ,C3.CODE_NM                                     AS ITEM_STATE_D
+        ,M1.ITEM_LOT
+        ,T1.QTY_IN_BOX
+        ,M1.ENTRY_QTY
+        ,WF.GET_B_BOX(M1.ENTRY_QTY ,T1.QTY_IN_BOX)      AS ENTRY_BOX
+        ,WF.GET_B_EA (M1.ENTRY_QTY ,T1.QTY_IN_BOX)      AS ENTRY_EA
+        ,M1.LOCATION_ID
+        ,M1.VALID_DATE
+        ,M1.BATCH_NO
+    FROM RI030NM M1
+         JOIN CMCENTER   C1 ON C1.CENTER_CD   = M1.CENTER_CD
+         JOIN CMBU       B1 ON B1.BU_CD       = M1.BU_CD
+         JOIN CMBRAND    B2 ON B2.BRAND_CD    = M1.BRAND_CD
+         JOIN CMDELIVERY D1 ON D1.CUST_CD     = M1.CUST_CD
+                           AND D1.DELIVERY_CD = M1.DELIVERY_CD
+         JOIN CMITEM     T1 ON T1.BRAND_CD    = M1.BRAND_CD
+                           AND T1.ITEM_CD     = M1.ITEM_CD
+         JOIN CMCODE     C2 ON C2.CODE_CD     = M1.INOUT_CD
+                           AND C2.CODE_GRP    = WF.GET_CODE_GRP('INOUT_CD')
+         JOIN CMCODE     C3 ON C3.CODE_CD     = M1.ITEM_STATE
+                           AND C3.CODE_GRP    = WF.GET_CODE_GRP('ITEM_STATE')
+   WHERE ROWNUM <1000
+   ORDER BY INBOUND_NO
+           ,PUTAWAY_LOCATION_CD
+           ,LOCATION_ID
+           ,BRAND_CD
+           ,ITEM_CD]]>
+	</queryString>
+	<field name="CENTER_CD_F" class="java.lang.String"/>
+	<field name="BU_CD_F" class="java.lang.String"/>
+	<field name="INBOUND_DATE" class="java.lang.String"/>
+	<field name="INBOUND_NO" class="java.lang.String"/>
+	<field name="INOUT_CD_F" class="java.lang.String"/>
+	<field name="DELIVERY_CD_F" class="java.lang.String"/>
+	<field name="PUTAWAY_LOCATION_CD" class="java.lang.String"/>
+	<field name="BRAND_CD" class="java.lang.String"/>
+	<field name="BRAND_NM" class="java.lang.String"/>
+	<field name="ITEM_CD" class="java.lang.String"/>
+	<field name="ITEM_NM" class="java.lang.String"/>
+	<field name="ITEM_SPEC" class="java.lang.String"/>
+	<field name="ITEM_STATE_D" class="java.lang.String"/>
+	<field name="ITEM_LOT" class="java.lang.String"/>
+	<field name="QTY_IN_BOX" class="java.math.BigDecimal"/>
+	<field name="ENTRY_QTY" class="java.math.BigDecimal"/>
+	<field name="ENTRY_BOX" class="java.math.BigDecimal"/>
+	<field name="ENTRY_EA" class="java.math.BigDecimal"/>
+	<field name="LOCATION_ID" class="java.lang.String"/>
+	<field name="VALID_DATE" class="java.lang.String"/>
+	<field name="BATCH_NO" class="java.lang.String"/>
+	<variable name="SUM_ENTRY_QTY" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{ENTRY_QTY}]]></variableExpression>
+	</variable>
+	<variable name="PAGE_SUM_ENTRY_QTY" class="java.math.BigDecimal" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{ENTRY_QTY}]]></variableExpression>
+	</variable>
+	<variable name="PAGE_INBOUND_NO" class="java.lang.String" resetType="Page" calculation="First">
+		<variableExpression><![CDATA[$F{INBOUND_NO}]]></variableExpression>
+	</variable>
+	<group name="GRP_OUTBOUND_NO" isStartNewPage="true" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{INBOUND_NO}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="95" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-3" x="0" y="68" width="55" height="12" uuid="f26abaa4-341f-4262-a658-38ac57b9eb3d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="true" isItalic="false" isUnderline="false" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[반입번호 :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-1" x="458" y="81" width="109" height="12" uuid="375df0c4-8c6b-4ae5-b6cb-dbdd2c294a62"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_SYSDATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-6" x="392" y="81" width="66" height="12" uuid="0db123b0-5bda-42ab-9bfe-0df0a6330508"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" isItalic="false" isUnderline="false" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[출력일시   :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-2" x="0" y="54" width="55" height="12" uuid="51be397c-cc41-4c88-878b-f1b37cea029a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="true" isItalic="false" isUnderline="false" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[반입일자 :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-4" x="55" y="40" width="130" height="12" uuid="99ee2d11-8c96-4891-bcc9-09e8cdeddfb7"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BU_CD_F}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-5" x="55" y="54" width="130" height="12" uuid="5d4cd5c6-1fad-40be-823e-3af9face2dbd"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INBOUND_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement key="textField-8" x="250" y="47" width="295" height="17" uuid="dd9baf81-91c7-4355-a77f-7cdc8882519c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="굴림체" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DELIVERY_CD_F}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-24" x="180" y="5" width="227" height="29" uuid="798afe54-9831-4849-876b-34f94f9728e7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="18" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[반입작업지시서]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" x="392" y="66" width="66" height="12" uuid="35e1f2b5-193d-482d-9853-e5d7c9d03565"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" isUnderline="false" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[출력사용자 :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-3" x="55" y="26" width="130" height="12" uuid="12c53372-48ad-462e-97bc-ebfa0a59b305"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CENTER_CD_F}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-2" x="458" y="66" width="108" height="12" uuid="891ceb34-9902-46dc-b1bd-b27357841eeb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_USER_ID}+" - "+$P{P_USER_NM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-6" x="55" y="68" width="130" height="12" uuid="046f6b38-563d-4bb8-b187-ca2c078bbb96"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INBOUND_NO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-1" x="0" y="94" width="567" height="1" uuid="4f615c42-73bb-4c45-b195-444f26a1714f"/>
+			</line>
+			<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement key="textField-8" x="55" y="81" width="129" height="12" uuid="134d04c8-80c5-455f-9feb-80a0dc50731c"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INOUT_CD_F}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-3" x="0" y="81" width="55" height="12" uuid="3e191665-21b2-4630-863b-c1c71ac9140e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="true" isItalic="false" isUnderline="false" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[반입구분 :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-24" x="201" y="47" width="49" height="17" uuid="c3a0a3bd-a360-4701-acf0-88c3ab591c14"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="11" isBold="true" isUnderline="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[배송처 :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" x="0" y="40" width="55" height="12" uuid="247daaf5-0b06-40da-9bcd-674ab4a79623"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="true" isItalic="false" isUnderline="false" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[사 업 부 :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="0" y="26" width="55" height="12" uuid="dbf932c2-fc0b-4b07-8271-cfb285bd70e2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="true" isItalic="false" isUnderline="false" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[물류센터 :]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-4" x="75" y="1" width="60" height="12" uuid="fe8792e2-cad5-4bc9-9f1b-4e1bf747baf7"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[상품]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="400" y="8" width="37" height="12" uuid="863b2802-d9c3-4a8d-8e2e-effda1212161"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[입수]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="135" y="1" width="143" height="12" uuid="ab017cdd-0221-42a6-b5e3-ef7e7b68ba6a"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[상품명]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="135" y="14" width="143" height="12" uuid="1f1b23a6-2645-4255-9db7-6eb8fbfffc11"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[상품규격]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="334" y="1" width="65" height="12" uuid="69ae0282-7612-4db3-9b48-d168025d532f"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[LOT번호]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="523" y="8" width="43" height="12" uuid="36f256e0-bfb7-4c3b-bd5a-2c4d4441193a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[등록수량]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="0" y="1" width="75" height="12" uuid="7c99aead-caac-4787-987b-c6e404512a87"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[로케이션]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="480" y="8" width="43" height="12" uuid="932cdf2f-235c-402d-bdc1-4543db6c6e02"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[등록EA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="437" y="8" width="43" height="12" uuid="76736bf2-f5a0-4680-8a2e-4e1d9fb9369b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[등록BOX]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="278" y="14" width="56" height="12" uuid="ca31d90c-f801-462f-8184-3ea0a243cca8"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[유통기한]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-1" x="0" y="27" width="567" height="1" uuid="92d89a09-8955-431e-961f-dd2411ebdd70"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-4" x="0" y="14" width="75" height="12" uuid="f86a1467-ed67-4433-b859-dcc5f2e89f49"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[로케이션ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="334" y="14" width="65" height="12" uuid="77f2007e-6815-4ffc-9d01-fff7fc7dfcf3"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[제조배치번호]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="278" y="1" width="56" height="12" uuid="1b50ed63-e80e-4e3b-9053-e3beff5a08a3"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[상태]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="278" y="1" width="56" height="12" uuid="f84fdf21-2205-4225-ac62-48914bc72a7f"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_STATE_D}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="75" y="1" width="60" height="12" uuid="5815b5b9-c57b-4378-a309-6525d8deef65"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_CD}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0;" isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="400" y="8" width="37" height="12" uuid="f07a0c74-e0f8-4785-b057-9f49e6a86981"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QTY_IN_BOX}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="135" y="1" width="143" height="12" uuid="86b849ba-de11-4690-9c99-a81528078beb"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_NM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="135" y="14" width="143" height="12" uuid="188749ba-096d-447f-a96c-8b8a59acf3ee"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_SPEC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="334" y="1" width="65" height="12" uuid="6c4d9141-ff86-4ce5-a246-8d5dcf7d5b96"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_LOT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0;" isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="523" y="8" width="43" height="12" uuid="4d63f4a6-ea0f-42f8-b4d5-2d2184591886"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ENTRY_QTY}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0;" isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="480" y="8" width="43" height="12" uuid="5b4e61dc-b15d-49d8-b139-be8a9ce5643f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ENTRY_EA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0;" isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="437" y="8" width="43" height="12" uuid="46838af0-8a10-45ff-9ffb-27fe74b337a8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ENTRY_BOX}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-1" x="0" y="27" width="567" height="1" uuid="9b01a247-dfc1-4ffd-95d6-3e6ae2d7ba8f"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="0" y="14" width="75" height="12" uuid="1c05f96f-b7a0-4d0f-b3a3-33ea5e20519d"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCATION_ID}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="0" y="1" width="75" height="12" uuid="f9a0a59e-4c94-4c09-a2d8-ca37d29873a8"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PUTAWAY_LOCATION_CD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="334" y="14" width="65" height="12" uuid="d2afde81-4d98-4158-a1c7-95fb8a5d296a"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BATCH_NO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="278" y="14" width="56" height="12" uuid="f3f16e8e-9a8b-4afb-8f2b-b286d342d9bf"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VALID_DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<line>
+				<reportElement key="line-3" x="0" y="0" width="567" height="1" uuid="9fb02b07-1cc1-48af-9ee5-ee4b22053cc0"/>
+			</line>
+			<textField evaluationTime="Page" isBlankWhenNull="true">
+				<reportElement key="textField-18" x="243" y="3" width="50" height="12" uuid="10e77f6d-7e1d-4d57-b9dd-263c0ed0d2cf"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="GRP_OUTBOUND_NO" isBlankWhenNull="true">
+				<reportElement key="textField-18" x="314" y="3" width="50" height="12" uuid="fc6d2f4d-864a-44f8-91b5-deafd16b2149"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-19" x="294" y="3" width="19" height="12" uuid="daeda547-4adc-4242-bc67-96bebbb81f8f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

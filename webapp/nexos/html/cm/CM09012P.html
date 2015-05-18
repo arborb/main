@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CM09011P CSS -->
+<link rel="stylesheet" href="../../layout/submain/cm/CM09012P.css" />
+<script src="js/CM09012P.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divMasterView" class="ui-ctnr-normal">
+    <div class="ui-gbox-header">
+      <div class="ui-lbl-header">매주 휴일인 요일 체크</div>
+    </div>
+    <div class="ui-ctnr-row" style="margin-top: 10px;">
+      <div id="lblSunDay" class="ui-lbl-key">일요일</div>
+      <input class="ui-checkbox-field-key" type="checkbox" id="chkSunDay" value="1" />
+    </div>
+    <div class="ui-ctnr-row">
+      <div id="lblMonDay" class="ui-lbl-key">월요일</div>
+      <input class="ui-checkbox-field-key" type="checkbox" id="chkMonDay" value="1" />
+    </div>
+    <div class="ui-ctnr-row">
+      <div id="lblTueDay" class="ui-lbl-key">화요일</div>
+      <input class="ui-checkbox-field-key" type="checkbox" id="chkTueDay" value="1" />
+    </div>
+    <div class="ui-ctnr-row">
+      <div id="lblWedDay" class="ui-lbl-key">수요일</div>
+      <input class="ui-checkbox-field-key" type="checkbox" id="chkWedDay" value="1" />
+    </div>
+    <div class="ui-ctnr-row">
+      <div id="lblThuDay" class="ui-lbl-key">목요일</div>
+      <input class="ui-checkbox-field-key" type="checkbox" id="chkThuDay" value="1" />
+    </div>
+    <div class="ui-ctnr-row">
+      <div id="lblFriDay" class="ui-lbl-key">금요일</div>
+      <input class="ui-checkbox-field-key" type="checkbox" id="chkFriDay" value="1" />
+    </div>
+    <div class="ui-ctnr-row" style="margin-bottom: 10px;">
+      <div id="lblSatDay" class="ui-lbl-key">토요일</div>
+      <input class="ui-checkbox-field-key" type="checkbox" id="chkSatDay" value="1" />
+    </div>
+  </div>
+  <div id="divBottomView" style="text-align: right; padding: 5px;">
+    <input type="button" id="btnOk" value="작업일자 생성" class="ui-btn-cmd" style="width: 100px;" />
+    <input type="button" id="btnCancel" value="취소" class="ui-btn-cmd" style="width: 60px;" />
+  </div>
+</body>
+</html>

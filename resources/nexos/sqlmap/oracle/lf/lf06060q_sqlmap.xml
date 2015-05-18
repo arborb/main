@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 수불현황
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  //  LF06060Q 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LF06060Q">
+ 
+
+  <!--
+    //================================================================================================================
+    // SELECT SQLMAP
+    //================================================================================================================
+  -->
+  <!-- [S] - RS_T1_MASTER -->
+  <parameterMap id="paramRS_MASTER1" class="java.util.Map">
+    <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"         mode="IN" />
+    <parameter property="P_BU_CD"             mode="IN" />
+    <parameter property="P_ADJUST_START_DATE" mode="IN" />
+    <parameter property="P_ADJUST_END_DATE"   mode="IN" />
+  </parameterMap>
+  <procedure id="RS_MASTER1" parameterMap="paramRS_MASTER1" resultClass="java.util.HashMap">
+    { ? = call LF06060Q.RS_MASTER1(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_MASTER -->
+
+
+  <!-- [S] - RS_T2_MASTER -->
+  <parameterMap id="paramRS_MASTER2" class="java.util.Map">
+    <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"         mode="IN" />
+    <parameter property="P_BU_CD"             mode="IN" />
+    <parameter property="P_ADJUST_START_DATE" mode="IN" />
+    <parameter property="P_ADJUST_END_DATE"   mode="IN" />
+  </parameterMap>
+  <procedure id="RS_MASTER2" parameterMap="paramRS_MASTER2" resultClass="java.util.HashMap">
+    { ? = call LF06060Q.RS_MASTER2(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T2_MASTER -->
+
+
+
+  <!--
+    //================================================================================================================
+    // INSERT/UPDATE/DELETE SQLMAP
+    //================================================================================================================
+  -->
+
+
+</sqlMap>

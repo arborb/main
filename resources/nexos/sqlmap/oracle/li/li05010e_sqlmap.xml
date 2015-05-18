@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2013-07-31
+  // Description
+  // LI05010E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LI05010E">
+
+
+    <!-- [S] - RS_MASTER -->
+    <parameterMap id="paramRS_MASTER" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_CENTER_CD"         mode="IN" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_INBOUND_DATE"      mode="IN" />
+        <parameter property="P_INOUT_CD"          mode="IN" />
+        <parameter property="P_VENDOR_CD"         mode="IN" />
+        <parameter property="P_BRAND_CD"          mode="IN" />
+        <parameter property="P_ITEM_CD"           mode="IN" />
+        <parameter property="P_ITEM_NM"           mode="IN" />
+    </parameterMap>
+    <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+        { ? = call LI05010E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_MASTER -->
+
+
+    <!-- [S] - RS_DETAIL -->
+    <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_CENTER_CD"         mode="IN" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_INBOUND_DATE"      mode="IN" />
+        <parameter property="P_INBOUND_NO"        mode="IN" />
+    </parameterMap>
+    <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+        { ? = call LI05010E.RS_DETAIL(?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_DETAIL -->
+
+
+    <!-- [S] - RS_SUB1 -->
+    <parameterMap id="paramRS_SUB1" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_CENTER_CD"         mode="IN" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_INBOUND_DATE"      mode="IN" />
+        <parameter property="P_INBOUND_NO"        mode="IN" />
+        <parameter property="P_LINE_NO"           mode="IN" />
+    </parameterMap>
+    <procedure id="RS_SUB1" parameterMap="paramRS_SUB1" resultClass="java.util.HashMap">
+        { ? = call LI05010E.RS_SUB1(?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_SUB1 -->
+
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+
+    <!-- [S] - UPDATE_LI030NM [입고지시서] -->
+    <update id="UPDATE_LI030NM" parameterClass="java.util.Map">
+        UPDATE LI030NM
+           SET LOCATION_CD       = #P_LOCATION_CD#
+              ,ENTRY_QTY         = #P_ENTRY_QTY#   
+              ,CONFIRM_QTY       = #P_CONFIRM_QTY#   
+              ,INSPECT_USER_ID   = #P_REG_USER_ID#
+              ,INSPECT_DATETIME  = SYSDATE
+         WHERE CENTER_CD         = #P_CENTER_CD#
+           AND BU_CD             = #P_BU_CD#
+           AND INBOUND_DATE      = #P_INBOUND_DATE#
+           AND INBOUND_NO        = #P_INBOUND_NO#
+           AND LINE_NO           = #P_LINE_NO#
+           AND INBOUND_SEQ       = #P_INBOUND_SEQ#
+    </update>
+    <!-- [E] - UPDATE_LI030NM [입고지시서] -->
+
+
+</sqlMap>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LABEL_SLIDING " pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7bb2567b-2b37-4192-ba90-2dd8a9a02325">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="73"/>
+	<queryString>
+		<![CDATA[SELECT M1.ZONE_CD
+          ,M1.BANK_CD
+          ,M1.BAY_CD
+          ,M1.LEV_CD
+          ,M1.LOCATION_CD
+          ,Z1.ZONE_NM
+          ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.ZONE_CD ORDER BY M1.BANK_CD ,M1.BAY_CD ,M1.LEV_CD) AS ZONE_FIRST_YN
+          ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.ZONE_CD ,M1.BANK_CD ORDER BY M1.BAY_CD ,M1.LEV_CD) AS BANK_FIRST_YN
+          ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.ZONE_CD ,M1.BANK_CD ,M1.BAY_CD ORDER BY M1.LEV_CD) AS BAY_FIRST_YN
+      FROM CMLOCATION M1
+           JOIN CMZONE Z1 ON Z1.CENTER_CD = M1.CENTER_CD
+                         AND Z1.ZONE_CD   = M1.ZONE_CD
+     WHERE M1.CENTER_CD  = 'G1'
+        AND BANK_CD      = '01'
+        AND BANK_CD      = '01'
+     ORDER BY BANK_CD
+             ,BAY_CD
+             ,LEV_CD]]>
+	</queryString>
+	<field name="ZONE_CD" class="java.lang.String"/>
+	<field name="BANK_CD" class="java.lang.String"/>
+	<field name="BAY_CD" class="java.lang.String"/>
+	<field name="LEV_CD" class="java.lang.String"/>
+	<field name="LOCATION_CD" class="java.lang.String"/>
+	<field name="ZONE_NM" class="java.lang.String"/>
+	<field name="ZONE_FIRST_YN" class="java.lang.String"/>
+	<field name="BANK_FIRST_YN" class="java.lang.String"/>
+	<field name="BAY_FIRST_YN" class="java.lang.String"/>
+	<detail>
+		<band height="555" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-1" x="-48" y="78" width="914" height="356" uuid="8729bb04-2dfb-40b1-9cdd-3a95fedb4091"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="휴먼둥근헤드라인" size="156" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZONE_CD} +"" +$F{BANK_CD}+"-" +$F{BAY_CD}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

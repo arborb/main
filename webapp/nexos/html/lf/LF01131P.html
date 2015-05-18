@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- LI01011P CSS -->
+<link rel="stylesheet" href="../../layout/submain/lf/LF01131P.css" />
+<script src="js/LF01131P.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divMasterView" class="ui-gbox-popup" style="min-width: 348px; max-width: 348px; height:130px; min-height: 130px; max-height: 130px;">
+    <table class="ui-tbl-popup">
+      <tr>
+        <td>
+          <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+          <select class="ui-cbo-key" id="cboQCenter_Cd" style="width: 150px;"></select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblQPopup_Bu_Cd" class="ui-lbl-key">사업부</div>
+          <input class="ui-edt-key" type="text" id="edtBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtBu_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+     </tr>
+      <tr>
+        <td>
+          <div id="lblPopup_Own_Brand_Cd" class="ui-lbl-key">위탁사</div>
+          <input class="ui-edt-key" type="text" id="edtOwn_Brand_Cd" tabindex="7" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnOwn_Brand_Cd" />
+          <input class="ui-edt-display" type="text" id="edtOwn_Brand_Nm"  disabled="disabled" style="width: 100px;" />
+        </td>
+      </tr>
+      <tr>
+       <td>
+          <div id="lblQAdjust_Date" class="ui-lbl-key">정산일자</div>
+          <input class="ui-dtp-key" type="text" id="dtpQAdjust_Date1" style="width: 80px;" />
+          <span class="ui-span-normal">▶</span>
+          <input class="ui-dtp-key" type="text" id="dtpQAdjust_Date2" style="width: 80px;" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblQAdjust_Month" class="ui-lbl-key">정산월</div>
+          <input class="ui-dtp-key" type="text" id="dtpQAdjust_Month" style="width: 80px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+  <div id="divBottomView" style="text-align: center; padding: 5px;">
+    <input type="button" id="btnAdjustInsertA" value="미처리내역 처리" class="ui-btn-cmd" style="width: 120px;" />
+    <input type="button" id="btnAdjustInsertB" value="정산내역 생성" class="ui-btn-cmd" style="width: 120px;" />
+  </div>
+</body>
+</html>

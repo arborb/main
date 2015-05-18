@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CS01080E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cs/CS01080E.css" />
+<script src="js/CS01080E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divMasterView" class="ui-ctnr-normal">
+    <div class="ui-gbox-title">비밀번호변경 주기정보</div>
+      <div class="ui-gbox-content">
+      <div class="ui-ctnr-row">
+        <div id="lblPassWord" class="ui-lbl-normal large">변경단위</div>
+        <select class="ui-cbo-key" id="cboPass_Div" style="width: 130px;"></select>
+        <div id="lblPass_Item_Reference" class="ui-lbl-normal large">변경기준</div>
+        <input id="edtPass_Item_Reference" class="ui-edt-normal large" type="text"  onkeydown="return onlyNumber(event)"/>
+      </div>
+   
+    </div>
+    <div class="ui-gbox-title">세션시간설정정보</div>
+      <div class="ui-gbox-content">
+    
+      <div class="ui-ctnr-row">
+        <div id="lblSession" class="ui-lbl-normal large">세션유지</div>
+        <!--select class="ui-cbo-key" id="cboSession_item_Reference" style="width: 130px;"></select-->
+        <input id="edtSession_item_Reference" class="ui-edt-normal large" type="text"  onkeydown="return onlyNumber(event)"/> 분 후 자동 로그아웃 됩니다.
+       </div>
+    </div>
+  </div>
+</body>
+</html>

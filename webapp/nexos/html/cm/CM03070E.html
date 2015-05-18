@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CM03070E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cm/CM03070E.css" />
+<script src="js/CM03070E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divMasterView" class="ui-ctnr-left">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdMaster" class="ui-grd-title">위탁사</td>
+        <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdMaster"></div>
+    <div class="ui-gbox-header">
+      <div class="ui-lbl-header">위탁사로고</div>
+    </div>
+    <div class="ui-gbox-content ui-noborder">
+      <div class="ui-border ui-padding" style="height: 185px; overflow: auto; text-align: center; line-height: 185px;">
+        <img id="imgBICust" src="" style="vertical-align: middle;">
+      </div>
+      <div style="margin-top: 5px; text-align: right;">
+        <input type="button" id="btnBICustUpload" value="파일업로드" class="ui-btn-cmd" style="width: 75px;" />
+        <input type="button" id="btnBICustRemove" value="파일삭제" class="ui-btn-cmd" style="width: 75px;" />
+      </div>
+    </div>
+  </div>
+  <div id="divDetailView" class="ui-ctnr-left" style="margin-left: 5px;">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdDetail" class="ui-grd-title">사업부</td>
+        <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdDetail"></div>
+    <div class="ui-gbox-header">
+      <div class="ui-lbl-header">사업부로고</div>
+    </div>
+    <div class="ui-gbox-content ui-noborder">
+      <div class="ui-border ui-padding" style="height: 185px; overflow: auto; text-align: center; line-height: 185px;">
+        <img id="imgBIBu" src="" style="vertical-align: middle;">
+      </div>
+      <div style="margin-top: 5px; text-align: right;">
+        <input type="button" id="btnBIBuUpload" value="파일업로드" class="ui-btn-cmd" style="width: 75px;" />
+        <input type="button" id="btnBIBuRemove" value="파일삭제" class="ui-btn-cmd" style="width: 75px;" />
+      </div>
+    </div>
+  </div>
+  <div id="divSubView" class="ui-ctnr-right">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdSub" class="ui-grd-title">판매사</td>
+        <td id="divRowCount_grdSub" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdSub"></div>
+    <div class="ui-gbox-header">
+      <div class="ui-lbl-header">판매사로고</div>
+    </div>
+    <div class="ui-gbox-content ui-noborder">
+      <div class="ui-border ui-padding" style="height: 185px; overflow: auto; text-align: center; line-height: 185px;">
+        <img id="imgBIBrand" src="" style="vertical-align: middle;">
+      </div>
+      <div style="margin-top: 5px; text-align: right;">
+        <input type="button" id="btnBIBrandUpload" value="파일업로드" class="ui-btn-cmd" style="width: 75px;" />
+        <input type="button" id="btnBIBrandRemove" value="파일삭제" class="ui-btn-cmd" style="width: 75px;" />
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CARD_LOM2" pageWidth="595" pageHeight="842" columnWidth="290" leftMargin="155" rightMargin="150" topMargin="198" bottomMargin="455" uuid="2026c8f0-0156-448a-9f98-536a902cf1b2">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="133"/>
+	<queryString>
+		<![CDATA[SELECT CARD_MSG
+        ,CARD_FROM
+        ,CARD_TO
+    FROM LO020PM
+   WHERE CENTER_CD     = 'E1'
+     AND BU_CD         = '3100'
+     AND OUTBOUND_DATE = '2014-04-29'
+     AND OUTBOUND_NO   = '0002']]>
+	</queryString>
+	<field name="CARD_MSG" class="java.lang.String"/>
+	<field name="CARD_FROM" class="java.lang.String"/>
+	<field name="CARD_TO" class="java.lang.String"/>
+	<columnHeader>
+		<band height="29">
+			<staticText>
+				<reportElement mode="Transparent" x="5" y="4" width="26" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="427216cc-0d3e-41d0-b697-1f7699343259"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="malgun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[TO.]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="31" y="4" width="135" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="1901af7c-4b49-4f45-9840-f04d543f4f80"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="malgun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARD_TO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="101" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="5" y="8" width="269" height="85" forecolor="#000000" backcolor="#FFFFFF" uuid="ea2f0570-2c59-4a64-98d1-f74265e59851"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="malgun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARD_MSG}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="34">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="118" y="12" width="155" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="55314820-c550-427d-8d33-ddae5d89a143"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="malgun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["From.  " + $F{CARD_FROM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

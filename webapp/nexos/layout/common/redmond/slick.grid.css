@@ -1,0 +1,448 @@
+/*
+IMPORTANT:
+In order to preserve the uniform grid appearance, all cell styles need to have padding, margin and border sizes.
+No built-in (selected, editable, highlight, flashing, invalid, loading, :focus) or user-specified CSS
+classes should alter those!
+*/
+.slick-header.ui-state-default,.slick-headerrow.ui-state-default,.slick-bandrow.ui-state-default {
+  width: 100%;
+  overflow: hidden;
+  border-left: 0px;
+}
+
+.slick-header-columns,.slick-headerrow-columns,.slick-bandrow-columns {
+  position: relative;
+  white-space: nowrap;
+  cursor: default;
+  overflow: hidden;
+}
+
+.slick-header-column.ui-state-default {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  height: 16px;
+  line-height: 16px;
+  margin: 0;
+  padding: 4px;
+  border-right: 1px solid silver;
+  border-left: 0px;
+  border-top: 0px;
+  border-bottom: 0px;
+  float: left;
+}
+
+.slick-bandrow-column.ui-state-default {
+  /*position: relative;*/
+  display: inline-block;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  height: 16px;
+  line-height: 16px;
+  margin: 0;
+  padding: 4px;
+  border-right: 1px solid silver;
+  border-left: 0px;
+  border-top: 0px;
+  border-bottom: 0px;
+  float: left;
+}
+
+.slick-header-editable {
+  text-decoration: underline;
+}
+
+.slick-headerrow-column.ui-state-default {
+  padding: 4px;
+}
+
+.slick-header-column-sorted {
+  /*font-style: italic;*/
+}
+
+.slick-header-column-active {
+
+}
+
+.slick-sort-indicator {
+  display: inline-block;
+}
+
+.slick-sort-indicator-desc {
+  width: 8px;
+  height: 5px;
+  margin-left: 4px;
+  background: url(image/sort-desc.gif);
+}
+
+.slick-sort-indicator-asc {
+  width: 8px;
+  height: 5px;
+  margin-left: 4px;
+  background: url(image/sort-asc.gif);
+}
+
+.slick-resizable-handle {
+  position: absolute;
+  font-size: 0.1px;
+  display: block;
+  cursor: col-resize;
+  width: 4px;
+  right: 0px;
+  top: 0;
+  height: 100%;
+}
+
+.slick-resizable-handle-hover {
+  background-color: #ccc;
+}
+
+.slick-sortable-placeholder {
+  background: silver;
+}
+
+.grid-canvas {
+  position: relative;
+  outline: 0;
+  overflow: hidden;
+}
+
+.slick-row.ui-widget-content,.slick-row.ui-state-active {
+  position: absolute;
+  border: 0px;
+  width: 100%;
+}
+
+.slick-cell,.slick-headerrow-column {
+  position: absolute;
+  border-left: 0px;
+  border-top: 0px;
+  border-right: 1px solid #d6d6d6;
+  border-bottom: 1px solid #d6d6d6;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  z-index: 1;
+  padding: 1px;
+  margin: 0;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.slick-group {
+  
+}
+
+.slick-group-toggle {
+  display: inline-block;
+}
+
+.slick-cell.highlighted {
+  background: lightskyblue;
+  background: rgba(0, 0, 255, 0.2);
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.slick-cell.flashing {
+  border: 1px solid red !important;
+}
+
+.slick-cell.editable {
+  z-index: 11;
+  overflow: visible;
+}
+
+.slick-cell:focus {
+  outline: none;
+}
+
+.slick-reorder-proxy {
+  display: inline-block;
+  background: blue;
+  opacity: 0.15;
+  filter: alpha(opacity = 15);
+  cursor: move;
+}
+
+.slick-reorder-guide {
+  display: inline-block;
+  height: 2px;
+  background: blue;
+  opacity: 0.7;
+  filter: alpha(opacity = 70);
+}
+
+.slick-selection {
+  z-index: 10;
+  position: absolute;
+  border: 2px dashed black;
+}
+
+.slick-pane {
+  position: absolute;
+  outline: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.slick-pane-header {
+  display: block;
+}
+
+.slick-header {
+  overflow: hidden;
+  position: relative;
+}
+
+.slick-headerrow {
+  overflow: hidden;
+  position: relative;
+}
+
+.slick-top-panel-scroller {
+  overflow: hidden;
+  position: relative;
+}
+
+.slick-top-panel {
+  width: 10000px
+}
+
+.slick-bandrow-scroller.ui-state-default {
+  overflow: hidden;
+  position: relative;
+  border: 0px;
+}
+
+.slick-bandrow {
+  width: 10000px;
+}
+
+.slick-viewport {
+  position: relative;
+  outline: 0;
+  width: 100%;
+}
+
+/*
+ Default Theme CSS
+*/
+.slick-header-column,.slick-bandrow-column {
+  text-align: center;
+}
+
+.slick-headerrow {
+  background: #fafafa;
+}
+
+.slick-headerrow-column {
+  background: #fafafa;
+  border-bottom: 0;
+  height: 100%;
+}
+
+.slick-row.ui-state-active {
+  background: #F5F7D7;
+}
+
+.slick-row {
+  position: absolute;
+  background: white;
+  border: 0px;
+  line-height: 20px;
+}
+
+.slick-row.selected {
+  z-index: 10;
+  background: #DFE8F6;
+}
+
+.slick-cell {
+  padding: 2px 5px 0 5px;
+}
+
+.slick-group {
+  border-bottom: 2px solid silver;
+}
+
+.slick-group .slick-cell,.slick-group .slick-cell.selected {
+  font-weight: bold;
+  color: #0000ff;
+}
+
+.slick-group-toggle {
+  width: 13px;
+  height: 13px;
+  margin-right: 2px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.slick-group-toggle.expanded {
+  background: url(image/collapse.gif) no-repeat center center;
+}
+
+.slick-group-toggle.collapsed {
+  background: url(image/expand.gif) no-repeat center center;
+}
+
+.slick-group-totals {
+  color: gray;
+  background: white;
+}
+
+.slick-cell.selected {
+  color: #363636;
+  background: #fbec88 url(image/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;
+}
+
+.slick-cell.active {
+  border-bottom: 1px solid gray;
+}
+
+.slick-sortable-placeholder {
+  background: silver !important;
+}
+
+.slick-row.odd {
+  background: #fafafa;
+}
+
+.slick-row.ui-state-active {
+  background: #F5F7D7;
+}
+
+.slick-row.loading {
+  opacity: 0.5;
+  filter: alpha(opacity = 50);
+}
+
+.slick-cell.invalid {
+  border-color: red;
+  -moz-animation-duration: 0.2s;
+  -webkit-animation-duration: 0.2s;
+  -moz-animation-name: slickgrid-invalid-hilite;
+  -webkit-animation-name: slickgrid-invalid-hilite;
+}
+
+input.editor-text,select.editor-select,input.editor-popup-text,input.editor-date {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border: 1px solid #ff5e00;
+  margin: 0;
+  padding: 0px 4px 0 4px;
+  background-color: #fff;
+  outline: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+select.editor-select {
+  padding: 0;
+}
+
+input.editor-popup-text,input.editor-date {
+  padding: 0px 22px 0 4px;
+}
+
+input.editor-popup-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 22px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-image: url('../image/btn_popup.png');
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  cursor: pointer;
+  outline: 0;
+}
+
+textarea.editor-longtext {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 74px;
+  border: 1px solid #ff5e00;
+  margin: 0;
+  padding: 2px 4px 2px 4px;
+  background-color: white;
+  outline: 0;
+  white-space: pre;
+  word-wrap: normal;
+  resize: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+input.editor-checkbox {
+  vertical-align: middle;
+}
+
+span.progress-bar {
+  display: inline-block;
+  height: 70%;
+  margin-top: -3px;
+  vertical-align: middle;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+}
+
+span.progress-bar-text {
+  position: absolute;
+  display: inline-block;
+  width: 93%;
+  height: 90%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+input.editor-text:disabled,input.editor-longtext:disabled,input.editor-date:disabled,input.editor-popup-text:disabled,select.editor-select:disabled {
+  background-color: #eaeaea;
+  border-color: silver;
+}
+
+input.editor-text.field-key,input.editor-longtext.field-key,input.editor-date.field-key,input.editor-popup-text.field-key,select.editor-select.field-key {
+  background-color: #faf3c0;
+}
+
+@
+-moz-keyframes slickgrid-invalid-hilite {from { box-shadow:006pxred;
+  
+}
+
+to {
+  box-shadow: none;
+}
+
+}
+@
+-webkit-keyframes slickgrid-invalid-hilite {from { box-shadow:006pxred;
+  
+}
+
+to {
+  box-shadow: none;
+}
+}

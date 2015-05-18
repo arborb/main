@@ -1,0 +1,191 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<title>예쁘다 위메프 - WMS</title>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=1100, height=600, initial-scale=0.5" />
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- JWindow CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jWindow.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<script src="../common/js/jquery/jquery.filedownload.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<!-- JWindow JS -->
+<script src="../common/js/jwindow/jWindow.js"></script>
+<!-- Common JS -->
+<script src="../common/js/service-response-mock.js"></script>
+<script src="../common/js/common.js"></script>
+<!-- Main CSS/JS -->
+<link rel="stylesheet" href="../../layout/main/main.css" />
+<script src="js/main.js"></script>
+<link rel="shortcut icon" href="http://image.wemakeprice.com/favicon_v01.ico" />
+</head>
+<body>
+  <div id="divViewport">
+    <div id="divMainView" tabIndex="0" style="outline: none;">
+      <!-- 상단 공통 버튼 -->
+      <div id="divTopMenuBar" class="ui-top-menu">
+        <div id="divTopLogo" class="ui-top-logo"></div>
+        <div id="divCommonButtons" class="ui-top-commonbtns" style="display: none;">
+          <input type="button" id="btnTopInquiry" class="ui-top-btninquiry" value="조회 (Alt+1)" disabled="disabled" />
+          <input type="button" id="btnTopNew" class="ui-top-btnnew" value="신규 (Alt+2)" disabled="disabled" />
+          <input type="button" id="btnTopSave" class="ui-top-btnsave" value="저장 (Alt+3)" disabled="disabled" />
+          <input type="button" id="btnTopCancel" class="ui-top-btncancel" value="취소 (Alt+4)" disabled="disabled" />
+          <input type="button" id="btnTopDelete" class="ui-top-btndelete" value="삭제 (Alt+5)" disabled="disabled" />
+          <input type="button" id="btnTopPrintList" class="ui-top-btnprint" value="출력" style="display: none; width: 58px;" />
+        </div>
+        <div class="ui-top-fixedbtns">
+          <input type="button" id="btnTopMenu" class="ui-top-btnmenu" value="메뉴 (Alt+Q)" />
+          
+          <input type="button" id="btnProgramBookMark" class="ui-top-btnmenu" value="즐겨찾기목록" style=" width: 105px;" />
+          <input type="button" id="btnProgramList" class="ui-top-btnprogram" value="프로그램목록" style="display: none; width: 105px;" />
+          <input type="button" id="btnTopUserName" class="ui-top-btnuser" value="사용자" style="width: 80px;" />
+          <input type="button" id="btnTopClose" class="ui-btn-black" value=" 종료 " style="height: 30px; margin-top: 2px;" />
+          <input type="button" id="btnTopLogout" class="ui-btn-white" value="로그아웃" style="height: 30px; margin-top: 2px;" />
+        </div>
+      </div>
+      <div id="divTopLine" class="ui-top-line"></div>
+      <div id="divClientView">
+        <!-- 왼쪽 프로그램 메뉴 -->
+        <div id="divMenuView" class="ui-ctnr-left" style="max-width: 198px">
+          <table class="ui-tbl-grid">
+            <tr>
+              <td class="ui-grd-title">메뉴</td>
+              <td class="ui-grd-title-btnctnr">
+                <input type="button" id="btnReloadMenu" value="Loading" class="ui-btn-trans" style="width: 55px; min-height: 20px; margin: 1px;" />
+                <input type="button" id="btnPinMenu" class="ui-btn-trans ui-btn-normal" style="width: 26px; min-height: 20px; margin: 1px 2px 1px 1px; font-weight: normal;" />
+                <input type="button" id="btnCloseMenu" value="X" class="ui-btn-trans" style="width: 26px; min-height: 20px; margin: 1px 2px 1px 1px;" />
+              </td>
+            </tr>
+          </table>
+          <div id="grdProgramMenu"></div>
+        </div>
+        <!-- 오른쪽 단위화면 컨테이너 -->
+        <div id="divProgramView" class="ui-ctnr-right" style="position: relative;"></div>
+      </div>
+      <div id="divBottomLine" class="ui-bottom-line"></div>
+    </div>
+  </div>
+  <div id="divExtraView">
+    <!-- 실행프로그램 -->
+    <div id=divProgramList class="ui-overlay" style="display: none; background-color: #fff; top: 40px; z-index: 9999;">
+      <div class="ui-gbox-header ui-gray" style="padding: 2px 5px 2px 5px; border-bottom-width: 1px; border-bottom-style: solid;">
+        <div class="ui-lbl-header" style="width: 80px;">메뉴</div>
+        <select id="cboProgramListSortDir" class="ui-cbo-normal" style="width: 107px;">
+          <option value="1">메뉴순</option>
+          <option value="2">실행순</option>
+          <option value="3">실행역순</option>
+        </select>
+        
+      </div>
+      <div id="grdProgramList"></div>
+    </div>
+    
+    <!-- 즐겨찾기 -->
+    <div id=divProgramBookMark class="ui-overlay" style="display: none; background-color: #fff; top: 40px; z-index: 9999;">
+      <div class="ui-gbox-header ui-gray" style="padding: 2px 5px 2px 5px; border-bottom-width: 1px; border-bottom-style: solid;">
+          <input class="ui-edt-normal" type="text" id="edtMenuAdd" style="width: 100px;" />
+       <input type="button" id="btnMenuAdd" value="추가" class="ui-btn-trans" style="width: 55px; min-height: 20px; margin: 1px;" />
+       <select id="cboProgramBookMarkSortDir" class="ui-cbo-normal" style="width: 107px;">
+          <option value="1">메뉴순</option>
+          <option value="2">실행순</option>
+          <option value="3">실행역순</option>
+        </select>
+      </div>
+      <div id="grdProgramBookMark"></div>
+    </div>
+    <!-- 단위화면 출력물 목록 -->
+    <div id=divPrintList class="ui-overlay" style="display: none; background-color: #fff; top: 40px; z-index: 9999;">
+      <div id="grdPrintList"></div>
+    </div>
+    <!-- Report 자동출력 -->
+    <div id="divReportView" style="position: absolute; top: -100000px;">
+      <form id="reportForm1" name="reportForm1"></form>
+      <iframe id="reportIFrame1" name="reportIFrame1" style="display: none" src="about:blank"></iframe>
+      <form id="reportForm2" name="reportForm2"></form>
+      <iframe id="reportIFrame2" name="reportIFrame2" style="display: none" src="about:blank"></iframe>
+      <form id="reportForm3" name="reportForm3"></form>
+      <iframe id="reportIFrame3" name="reportIFrame3" style="display: none" src="about:blank"></iframe>
+    </div>
+    <!-- 메시지 팝업 -->
+    <div id="divMessagePopupView" tabindex="1" style="display: none; padding: 5px; margin: 0; outline: none; overflow: auto; width: 100%; height: 100%; font-weight: bold;"></div>
+    <!-- 파일 업/다운로드 -->
+    <div id="divFileView" style="position: absolute; top: -100000px;">
+      <form id="fileForm" name="fileForm">
+        <input id="P_UPLOAD_FILE" type="file" name="P_UPLOAD_FILE">
+      </form>
+      <iframe id="fileIFrame" name="fileIFrame" src="about:blank" style="display: none;"></iframe>
+    </div>
+    <!-- 데이터 복사 레이어 -->
+    <div id="divCopyGridDataView" class="ui-copy-grd-data  ui-overlay" style="display: none;">
+      <div id="divCopyGridDataHeader" class="ui-gbox-header ui-gray" style="cursor: move;">
+        <div class="ui-lbl-header">데이터 검색 및 복사</div>
+      </div>
+      <div class="ui-gbox-content" style="margin: 0; padding: 15px; border-color: transparent;">
+        <div id="divCopyComments" style="margin-bottom: 15px; font-weight: bold;"></div>
+        <div style="text-align: right;">
+          <input type="checkbox" checked="checked" id="chkCopyOption" class="ui-chk-normal">
+          전체 일치
+        </div>
+        <div id="divCopyGridDataColumn" style="margin-bottom: 5px;"></div>
+        <textarea class="ui-edt-normal" id="edtCopyGridData" style="white-space: pre; word-wrap: normal; resize: none; min-height: 32px; min-width: 300px; max-width: 300px; overflow: hidden;"></textarea>
+      </div>
+    </div>
+  </div>
+  <!-- 로그인 Dialog -->
+  <div id="divLoginView">
+    <div class="ui-ctnr-login">
+      <table>
+        <tr>
+          <td style="padding: 2px; color: white;">ID</td>
+          <td style="padding: 2px;">
+            <input type="text" id="edtUser_Id" class="ui-edt-normal" tabindex="1" maxlength="50" />
+          </td>
+          <td style="padding: 2px;" rowspan="2">
+            <input id="btnLogin" type="button" value="로그인" class="ui-btn-white" style="width: 100px; height: 44px; font-size: 16px;" tabindex="3">
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 2px; color: white;">PW</td>
+          <td style="padding: 2px;">
+            <input type="password" id="edtUser_Pwd" class="ui-edt-normal" tabindex="2" maxlength="20" />
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 2px;"></td>
+          <td style="padding: 2px;" colspan="2">
+            <input type="checkbox" id="chkSave_User_Id" class="ui-chk-normal" tabindex="4" />
+            <span style="color: white;">사용자ID 저장</span>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

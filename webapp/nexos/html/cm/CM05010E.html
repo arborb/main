@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CM05010E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cm/CM05010E.css" />
+<script src="js/CM05010E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 조회 조건 -->
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+          <select id="cboQCenter_Cd" class="ui-cbo-key" style="width: 150px;"></select>
+        </td>
+        <td>
+          <div id="lblQPopup_Brand_Cd" class="ui-lbl-condition">위탁사</div>
+          <input id="edtQBrand_Cd" class="ui-edt-key" type="text" style="width: 60px;" />
+          <input id="btnQBrand_Cd" class="ui-btn-popup" type="button" />
+          <input id="edtQBrand_Nm" class="ui-edt-display" type="text" disabled="disabled" style="width: 150px;" />
+          <input type="hidden" id="edtQBu_Cd" />
+        </td>
+        <td>
+          <div id="lblQItem_State" class="ui-lbl-condition">상품상태</div>
+          <select id="cboQItem_State" class="ui-cbo-key" style="width: 100px;"></select>
+        </td>
+      </tr>
+    </table>
+    <table id="tblAdditionalConditionView" class="ui-tbl-additional">
+      <tr>
+        <td id="tdQItem_Loc_Div" >
+          <div id="lblQItem_Loc_Div" class="ui-lbl-condition">로케이션구분</div>
+          <select id="cboQItem_Loc_Div" class="ui-cbo-normal" style="width: 120px;"></select>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divTabView" style="padding: 1px;">
+    <!-- Tab Handler -->
+    <ul>
+      <li id="divTab1"><a href="#divTabSheetT1View">권장로케이션</a></li>
+      <li id="divTab2"><a href="#divTabSheetT2View">고정로케이션</a></li>
+      <li id="divTab3"><a href="#divTabSheetT3View">상품로케이션 내역</a></li>
+    </ul>
+    <!-- Tab1 : 권장로케이션 탭 -->
+    <div id="divTabSheetT1View" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div id="divSplitterT1" style="border: none;">
+        <div>
+          <!-- 권장로켸이션 마스터 -->
+          <div id="divT1MainView">
+            <table class="ui-tbl-grid">
+              <tr>
+                <td id="divTitle_grdT1Master" class="ui-grd-title">권장로케이션</td>
+                <td id="divRowCount_grdT1Master" class="ui-grd-rowcount">0/0 Rows</td>
+              </tr>
+            </table>
+            <div id="grdT1Master"></div>
+          </div>
+        </div>
+        <div>
+          <!-- 권장로케이션 지정 -->
+          <div id="divT1SubLeftView" class="ui-ctnr-left" style="border-left: none; border-bottom: none;">
+            <div class="ui-gbox-header">
+              <div class="ui-lbl-header">권장로케이션 지정</div>
+            </div>
+            <div id="divTab1Button" style="padding: 5px;">
+              <input type="button" id="btnBrand" value="판매사별지정" class="button-group ui-btn-cmd" style="width: 110px;" />
+              <input type="button" id="btnItemGroup" value="상품그룹별지정" class="button-group ui-btn-cmd" style="width: 110px;" />
+              <input type="button" id="btnItem" value="상품별지정" class="button-group ui-btn-cmd" style="width: 110px;" />
+              <input type="button" id="btnT1Confirm" value="권장로케이션 등록" class="ui-btn-cmd ui-clr-selected" style="width: 130px; margin-left: 80px;" />
+            </div>
+            <div id="grdT1Zone" class="ui-ctnr-left" style="border-width: 0 1px 0 0;"></div>
+            <div id="grdT1Bank" class="ui-ctnr-right" style="border-width: 0 1px 0 1px;"></div>
+            <div id="grdT1Bay" class="ui-ctnr-right" style="border-width: 0 1px 0 1px;"></div>
+            <div id="grdT1Lev" class="ui-ctnr-right" style="border-width: 0 0 0 1px;"></div>
+          </div>
+          <!-- 상품그룹 지정 -->
+          <div id="divT1ItemGroupView" class="ui-ctnr-right" style="border-right: none; border-bottom: none;">
+            <div class="ui-gbox-header">
+              <div class="ui-lbl-header">상품그룹 지정</div>
+            </div>
+            <div id="grdT1Depart" class="ui-ctnr-left" style="border-width: 0 1px 0 0;"></div>
+            <div id="grdT1Line" class="ui-ctnr-right" style="border-width: 0 1px 0 1px;"></div>
+            <div id="grdT1Class" class="ui-ctnr-right" style="border-width: 0 0 0 1px;"></div>
+          </div>
+          <!-- 상품 지정 -->
+          <div id="divT1ItemView" class="ui-ctnr-right" style="border-right: none; border-bottom: none;">
+            <div class="ui-gbox-header">
+              <div class="ui-lbl-header">상품 지정</div>
+            </div>
+            <div id="divT1ItemCondition" style="padding: 5px;">
+              <div id="lblQT1_Item_Cd" class="ui-lbl-condition">상품코드</div>
+              <input class="ui-edt-normal" type="text" id="edtT1QItem_Cd" style="width: 90px; margin-left: -25px;" />
+              <div id="lblQT1_Item_Nm" class="ui-lbl-condition" style="margin-left: 30px;">상품명</div>
+              <input class="ui-edt-normal" type="text" id="edtT1QItem_Nm" style="width: 120px; margin-left: -35px;" />
+              <input type="button" id="btnT1Refresh" class="ui-btn-refresh" style="margin-left: 10px;" />
+            </div>
+            <div id="grdT1Item"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Tab2 : 고정로케이션 탭 -->
+    <div id="divTabSheetT2View" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div id="divSplitterT2" style="border: none;">
+        <div>
+          <!-- 고정로켸이션 마스터 -->
+          <div id="divT2MainView">
+            <table class="ui-tbl-grid">
+              <tr>
+                <td id="divTitle_grdT2Master" class="ui-grd-title">고정로케이션</td>
+                <td id="divRowCount_grdT2Master" class="ui-grd-rowcount">0/0 Rows</td>
+              </tr>
+            </table>
+            <div id="grdT2Master"></div>
+          </div>
+        </div>
+        <div>
+          <!-- 고정로케이션 지정 -->
+          <div id="divT2SubLeftView" class="ui-ctnr-left" style="border-left: none; border-bottom: none;">
+            <div class="ui-gbox-header">
+              <div class="ui-lbl-header">고정로케이션 지정</div>
+            </div>
+            <div id="divTab2Button" style="padding: 5px;">
+              <input type="button" id="btnT2Confirm" value="고정로케이션 등록" class="ui-btn-cmd ui-clr-selected" style="width: 130px; margin-left: 425px;" />
+            </div>
+            <div id="grdT2Zone" class="ui-ctnr-left" style="border-width: 0 1px 0 0;"></div>
+            <div id="grdT2Bank" class="ui-ctnr-right" style="border-width: 0 1px 0 1px;"></div>
+            <div id="grdT2Bay" class="ui-ctnr-right" style="border-width: 0 1px 0 1px;"></div>
+            <div id="grdT2Lev" class="ui-ctnr-right" style="border-width: 0 0 0 1px;"></div>
+          </div>
+          <!-- 상품 지정 -->
+          <div id="divT2ItemView" class="ui-ctnr-right" style="border-right: none; border-bottom: none;">
+            <div class="ui-gbox-header">
+              <div class="ui-lbl-header">상품 지정</div>
+            </div>
+            <div id="divT2ItemCondition" style="padding: 5px;">
+              <div id="lblQT2_Item_Cd" class="ui-lbl-condition">상품코드</div>
+              <input class="ui-edt-normal" type="text" id="edtT2QItem_Cd" style="width: 90px; margin-left: -25px;" />
+              <div id="lblQT2_Item_Nm" class="ui-lbl-condition" style="margin-left: 30px;">상품명</div>
+              <input class="ui-edt-normal" type="text" id="edtT2QItem_Nm" style="width: 120px; margin-left: -35px;" />
+              <input type="button" id="btnT2Refresh" class="ui-btn-refresh" style="margin-left: 10px;" />
+            </div>
+            <div id="grdT2Item"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Tab3 : 상품로케이션 내역 탭 -->
+    <div id="divTabSheetT3View" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div id="divT3MainView">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT3Master" class="ui-grd-title">상품로케이션내역</td>
+            <td id="divRowCount_grdT3Master" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT3Master"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

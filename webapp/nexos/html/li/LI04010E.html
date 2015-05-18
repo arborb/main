@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- LI04010E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/li/LI04010E.css" />
+<script src="js/LI04010E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 조회 조건 -->
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+          <select id="cboQCenter_Cd" class="ui-cbo-key" style="width: 150px;"></select>
+        </td>
+        <td>
+          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+          <input class="ui-edt-key" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+        <td>
+          <div id="lblQInbound_Date" class="ui-lbl-condition">입고일자</div>
+          <input class="ui-dtp-key" type="text" id="dtpQInbound_Date1" style="width: 80px;" />
+          <span class="ui-span-normal">▶</span>
+          <input class="ui-dtp-key" type="text" id="dtpQInbound_Date2" style="width: 80px;" />
+        </td>
+        <td>
+          <div id="lblQInout_Cd" class="ui-lbl-condition">입고구분</div>
+          <select id="cboQInout_Cd" class="ui-cbo-normal" style="width: 150px;"></select>
+        </td>
+        
+        <td>
+          <div>
+            <div id="lblQView_Div" class="ui-lbl-condition">검색구분</div>
+            <div class="ui-gbox-normal">
+              <input class="ui-rgb-normal" type="radio" name="rgbQView_Div" id="rgbQView_Div0" value="0" />
+              전체
+              <input class="ui-rgb-normal" type="radio" name="rgbQView_Div" id="rgbQView_Div1" value="1" />
+              미입고
+            </div>
+          </div>
+        </td>
+      </tr>
+      
+      <tr>
+          <td id="tdQDspOwn_Brand_Cd">
+          <div id="lblQPopup_Own_Brand_Cd" class="ui-lbl-condition">위탁사</div>
+          <input class="ui-edt-normal" type="text" id="edtQOwn_Brand_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQOwn_Brand_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQOwn_Brand_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+        <td>
+          <div id="lblQPopup_Depart_cd" class="ui-lbl-condition">대분류</div>
+          <input class="ui-edt-normal" type="text" id="edtQDepart_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQDepart_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQDepart_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+        <td>
+          <div id="lblQPopup_Line" class="ui-lbl-condition">중분류</div>
+          <input class="ui-edt-normal" type="text" id="edtQLine_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQLine_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQLine_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+        <td>
+          <div id="lblQPopup_Class" class="ui-lbl-condition">소분류</div>
+          <input class="ui-edt-normal" type="text" id="edtQClass_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQClass_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQClass_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+      </tr>
+    </table>
+    <!-- 추가 조건 -->
+    <table id="tblAdditionalConditionView" class="ui-tbl-additional">
+      <tr>    
+        <td>
+          <div id="lblVendor_Cd" class="ui-lbl-condition">공급처코드</div>
+          <input class="ui-edt-normal" type="text" id="edtQVendor_Cd" style="width: 215px;" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblQVendor_Nm" class="ui-lbl-condition">공급처명</div>
+          <input class="ui-edt-normal" type="text" id="edtQVendor_Nm" style="width: 214px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divMasterView" style="padding: 1px;">
+    <!-- Tab Handler -->
+    <ul>
+      <li id="divTab1"><a href="#divDetailViewT1">미입고 사유등록</a></li>
+      <li id="divTab2"><a href="#divDetailViewT2">기간별 미입고 내역</a></li>
+    </ul>
+    <!-- 미입고 사유등록 -->
+    <div id="divDetailViewT1" style="padding: 0; border-width: 1px; border-style: solid;">
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdMasterT1" class="ui-grd-title">미입고 사유등록</td>
+          <td id="divRowCount_grdMasterT1" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdMasterT1"></div>
+    </div>
+    <!-- 기간별 미입고 내역 -->
+    <div id="divDetailViewT2" style="padding: 0; border-width: 1px; border-style: solid; display: none;">
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdMasterT2" class="ui-grd-title">기간별 미입고 내역</td>
+          <td id="divRowCount_grdMasterT2" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdMasterT2"></div>
+    </div>
+  </div>
+</body>
+</html>

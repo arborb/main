@@ -1,0 +1,249 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- ED02011P CSS -->
+<link rel="stylesheet" href="../../layout/submain/ed/ED02011P.css" />
+<script src="js/ED02011P.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divMasterView" class="ui-gbox-popup">
+    <table class="ui-tbl-popup">
+      <tr>
+        <td>
+          <div id="lblPopup_Bu_Cd" class="ui-lbl-key">사업부</div>
+          <input class="ui-edt-display" type="text" id="edtBu_Cd" style="width: 40px;" tabindex="0" />
+          <input class="ui-edt-display" type="text" id="edtBu_Nm" disabled="disabled" style="width: 110px;" />
+        </td>
+        <td>
+          <div id="lblData_Cycle_Div" class="ui-lbl-normal">[XML]루트태그</div>
+          <input class="ui-edt-normal" type="text" id="edtXml_Tag_Root" style="width: 200px;" tabindex="11" />
+        </td>
+        <td>
+          <div id="lblWebService_Url" class="ui-lbl-normal">웹서비스URL</div>
+          <input class="ui-edt-normal" type="text" id="edtWebService_Url" style="width: 284px;" tabindex="22" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblEdi_Div" class="ui-lbl-key">수신구분</div>
+          <select id="cboEdi_Div" class="ui-cbo-key" style="width: 165px;" tabindex="1"></select>
+        </td>
+        <td>
+          <div id="lblXml_Tag_Bunch" class="ui-lbl-normal">[XML]단위태그</div>
+          <input class="ui-edt-normal" type="text" id="edtXml_Tag_Bunch" style="width: 200px;" tabindex="12" />
+        </td>
+        <td>
+          <div id="lblWebService_Method" class="ui-lbl-normal">웹서비스메소드</div>
+          <input class="ui-edt-normal" type="text" id="edtWebService_Method" style="width: 284px;" tabindex="23" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblDefine_No" class="ui-lbl-key">정의번호</div>
+          <input class="ui-edt-key" type="text" id="edtDefine_No" style="width: 158px;" tabindex="2" />
+        </td>
+        <td>
+          <div id="lblXml_Tag_Sub_Bunch" class="ui-lbl-normal">[XML]하위단위태그</div>
+          <input class="ui-edt-normal" type="text" id="edtXml_Tag_Sub_Bunch" style="width: 200px;" tabindex="13" />
+        </td>
+        <td>
+          <div id="lblRemote_User_Id" class="ui-lbl-normal">원격사용자ID</div>
+          <input class="ui-edt-normal" type="text" id="edtRemote_User_Id" style="width: 200px;" tabindex="24" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblDefine_Nm" class="ui-lbl-key">정의명칭</div>
+          <input class="ui-edt-key" type="text" id="edtDefine_Nm" style="width: 158px;" tabindex="3" />
+        </td>
+        <td>
+          <div id="lblPrefix_File_Nm" class="ui-lbl-normal">파일명접두사</div>
+          <input class="ui-edt-normal" type="text" id="edtPrefix_File_Nm" style="width: 200px;" tabindex="14" />
+        </td>
+        <td>
+          <div id="lblRemote_User_Pwd" class="ui-lbl-normal">원격비밀번호</div>
+          <input class="ui-edt-normal" type="password" id="edtRemote_User_Pwd" style="width: 200px;" tabindex="25" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblData_Div" class="ui-lbl-key">수신처리구분</div>
+          <select id="cboData_Div" class="ui-cbo-key" style="width: 165px;" tabindex="4"></select>
+        </td>
+        <td>
+          <div id="lblRemote_Div" class="ui-lbl-normal">원격송신구분</div>
+          <select id="cboRemote_Div" class="ui-cbo-normal" style="width: 206px;" tabindex="15"></select>
+        </td>
+        <td>
+          <div id="lblData_Cycle_Div" class="ui-lbl-normal">수신주기구분</div>
+          <select id="cboData_Cycle_Div" class="ui-cbo-normal" style="width: 207px;" tabindex="26"></select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblAuto_Exec_Yn" class="ui-lbl-key">자동실행여부</div>
+          <input class="ui-chk-normal" type="checkbox" id="chkAuto_Exec_Yn" value="Y" style="width: 10px; margin-right: 5px;" tabindex="5" />
+          자동실행
+        </td>
+        <td>
+          <div id="lblRemote_Ip" class="ui-lbl-normal">원격서버IP</div>
+          <input class="ui-edt-normal" type="text" id="edtRemote_Ip" style="width: 200px;" tabindex="16" />
+        </td>
+        <td id="tdSub" rowspan="6" valign="top">
+          <div id="data-cycle-div1" style="width: 205px; border-width: 1px; border-style: solid; margin: 0px 0px 0px 98px;">
+            <table class="ui-tbl-grid">
+              <tr>
+                <td id="divTitle_grdSub" class="ui-grd-title">수행주기</td>
+                <td>
+                  <input type="button" id="btnEntryNew" class="ui-grd-btnnew" style="width: 30px; height: 20px;" />
+                  <input type="button" id="btnEntryDelete" class="ui-grd-btndelete" style="width: 30px; height: 20px;" />
+                </td>
+                <td id="divRowCount_grdSub" class="ui-grd-rowcount">0/0 Rows</td>
+              </tr>
+            </table>
+            <div id="grdSub"></div>
+          </div>
+          <div id="data-cycle-div2" style="padding: 0; border-width: 0px; border-style: solid;">
+            <table class="ui-tbl-popup" style="border-spacing: 0px 8px;">
+              <tr>
+                <td>
+                  <div id="lblStart_Time" class="ui-lbl-normal">시작시각</div>
+                  <input class="ui-edt-normal" type="text" id="edtStart_Time" style="width: 201px;" tabindex="27" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div id="lblEnd_Time" class="ui-lbl-normal">종료시각</div>
+                  <input class="ui-edt-normal" type="text" id="edtEnd_Time" style="width: 201px;" tabindex="28" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div id="lblRepeat_Time" class="ui-lbl-normal">수행주기</div>
+                  <input class="ui-edt-normal ui-edt-integer" type="text" id="edtRepeat_Time" style="width: 201px;" tabindex="29" />
+                  &nbsp;초
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblLink_Where_Text" class="ui-lbl-normal">[DBLINK]수신추가조건절</div>
+          <input class="ui-edt-normal" type="text" id="edtLink_Where_Text" style="width: 158px;" tabindex="6" />
+        </td>
+        <td>
+          <div id="lblRemote_Ip" class="ui-lbl-normal">원격포트번호</div>
+          <input class="ui-edt-normal" type="text" id="edtRemote_Port" style="width: 200px;" tabindex="17" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblLink_Db_Nm" class="ui-lbl-normal">[DBLINK]데이터베이스명</div>
+          <input class="ui-edt-normal" type="text" id="edtLink_Db_Nm" style="width: 158px;" tabindex="7" />
+
+        </td>
+        <td>
+          <div id="lblRemote_Passive_Yn" class="ui-lbl-normal">패시브모드</div>
+          <input class="ui-chk-normal" type="checkbox" id="chkRemote_Passive_Yn" value="Y" style="width: 10px; margin-right: 5px;" tabindex="18" />
+          패시브모드
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblLink_Table_Nm" class="ui-lbl-normal">[DBLINK]테이블명</div>
+          <input class="ui-edt-normal" type="text" id="edtLink_Table_Nm" style="width: 158px;" tabindex="8" />
+        </td>
+        <td>
+          <div id="lblRemote_Dir" class="ui-lbl-normal">원격파일경로</div>
+          <input class="ui-edt-normal" type="text" id="edtRemote_Dir" style="width: 200px;" tabindex="19" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblXls_First_Row" class="ui-lbl-normal">[EXCEL]데이터첫행</div>
+          <input class="ui-edt-normal" type="text" id="edtXls_First_Row" style="width: 50px;" tabindex="9" />
+        </td>
+        <td>
+          <div id="lblEdi_Dir" class="ui-lbl-normal">서버파일경로</div>
+          <input class="ui-edt-normal" type="text" id="edtEdi_Dir" style="width: 200px;" tabindex="20" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblTxt_Col_Delimeter" class="ui-lbl-normal">[TEXT]구분자</div>
+          <input class="ui-edt-normal" type="text" id="edtTxt_Col_Delimeter" style="width: 109px;" tabindex="10" />
+          <input class="ui-chk-normal" type="checkbox" id="chkTxt_Delimeter_Yn" value="Y" style="width: 10px; margin-right: 5px;" tabindex="7" />
+          사용
+        </td>
+        <td>
+          <div id="lblEdi_Dir" class="ui-lbl-normal">원격캐릭터셋</div>
+          <input class="ui-edt-normal" type="text" id="edtRemote_Charset" style="width: 200px;" tabindex="21" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div id="lblRemark1" class="ui-lbl-normal">비고</div>
+          <input class="ui-edt-normal" type="text" id="edtRemark1" style="width: 483px;" tabindex="30" />
+        </td>
+        <td style="text-align: right;">
+          <input type="button" id="btnSub3" value="수신항목 전체추가" class="ui-btn-cmd" style="width: 140px; margin-right: 17px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- 수신정의 상세내역 -->
+  <div id="divDetailView" style="padding: 0; border-width: 1px; border-style: solid; margin-top: 5px">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdDetail" class="ui-grd-title">수신정의 상세내역</td>
+        <td>
+          <input type="button" id="btnEntrySave" class="ui-grd-btnsave" style="width: 30px; height: 20px;" />
+        </td>
+        <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdDetail"></div>
+  </div>
+  <div id="divBottomView" style="text-align: right; padding: 5px;">
+    <input type="button" id="btnClose" value="닫기" class="ui-btn-cmd" style="width: 80px;" />
+  </div>
+</body>
+</html>

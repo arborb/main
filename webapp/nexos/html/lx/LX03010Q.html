@@ -1,0 +1,382 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- LX03010Q CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/lx/LX03010Q.css" />
+<script src="js/LX03010Q.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 조회 조건 -->
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+          <select id="cboQCenter_Cd" class="ui-cbo-key" style="width: 150px;"></select>
+        </td>
+        <td>
+          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+          <input class="ui-edt-normal" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblQXDock_Date" class="ui-lbl-condition">CD일자</div>
+          <div id="lblQOrder_Date" class="ui-lbl-condition">예정일자</div>
+          <input class="ui-dtp-key" type="text" id="dtpQXDock_Date1" style="width: 80px;" />
+          <span class="ui-span-normal">▶</span>
+          <input class="ui-dtp-key" type="text" id="dtpQXDock_Date2" style="width: 80px;" />
+        </td>
+        <td>
+          <div id="lblQXDock_Type" class="ui-lbl-condition">처리유형</div>
+          <select id="cboQXDock_Type" class="ui-cbo-normal" style="width: 150px;"></select>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divMasterView" style="padding: 1px;">
+    <!-- Tab Handler -->
+    <ul>
+      <li id="divTab1"><a href="#divT1TabSheetView">CD진행현황</a></li>
+      <li id="divTab2"><a href="#divT2TabSheetView">상세CD진행현황</a></li>
+    </ul>
+    <!-- CD진행현황 -->
+    <div id="divT1TabSheetView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdT1Master" class="ui-grd-title">CD진행현황</td>
+          <td id="divRowCount_grdT1Master" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdT1Master"></div>
+    </div>
+    <!-- 상세CD출고진행현황 -->
+    <div id="divT2TabSheetView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div id="divT2DetailInfoView" style="padding: 5px; border-width: 0 0 1px 0; border-style: solid;">
+        <div class="ui-lbl-key tabLabel">CD단계</div>
+        <input type="button" id="btnProcessA" value="예정" class="ui-btn-cmd" style="width: 70px;" />
+        <div id="divProcessCntA" class="tabSum">
+          <div class="tabTitle">PO&nbsp;&nbsp;/&nbsp;&nbsp;수량</div>
+          <div class="tabNum">0 / 0</div>
+        </div>
+        <input type="button" id="btnProcessB" value="등록" class="ui-btn-cmd" style="width: 70px;" />
+        <div id="divProcessCntB" class="tabSum">
+          <div class="tabTitle">PO&nbsp;&nbsp;/&nbsp;&nbsp;수량</div>
+          <div class="tabNum">0 / 0</div>
+        </div>
+        <input type="button" id="btnProcessC" value="검수" class="ui-btn-cmd" style="width: 70px;" />
+        <div id="divProcessCntC" class="tabSum">
+          <div class="tabTitle">PO&nbsp;&nbsp;/&nbsp;&nbsp;수량</div>
+          <div class="tabNum">0 / 0</div>
+        </div>
+        <input type="button" id="btnProcessD" value="분배" class="ui-btn-cmd" style="width: 70px;" />
+        <div id="divProcessCntD" class="tabSum">
+          <div class="tabTitle">PO&nbsp;&nbsp;/&nbsp;&nbsp;수량</div>
+          <div class="tabNum">0 / 0</div>
+        </div>
+        <input type="button" id="btnProcessE" value="확정" class="ui-btn-cmd" style="width: 70px;" />
+        <div id="divProcessCntE" class="tabSum">
+          <div class="tabTitle">PO&nbsp;&nbsp;/&nbsp;&nbsp;수량</div>
+          <div class="tabNum">0 / 0</div>
+        </div>
+        <input type="button" id="btnProcessF" value="배송" class="ui-btn-cmd" style="width: 70px;" />
+        <div id="divProcessCntF" class="tabSum">
+          <div class="tabTitle">PO&nbsp;&nbsp;/&nbsp;&nbsp;수량</div>
+          <div class="tabNum">0 / 0</div>
+        </div>
+      </div>
+      <!-- 예정 -->
+      <div id="divT2SubViewA" style="border: none;">
+        
+        <div id="divT2SplitterA1" style="border: none;">
+        
+          <div>
+            <table class="ui-tbl-grid">
+              <tr>
+                <td id="divTitle_grdT2MasterA" class="ui-grd-title">예정 정보</td>
+                <td id="divRowCount_grdT2MasterA" class="ui-grd-rowcount">0/0 Rows</td>
+              </tr>
+            </table>
+            <div id="grdT2MasterA"></div>
+          </div>
+          
+          <div id="divT2SplitterA2" style="border: none;">
+          
+            <div>
+              <table class="ui-tbl-grid">
+                <tr>
+                  <td id="divTitle_grdT2DetailA" class="ui-grd-title">상품정보</td>
+                  <td id="divRowCount_grdT2DetailA" class="ui-grd-rowcount">0/0 Rows</td>
+                </tr>
+              </table>
+              <div id="grdT2DetailA"></div>
+            </div>
+            
+            <div>
+              <table class="ui-tbl-grid">
+                <tr>
+                  <td id="divTitle_grdT2SubA" class="ui-grd-title">배송처정보</td>
+                  <td id="divRowCount_grdT2SubA" class="ui-grd-rowcount">0/0 Rows</td>
+                </tr>
+              </table>
+              <div id="grdT2SubA"></div>
+            </div>
+            
+          </div>
+        
+        </div>
+        
+      </div>
+      <!-- 등록 -->
+      <div id="divT2SubViewB" style="border: none; display: none">
+      
+        <div id="divT2SplitterB1" style="border: none;">
+        
+          <div>
+            <table class="ui-tbl-grid">
+              <tr>
+                <td id="divTitle_grdT2MasterB" class="ui-grd-title">등록 정보</td>
+                <td id="divRowCount_grdT2MasterB" class="ui-grd-rowcount">0/0 Rows</td>
+              </tr>
+            </table>
+            <div id="grdT2MasterB"></div>
+          </div>
+          
+          <div id="divT2SplitterB2" style="border: none;">
+          
+            <div>
+              <table class="ui-tbl-grid">
+                <tr>
+                  <td id="divTitle_grdT2DetailB" class="ui-grd-title">상품정보</td>
+                  <td id="divRowCount_grdT2DetailB" class="ui-grd-rowcount">0/0 Rows</td>
+                </tr>
+              </table>
+              <div id="grdT2DetailB"></div>
+            </div>
+            
+            <div>
+              <table class="ui-tbl-grid">
+                <tr>
+                  <td id="divTitle_grdT2SubB" class="ui-grd-title">배송처정보</td>
+                  <td id="divRowCount_grdT2SubB" class="ui-grd-rowcount">0/0 Rows</td>
+                </tr>
+              </table>
+              <div id="grdT2SubB"></div>
+            </div>
+          
+          </div>
+        
+        </div>
+        
+      </div>
+      <!-- 검수 -->
+      <div id="divT2SubViewC" style="border: none; display: none">
+        
+        <div id="divT2SplitterC1" style="border: none;">
+        
+          <div>
+            <table class="ui-tbl-grid">
+              <tr>
+                <td id="divTitle_grdT2MasterC" class="ui-grd-title">검수 정보</td>
+                <td id="divRowCount_grdT2MasterC" class="ui-grd-rowcount">0/0 Rows</td>
+              </tr>
+            </table>
+            <div id="grdT2MasterC"></div>
+          </div>
+          
+          <div id="divT2SplitterC2" style="border: none;">
+          
+            <div>
+              <table class="ui-tbl-grid">
+                <tr>
+                  <td id="divTitle_grdT2DetailC" class="ui-grd-title">상품정보</td>
+                  <td id="divRowCount_grdT2DetailC" class="ui-grd-rowcount">0/0 Rows</td>
+                </tr>
+              </table>
+              <div id="grdT2DetailC"></div>
+            </div>
+            
+            <div>
+              <table class="ui-tbl-grid">
+                <tr>
+                  <td id="divTitle_grdT2SubC" class="ui-grd-title">배송처정보</td>
+                  <td id="divRowCount_grdT2SubC" class="ui-grd-rowcount">0/0 Rows</td>
+                </tr>
+              </table>
+              <div id="grdT2SubC"></div>
+            </div>
+            
+          </div>
+        
+        </div>
+        
+      </div>
+      <!-- 분배 -->
+      <div id="divT2SubViewD" style="border: none; display: none">
+      
+        <div id="divT2SplitterD1" style="border: none;">
+        
+          <div>
+            <table class="ui-tbl-grid">
+              <tr>
+                <td id="divTitle_grdT2MasterD" class="ui-grd-title">분배 정보</td>
+                <td id="divRowCount_grdT2MasterD" class="ui-grd-rowcount">0/0 Rows</td>
+              </tr>
+            </table>
+            <div id="grdT2MasterD"></div>
+          </div>
+          
+          <div id="divT2SplitterD2" style="border: none;">
+          
+            <div>
+              <table class="ui-tbl-grid">
+                <tr>
+                  <td id="divTitle_grdT2DetailD" class="ui-grd-title">상품정보</td>
+                  <td id="divRowCount_grdT2DetailD" class="ui-grd-rowcount">0/0 Rows</td>
+                </tr>
+              </table>
+              <div id="grdT2DetailD"></div>
+            </div>
+            
+            <div>
+              <table class="ui-tbl-grid">
+                <tr>
+                  <td id="divTitle_grdT2SubD" class="ui-grd-title">배송처정보</td>
+                  <td id="divRowCount_grdT2SubD" class="ui-grd-rowcount">0/0 Rows</td>
+                </tr>
+              </table>
+              <div id="grdT2SubD"></div>
+            </div>
+              
+          </div>
+          
+        </div>
+        
+      </div>
+      <!-- 확정 -->
+      <div id="divT2SubViewE" style="border: none; display: none">
+        
+        <div id="divT2SplitterE1" style="border: none;">
+        
+          <div>
+            <table class="ui-tbl-grid">
+              <tr>
+                <td id="divTitle_grdT2MasterE" class="ui-grd-title">확정 정보</td>
+                <td id="divRowCount_grdT2MasterE" class="ui-grd-rowcount">0/0 Rows</td>
+              </tr>
+            </table>
+            <div id="grdT2MasterE"></div>
+          </div>
+        
+          <div id="divT2SplitterE2" style="border: none;">
+          
+            <div>
+              <table class="ui-tbl-grid">
+                <tr>
+                  <td id="divTitle_grdT2DetailE" class="ui-grd-title">상품정보</td>
+                  <td id="divRowCount_grdT2DetailE" class="ui-grd-rowcount">0/0 Rows</td>
+                </tr>
+              </table>
+              <div id="grdT2DetailE"></div>
+            </div>
+            
+            <div>
+              <table class="ui-tbl-grid">
+                <tr>
+                  <td id="divTitle_grdT2SubE" class="ui-grd-title">배송처정보</td>
+                  <td id="divRowCount_grdT2SubE" class="ui-grd-rowcount">0/0 Rows</td>
+                </tr>
+              </table>
+              <div id="grdT2SubE"></div>
+            </div>
+          
+          </div>
+        
+        </div>
+        
+      </div>
+      <!-- 배송 -->
+      <div id="divT2SubViewF" style="border: none; display: none">
+      
+        <div id="divT2SplitterF1" style="border: none;">
+      
+          <div>
+            <table class="ui-tbl-grid">
+              <tr>
+                <td id="divTitle_grdT2MasterF" class="ui-grd-title">배송 정보</td>
+                <td id="divRowCount_grdT2MasterF" class="ui-grd-rowcount">0/0 Rows</td>
+              </tr>
+            </table>
+            <div id="grdT2MasterF"></div>
+          </div>
+        
+          <div id="divT2SplitterF2" style="border: none;">
+        
+            <div>
+              <table class="ui-tbl-grid">
+                <tr>
+                  <td id="divTitle_grdT2DetailF" class="ui-grd-title">상품정보</td>
+                  <td id="divRowCount_grdT2DetailF" class="ui-grd-rowcount">0/0 Rows</td>
+                </tr>
+              </table>
+              <div id="grdT2DetailF"></div>
+            </div>
+            
+            <div>
+              <table class="ui-tbl-grid">
+                <tr>
+                  <td id="divTitle_grdT2SubF" class="ui-grd-title">배송처정보</td>
+                  <td id="divRowCount_grdT2SubF" class="ui-grd-rowcount">0/0 Rows</td>
+                </tr>
+              </table>
+              <div id="grdT2SubF"></div>
+            </div>
+        
+          </div>
+        
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+</body>
+</html>

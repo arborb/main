@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CS01050E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cs/CS01050E.css" />
+<script src="js/CS01050E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divMasterView" class="ui-ctnr-normal">
+    <div class="ui-gbox-title">기본IP프린터정보</div>
+      <div class="ui-gbox-content">
+      <!-- 
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Li_Bill_2" class="ui-lbl-normal large">입고전표프린터명</div>
+        <input id="edtPrint_Li_Bill_2" class="ui-edt-normal large" type="text" />
+      </div>
+       -->
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Lo_Bill_2" class="ui-lbl-normal large">출고전표프린터명</div>
+        <input id="edtPrint_Lo_Bill_2" class="ui-edt-normal large" type="text" />
+      </div>
+      <!-- 
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Lo_Bill_2" class="ui-lbl-normal large">출고전표프린터명</div>
+        <input id="edtPrint_Lo_Bill_2" class="ui-edt-normal large" type="text" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Ri_Bill_2" class="ui-lbl-normal large">반입전표프린터명</div>
+        <input id="edtPrint_Ri_Bill_2" class="ui-edt-normal large" type="text" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Ro_Bill_2" class="ui-lbl-normal large">반출전표프린터명</div>
+        <input id="edtPrint_Ro_Bill_2" class="ui-edt-normal large" type="text" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Inbound_Seq_2" class="ui-lbl-normal large">입고라벨프린터명</div>
+        <input id="edtPrint_Inbound_Seq_2" class="ui-edt-normal large" type="text" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Location_Id_2" class="ui-lbl-normal large">로케이션ID프린터명</div>
+        <input id="edtPrint_Location_Id_2" class="ui-edt-normal large" type="text" />
+      </div>
+       --> 
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Ship_Id_2" class="ui-lbl-normal large">상차라벨프린터명</div>
+        <input id="edtPrint_Ship_Id_2" class="ui-edt-normal large" type="text" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Wb_No_2" class="ui-lbl-normal large">택배송장프린터명</div>
+        <input id="edtPrint_Wb_No_2" class="ui-edt-normal large" type="text" />
+      </div>
+      <!--
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Lo_Box_2" class="ui-lbl-normal large">박스내역서프린터명</div>
+        <input id="edtPrint_Lo_Box_2" class="ui-edt-normal large" type="text" />
+      </div>
+      -->
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Card_2" class="ui-lbl-normal large">선물카드프린터명</div>
+        <input id="edtPrint_Card_2" class="ui-edt-normal large" type="text" />
+      </div>
+    </div>
+    <div class="ui-gbox-title">현재IP프린터정보</div>
+      <div class="ui-gbox-content">
+      <!-- 
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Li_Bill_1" class="ui-lbl-normal large">입고전표프린터명</div>
+        <input id="edtPrint_Li_Bill_1" class="ui-edt-normal large" type="text" />
+      </div>
+       -->
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Lo_Bill_1" class="ui-lbl-normal large">출고전표프린터명</div>
+        <input id="edtPrint_Lo_Bill_1" class="ui-edt-normal large" type="text" />
+      </div>
+      <!-- 
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Lo_Bill_1" class="ui-lbl-normal large">출고전표프린터명</div>
+        <input id="edtPrint_Lo_Bill_1" class="ui-edt-normal large" type="text" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Ri_Bill_1" class="ui-lbl-normal large">반입전표프린터명</div>
+        <input id="edtPrint_Ri_Bill_1" class="ui-edt-normal large" type="text" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Ro_Bill_1" class="ui-lbl-normal large">반출전표프린터명</div>
+        <input id="edtPrint_Ro_Bill_1" class="ui-edt-normal large" type="text" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Inbound_Seq_1" class="ui-lbl-normal large">입고라벨프린터명</div>
+        <input id="edtPrint_Inbound_Seq_1" class="ui-edt-normal large" type="text" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Location_Id_1" class="ui-lbl-normal large">로케이션ID프린터명</div>
+        <input id="edtPrint_Location_Id_1" class="ui-edt-normal large" type="text" />
+      </div>
+       --> 
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Ship_Id_1" class="ui-lbl-normal large">상차라벨프린터명</div>
+        <input id="edtPrint_Ship_Id_1" class="ui-edt-normal large" type="text" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Wb_No_1" class="ui-lbl-normal large">택배송장프린터명</div>
+        <input id="edtPrint_Wb_No_1" class="ui-edt-normal large" type="text" />
+      </div>
+      <!--
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Lo_Box_1" class="ui-lbl-normal large">박스내역서프린터명</div>
+        <input id="edtPrint_Lo_Box_1" class="ui-edt-normal large" type="text" />
+      </div>
+      -->
+      <div class="ui-ctnr-row">
+        <div id="lblPrint_Card_1" class="ui-lbl-normal large">선물카드프린터명</div>
+        <input id="edtPrint_Card_1" class="ui-edt-normal large" type="text" />
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 공급처별 반품 로케이션 관리
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  //  CM05020E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CM05020E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - RS_MASTER -->
+    <parameterMap id="paramRS_MASTER" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_CENTER_CD"         mode="IN" />
+        <parameter property="P_CUST_CD"           mode="IN" />
+    </parameterMap>
+    <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+        { ? = call CM05020E.RS_MASTER(?, ?) }
+    </procedure>
+    <!-- [E] - RS_MASTER -->
+
+
+    <!-- [S] - RS_REF1 -->
+    <parameterMap id="paramRS_REF1" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_CUST_CD"           mode="IN" />
+    </parameterMap>
+    <procedure id="RS_REF1" parameterMap="paramRS_REF1" resultClass="java.util.HashMap">
+        { ? = call CM05020E.RS_REF1(?) }
+    </procedure>
+    <!-- [E] - RS_REF1 -->
+
+
+    <!-- [S] - RS_REF2 -->
+    <parameterMap id="paramRS_REF2" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_CENTER_CD"         mode="IN" />
+    </parameterMap>
+    <procedure id="RS_REF2" parameterMap="paramRS_REF2" resultClass="java.util.HashMap">
+        { ? = call CM05020E.RS_REF2(?) }
+    </procedure>
+    <!-- [E] - RS_REF2 -->
+
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - INSERT_CMRETURNLOC [반품로케이션마스터] -->
+    <insert id="INSERT_CMRETURNLOC" parameterClass="java.util.Map">
+        INSERT INTO CMRETURNLOC
+                   (
+                    CENTER_CD
+                   ,BRAND_CD
+                   ,ITEM_STATE
+                   ,VENDOR_CD
+                   ,CUST_CD
+                   ,ZONE_CD
+                   ,BANK_CD
+                   ,BAY_CD
+                   ,LEV_CD
+                   <isNotEmpty prepend = "," property= "P_LOCATION_CD"      >LOCATION_CD       </isNotEmpty>
+                   ,REG_USER_ID
+                   ,REG_DATETIME
+                   )
+            VALUES (
+                    #P_CENTER_CD#
+                   ,#P_BRAND_CD#
+                   ,#P_ITEM_STATE#
+                   ,#P_VENDOR_CD#
+                   ,#P_CUST_CD#
+                   ,#P_ZONE_CD#
+                   ,#P_BANK_CD#
+                   ,#P_BAY_CD#
+                   ,#P_LEV_CD#
+                   <isNotEmpty prepend = "," property= "P_LOCATION_CD"      >#P_LOCATION_CD#     </isNotEmpty>
+                   ,#P_REG_USER_ID#
+                   ,SYSDATE
+                   )
+    </insert>
+    <!-- [E] - INSERT_CMRETURNLOC [반품로케이션마스터] -->
+
+
+    <!-- [S] - UPDATE_CMRETURNLOC [반품로케이션마스터] -->
+    <update id="UPDATE_CMRETURNLOC" parameterClass="java.util.Map">
+        UPDATE CMRETURNLOC
+           SET LOCATION_CD       = #P_LOCATION_CD#
+              ,REG_USER_ID       = #P_REG_USER_ID#
+              ,REG_DATETIME      = SYSDATE
+         WHERE CENTER_CD         = #P_CENTER_CD#
+           AND BRAND_CD          = #P_BRAND_CD#
+           AND ITEM_STATE        = #P_ITEM_STATE#
+           AND VENDOR_CD         = #P_VENDOR_CD#
+           AND CUST_CD           = #P_CUST_CD#
+           AND ZONE_CD           = #P_ZONE_CD#
+           AND BANK_CD           = #P_BANK_CD#
+           AND BAY_CD            = #P_BAY_CD#
+           AND LEV_CD            = #P_LEV_CD#
+    </update>
+    <!-- [E] - UPDATE_CMRETURNLOC [반품로케이션마스터] -->
+
+
+    <!-- [S] - DELETE_CMRETURNLOC [반품로케이션마스터] -->
+    <delete id="DELETE_CMRETURNLOC" parameterClass="java.util.Map">
+        DELETE 
+          FROM CMRETURNLOC
+         WHERE CENTER_CD         = #P_CENTER_CD#
+           AND BRAND_CD          = #P_BRAND_CD#
+           AND ITEM_STATE        = #P_ITEM_STATE#
+           AND VENDOR_CD         = #P_VENDOR_CD#
+           AND CUST_CD           = #P_CUST_CD#
+           AND ZONE_CD           = #P_ZONE_CD#
+           AND BANK_CD           = #P_BANK_CD#
+           AND BAY_CD            = #P_BAY_CD#
+           AND LEV_CD            = #P_LEV_CD#
+    </delete>
+    <!-- [E] - DELETE_CMRETURNLOC [반품로케이션마스터] -->
+
+
+
+
+</sqlMap>

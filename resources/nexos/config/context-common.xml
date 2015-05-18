@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  //====================================================================================================================
+  // 공통적으로 사용하는 Spring Root Context 설정 [공통]
+  // Author : ASETEC
+  // Date : 2012-10-25
+  // Description
+  // Root Context 중에서 공통적인 설정
+  //====================================================================================================================
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+  xsi:schemaLocation="http://www.springframework.org/schema/aop
+                      http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+                      http://www.springframework.org/schema/beans
+                      http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                      http://www.springframework.org/schema/util
+                      http://www.springframework.org/schema/util/spring-util-3.1.xsd
+                      http://www.springframework.org/schema/context
+                      http://www.springframework.org/schema/context/spring-context-3.1.xsd"
+>
+  <context:annotation-config />
+
+  <util:properties id="taskProps" location="classpath:/nexos/config/task.properties">
+    <prop key="webapp.root">${wms.webapp.root}</prop>
+  </util:properties>
+
+  <!-- 암호화 Properties -->
+  <bean id="commonEncryptor" class="nexos.common.spring.security.CommonEncryptor" depends-on="taskProps" />
+
+  <bean id="encryptGlobalProps" class="org.jasypt.spring3.properties.EncryptablePropertyPlaceholderConfigurer">
+    <constructor-arg ref="commonEncryptor" />
+    <property name="locations">
+      <list>
+        <value>classpath:/nexos/config/encrypt-globals.properties</value>
+      </list>
+    </property>
+  </bean>
+
+  <!-- Spring Expression Language (SpEL) 사용 -->
+  <util:properties id="globalProps" location="classpath:/nexos/config/globals.properties">
+    <prop key="db.jdbcUrl">jdbc:oracle:thin:@121.135.236.70:1521:WMS11G</prop>
+    <prop key="db.user">WMS_USER</prop>
+    <prop key="db.password">WMS_PWD</prop>
+    <prop key="webapp.root">${wms.webapp.root}</prop>
+  </util:properties>
+
+  <!-- 인터페이스없이 직접적으로 Proxy 적용하도록 설정한다 -->
+  <aop:config proxy-target-class="true" />
+</beans>

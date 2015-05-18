@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2013-08-08
+  // Description
+  // LF01010E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LF01030E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+  <!-- [S] - RS_MASTER -->
+  <parameterMap id="paramRS_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ADJUST_MONTH"            mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+  </parameterMap>
+  <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+    { ? = call LF01030E.RS_MASTER(?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_MASTER -->
+
+
+  <!-- [S] - RS_DETAIL -->
+  <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ADJUST_MONTH"            mode="IN" />
+    <parameter property="P_ADJUST_DATE"            mode="IN" />
+    <parameter property="P_ADJUST_NO"            mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_PAY_CHA_DIV"             mode="IN" />
+  </parameterMap>
+  <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+    { ? = call LF01030E.RS_DETAIL(?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_DETAIL -->
+
+
+
+  <!-- [S] - RS_SUB1 -->
+  <parameterMap id="paramRS_SUB1" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ADJUST_MONTH"            mode="IN" />
+    <parameter property="P_ADJUST_DATE"             mode="IN" />
+    <parameter property="P_ADJUST_NO"               mode="IN" />
+    <parameter property="P_ADJUST_START_DATE"       mode="IN" />
+    <parameter property="P_ADJUST_END_DATE"         mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+  </parameterMap>
+  <procedure id="RS_SUB1" parameterMap="paramRS_SUB1" resultClass="java.util.HashMap">
+    { ? = call LF01030E.RS_SUB1(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_SUB1 -->
+
+
+  <!-- [S] - RS_SUB2 -->
+  <parameterMap id="paramRS_SUB2" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ADJUST_MONTH"            mode="IN" />
+    <parameter property="P_ADJUST_DATE"             mode="IN" />
+    <parameter property="P_ADJUST_NO"               mode="IN" />
+    <parameter property="P_ADJUST_START_DATE"       mode="IN" />
+    <parameter property="P_ADJUST_END_DATE"         mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+  </parameterMap>
+  <procedure id="RS_SUB2" parameterMap="paramRS_SUB2" resultClass="java.util.HashMap">
+    { ? = call LF01030E.RS_SUB2(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_SUB2 -->
+  
+  <!-- [S] - RS_SUB3 -->
+  <parameterMap id="paramRS_SUB3" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ADJUST_MONTH"            mode="IN" />
+    <parameter property="P_ADJUST_DATE"             mode="IN" />
+    <parameter property="P_ADJUST_NO"               mode="IN" />
+    <parameter property="P_ADJUST_START_DATE"       mode="IN" />
+    <parameter property="P_ADJUST_END_DATE"         mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+  </parameterMap>
+  <procedure id="RS_SUB3" parameterMap="paramRS_SUB3" resultClass="java.util.HashMap">
+    { ? = call LF01030E.RS_SUB3(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_SUB3 -->
+  
+    <!-- [S] - RS_SUB4 -->
+  <parameterMap id="paramRS_SUB4" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ADJUST_MONTH"            mode="IN" />
+    <parameter property="P_ADJUST_DATE"             mode="IN" />
+    <parameter property="P_ADJUST_NO"               mode="IN" />
+    <parameter property="P_ADJUST_START_DATE"       mode="IN" />
+    <parameter property="P_ADJUST_END_DATE"         mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+  </parameterMap>
+  <procedure id="RS_SUB4" parameterMap="paramRS_SUB4" resultClass="java.util.HashMap">
+    { ? = call LF01030E.RS_SUB4(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_SUB3 -->
+  
+  
+    <!-- [S] - RS_SUB3 -->
+  <parameterMap id="paramRS_SUB5" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ADJUST_MONTH"            mode="IN" />
+    <parameter property="P_ADJUST_DATE"             mode="IN" />
+    <parameter property="P_ADJUST_NO"               mode="IN" />
+    <parameter property="P_ADJUST_START_DATE"       mode="IN" />
+    <parameter property="P_ADJUST_END_DATE"         mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+  </parameterMap>
+  <procedure id="RS_SUB5" parameterMap="paramRS_SUB5" resultClass="java.util.HashMap">
+    { ? = call LF01030E.RS_SUB5(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_SUB5 -->
+  
+  
+    <!-- [S] - RS_SUB6 -->
+  <parameterMap id="paramRS_SUB6" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ADJUST_MONTH"            mode="IN" />
+    <parameter property="P_ADJUST_DATE"             mode="IN" />
+    <parameter property="P_ADJUST_NO"               mode="IN" />
+    <parameter property="P_ADJUST_START_DATE"       mode="IN" />
+    <parameter property="P_ADJUST_END_DATE"         mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+  </parameterMap>
+  <procedure id="RS_SUB6" parameterMap="paramRS_SUB6" resultClass="java.util.HashMap">
+    { ? = call LF01030E.RS_SUB6(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_SUB6 -->
+  
+  
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+    
+     <!-- [S] - LFAMOUNT [청구/지급 상세 내역] -->
+  <insert id="INSERT_LFAMOUNT" parameterClass="java.util.Map">
+      INSERT INTO LFAMOUNT_CHARGE
+                 (
+                  ADJUST_MONTH
+                 ,ADJUST_DATE
+                 ,ADJUST_NO
+                 ,CENTER_CD
+                 ,BU_CD
+                 ,FEE_HEAD_CD
+                 ,FEE_BASE_CD
+                 ,BRAND_CD
+                 <isNotEmpty prepend = "," property= "P_FEE_HEAD_NM"      >FEE_HEAD_NM       </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_FEE_BASE_NM"      >FEE_BASE_NM       </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_PAY_CHA_DIV"      >PAY_CHA_DIV       </isNotEmpty>
+                  <isNotEmpty prepend = "," property= "P_UNIT_PRICE"       >UNIT_PRICE        </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_FEE_QTY"          >FEE_QTY           </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_FEE_AMT"          >FEE_AMT           </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_REMARK1"          >REMARK1           </isNotEmpty>
+                 ,REG_USER_ID
+                 ,REG_DATETIME
+                 )
+          VALUES (
+                  #P_ADJUST_MONTH#
+                 ,#P_ADJUST_DATE#
+                 ,#P_ADJUST_NO#
+                 ,#P_CENTER_CD#
+                 ,#P_BU_CD#
+                 ,#P_FEE_HEAD_CD#
+                 ,#P_FEE_BASE_CD#
+                 ,#P_BRAND_CD#
+                 <isNotEmpty prepend = "," property= "P_FEE_HEAD_NM"        >#P_FEE_HEAD_NM#   </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_FEE_BASE_NM"        >#P_FEE_BASE_NM#   </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_PAY_CHA_DIV"        >#P_PAY_CHA_DIV#   </isNotEmpty>
+                  <isNotEmpty prepend = "," property= "P_UNIT_PRICE"         >#P_UNIT_PRICE#    </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_FEE_QTY"            >#P_FEE_QTY#       </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_FEE_AMT"            >#P_FEE_AMT#       </isNotEmpty>
+                  <isNotEmpty prepend = "," property= "P_REMARK1"            >#P_REMARK1#       </isNotEmpty>
+                 ,#P_REG_USER_ID#
+                 ,SYSDATE
+                 )
+  </insert>
+  <!-- [E] - LFAMOUNT [청구/지급 상세 내역] -->
+    
+
+</sqlMap>

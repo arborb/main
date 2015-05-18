@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- jqPlot Chart CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery.jqplot.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- jqPlot Chart -->
+<script src="../common/js/jqplot/jquery.jqplot.js"></script>
+<script src="../common/js/jqplot/jqplot.canvasTextRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.canvasAxisTickRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.categoryAxisRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.highlighter.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- LV04010Q CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/lv/LV04010Q.css" />
+<script src="js/LV04010Q.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 조회 조건 -->
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+          <select id="cboQCenter_Cd" class="ui-cbo-normal" style="width: 150px;"></select>
+        </td>
+        <td>
+          <div id="lblPopup_Cust_Cd" class="ui-lbl-condition">위탁사</div>
+          <input class="ui-edt-normal" type="text" id="edtQCust_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQCust_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQCust_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+          <input class="ui-edt-normal" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+        <td id="tdQDsp_Brand_Cd">
+          <div id="lblQPopup_Brand_Cd" class="ui-lbl-condition">브랜드</div>
+          <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBrand_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBrand_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+  </div>
+  <div id="divMasterView" style="border-width: 1px; border-style: solid; overflow: hidden;">
+    <div id="divLeftView" class="ui-ctnr-left">
+      <div class="ui-gbox-title">주간</div>
+      <div class="ui-gbox-content">
+        <div id="chtMaster01"></div>
+      </div>
+      <div class="ui-gbox-title">분기</div>
+      <div class="ui-gbox-content">
+        <div id="chtMaster03"></div>
+      </div>
+    </div>
+    <div id="divRightView" class="ui-ctnr-right">
+      <div class="ui-gbox-title">월간</div>
+      <div class="ui-gbox-content">
+        <div id="chtMaster02"></div>
+      </div>
+      <div class="ui-gbox-title">연간</div>
+      <div class="ui-gbox-content">
+        <div id="chtMaster04"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

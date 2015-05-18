@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // Dashboard
+  // Author : ASETEC
+  // Date : 2014-05-12
+  // Description
+  //  LV02020Q 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LV02020Q">
+
+
+  <!--
+    //==================================================================================================================
+    // SELECT SQLMAP
+    //==================================================================================================================
+  -->
+  <!-- [S] - LOCATION_PUTAWAY_REPORT -->
+  <parameterMap id="paramLOCATION_PUTAWAY_REPORT" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="LOCATION_PUTAWAY_REPORT" parameterMap="paramLOCATION_PUTAWAY_REPORT" resultClass="java.util.HashMap">
+    { ? = call LV02020Q.LOCATION_PUTAWAY_REPORT(?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - LOCATION_PUTAWAY_REPORT -->
+
+
+  <!-- [S] - LONG_TERM_REPORT -->
+  <parameterMap id="paramLONG_TERM_REPORT" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_LONG_TERM_MONTH"         mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="LONG_TERM_REPORT" parameterMap="paramLONG_TERM_REPORT" resultClass="java.util.HashMap">
+    { ? = call LV02020Q.LONG_TERM_REPORT(?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - LONG_TERM_REPORT -->
+
+
+  <!-- [S] - ROTATE_DAY_REPORT -->
+  <parameterMap id="paramROTATE_DAY_REPORT" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_HIGH_ROTATE_DAY"         mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="ROTATE_DAY_REPORT" parameterMap="paramROTATE_DAY_REPORT" resultClass="java.util.HashMap">
+    { ? = call LV02020Q.ROTATE_DAY_REPORT(?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - ROTATE_DAY_REPORT -->
+
+
+  <!-- [S] - VALID_DATE_REPORT -->
+  <parameterMap id="paramVALID_DATE_REPORT" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_IMPEND_DAY"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="VALID_DATE_REPORT" parameterMap="paramVALID_DATE_REPORT" resultClass="java.util.HashMap">
+    { ? = call LV02020Q.VALID_DATE_REPORT(?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - VALID_DATE_REPORT -->
+
+
+</sqlMap>

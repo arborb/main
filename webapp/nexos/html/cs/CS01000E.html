@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CS01000E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cs/CS01000E.css" />
+<script src="js/CS01000E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+          <input class="ui-edt-normal" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 150px;" />
+        </td>
+        <td>
+          <div id="lblQNotice_Title" class="ui-lbl-condition">제목</div>
+          <input class="ui-edt-normal" type="text" id="edtQNotice_Title" style="width: 150px;" />
+        </td>
+        <td>
+          <div id="lblQContent_Text" class="ui-lbl-condition">내용</div>
+          <input class="ui-edt-normal" type="text" id="edtQContent_Text" style="width: 150px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divLeftView" class="ui-ctnr-left">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdMaster" class="ui-grd-title">공지사항</td>
+        <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdMaster"></div>
+  </div>
+  <div id="divRightView" class="ui-ctnr-right" style="display: none;">
+    <div class="ui-gbox-header">
+      <div class="ui-lbl-header">공지사항 상세정보</div>
+    </div>
+    <div id="divMasterInfoView" class="ui-gbox-content ui-noborder">
+      <div class="ui-ctnr-row">
+        <div id="lblWrite_No" class="ui-lbl-normal">공지번호</div>
+        <input class="ui-edt-normal" type="text" id="edtWrite_No" style="width: 80px;" readonly="readonly" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblBu_Cd" class="ui-lbl-normal">사업부</div>
+        <input class="ui-edt-normal" type="text" id="edtBu_Cd" style="width: 80px;" readonly="readonly" />
+        <input class="ui-edt-display" type="text" id="edtBu_Nm" style="width: 235px;" readonly="readonly" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblNotice_Div" class="ui-lbl-normal">공지구분</div>
+        <input class="ui-edt-normal" type="text" id="edtNotice_Div" style="width: 325px;" readonly="readonly" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblUser_Id" class="ui-lbl-normal">등록자</div>
+        <input class="ui-edt-normal" type="text" id="edtUser_Id" style="width: 80px;" readonly="readonly" />
+        <input class="ui-edt-display" type="text" id="edtUser_Nm" style="width: 235px;" readonly="readonly" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblReadUser" class="ui-lbl-normal">공지확인</div>
+        <select class="ui-cbo-normal" id="cboReadUser" style="width: 331px;"></select>
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblFile_Nm" class="ui-lbl-normal">첨부파일명</div>
+        <input class="ui-edt-normal" type="text" id="edtFile_Nm" style="width: 325px;" readonly="readonly" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblFile_Size" class="ui-lbl-normal">첨부파일크기</div>
+        <input class="ui-edt-display" type="text" id="edtFile_Size" style="width: 164px;" readonly="readonly" />
+        <input type="button" id="btnDownload" value="파일저장" class="ui-btn-cmd" style="width: 75px;" />
+        <input type="button" id="btnModify" value="공지수정" class="ui-btn-cmd" style="width: 75px;" />
+      </div>
+      <div class="ui-gbox-title">공지사항</div>
+      <div class="ui-gbox-content" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <div id="lblNotice_Title" class="ui-lbl-normal">제목</div>
+          <input class="ui-edt-normal" type="text" id="edtNotice_Title" readonly="readonly" style="width: 312px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblContent_Text" class="ui-lbl-normal">내용</div>
+          <textarea class="ui-edt-normal" id="edtContent_Text" readonly="readonly" style="resize: none; min-height: 140px; width: 312px;"></textarea>
+        </div>
+      </div>
+      <div class="ui-gbox-title">덧글</div>
+      <div class="ui-gbox-content" style="margin-top: 0;">
+        <div id="grdDetail"></div>
+        <div class="ui-ctnr-row" style="padding-left: 1px;">
+          <textarea class="ui-edt-normal" id="edtReply_Content_Text" maxlength="4000" style="resize: none; min-height: 60px; width: 410px;"></textarea>
+        </div>
+        <div class="ui-ctnr-row" style="text-align: right;">
+          <input type="button" id="btnEntryReply" value="덧글등록" class="ui-btn-cmd" style="width: 136px;" />
+          <input type="button" id="btnModifyReply" value="덧글수정" class="ui-btn-cmd" style="width: 65px;" />
+          <input type="button" id="btnDeleteReply" value="덧글삭제" class="ui-btn-cmd" style="width: 65px;" />
+        </div>
+      </div>
+      <div>  
+        <input type="button" id="btnReadUserId" value="공지사용자지정" class="ui-btn-cmd" style="width: 136px;" />
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+.red-uline {
+    color: red;
+    text-decoration: underline;
+}
+.red-bold {
+    color: red;
+    font-weight: bold;
+}

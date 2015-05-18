@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // Dashboard
+  // Author : ASETEC
+  // Date : 2014-05-19
+  // Description
+  //  LV02010Q 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LV02010Q">
+
+
+  <!--
+    //==================================================================================================================
+    // SELECT SQLMAP
+    //==================================================================================================================
+  -->
+  <!-- [S] - RS_EMPTYLOCBANK -->
+  <parameterMap id="paramRS_EMPTYLOCBANK" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_ZONE_CD"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_EMPTYLOCBANK" parameterMap="paramRS_EMPTYLOCBANK" resultClass="java.util.HashMap">
+    { ? = call LV02010Q.RS_EMPTYLOCBANK(?, ?) }
+  </procedure>
+  <!-- [E] - RS_EMPTYLOCBANK -->
+
+
+  <!-- [S] - RS_PUTAWAYBANK -->
+  <parameterMap id="paramRS_PUTAWAYBANK" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_ZONE_CD"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_PUTAWAYBANK" parameterMap="paramRS_PUTAWAYBANK" resultClass="java.util.HashMap">
+    { ? = call LV02010Q.RS_PUTAWAYBANK(?, ?) }
+  </procedure>
+  <!-- [E] - RS_PUTAWAYBANK -->
+
+
+
+
+
+</sqlMap>

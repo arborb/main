@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2013-07-23
+  // Description
+  //  CM01010E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CS03010E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - RS_MASTER -->
+    <parameterMap id="paramRS_MASTER" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    </parameterMap>
+    <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+        { ? = call CS03010E.RS_MASTER }
+    </procedure>
+    <!-- [E] - RS_MASTER -->
+
+
+    <!-- [S] - RS_DETAIL -->
+    <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_PROCESS_GRP"       mode="IN" />
+    </parameterMap>
+    <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+        { ? = call CS03010E.RS_DETAIL(?) }
+    </procedure>
+    <!-- [E] - RS_DETAIL -->
+
+
+    <!-- [S] - RS_REF1 -->
+    <parameterMap id="paramRS_REF1" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_PROCESS_GRP"       mode="IN" />
+    </parameterMap>
+    <procedure id="RS_REF1" parameterMap="paramRS_REF1" resultClass="java.util.HashMap">
+        { ? = call CS03010E.RS_REF1(?) }
+    </procedure>
+    <!-- [E] - RS_REF1 -->
+
+
+    <!-- [S] - RS_REF2 -->
+    <parameterMap id="paramRS_REF2" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_PROCESS_GRP"       mode="IN" />
+    </parameterMap>
+    <procedure id="RS_REF2" parameterMap="paramRS_REF2" resultClass="java.util.HashMap">
+        { ? = call CS03010E.RS_REF2(?) }
+    </procedure>
+    <!-- [E] - RS_REF2 -->
+
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - INSERT_CPPROCESS [프로세스마스터] -->
+    <insert id="INSERT_CPPROCESS" parameterClass="java.util.Map">
+        INSERT INTO CPPROCESS
+                   (
+                    PROCESS_GRP
+                   ,PROCESS_CD
+                   <isNotEmpty prepend = "," property= "P_PROCESS_NM"       >PROCESS_NM        </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_PROCESS_STATE"    >PROCESS_STATE     </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_START_PROCESS_YN" >START_PROCESS_YN  </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_END_PROCESS_YN"   >END_PROCESS_YN    </isNotEmpty>
+                   ,REG_USER_ID
+                   ,REG_DATETIME
+                   )
+            VALUES (
+                    #P_PROCESS_GRP#
+                   ,#P_PROCESS_CD#
+                   <isNotEmpty prepend = "," property= "P_PROCESS_NM"       >#P_PROCESS_NM#      </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_PROCESS_STATE"    >#P_PROCESS_STATE#   </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_START_PROCESS_YN" >#P_START_PROCESS_YN#</isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_END_PROCESS_YN"   >#P_END_PROCESS_YN#  </isNotEmpty>
+                   ,#P_REG_USER_ID#
+                   ,SYSDATE
+                   )
+    </insert>
+    <!-- [E] - INSERT_CPPROCESS [프로세스마스터] -->
+
+
+    <!-- [S] - UPDATE_CPPROCESS [프로세스마스터] -->
+    <update id="UPDATE_CPPROCESS" parameterClass="java.util.Map">
+        UPDATE CPPROCESS
+           SET PROCESS_NM        = #P_PROCESS_NM#
+              <isNotNull prepend = "," property= "P_PROCESS_STATE"    >PROCESS_STATE     = #P_PROCESS_STATE#   </isNotNull>
+              <isNotNull prepend = "," property= "P_START_PROCESS_YN" >START_PROCESS_YN  = #P_START_PROCESS_YN#</isNotNull>
+              <isNotNull prepend = "," property= "P_END_PROCESS_YN"   >END_PROCESS_YN    = #P_END_PROCESS_YN#  </isNotNull>
+              ,REG_USER_ID       = #P_REG_USER_ID#
+              ,REG_DATETIME      = SYSDATE
+         WHERE PROCESS_GRP       = #P_PROCESS_GRP#
+           AND PROCESS_CD        = #P_PROCESS_CD#
+    </update>
+    <!-- [E] - UPDATE_CPPROCESS [프로세스마스터] -->
+
+
+    <!-- [S] - DELETE_CPPROCESS [프로세스마스터] -->
+    <delete id="DELETE_CPPROCESS" parameterClass="java.util.Map">
+        DELETE 
+          FROM CPPROCESS
+         WHERE PROCESS_GRP       = #P_PROCESS_GRP#
+           AND PROCESS_CD        = #P_PROCESS_CD#
+    </delete>
+    <!-- [E] - DELETE_CPPROCESS [프로세스마스터] -->
+
+
+    <!-- [S] - INSERT_CPCHILDPROCESS [하위프로세스마스터] -->
+    <insert id="INSERT_CPCHILDPROCESS" parameterClass="java.util.Map">
+        INSERT INTO CPCHILDPROCESS
+                   (
+                    PROCESS_GRP
+                   ,PROCESS_CD
+                   ,CHILD_PROCESS_CD
+                   ,REG_USER_ID
+                   ,REG_DATETIME
+                   )
+            VALUES (
+                    #P_PROCESS_GRP#
+                   ,#P_PROCESS_CD#
+                   ,#P_CHILD_PROCESS_CD#
+                   ,#P_REG_USER_ID#
+                   ,SYSDATE
+                   )
+    </insert>
+    <!-- [E] - INSERT_CPCHILDPROCESS [하위프로세스마스터] -->
+
+
+    <!-- [S] - UPDATE_CPCHILDPROCESS [하위프로세스마스터] -->
+    <update id="UPDATE_CPCHILDPROCESS" parameterClass="java.util.Map">
+        UPDATE CPCHILDPROCESS
+           SET REG_USER_ID       = #P_REG_USER_ID#
+              ,REG_DATETIME      = SYSDATE
+         WHERE PROCESS_GRP       = #P_PROCESS_GRP#
+           AND PROCESS_CD        = #P_PROCESS_CD#
+           AND CHILD_PROCESS_CD  = #P_CHILD_PROCESS_CD#
+    </update>
+    <!-- [E] - UPDATE_CPCHILDPROCESS [하위프로세스마스터] -->
+
+
+    <!-- [S] - DELETE_CPCHILDPROCESS [하위프로세스마스터] -->
+    <delete id="DELETE_CPCHILDPROCESS" parameterClass="java.util.Map">
+        DELETE 
+          FROM CPCHILDPROCESS
+         WHERE PROCESS_GRP       = #P_PROCESS_GRP#
+           AND PROCESS_CD        = #P_PROCESS_CD#
+           AND CHILD_PROCESS_CD  = #P_CHILD_PROCESS_CD#
+    </delete>
+    <!-- [E] - DELETE_CPCHILDPROCESS [하위프로세스마스터] -->
+
+
+
+
+</sqlMap>

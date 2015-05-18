@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LABEL_ITEMLOC" pageWidth="235" pageHeight="180" orientation="Landscape" columnWidth="235" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="3.1384283767210035"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<queryString>
+		<![CDATA[SELECT M1.ZONE_CD
+          ,Z1.ZONE_NM
+          ,M1.BANK_CD
+          ,M1.BAY_CD
+          ,M1.LEV_CD
+          ,M1.BU_CD
+          ,B1.BU_NM
+          ,M1,BRAND_CD
+          ,B2.BRAND_NM
+          ,M1.ITEM_CD
+          ,T1.ITEM_NM
+          ,T1.ITEM_SPEC
+          ,WF.DSP_COMBO(M1.ITEM_STATE ,C1.CODE_NM) AS ITEM_STATE_F
+          ,T1.QTY_IN_BOX
+          ,M1.LOCATION_CD
+          ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.ZONE_CD ORDER BY M1.BANK_CD ,M1.BAY_CD ,M1.LEV_CD) AS ZONE_FIRST_YN
+          ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.ZONE_CD ,M1.BANK_CD ORDER BY M1.BAY_CD ,M1.LEV_CD) AS BANK_FIRST_YN
+          ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.ZONE_CD ,M1.BANK_CD ,M1.BAY_CD ORDER BY M1.LEV_CD) AS BAY_FIRST_YN
+      FROM CMITEMLOC M1
+           JOIN CMZONE  Z1 ON Z1.CENTER_CD = M1.CENTER_CD
+                          AND Z1.ZONE_CD   = M1.ZONE_CD
+           JOIN CMBU B1    ON B1.BU_CD     = M1.BU_CD
+           JOIN CMBRAND B2 ON B2.BRAND_CD  = M1.BRAND_CD
+           JOIN CMITEM  T1 ON T1.BRAND_CD  = M1.BRAND_CD
+                          AND T1.ITEM_CD   = M1.ITEM_CD
+           JOIN CMCODE  C1 ON C1.CODE_CD   = M1.ITEM_STATE
+                          AND C1.CODE_GRP  = WF.GET_CODE_GRP('ITEM_STATE')
+     WHERE M1.CENTER_CD     = 'A1'
+       AND M1.ITEM_LOC_DIV  = '2'
+       AND ROWNUM < 3
+     ORDER BY ZONE_CD
+             ,BANK_CD
+             ,BAY_CD
+             ,LEV_CD
+             ,BU_CD
+             ,ITEM_CD
+             ,ITEM_STATE]]>
+	</queryString>
+	<field name="ZONE_CD" class="java.lang.String"/>
+	<field name="ZONE_NM" class="java.lang.String"/>
+	<field name="BANK_CD" class="java.lang.String"/>
+	<field name="BAY_CD" class="java.lang.String"/>
+	<field name="LEV_CD" class="java.lang.String"/>
+	<field name="BU_CD" class="java.lang.String"/>
+	<field name="BU_NM" class="java.lang.String"/>
+  <field name="BRAND_CD" class="java.lang.String"/>
+  <field name="BRAND_NM" class="java.lang.String"/>
+	<field name="ITEM_CD" class="java.lang.String"/>
+	<field name="ITEM_NM" class="java.lang.String"/>
+	<field name="ITEM_SPEC" class="java.lang.String"/>
+	<field name="ITEM_STATE_F" class="java.lang.String"/>
+	<field name="QTY_IN_BOX" class="java.math.BigDecimal"/>
+	<field name="LOCATION_CD" class="java.lang.String"/>
+	<field name="ZONE_FIRST_YN" class="java.lang.String"/>
+	<field name="BANK_FIRST_YN" class="java.lang.String"/>
+	<field name="BAY_FIRST_YN" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="180" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle-1" x="7" y="6" width="215" height="165"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="7" y="128" width="52" height="20"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[상품명칭]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-3" x="60" y="106" width="84" height="22"/>
+				<box leftPadding="3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="맑은 고딕" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ITEM_CD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="144" y="106" width="30" height="22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[입수]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-2" stretchType="RelativeToBandHeight" x="60" y="128" width="162" height="20"/>
+				<box leftPadding="3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="맑은 고딕" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ITEM_NM}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-2" x="7" y="148" width="215" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="7" y="106" width="52" height="21"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[상품코드]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-5" stretchType="RelativeToBandHeight" x="60" y="149" width="162" height="22"/>
+				<box leftPadding="3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="맑은 고딕" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ITEM_SPEC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="149" width="52" height="22"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[상품규격]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-1" x="7" y="105" width="215" height="1"/>
+			</line>
+			<textField pattern="#,##0">
+				<reportElement x="176" y="106" width="46" height="22"/>
+				<box rightPadding="6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="12" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{QTY_IN_BOX}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement mode="Transparent" x="143" y="106" width="1" height="21"/>
+			</line>
+			<line>
+				<reportElement key="line-2" x="7" y="127" width="215" height="1"/>
+			</line>
+			<line>
+				<reportElement mode="Transparent" x="175" y="106" width="1" height="21"/>
+			</line>
+			<line>
+				<reportElement mode="Transparent" x="59" y="106" width="1" height="65"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-4" x="7" y="6" width="215" height="40"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None">
+					<font fontName="맑은 고딕" size="30" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOCATION_CD}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement mode="Transparent" x="12" y="48" width="205" height="37"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{LOCATION_CD}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement mode="Transparent" x="12" y="66" width="205" height="37"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{LOCATION_CD}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

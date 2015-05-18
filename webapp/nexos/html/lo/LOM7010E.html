@@ -1,0 +1,294 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- LOM7010E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/lo/LOM7010E.css" />
+<script src="js/LOM7010E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 조회 조건 -->
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+          <select class="ui-cbo-key" id="cboQCenter_Cd" style="width: 150px;"></select>
+        </td>
+        <td>
+          <div id="lblQBu_Cd" class="ui-lbl-condition">사업부</div>
+          <input class="ui-edt-key" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 120px;" />
+          <input type="hidden" id="edtQCust_Cd" />
+        </td>
+        <td>
+          <div id="lblQPopup_Carrier_Cd" class="ui-lbl-condition">운송사</div>
+          <input class="ui-edt-key" type="text" id="edtQCarrier_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQCarrier_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQCarrier_Nm" style="width: 120px;" disabled="disabled" />
+        </td>
+        <!--td>
+          <div id="lblQPick_Seq" class="ui-lbl-normal large">피킹SEQ</div>
+          <input class="ui-edt-display normal" type="text" id="edtQPick_Seq"/>
+        </td-->
+      </tr>
+    </table>
+    <!-- 추가 조건 -->
+    <!-- 
+    <table id="tblAdditionalConditionView" class="ui-tbl-additional">
+      <tr>
+        <td>
+          <div id="lblQPopup_Carrier_Cd" class="ui-lbl-condition">운송사</div>
+          <input class="ui-edt-key" type="text" id="edtQCarrier_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQCarrier_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQCarrier_Nm" style="width: 120px;" disabled="disabled" />
+        </td>
+      </tr>
+    </table>
+    -->
+  </div>
+  <div id="divCenterView" class="ui-ctnr-normal" style="border-width: 1px 1px 0 1px;">
+    <div id="divDetailView" class="ui-ctnr-left" style="border-width: 0 1px 1px 0;">
+      <div id="divSubConditionView" class="ui-ctnr-condition">
+        <table class="ui-tbl-condition">
+          <tr>
+            <td>
+              <div id="lblQOutbound_Cd" class="ui-lbl-condition">출고일자</div>
+              <input class="ui-dtp-key" type="text" id="dtpQOutbound_Date" style="width: 80px;" />
+              <input type="hidden" id="edtQOutbound_No" />
+              <input type="hidden" id="edtQPacking_Batch" />
+            </td>
+            <td>
+              <!--div id="lblQDelivery_Type" class="ui-lbl-key">배송유형</div>
+              <select id="cboQDelivery_Type" class="ui-cbo-key" style="width: 150px;"></select-->
+            </td>
+<!-- 
+            <td>
+              <div id="lblQDelivery_Type" class="ui-lbl-key">배송유형</div>
+              <select id="cboQDelivery_Type" class="ui-cbo-key" style="width: 150px;"></select>
+            </td>
+ -->     
+            <td style="width: 100%; text-align: right; padding-right: 20px;">
+              <div style="display: inline-block; line-height: 20px;">
+                <div id="btnInit" class="ui-btn-wrapper" style="width: 85px; font-size: 18px;position: absolute;right: 1px;padding: 3px;top: 3px;color: #fff;background: #72AAD3;border: 1px solid #306D9A;">초 기 화</div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="divGridBox">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdMaster" class="ui-grd-title">출고 상품내역</td>
+            <td id="divRowCount_grdMaster" class="ui-grd-rowcount" style="width: 100px; min-width: 100px;">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdMaster"></div>
+      </div>
+      
+      
+    </div>
+    <div id="divMasterView" class="ui-ctnr-right" style="border-width: 0 0 1px 1px;">
+      <div style="width: 100%; background-color: #72aad3;">
+        <div class="ui-lbl-wrapper" style="max-width: 65px;">
+          <div class="ui-lbl-normal scan">SCAN</div>
+        </div>
+        <div class="ui-ctnr-wrapper">
+          <input class="ui-edt-key scan ui-edt-keydown" type="text" id="edtScan" />
+        </div>
+      </div>
+      <div class="ui-gbox-title large" style="display: inline-block;">출고전표 정보</div>
+      <div id="divMasterInfoExpender" class="ui-gbox-title large" style="display: inline-block; margin-left: -6px; cursor: pointer; text-align: center; width: 25px;">▼</div>
+      <div class="ui-gbox-content">
+        <table id="tblMasterInfoView" class="ui-tbl-normal" style="table-layout: fixed;">
+          <col style="width: 95px;">
+          <col style="width: 40%;">
+          <col style="width: 95px;">
+          <col style="width: 40%;">
+          <tr>
+            <td>
+              <div id="lblOrderer_Nm" class="ui-lbl-normal large">주문자명</div>
+            </td>
+            <td>
+              <input class="ui-edt-display normal" type="text" id="edtOrderer_Nm" disabled="disabled" />
+            </td>
+            <td>
+              <div id="lblBu_No" class="ui-lbl-normal large">전표번호</div>
+            </td>
+            <td style="padding-right: 2px;">
+              <input class="ui-edt-display normal" type="text" id="edtBu_No" disabled="disabled" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="lblOutbound_No" class="ui-lbl-normal large">출고번호</div>
+              <input type="hidden" id="edtPacking_Batch"  />
+            </td>
+            <td>
+              <input class="ui-edt-display normal" type="text" id="edtOutbound_No" disabled="disabled" />
+            </td>
+            <td>
+              <div id="lblOutbound_Type" class="ui-lbl-normal large">주문유형</div>
+            </td>
+            <td>
+              <input class="ui-edt-display normal" type="text" id="edtOutbound_Type" disabled="disabled" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="lblDelivery_Type" class="ui-lbl-normal large">배송유형</div>
+            </td>
+            <td>
+              <input class="ui-edt-display normal" type="text" id="edtDelivery_Type" disabled="disabled" style="color: blue; font-size: 18px;"/>
+            </td>
+            <td>
+              <div id="lblShip_Type" class="ui-lbl-normal large">운송구분</div>
+            </td>
+            <td>
+              <input class="ui-edt-display normal" type="text" id="edtShip_Type" disabled="disabled" style="color: blue; font-size: 18px;"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="lblOrderer_Msg" class="ui-lbl-normal large">배송메시지</div>
+            </td>
+            <td colspan="3" style="padding-right: 2px;">
+              <input class="ui-edt-display normal" type="text" id="edtOrderer_Msg" disabled="disabled" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="lblRemark1" class="ui-lbl-normal large">비고</div>
+            </td>
+            <td colspan="3" style="padding-right: 2px;">
+              <input class="ui-edt-display normal" type="text" id="edtRemark1" disabled="disabled" />
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="ui-gbox-title large">송장갯수</div>
+      <div class="ui-gbox-content">
+        <input class="ui-edt-display boxno" type="text" id="edtBox_No" disabled="disabled" />
+      </div>
+      <div class="ui-gbox-title large">검수상품 정보</div>
+      <div class="ui-gbox-content">
+        <table class="ui-tbl-normal" style="table-layout: fixed;">
+          <col style="width: 95px;">
+          <col style="width: 60%;">
+          <col style="width: 95px;">
+          <col style="width: 20%;">
+          <tr>
+            <td>
+              <div id="lblItem_Cd" class="ui-lbl-normal large">상품코드</div>
+            </td>
+            <td colspan="3" style="padding-right: 2px;">
+              <input class="ui-edt-display large" type="text" id="edtItem_Cd" disabled="disabled" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="lblItem_Nm" class="ui-lbl-normal large">상품명</div>
+            </td>
+            <td colspan="3" style="padding-right: 2px;">
+              <input class="ui-edt-display large" type="text" id="edtItem_Nm" disabled="disabled" />
+            </td>
+          </tr>
+          <tr>
+            <td id="tdQ1Dsp_Item_Spec">
+              <div id="lblItem_Spec" class="ui-lbl-normal large">상품규격</div>
+            </td>
+            <td id="tdQ2Dsp_Item_Spec">
+              <input class="ui-edt-display normal" type="text" id="edtItem_Spec" disabled="disabled" />
+            </td>
+            <td>
+              <div id="lblQty_In_Box" class="ui-lbl-normal large">입수</div>
+            </td>
+            <td style="padding-right: 2px;">
+              <input class="ui-edt-display normal" type="text" id="edtQty_In_Box" disabled="disabled" />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="padding-left: 2px;">
+              <div style="display: inline-block; width: 50%;">
+                <div id="lblEntry_Qty" class="ui-gbox-title inner">등록수량</div>
+                <div style="margin-right: 4px; border-width: 1px; border-style: solid; padding-right: 4px;">
+                  <input class="ui-edt-display full" type="text" id="edtEntry_Qty" disabled="disabled" />
+                </div>
+              </div>
+              <div style="display: inline-block; width: 50%;">
+                <div id="lblConfirm_Qty" class="ui-gbox-title inner">기검수수량</div>
+                <div style="margin-right: 4px; border-width: 1px; border-style: solid; padding-right: 4px;">
+                  <input class="ui-edt-display full" type="text" id="edtConfirm_Qty" disabled="disabled" />
+                </div>
+              </div>
+            </td>
+            <td colspan="2">
+              <div id="lblInspect_Qty" class="ui-gbox-title inner" style="margin-right: 2px;">현검수수량</div>
+              <div style="margin-right: 2px; border-width: 1px; border-style: solid; padding-right: 4px;">
+                <input class="ui-edt-display full" type="text" id="edtInspect_Qty" disabled="disabled" style="color: blue; font-size: 36px;" />
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div id="divBottomView" class="ui-ctnr-bottom">
+    <div style="display: inline-block; width: 46%; margin: 0 -5px; vertical-align: middle;">
+      <div class="ui-lbl-wrapper">
+        <div id="lblConfirm_Rate" class="ui-lbl-normal large">진행율</div>
+      </div>
+      <div class="ui-ctnr-wrapper" style="padding: 0;">
+        <div id="divProgressbar" class="ui-progressbar">
+          <div id="divProgressVal" class="ui-lbl-progress">0 / 0 [ 0%]</div>
+        </div>
+      </div>
+    </div>
+    <div style="display: inline-block; width: 34%; line-height: 28px;">
+      <div id="btnBoxComplete" class="ui-btn-wrapper" style="width: 110px;">박스완료</div>
+      <div id="btnBoxManage" class="ui-btn-wrapper" style="width: 110px;">박스관리</div>
+    </div>
+    <div style="display: inline-block; width: 20%; text-align: right; line-height: 28px;">
+      <!--div id="btnFWScanConfirm" class="ui-btn-wrapper" style="width: 45%;">검수완료</div-->
+      <div id="btnBWScanConfirm" class="ui-btn-wrapper" style="width: 45%;">검수취소</div>
+    </div>
+  </div>
+  <div id="grdSub"></div>
+</body>
+</html>

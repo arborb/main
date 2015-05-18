@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!-- Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CM01010E VERSION/CSS/JS -->
+<meta name="version" content="1">
+<link rel="stylesheet" href="../../layout/submain/cm/CM01010E.css" />
+<script src="js/CM01010E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divLeftView" class="ui-ctnr-left">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdMaster" class="ui-grd-title">물류센터</td>
+        <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+        
+      </tr>
+    </table>
+    <div id="grdMaster"></div>
+  </div>
+  <div id="divRightView" class="ui-ctnr-right">
+    <div class="ui-gbox-header">
+      <div class="ui-lbl-header">기본정보</div>
+    </div>
+    <div id="divMasterInfoView" class="ui-gbox-content ui-noborder">
+      <div class="ui-ctnr-row">
+        <div id="lblCenter_Cd" class="ui-lbl-key">물류센터코드</div>
+        <input class="ui-edt-key" type="text" id="edtCenter_Cd" maxlength="2" style="width: 100px; margin-left: 6px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblCenter_Nm" class="ui-lbl-key">물류센터명</div>
+        <input class="ui-edt-key" type="text" id="edtCenter_Nm" maxlength="100" style="width: 319px; margin-left: 6px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblCenter_Full_Nm" class="ui-lbl-normal">정식명칭</div>
+        <input class="ui-edt-normal" type="text" id="edtCenter_Full_Nm" maxlength="100" style="width: 319px; margin-left: 6px;" />
+      </div>
+      <div class="ui-gbox-title">사업자정보</div>
+      <div class="ui-gbox-content" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <div id="lblBusiness_No" class="ui-lbl-normal">사업자번호</div>
+          <input class="ui-edt-normal" type="text" id="edtBusiness_No" style="width: 100px;" />
+          <div id="lblCeo_Nm" class="ui-lbl-normal">대표자명</div>
+          <input class="ui-edt-normal" type="text" id="edtCeo_Nm" style="width: 102px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblBusiness_Kind" class="ui-lbl-normal">업태</div>
+          <input class="ui-edt-normal" type="text" id="edtBusiness_Kind" style="width: 100px;" />
+          <div id="lblBusiness_Type" class="ui-lbl-normal">업종</div>
+          <input class="ui-edt-normal" type="text" id="edtBusiness_Type" style="width: 102px;" />
+        </div>
+      </div>
+      <div class="ui-gbox-title">주소정보</div>
+      <div class="ui-gbox-content" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <div id="lblZip_Cd" class="ui-lbl-normal">우편번호</div>
+          <input class="ui-edt-display" type="text" id="edtZip_Cd" disabled="disabled" style="width: 100px;" />
+          <input class="ui-btn-popup" type="button" id="btnZip_Cd" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblAddr_Detail" class="ui-lbl-normal">기본주소</div>
+          <input class="ui-edt-display" type="text" id="edtAddr_Basic" disabled="disabled" style="width: 310px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblAddr_Detail" class="ui-lbl-normal">상세주소</div>
+          <input class="ui-edt-normal" type="text" id="edtAddr_Detail" style="width: 310px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblTel_No" class="ui-lbl-normal">전화번호</div>
+          <input class="ui-edt-normal" type="text" id="edtTel_No" style="width: 100px;" />
+          <div id="lblFax_No" class="ui-lbl-normal">팩스번호</div>
+          <input class="ui-edt-normal" type="text" id="edtFax_No" style="width: 102px;" />
+        </div>
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblManager_Id" class="ui-lbl-normal">관리책임자</div>
+        <input class="ui-edt-normal" type="text" id="edtManager_Id" style="width: 100px; margin-left: 6px;" />
+        <input class="ui-btn-popup" type="button" id="btnManager_Id" />
+        <input class="ui-edt-display" type="text" id="edtManager_Nm" disabled="disabled" style="width: 181px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblRemark1" class="ui-lbl-normal">비고</div>
+        <input class="ui-edt-normal" type="text" id="edtRemark1" style="width: 319px; margin-left: 6px;" />
+      </div>
+    </div>
+  </div>
+</body>
+</html>

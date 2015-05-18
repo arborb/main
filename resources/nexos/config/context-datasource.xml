@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  //====================================================================================================================
+  // 공통적으로 사용하는 Spring Root Context 설정 [데이터소스 설정]
+  // Author : ASETEC
+  // Date : 2012-10-25
+  // Description
+  // Root Context 중에서 데이터소스 설정 부분
+  //====================================================================================================================
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+                      http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                      http://www.springframework.org/schema/util
+                      http://www.springframework.org/schema/util/spring-util-3.1.xsd"
+>
+  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" depends-on="globalProps" destroy-method="close">
+    <property name="driverClass" value="#{globalProps['db.driverClassName']}" />      <!-- DriverClass -->
+    <property name="jdbcUrl" value="#{globalProps['db.jdbcUrl']}" />                  <!-- JDBC URL -->
+    <property name="user" value="#{globalProps['db.user']}" />                        <!-- User Name -->
+    <property name="password" value="#{globalProps['db.password']}" />                <!-- Password -->
+    <property name="initialPoolSize" value="1" />                                     <!-- 최초 Pool Size -->
+    <property name="maxPoolSize" value="1" />                                         <!-- 최대 Pool Size -->
+    <property name="minPoolSize" value="1" />                                         <!-- 최소 유지 Pool Size -->
+    <property name="acquireIncrement" value="5" />                                    <!-- Pool에 Connection 없을때 생성할 Connection 갯수 -->
+    <property name="acquireRetryAttempts" value="30" />                               <!-- 재생성 시도 시간 -->
+    <property name="maxIdleTime" value="3600" />                                      <!-- 지정시간 이후 Pool에서 Connection 제거 -->
+    <property name="maxIdleTimeExcessConnections" value="300" />                      <!-- [s] -->
+    <property name="numHelperThreads" value="6" />                                    <!--  -->
+    <property name="unreturnedConnectionTimeout" value="3600" />                      <!-- [s] -->
+    <property name="acquireRetryDelay" value="1000" />                                <!-- 재생성 지연 시간[ms] -->
+    <property name="idleConnectionTestPeriod" value="300" />                          <!-- 테스트시간 지정[s] -->
+    <property name="preferredTestQuery" value="SELECT * FROM DUAL" />                 <!-- 테스트 쿼리 -->
+    <property name="testConnectionOnCheckin" value="true" />                          <!-- Check In 시 테스트 여부 -->
+    <property name="testConnectionOnCheckout" value="false" />                        <!-- Check Out 시 테스트 여부 -->
+    <property name="connectionCustomizerClassName" value="nexos.common.ibatis.CommonConnectionCustomizer" />
+  </bean>
+</beans>

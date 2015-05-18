@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LABEL_LOM_LABEL" pageWidth="226" pageHeight="85" orientation="Landscape" columnWidth="226" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="da653a23-3e4e-40db-96d3-c459e3f38269">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_CENTER_CD" class="java.lang.String"/>
+	<parameter name="P_BU_CD" class="java.lang.String"/>
+	<parameter name="P_HAS_DATE" class="java.lang.String"/>
+	<parameter name="P_HAS_NO" class="java.lang.String"/>
+	<parameter name="P_LINE_NO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT C1.CENTER_NM
+        ,B1.BU_NM
+        ,TO_CHAR(L1.OUTBOUND_DATE, 'YYYY-MM-DD') AS OUTBOUND_DATE
+        ,L1.OUTBOUND_NO
+        ,WF.DSP_COMBO(L1.INOUT_CD     ,C2.CODE_NM)      AS INOUT_CD_F
+        ,WF.DSP_COMBO(L1.ZONE_CD      ,E1.ZONE_NM)      AS ZONE_CD_F
+        ,'OP' || L1.CENTER_CD || '-' || L1.BU_CD || '-' || TO_CHAR(L1.OUTBOUND_DATE ,'YYYYMMDD') || '-' || L1.PACKING_BATCH AS PAPER_NO
+        ,L1.LOCATION_CD
+        ,L1.BRAND_CD
+        ,B2.OWN_BRAND_NM                                AS BRAND_NM
+        ,L1.ITEM_CD
+        ,T1.ITEM_NM || ' ' || T1.ITEM_SPEC              AS ITEM_NM
+        --,T1.ITEM_SPEC
+        --,T1.ITEM_BAR_CD
+        ,C3.CODE_NM                                     AS ITEM_STATE_D
+        ,L1.OUT_INFO
+        ,L1.RANK_Q
+        ,L1.PACKING_BATCH
+        ,L1.ENTRY_QTY
+        --,L1.DEAL_ID
+        --,L1.DEAL_NM
+        ,L1.OUTBOUND_BATCH||'('||L1.DELIVERY_TYPE||')'  AS OUTBOUND_BATCH
+        ,T1.DELIVERY_TYPE2
+        --,L1.BU_NO
+    FROM (
+          SELECT M1.CENTER_CD
+                ,M1.BU_CD
+                ,M1.OUTBOUND_DATE
+                ,M1.OUTBOUND_NO
+                ,M3.LOCATION_CD
+                ,E1.ZONE_CD
+                ,M3.STOCK_IN_GRP
+                ,M3.INOUT_CD
+                ,M3.OUTBOUND_BATCH
+                ,M3.BRAND_CD
+                ,M3.ITEM_CD
+                ,M3.ITEM_STATE
+                ,M2.DEAL_ID
+                ,C1.DEAL_NM
+                ,M2.ITEM_ORDER_DIV
+                ,M3.PACKING_BATCH
+                ,M3.RANK_Q
+                ,M2.BU_NO
+                ,M3.DELIVERY_TYPE
+                ,SUM(M1.CONFIRM_QTY)          AS ENTRY_QTY
+                ,M3.LOCATION_CD               AS OUT_INFO
+            FROM LOPICKSEQ M1
+                 JOIN LO020ND    M2 ON M2.CENTER_CD     = M1.CENTER_CD
+                                   AND M2.BU_CD         = M1.BU_CD
+                                   AND M2.OUTBOUND_DATE = M1.OUTBOUND_DATE
+                                   AND M2.OUTBOUND_NO   = M1.OUTBOUND_NO
+                                   AND M2.LINE_NO       = M1.LINE_NO
+                 JOIN CMDEAL     C1 ON C1.BU_CD         = M2.BU_CD
+                                   AND C1.DEAL_ID       = M2.DEAL_ID
+                 JOIN (
+                       SELECT L1.RANK_NO                AS RANK_Q
+                             ,L1.*
+                         FROM
+                             (
+                               SELECT RANK() OVER (ORDER BY M3.LOC_1,LOC_2 DESC,LOC_3,TO_NUMBER(M3.PACKING_BATCH)) AS RANK_NO
+                                     ,M3.*
+                                     ,M3.LOC_1 || M3.LOC_2 || M3.LOC_3                                             AS RANK_CD
+                                 FROM
+                                     (
+                                      SELECT M2.*
+                                            ,M2.LINE_CD || M2.DEAL_ID   AS LOC_1
+                                            ,M2.LINE_NO || M2.ITEM_CD   AS LOC_2
+                                            ,M2.ENTRY_QTY               AS LOC_3
+                                        FROM (
+                                              SELECT M1.PACKING_BATCH
+                                                    ,M1.CENTER_CD
+                                                    ,M1.BU_CD
+                                                    ,M1.OUTBOUND_DATE
+                                                    ,M1.OUTBOUND_NO
+                                                    ,M1.ORDER_DIV
+                                                    ,M1.MALL_CD
+                                                    ,M1.OUTBOUND_BATCH
+                                                    ,M1.DELIVERY_TYPE
+                                                    ,M1.LOCATION_CD
+                                                    ,M1.STOCK_IN_GRP
+                                                    ,M1.INOUT_CD
+                                                    ,M1.BRAND_CD
+                                                    ,M1.ITEM_STATE
+                                                    ,MIN(M3.LINE_CD)                AS LINE_CD
+                                                    ,MIN(M2.DEAL_ID)                AS DEAL_ID
+                                                    ,MIN(M2.ITEM_CD)                AS ITEM_CD
+                                                    ,SUM(M2.ENTRY_QTY)              AS ENTRY_QTY
+                                                    ,MAX(M2.LINE_NO)                AS LINE_NO
+                                               FROM (
+                                                     SELECT M1.PICK_SEQ             AS PACKING_BATCH
+                                                           ,M1.CENTER_CD
+                                                           ,M1.BU_CD
+                                                           ,M1.OUTBOUND_DATE
+                                                           ,M1.OUTBOUND_NO
+                                                           ,M1.LINE_NO
+                                                           ,M3.ORDER_DIV
+                                                           ,M3.MALL_CD
+                                                           ,M2.OUTBOUND_BATCH
+                                                           ,DECODE(M3.DELIVERY_TYPE,'1','당일','익일')       AS DELIVERY_TYPE
+                                                           ,M2.LOCATION_CD
+                                                           ,M2.STOCK_IN_GRP
+                                                           ,M2.INOUT_CD
+                                                           ,M2.BRAND_CD
+                                                           ,M2.ITEM_STATE
+                                                       FROM LOPICKSEQ M1
+                                                            JOIN LO030NM M2 ON M2.CENTER_CD                              = M1.CENTER_CD
+                                                                           AND M2.BU_CD                                  = M1.BU_CD
+                                                                           AND M2.OUTBOUND_DATE                          = M1.OUTBOUND_DATE
+                                                                           AND M2.OUTBOUND_NO                            = M1.OUTBOUND_NO
+                                                                           AND M2.LINE_NO                                = M1.LINE_NO
+                                                                           AND REGEXP_SUBSTR(M2.LOCATION_CD,'[^-]+',1,1) = M1.DIRECTIONS_INFO
+                                                            JOIN LO020NM M3 ON M3.CENTER_CD                              = M1.CENTER_CD
+                                                                           AND M3.BU_CD                                  = M1.BU_CD
+                                                                           AND M3.OUTBOUND_DATE                          = M1.OUTBOUND_DATE
+                                                                           AND M3.OUTBOUND_NO                            = M1.OUTBOUND_NO
+                                                      WHERE M1.CENTER_CD      = $P{P_CENTER_CD}
+                                                        AND M1.BU_CD          = $P{P_BU_CD}
+                                                      GROUP BY M1.PICK_SEQ
+                                                              ,M1.CENTER_CD
+                                                              ,M1.BU_CD
+                                                              ,M1.OUTBOUND_DATE
+                                                              ,M1.OUTBOUND_NO
+                                                              ,M1.LINE_NO
+                                                              ,M3.ORDER_DIV
+                                                              ,M3.MALL_CD
+                                                              ,M2.OUTBOUND_BATCH
+                                                              ,DECODE(M3.DELIVERY_TYPE,'1','당일','익일')
+                                                              ,M2.LOCATION_CD
+                                                              ,M2.STOCK_IN_GRP
+                                                              ,M2.INOUT_CD
+                                                              ,M2.BRAND_CD
+                                                              ,M2.ITEM_STATE
+                                                     ) M1
+                                                    JOIN LO020ND M2 ON M2.CENTER_CD     = M1.CENTER_CD
+                                                                   AND M2.BU_CD         = M1.BU_CD
+                                                                   AND M2.OUTBOUND_DATE = M1.OUTBOUND_DATE
+                                                                   AND M2.OUTBOUND_NO   = M1.OUTBOUND_NO
+                                                                   AND M2.LINE_NO       = M1.LINE_NO
+                                                    JOIN CMDEAL  M3 ON M3.BU_CD         = M2.BU_CD
+                                                                   AND M3.MALL_CD       = M1.MALL_CD
+                                                                   AND M3.DEAL_ID       = M2.DEAL_ID
+                                              GROUP BY M1.PACKING_BATCH
+                                                      ,M1.CENTER_CD
+                                                      ,M1.BU_CD
+                                                      ,M1.OUTBOUND_DATE
+                                                      ,M1.OUTBOUND_NO
+                                                      ,M1.ORDER_DIV
+                                                      ,M1.MALL_CD
+                                                      ,M1.OUTBOUND_BATCH
+                                                      ,M1.DELIVERY_TYPE
+                                                      ,M1.LOCATION_CD
+                                                      ,M1.STOCK_IN_GRP
+                                                      ,M1.INOUT_CD
+                                                      ,M1.BRAND_CD
+                                                      ,M1.ITEM_STATE
+                                                      ,M2.ITEM_CD
+                                             ) M2
+                                     ) M3
+                             ) L1
+                      ) M3 ON M3.PACKING_BATCH  = M1.PICK_SEQ
+                          AND M3.CENTER_CD      = M1.CENTER_CD
+                          AND M3.BU_CD          = M1.BU_CD
+                          AND M3.OUTBOUND_DATE  = M1.OUTBOUND_DATE
+                          AND M3.OUTBOUND_NO    = M1.OUTBOUND_NO
+                          AND M3.LINE_NO        = M1.LINE_NO
+                          AND REGEXP_SUBSTR(M3.LOCATION_CD,'[^-]+',1,1) = M1.DIRECTIONS_INFO
+            LEFT JOIN CMLOCATION E1 ON E1.CENTER_CD     = M3.CENTER_CD
+                                   AND E1.LOCATION_CD   = M3.LOCATION_CD
+           WHERE M1.CENTER_CD      = $P{P_CENTER_CD}
+             AND M1.BU_CD          = $P{P_BU_CD}
+           GROUP BY M1.CENTER_CD
+                   ,M1.BU_CD
+                   ,M1.OUTBOUND_DATE
+                   ,M1.OUTBOUND_NO
+                   ,M3.LOCATION_CD
+                   ,E1.ZONE_CD
+                   ,M3.STOCK_IN_GRP
+                   ,M3.INOUT_CD
+                   ,M3.OUTBOUND_BATCH
+                   ,M3.BRAND_CD
+                   ,M3.ITEM_CD
+                   ,M3.ITEM_STATE
+                   ,M2.DEAL_ID
+                   ,C1.DEAL_NM
+                   ,M2.ITEM_ORDER_DIV
+                   ,M3.PACKING_BATCH
+                   ,M3.RANK_Q
+                   ,M2.BU_NO
+                   ,M3.DELIVERY_TYPE
+         ) L1
+         JOIN CMCENTER   C1 ON C1.CENTER_CD      = L1.CENTER_CD
+         JOIN CMCODE     C2 ON C2.CODE_CD        = L1.INOUT_CD
+                           AND C2.CODE_GRP       = WF.GET_CODE_GRP('INOUT_CD')
+         JOIN CMCODE     C3 ON C3.CODE_CD        = L1.ITEM_STATE
+                           AND C3.CODE_GRP       = WF.GET_CODE_GRP('ITEM_STATE')
+         JOIN CMBU       B1 ON B1.BU_CD          = L1.BU_CD
+         JOIN CMOWNBRAND B2 ON B2.OWN_BRAND_CD   = L1.BRAND_CD
+         JOIN CMITEM     T1 ON T1.BRAND_CD       = L1.BRAND_CD
+                           AND T1.ITEM_CD        = L1.ITEM_CD
+    LEFT JOIN CMZONE     E1 ON E1.CENTER_CD      = L1.CENTER_CD
+                           AND E1.ZONE_CD        = L1.ZONE_CD
+   ORDER BY RANK_Q
+           ,PACKING_BATCH
+           ,LOCATION_CD
+           ,ZONE_CD_F
+           ,OUTBOUND_NO
+           ,BRAND_CD
+           ,ITEM_CD
+           ,ITEM_STATE
+           ,DEAL_ID]]>
+	</queryString>
+	<field name="CENTER_NM" class="java.lang.String"/>
+	<field name="BU_NM" class="java.lang.String"/>
+	<field name="OUTBOUND_DATE" class="java.lang.String"/>
+	<field name="OUTBOUND_NO" class="java.lang.String"/>
+	<field name="INOUT_CD_F" class="java.lang.String"/>
+	<field name="ZONE_CD_F" class="java.lang.String"/>
+	<field name="PAPER_NO" class="java.lang.String"/>
+	<field name="LOCATION_CD" class="java.lang.String"/>
+	<field name="BRAND_CD" class="java.lang.String"/>
+	<field name="BRAND_NM" class="java.lang.String"/>
+	<field name="ITEM_CD" class="java.lang.String"/>
+	<field name="ITEM_NM" class="java.lang.String"/>
+	<field name="ITEM_STATE_D" class="java.lang.String"/>
+	<field name="OUT_INFO" class="java.lang.String"/>
+	<field name="RANK_Q" class="java.math.BigDecimal"/>
+	<field name="PACKING_BATCH" class="java.math.BigDecimal"/>
+	<field name="ENTRY_QTY" class="java.math.BigDecimal"/>
+	<field name="OUTBOUND_BATCH" class="java.lang.String"/>
+	<field name="DELIVERY_TYPE2" class="java.lang.String"/>
+	<detail>
+		<band height="83" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="21" y="3" width="44" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="e44b1e23-3412-4ad9-94e2-f07bcd5d580c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CENTER_NM}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="27" y="14" width="185" height="24" uuid="086e3441-46a8-445a-b852-310c5efa3c94"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{PAPER_NO}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="3" y="2" width="19" height="45" forecolor="#FFFFFF" backcolor="#000000" uuid="fe431fb0-cc99-4c7e-8451-7177195c7277"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DELIVERY_TYPE2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="64" y="3" width="67" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="f179d997-a1f1-40bd-88b8-1c6b4121d612"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BU_NM}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="131" y="3" width="51" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="0c159fcd-449a-45e3-9402-04336c01c03f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OUTBOUND_DATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="181" y="3" width="44" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="71f21370-96bf-451d-ae89-666252f2dacb"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OUTBOUND_BATCH}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="20" y="35" width="200" height="9" forecolor="#000000" backcolor="#FFFFFF" uuid="0eae1af3-1e0a-48f8-8275-6ce3809e0fb5"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PAPER_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="7" y="45" width="216" height="0" uuid="c34c56bb-b8a6-4386-ab12-cbc27e7a7648"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="휴먼둥근헤드라인" size="12" isBold="false"/>
+					<paragraph tabStopWidth="45"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="3" y="45" width="73" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="2c830a16-bb41-46c1-97e1-abc9b109e1dc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_CD}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="79" y="45" width="83" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="a03c326c-568d-4e63-a4e6-d38a1828d92c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCATION_CD}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="167" y="45" width="56" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="15902dd7-fa40-4805-b422-963f8e001e1a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ENTRY_QTY}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="5" y="60" width="211" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="4923202c-220c-4a50-ba24-16470532e7cc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_NM}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="182" y="73" width="13" height="8" forecolor="#000000" backcolor="#FFFFFF" uuid="b7f46e82-695c-4116-bb07-f0f049acddf0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="210" y="73" width="13" height="8" forecolor="#000000" backcolor="#FFFFFF" uuid="640f80f1-8025-4b9a-b08d-231db37ca942"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-19" x="195" y="74" width="17" height="7" uuid="a4127cd5-f60f-49eb-bbfb-a9da0721698d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

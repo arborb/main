@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RECEIPT_LF02" pageWidth="595" pageHeight="842" columnWidth="567" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="29e21767-f28b-4459-9a31-07bcb247df04">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="229"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="P_SYSDATE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2008-01-01 01:01:01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_USER_ID" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_USER_NM" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="FSUBTOTAL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="FTOTAL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="HPRINTTIME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="HPUSER" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="HPAGE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_CENTER_CD" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["A1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_BU_CD" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["1100"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ADJUST_MONTH" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2013-11"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT ROW_NUMBER() OVER( ORDER BY M1.ADJUST_DATE ,M1.ITEM_CD, M1.FEE_HEAD_CD, M1.FEE_BASE_CD, M1.UNIT_DIV, M1.UNIT_PRICE )     AS LINE_NO
+          ,M1.ITEM_CD
+          ,C4.ITEM_NM
+          ,WF.D_TO_CHAR(M1.ADJUST_DATE)                  AS ADJUST_DATE
+          ,F2.FEE_BASE_NM
+          ,C3.CODE_NM                                    AS UNIT_DIV_D
+          ,M1.UNIT_PRICE
+          ,M1.FEE_QTY
+          ,M1.FEE_AMT
+          ,M1.ADJUST_FEE_AMT
+          ,M1.CENTER_CD
+          ,M1.BU_CD
+          ,M1.ADJUST_MONTH
+          ,M1.FEE_HEAD_CD
+          ,M1.FEE_BASE_CD
+          ,M1.UNIT_DIV
+          ,F1.FEE_HEAD_NM
+          ,C1.CENTER_FULL_NM                             AS PROVIDER_NM
+          ,C2.CUST_FULL_NM                               AS CUSTOMER_NM
+      FROM LF010NM M1
+           JOIN CMCENTER C1 ON C1.CENTER_CD    = M1.CENTER_CD
+           JOIN CMBU  B1 ON B1.BU_CD     = M1.BU_CD
+           JOIN CMCUST   C2 ON C2.CUST_CD      = B1.CUST_CD
+           JOIN LFHEAD   F1 ON F1.FEE_HEAD_CD  = M1.FEE_HEAD_CD
+           JOIN LFBASE   F2 ON F2.FEE_HEAD_CD  = M1.FEE_HEAD_CD
+                           AND F2.FEE_BASE_CD  = M1.FEE_BASE_CD
+           JOIN CMCODE   C3 ON C3.CODE_CD      = M1.UNIT_DIV
+                           AND C3.CODE_GRP     = WF.GET_CODE_GRP('UNIT_DIV')
+      LEFT JOIN CMITEM C4   ON C4.BU_CD     = M1.BU_CD
+                           AND C4.ITEM_CD      = M1.ITEM_CD
+    WHERE M1.CENTER_CD    = $P{P_CENTER_CD}
+      AND M1.BU_CD     = $P{P_BU_CD}
+      AND M1.ADJUST_MONTH = $P{P_ADJUST_MONTH}
+    ORDER BY LINE_NO]]>
+	</queryString>
+	<field name="LINE_NO" class="java.math.BigDecimal"/>
+	<field name="ITEM_CD" class="java.lang.String"/>
+	<field name="ITEM_NM" class="java.lang.String"/>
+	<field name="ADJUST_DATE" class="java.lang.String"/>
+	<field name="FEE_BASE_NM" class="java.lang.String"/>
+	<field name="UNIT_DIV_D" class="java.lang.String"/>
+	<field name="UNIT_PRICE" class="java.math.BigDecimal"/>
+	<field name="FEE_QTY" class="java.math.BigDecimal"/>
+	<field name="FEE_AMT" class="java.math.BigDecimal"/>
+	<field name="ADJUST_FEE_AMT" class="java.math.BigDecimal"/>
+	<field name="CENTER_CD" class="java.lang.String"/>
+	<field name="BU_CD" class="java.lang.String"/>
+	<field name="ADJUST_MONTH" class="java.lang.String"/>
+	<field name="FEE_HEAD_CD" class="java.lang.String"/>
+	<field name="FEE_BASE_CD" class="java.lang.String"/>
+	<field name="UNIT_DIV" class="java.lang.String"/>
+	<field name="FEE_HEAD_NM" class="java.lang.String"/>
+	<field name="PROVIDER_NM" class="java.lang.String"/>
+	<field name="CUSTOMER_NM" class="java.lang.String"/>
+	<variable name="SUM_ITEM_ADJUST_FEE_AMT" class="java.math.BigDecimal" resetType="Group" resetGroup="GRP_ITEM_CD" calculation="Sum">
+		<variableExpression><![CDATA[$F{ADJUST_FEE_AMT}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ADJUST_FEE_AMT" class="java.math.BigDecimal" resetType="Group" resetGroup="GRP_ADJUST_MONTH" calculation="Sum">
+		<variableExpression><![CDATA[$F{ADJUST_FEE_AMT}]]></variableExpression>
+	</variable>
+	<group name="GRP_ADJUST_MONTH" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{ADJUST_MONTH}]]></groupExpression>
+		<groupFooter>
+			<band height="30">
+				<textField evaluationTime="Group" evaluationGroup="GRP_ADJUST_MONTH" pattern="#,##0" isBlankWhenNull="true">
+					<reportElement x="437" y="0" width="129" height="29" uuid="e3e2bb7e-4d17-4cef-a0a7-9b88cd80e500"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="굴림체" size="17" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUM_ADJUST_FEE_AMT}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement key="line-6" x="348" y="29" width="218" height="1" uuid="a08e246f-428a-4756-bce9-29ed5da8a31a"/>
+					<graphicElement>
+						<pen lineWidth="1.0" lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="362" y="0" width="75" height="29" uuid="cc4e448a-1bd6-4f66-8089-23a347a274c8"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="굴림체" size="17" isBold="true"/>
+					</textElement>
+					<text><![CDATA[합계:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="GRP_ITEM_CD">
+		<groupExpression><![CDATA[$F{ITEM_CD}]]></groupExpression>
+		<groupFooter>
+			<band height="20">
+				<line>
+					<reportElement key="line-6" x="374" y="19" width="193" height="1" uuid="ce4929f2-e70a-420d-bff2-472fc6a3a02e"/>
+					<graphicElement>
+						<pen lineWidth="1.0" lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+				<textField evaluationTime="Group" evaluationGroup="GRP_ITEM_CD" pattern="#,##0" isBlankWhenNull="true">
+					<reportElement x="471" y="0" width="96" height="20" uuid="8d9976cc-d14f-429d-bcd9-01c126335ebf"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="굴림체" size="15" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUM_ITEM_ADJUST_FEE_AMT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="397" y="0" width="75" height="20" uuid="d91a60c1-7e92-4e53-a055-d997cfc23866"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="굴림체" size="15" isBold="true"/>
+					</textElement>
+					<text><![CDATA[소계:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="89" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-7" x="391" y="58" width="66" height="14" uuid="5c4d9b32-c6da-43c8-9873-0067d33ef4ff"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" isBold="true" pdfFontName="malgun.ttf" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[출력사용자 :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-30" x="180" y="12" width="227" height="29" uuid="96ef912b-8a18-4d1f-9e9f-7615c83386c7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="18" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfFontName="malgun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[위탁청구내역서]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="55" y="44" width="170" height="12" uuid="5a9686e5-ec3c-4881-905d-596107d58803"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" isBold="true" pdfFontName="malgun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROVIDER_NM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-6" x="391" y="72" width="66" height="14" uuid="bd5448f1-96bb-4fef-add8-13051dc6e33a"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" isBold="true" pdfFontName="malgun.ttf" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[출력일시   :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" x="0" y="58" width="55" height="12" uuid="2f858591-07f7-43d3-a5dd-db1e64646b9b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" isBold="true" pdfFontName="malgun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[위 탁 사 :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-2" x="457" y="58" width="109" height="12" uuid="54908637-cf30-4786-808a-faa383114230"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_USER_ID}+" - "+$P{P_USER_NM}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-5" x="55" y="72" width="170" height="12" uuid="9f480353-99d3-4204-91ef-2a845254fc25"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADJUST_MONTH}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="0" y="44" width="55" height="12" uuid="852200ba-4794-45fa-9d2e-f568811b8c9f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[물류센터 :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-24" x="0" y="72" width="55" height="12" uuid="f40f93ac-adbd-4fef-b77d-1a15bb2cd87c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" isBold="true" pdfFontName="malgun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[정 산 월 :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="457" y="72" width="109" height="14" uuid="700a75cc-910b-4643-9bed-12f5c6bcdd70"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" isBold="true" pdfFontName="malgun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_SYSDATE}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-1" x="0" y="88" width="567" height="1" uuid="1e4eb58b-21b3-4590-a484-1c45a294ce5b"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="55" y="58" width="170" height="12" uuid="cc1cc068-7282-400f-ba58-b9521fa14a37"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" isBold="true" pdfFontName="malgun.ttf" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUSTOMER_NM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement key="line-1" x="0" y="19" width="567" height="1" uuid="681426f5-996b-48d0-9f02-5b6dfb4e2ea9"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-4" x="0" y="0" width="24" height="20" uuid="881d5b43-ae03-47ac-9976-6cf9b5442058"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="맑은 고딕" size="8" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[순  번]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="165" y="0" width="50" height="20" uuid="8ff63500-8a7b-48a7-b734-0dcec78f8b1d"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="맑은 고딕" size="8" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[정산일자]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="397" y="0" width="50" height="20" uuid="853c27f2-0bd6-40e2-bca9-f7ad45a5d65c"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="맑은 고딕" size="8" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[수량]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="507" y="0" width="60" height="20" uuid="851e3e76-5b6a-44e5-85f7-392850f75903"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="맑은 고딕" size="8" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[실정산금액]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="447" y="0" width="60" height="20" uuid="8c65b0ac-141d-4144-b6c9-b63930143884"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="맑은 고딕" size="8" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[정산금액]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="358" y="0" width="39" height="20" uuid="0360b992-6e21-4fbc-9138-b32398831cac"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="맑은 고딕" size="8" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[단가]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="318" y="0" width="40" height="20" uuid="ba2b265b-d93f-44c7-a683-f9c7c8f564fc"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="맑은 고딕" size="8" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[정산단위]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="218" y="0" width="100" height="20" uuid="06f0833e-065f-48e3-b8f4-5db94da3633e"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="맑은 고딕" size="8" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[정산항목]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="27" y="0" width="135" height="20" uuid="c6a7814e-4381-4828-95d8-d1d899d26411"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="맑은 고딕" size="8" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[상품]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<line>
+				<reportElement key="line-1" x="0" y="14" width="567" height="1" uuid="91297a5d-a5e7-4e09-8469-932ea2a02fa4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="24" height="15" uuid="fa524a8f-2422-483b-b906-9321884b93d6"/>
+				<box rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LINE_NO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="YYYY-MM-DD" isBlankWhenNull="true">
+				<reportElement x="165" y="0" width="50" height="15" uuid="fe67c022-b9f0-48d2-9af3-7b5bde0fc624"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADJUST_DATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="397" y="0" width="50" height="15" uuid="08f7f075-60cf-4dab-a6bb-9ed40a3dd7e0"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FEE_QTY}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="507" y="0" width="60" height="15" uuid="021f8f2c-af96-4748-8ac4-fc8cfa9234cb"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADJUST_FEE_AMT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="447" y="0" width="60" height="15" uuid="e2c8d076-f62e-491a-bcb7-4b031a24a67e"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FEE_AMT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="358" y="0" width="39" height="15" uuid="6bf21c13-c787-4225-a855-7535da0c1ca4"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UNIT_PRICE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="318" y="0" width="40" height="15" uuid="051dd34c-82ce-43b5-9527-402c9c89689b"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UNIT_DIV_D}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="218" y="0" width="100" height="15" uuid="b90ad474-df54-4fe0-b74d-3f53b28c7fa0"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FEE_BASE_NM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="27" y="0" width="135" height="15" uuid="7417f028-5df4-4da4-a7ab-780de7db394b"/>
+				<box leftPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_NM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="1"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="29" splitType="Stretch">
+			<textField evaluationTime="Page" isBlankWhenNull="true">
+				<reportElement key="textField-18" x="225" y="16" width="50" height="12" uuid="4fbc9fc7-cd14-4320-8afa-34f47b9a961e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-18" x="292" y="16" width="50" height="12" uuid="29d1714a-f272-4410-93b7-794bd23fb41d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="textField-19" x="274" y="16" width="19" height="12" uuid="3eceae29-6f18-4203-ae33-91416ee2626d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

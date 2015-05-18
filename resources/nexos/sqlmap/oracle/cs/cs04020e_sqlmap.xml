@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  //  CM01010E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CS04020E">
+
+
+  <!--
+    //================================================================================================================
+    // SELECT SQLMAP
+    //================================================================================================================
+  -->
+  <!-- [S] - RS_MASTER -->
+  <parameterMap id="paramRS_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+  </parameterMap>
+  <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+    { ? = call CS04020E.RS_MASTER }
+  </procedure>
+  <!-- [E] - RS_MASTER -->
+
+
+  <!-- [S] - RS_DETAIL -->
+  <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_POLICY_CD"               mode="IN" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+  </parameterMap>
+  <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+    { ? = call CS04020E.RS_DETAIL(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_DETAIL -->
+
+
+  <!-- [S] - RS_SUB1 -->
+  <parameterMap id="paramRS_SUB1" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+  </parameterMap>
+  <procedure id="RS_SUB1" parameterMap="paramRS_SUB1" resultClass="java.util.HashMap">
+    { ? = call CS04020E.RS_SUB1(?, ?) }
+  </procedure>
+  <!-- [E] - RS_SUB1 -->
+
+
+  <!--
+    //================================================================================================================
+    // INSERT/UPDATE/DELETE SQLMAP
+    //================================================================================================================
+  -->
+
+
+  <!-- [S] - INSERT_CPBUPOLICYVAL [사업부정책마스터] -->
+  <insert id="INSERT_CPBUPOLICYVAL" parameterClass="java.util.Map">
+    INSERT INTO CPBUPOLICYVAL
+               (
+                CENTER_CD
+               ,BU_CD
+               ,POLICY_CD
+               <isNotEmpty prepend = "," property= "P_POLICY_VAL"              >POLICY_VAL                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_POLICY_GRP"              >POLICY_GRP                 </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_CENTER_CD#
+               ,#P_BU_CD#
+               ,#P_POLICY_CD#
+               <isNotEmpty prepend = "," property= "P_POLICY_VAL"              >#P_POLICY_VAL#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_POLICY_GRP"              >#P_POLICY_GRP#             </isNotEmpty>
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_CPBUPOLICYVAL [사업부정책마스터] -->
+
+
+  <!-- [S] - DELETE_CPBUPOLICYVAL [사업부정책마스터] -->
+  <delete id="DELETE_CPBUPOLICYVAL" parameterClass="java.util.Map">
+    DELETE 
+      FROM CPBUPOLICYVAL
+     WHERE POLICY_CD                = #P_POLICY_CD#
+           <isNotEmpty prepend = " AND " property= "P_CENTER_CD"     >CENTER_CD           = #P_CENTER_CD#        </isNotEmpty>
+           <isNotEmpty prepend = " AND " property= "P_BU_CD"         >BU_CD               = #P_BU_CD#            </isNotEmpty>
+           <isNotEmpty prepend = " AND " property= "P_POLICY_VAL"    >POLICY_VAL          = #P_POLICY_VAL#       </isNotEmpty>
+  </delete>
+  <!-- [E] - DELETE_CPBUPOLICYVAL [사업부정책마스터] -->
+
+
+</sqlMap>

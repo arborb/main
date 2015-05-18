@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- LO01010E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cm/CM10010E.css" />
+<script src="js/CM10010E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <!-- 조회 조건 -->
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+          <input class="ui-edt-normal" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
+          <input type="hidden" id="edtQCust_Cd" />
+        </td>
+        <td>
+          <div id="lblQPopup_Brand_Cd" class="ui-lbl-condition">위탁사</div> 
+          <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 60px;" /> 
+          <input class="ui-btn-popup" type="button" id="btnQBrand_Cd" /> 
+          <input class="ui-edt-display" type="text" id="edtQBrand_Nm" disabled="disabled" style="width: 118px;" /> 
+          <input type="hidden" id="edtQCust_Cd" />
+        </td>
+        <td>
+          <div id="lblQPopup_Mall_Brand_Cd" class="ui-lbl-condition">판매사</div>
+          <input class="ui-edt-normal" type="text" id="edtQMall_Brand_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQMall_Brand_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQMall_Brand_Nm"  disabled="disabled" style="width: 100px;" />
+        </td>
+        <td>
+          <div id="lblQDeal_Div" class="ui-lbl-condition">거래구분</div>
+          <select class="ui-cbo-normal" id="cboDeal_Div_Cd" style="width: 150px;"></select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblQDeal_Nm" class="ui-lbl-condition">딜명</div>
+          <input class="ui-edt-normal" type="text" id="edtQDEAL_Nm" style="width: 215px;" />
+        </td>
+        <td>
+          <div id="lblQDeal_Option_Id" class="ui-lbl-condition">옵션명</div>
+          <input class="ui-edt-normal" type="text" id="edtQDeal_Option_Id" style="width: 215px;" />
+        </td>
+        <td>
+          <div id="lblQDeal_Id" class="ui-lbl-condition">딜코드</div>
+          <input class="ui-edt-normal" type="text" id="edtQDeal_Id" style="width: 145px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divMasterView" class="ui-ctnr-normal">
+    <div>
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdMaster" class="ui-grd-title">딜내역</td>
+          <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdMaster"></div>
+    </div>
+    <div>
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdDetail" class="ui-grd-title">옵션내역상세</td>
+          <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdDetail"></div>
+    </div>
+  </div>
+</body>
+</html>

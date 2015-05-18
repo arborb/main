@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2013-07-30
+  // Description
+  // LOC2010E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LOC2010E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - RS_MASTER -->
+    <parameterMap id="paramRS_MASTER" class="java.util.Map">
+      <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"               mode="IN" />
+      <parameter property="P_BU_CD"                   mode="IN" />
+      <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+      <parameter property="P_INOUT_CD"                mode="IN" />
+      <parameter property="P_BRAND_CD"                mode="IN" />
+      <parameter property="P_ITEM_CD"                 mode="IN" />
+    </parameterMap>
+    <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+      { ? = call LOC2010E.RS_MASTER(?, ?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_MASTER -->
+  
+  
+    <!-- [S] - RS_DETAIL -->
+    <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+      <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"               mode="IN" />
+      <parameter property="P_BU_CD"                   mode="IN" />
+      <parameter property="P_BRAND_CD"                mode="IN" />
+      <parameter property="P_ITEM_CD"                 mode="IN" />
+      <parameter property="P_ITEM_STATE"              mode="IN" />
+      <parameter property="P_ITEM_LOT"                mode="IN" />
+    </parameterMap>
+    <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+      { ? = call LOC2010E.RS_DETAIL(?, ?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_DETAIL -->
+
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - UPDATE_LS010NM [현재고] -->
+    <update id="UPDATE_LS010NM" parameterClass="java.util.Map">
+        UPDATE LS010NM
+           SET OUT_ORDER         = #P_OUT_ORDER#
+              ,REG_USER_ID       = #P_REG_USER_ID#
+              ,REG_DATETIME      = SYSDATE
+         WHERE CENTER_CD         = #P_CENTER_CD#
+           AND BU_CD             = #P_BU_CD#
+           AND LOCATION_CD       = #P_LOCATION_CD#
+           AND BRAND_CD          = #P_BRAND_CD#
+           AND ITEM_CD           = #P_ITEM_CD#
+           AND ITEM_STATE        = #P_ITEM_STATE#
+           AND ITEM_LOT          = #P_ITEM_LOT#
+           AND STOCK_DATE        = #P_STOCK_DATE#
+           AND STOCK_IN_GRP      = #P_STOCK_IN_GRP#
+           AND STOCK_ID          = #P_STOCK_ID#
+    </update>
+    <!-- [E] - UPDATE_LS010NM [현재고] -->
+
+</sqlMap>

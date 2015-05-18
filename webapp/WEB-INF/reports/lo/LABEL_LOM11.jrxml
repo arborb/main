@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LABEL_LOM11" language="groovy" pageWidth="287" pageHeight="299" orientation="Landscape" columnWidth="287" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="edc8d2b1-655f-4a62-9fae-0734af8ca0f9">
+	<property name="ireport.zoom" value="2.357947691000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT CENTER_CD
+         ,BU_CD
+         ,HAS_DATE
+         ,HAS_NO
+         ,LINE_NO
+         ,OUTBOUND_DATE
+         ,OUTBOUND_NO
+         ,ORDERER_NM
+         ,SHIPPER_NM
+         ,WF.GET_DECSTR(SHIPPER_TEL)          AS  SHIPPER_TEL
+         ,WF.GET_DECSTR(SHIPPER_HP)           AS  SHIPPER_HP
+         ,SHIPPER_ZIP_CD
+         ,WF.GET_DECSTR(SHIPPER_ADDR_BASIC)   AS SHIPPER_ADDR_BASIC
+         ,WF.GET_DECSTR(SHIPPER_ADDR_DETAIL)  AS SHIPPER_ADDR_DETAIL
+         ,ZONE_CD
+         ,LOCATION_CD
+         ,END_YN
+         ,DECODE(END_YN,'Y','OP'||CENTER_CD||'-'||BU_CD||'-'||TO_CHAR(OUTBOUND_DATE,'YYYYMMDD')||'-'||REMARK1,'N',NULL) AS END_YN_REMAKCK
+        --,'OP'||CENTER_CD||'-'||BU_CD||'-'||TO_CHAR(OUTBOUND_DATE,'YYYYMMDD')||'-'||REMARK1
+         ,REMARK1
+         ,REG_USER_ID
+         ,REG_DATETIME
+    FROM LOHASNM
+
+   WHERE CENTER_CD   = 'G1'
+     AND BU_CD       = '5000'
+     AND HAS_DATE    = '2014-10-31'
+     AND HAS_NO      = '000001']]>
+	</queryString>
+	<field name="CENTER_CD" class="java.lang.String"/>
+	<field name="BU_CD" class="java.lang.String"/>
+	<field name="HAS_DATE" class="java.sql.Timestamp"/>
+	<field name="HAS_NO" class="java.lang.String"/>
+	<field name="LINE_NO" class="java.math.BigDecimal"/>
+	<field name="OUTBOUND_DATE" class="java.sql.Timestamp"/>
+	<field name="OUTBOUND_NO" class="java.lang.String"/>
+	<field name="ORDERER_NM" class="java.lang.String"/>
+	<field name="SHIPPER_NM" class="java.lang.String"/>
+	<field name="SHIPPER_TEL" class="java.lang.String"/>
+	<field name="SHIPPER_HP" class="java.lang.String"/>
+	<field name="SHIPPER_ZIP_CD" class="java.lang.String"/>
+	<field name="SHIPPER_ADDR_BASIC" class="java.lang.String"/>
+	<field name="SHIPPER_ADDR_DETAIL" class="java.lang.String"/>
+	<field name="ZONE_CD" class="java.lang.String"/>
+	<field name="LOCATION_CD" class="java.lang.String"/>
+	<field name="END_YN" class="java.lang.String"/>
+	<field name="END_YN_REMAKCK" class="java.lang.String"/>
+	<field name="REMARK1" class="java.lang.String"/>
+	<field name="REG_USER_ID" class="java.lang.String"/>
+	<field name="REG_DATETIME" class="java.sql.Timestamp"/>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="67" y="21" width="76" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="f4f8af26-045f-4fc2-95ac-da118281946c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="맑은 고딕" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HAS_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="21" width="53" height="16" uuid="19448803-9b70-4f19-9c24-4700a9c9774a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕 ExtraBold" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[HAS일자 :]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

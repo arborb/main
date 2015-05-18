@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- jqPlot Chart CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery.jqplot.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- jqPlot Chart -->
+<script src="../common/js/jqplot/jquery.jqplot.js"></script>
+<script src="../common/js/jqplot/jqplot.dateAxisRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.highlighter.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- LK02010Q CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/lk/LK02010Q.css" />
+<script src="js/LK02010Q.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 조회 조건 -->
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+          <select id="cboQCenter_Cd" class="ui-cbo-key" style="width: 150px;"></select>
+        </td>
+        <td>
+          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+          <input class="ui-edt-key" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 150px;" />
+        </td>
+        <td>
+          <div id="lblQInout_Month" class="ui-lbl-condition">수불월</div>
+          <input class="ui-dtp-key" type="text" id="dtpQInout_Month1" style="width: 80px;" />
+          <span class="ui-span-normal">▶</span>
+          <input class="ui-dtp-key" type="text" id="dtpQInout_Month2" style="width: 80px;" />
+        </td>
+      </tr>
+      <tr>
+        <td id="tdQDsp_Brand_Cd">
+          <div id="lblQPopup_Brand_Cd" class="ui-lbl-condition">브랜드</div>
+          <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBrand_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBrand_Nm" disabled="disabled" style="width: 150px;" />
+        </td>
+        <td>
+          <div id="lblQItem_Cd" class="ui-lbl-condition">상품코드</div>
+          <input class="ui-edt-normal" type="text" id="edtQItem_Cd" style="width: 247px;" />
+        </td>
+        <td>
+          <div id="lblQItem_Nm" class="ui-lbl-condition">상품명</div>
+          <input class="ui-edt-normal" type="text" id="edtQItem_Nm" style="width: 214px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divMasterView" style="padding: 1px;">
+    <!-- Tab Handler -->
+    <ul>
+      <li id="divTab1"><a href="#divT1TabSheetView">입고추이</a></li>
+      <li id="divTab2"><a href="#divT2TabSheetView">출고추이</a></li>
+      <li id="divTab3"><a href="#divT3TabSheetView">반품입고추이</a></li>
+      <li id="divTab4"><a href="#divT4TabSheetView">반품출고추이</a></li>
+      <li id="divTab5"><a href="#divT5TabSheetView">재고량추이</a></li>
+    </ul>
+    <!-- 입고추이 -->
+    <div id="divT1TabSheetView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div class="ui-ctnr-left" style="border-width: 0 1px 0 0;">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT1Master" class="ui-grd-title">입고정보</td>
+            <td id="divRowCount_grdT1Master" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT1Master"></div>
+      </div>
+      <div class="ui-ctnr-right" style="border-width: 0 0 0 1px;">
+        <div class="ui-gbox-header">
+          <div class="ui-lbl-header">[일별]입고추이 그래프</div>
+        </div>
+        <div id="divDisplayDivView" style="padding: 10px;">
+          <div id="lblQT1_Display_Div " class="ui-lbl-normal">표시항목</div>
+          <div class="ui-gbox-normal">
+            <input class="ui-chk-normal" type="checkbox" name="T1DISPLAY_DIV" id="chkQT1_Display_Div1" checked="checked">
+            [입고]상품수
+            <input class="ui-chk-normal" type="checkbox" name="T1DISPLAY_DIV" id="chkQT1_Display_Div2" checked="checked" style="margin-left: 30px;">
+            [입고]수량
+          </div>
+        </div>
+        <div id="chtT1Master" style="margin: 10px;"></div>
+      </div>
+    </div>
+    <!-- 출고추이 -->
+    <div id="divT2TabSheetView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div class="ui-ctnr-left" style="border-width: 0 1px 0 0;">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT2Master" class="ui-grd-title">출고정보</td>
+            <td id="divRowCount_grdT2Master" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT2Master"></div>
+      </div>
+      <div class="ui-ctnr-right" style="border-width: 0 0 0 1px;">
+        <div class="ui-gbox-header">
+          <div class="ui-lbl-header">[일별]출고추이 그래프</div>
+        </div>
+        <div style="padding: 10px;">
+          <div id="lblQT2_Display_Div" class="ui-lbl-normal">표시항목</div>
+          <div class="ui-gbox-normal">
+            <input class="ui-chk-normal" type="checkbox" name="T2DISPLAY_DIV" id="chkQT2_Display_Div1" checked="checked">
+            [출고]상품수
+            <input class="ui-chk-normal" type="checkbox" name="T2DISPLAY_DIV" id="chkQT2_Display_Div2" checked="checked" style="margin-left: 30px;">
+            [출고]수량
+          </div>
+        </div>
+        <div id="chtT2Master" style="margin: 10px;"></div>
+      </div>
+    </div>
+    <!-- 반품입고추이 -->
+    <div id="divT3TabSheetView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div class="ui-ctnr-left" style="border-width: 0 1px 0 0;">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT3Master" class="ui-grd-title">반품입고정보</td>
+            <td id="divRowCount_grdT3Master" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT3Master"></div>
+      </div>
+      <div class="ui-ctnr-right" style="border-width: 0 0 0 1px;">
+        <div class="ui-gbox-header">
+          <div class="ui-lbl-header">[일별]반품입고추이 그래프</div>
+        </div>
+        <div style="padding: 10px;">
+          <div id="lblQT3_Display_Div" class="ui-lbl-normal">표시항목</div>
+          <div class="ui-gbox-normal">
+            <input class="ui-chk-normal" type="checkbox" name="T3DISPLAY_DIV" id="chkQT3_Display_Div1" checked="checked">
+            [반품입고]상품수
+            <input class="ui-chk-normal" type="checkbox" name="T3DISPLAY_DIV" id="chkQT3_Display_Div2" checked="checked" style="margin-left: 30px;">
+            [반품입고]수량
+          </div>
+        </div>
+        <div id="chtT3Master" style="margin: 10px;"></div>
+      </div>
+    </div>
+    <!-- 반품출고추이 -->
+    <div id="divT4TabSheetView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div class="ui-ctnr-left" style="border-width: 0 1px 0 0;">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT4Master" class="ui-grd-title">반품출고정보</td>
+            <td id="divRowCount_grdT4Master" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT4Master"></div>
+      </div>
+      <div class="ui-ctnr-right" style="border-width: 0 0 0 1px;">
+        <div class="ui-gbox-header">
+          <div class="ui-lbl-header">[일별]반품출고추이 그래프</div>
+        </div>
+        <div style="padding: 10px;">
+          <div id="lblQT4_Display_Div" class="ui-lbl-normal">표시항목</div>
+          <div class="ui-gbox-normal">
+            <input class="ui-chk-normal" type="checkbox" name="T4DISPLAY_DIV" id="chkQT4_Display_Div1" checked="checked">
+            [반품출고]상품수
+            <input class="ui-chk-normal" type="checkbox" name="T4DISPLAY_DIV" id="chkQT4_Display_Div2" checked="checked" style="margin-left: 30px;">
+            [반품출고]수량
+          </div>
+        </div>
+        <div id="chtT4Master" style="margin: 10px;"></div>
+      </div>
+    </div>
+    <!-- 재고량추이 -->
+    <div id="divT5TabSheetView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div class="ui-ctnr-left" style="border-width: 0 1px 0 0;">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT5Master" class="ui-grd-title">재고량정보</td>
+            <td id="divRowCount_grdT5Master" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT5Master"></div>
+      </div>
+      <div class="ui-ctnr-right" style="border-width: 0 0 0 1px;">
+        <div class="ui-gbox-header">
+          <div class="ui-lbl-header">[일별]재고량추이 그래프</div>
+        </div>
+        <div style="padding: 10px;">
+          <div id="lblQT5_Display_Div" class="ui-lbl-normal">표시항목</div>
+          <div class="ui-gbox-normal">
+            <input class="ui-chk-normal" type="checkbox" name="T5DISPLAY_DIV" id="chkQT5_Display_Div1" checked="checked">
+            [당일재고]상품수
+            <input class="ui-chk-normal" type="checkbox" name="T5DISPLAY_DIV" id="chkQT5_Display_Div2" checked="checked" style="margin-left: 30px;">
+            [당일재고]수량
+          </div>
+        </div>
+        <div id="chtT5Master" style="margin: 10px;"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

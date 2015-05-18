@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CS01070Q CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cs/CS01070Q.css" />
+<script src="js/CS01070Q.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divMasterView" class="ui-ctnr-normal">
+    <div id="divConditionView" class="ui-ctnr-condition">
+      <table class="ui-tbl-condition">
+        <tbody><tr>
+          <td>
+            <div class="ui-lbl-condition">빨리찾기</div>
+            <input id="edtQBu_Cd" class="ui-edt-key" type="text">
+            <input id="btnQBu_Cd" class="ui-btn-popup" type="button">
+            <span id="txtSearchResult"></span>
+          </td>
+          <td>
+            <input type="button" id="btnOpenAll" class="ui-btn-cmd" value="모두펼치기" style="width: 80px;">
+            <input type="button" id="btnCloseAll" class="ui-btn-cmd" value="모두접기" style="width: 80px;">
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+
+    <div id="sitemap">
+      <div class="container left" id="layoutLeft"></div>
+      <div class="container right" id="layoutRight"></div>
+    </div>
+  </div>
+</body>
+</html>

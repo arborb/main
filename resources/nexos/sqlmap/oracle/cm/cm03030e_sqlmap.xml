@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 공급처 관리
+  // Author : ASETEC
+  // Date : 2013-07-16
+  // Description
+  //  CM03030E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CM03030E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - RS_MASTER -->
+    <parameterMap class="java.util.Map" id="paramRS_MASTER">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_CUST_CD"           mode="IN" />
+        <parameter property="P_DEAL_DIV1"         mode="IN" />
+        <parameter property="P_DEAL_DIV2"         mode="IN" />
+        <parameter property="P_DEAL_DIV3"         mode="IN" />
+        <parameter property="P_VENDOR_CD"         mode="IN" />
+        <parameter property="P_VENDOR_NM"         mode="IN" />
+        <parameter property="P_FROM"              mode="IN" />
+        <parameter property="P_TOTAL"             mode="IN" />
+    </parameterMap>
+    <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+        { ? = call CM03030E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_MASTER -->
+
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - INSERT_CMVENDOR [공급처마스터] -->
+    <insert id="INSERT_CMVENDOR" parameterClass="java.util.Map">
+        INSERT INTO CMVENDOR
+                   (
+                    CUST_CD
+                   ,VENDOR_CD
+                   <isNotEmpty prepend = "," property= "P_VENDOR_NM"        >VENDOR_NM         </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_VENDOR_FULL_NM"   >VENDOR_FULL_NM    </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_VENDOR_DIV"       >VENDOR_DIV        </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_BRAND_CD"         >BRAND_CD          </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_BUSINESS_NO"      >BUSINESS_NO       </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CEO_NM"           >CEO_NM            </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_BUSINESS_KIND"    >BUSINESS_KIND     </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_BUSINESS_TYPE"    >BUSINESS_TYPE     </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_IDENTITY_NO"      >IDENTITY_NO       </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_ZIP_CD"           >ZIP_CD            </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_ADDR_BASIC"       >ADDR_BASIC        </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_ADDR_DETAIL"      >ADDR_DETAIL       </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_TEL_NO"           >TEL_NO            </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_FAX_NO"           >FAX_NO            </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CHARGE_NM"        >CHARGE_NM         </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CHARGE_DUTY"      >CHARGE_DUTY       </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CHARGE_TEL"       >CHARGE_TEL        </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CHARGE_HP"        >CHARGE_HP         </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_EMAIL_ADDR"       >EMAIL_ADDR        </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_DEAL_DIV"         >DEAL_DIV          </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_OPEN_DATE"        >OPEN_DATE         </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CLOSE_DATE"       >CLOSE_DATE        </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_REMARK1"          >REMARK1           </isNotEmpty>
+                   ,REG_USER_ID
+                   ,REG_DATETIME
+                   )
+            VALUES (
+                    #P_CUST_CD#
+                   ,#P_VENDOR_CD#
+                   <isNotEmpty prepend = "," property= "P_VENDOR_NM"        >#P_VENDOR_NM#       </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_VENDOR_FULL_NM"   >#P_VENDOR_FULL_NM#  </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_VENDOR_DIV"       >#P_VENDOR_DIV#      </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_BRAND_CD"         >#P_BRAND_CD#        </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_BUSINESS_NO"      >#P_BUSINESS_NO#     </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CEO_NM"           >#P_CEO_NM#          </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_BUSINESS_KIND"    >#P_BUSINESS_KIND#   </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_BUSINESS_TYPE"    >#P_BUSINESS_TYPE#   </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_IDENTITY_NO"      >#P_IDENTITY_NO#     </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_ZIP_CD"           >#P_ZIP_CD#          </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_ADDR_BASIC"       >#P_ADDR_BASIC#      </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_ADDR_DETAIL"      >#P_ADDR_DETAIL#     </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_TEL_NO"           >#P_TEL_NO#          </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_FAX_NO"           >#P_FAX_NO#          </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CHARGE_NM"        >#P_CHARGE_NM#       </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CHARGE_DUTY"      >#P_CHARGE_DUTY#     </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CHARGE_TEL"       >#P_CHARGE_TEL#      </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CHARGE_HP"        >#P_CHARGE_HP#       </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_EMAIL_ADDR"       >#P_EMAIL_ADDR#      </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_DEAL_DIV"         >#P_DEAL_DIV#        </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_OPEN_DATE"        >#P_OPEN_DATE#       </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CLOSE_DATE"       >#P_CLOSE_DATE#      </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_REMARK1"          >#P_REMARK1#         </isNotEmpty>
+                   ,#P_REG_USER_ID#
+                   ,SYSDATE
+                   )
+    </insert>
+    <!-- [E] - INSERT_CMVENDOR [공급처마스터] -->
+
+
+    <!-- [S] - UPDATE_CMVENDOR [공급처마스터] -->
+    <update id="UPDATE_CMVENDOR" parameterClass="java.util.Map">
+        UPDATE CMVENDOR
+           SET VENDOR_NM         = #P_VENDOR_NM#
+              <isNotNull prepend = "," property= "P_VENDOR_FULL_NM"   >VENDOR_FULL_NM    = #P_VENDOR_FULL_NM#  </isNotNull>
+              <isNotNull prepend = "," property= "P_VENDOR_DIV"       >VENDOR_DIV        = #P_VENDOR_DIV#      </isNotNull>
+              <isNotNull prepend = "," property= "P_BRAND_CD"         >BRAND_CD          = #P_BRAND_CD#        </isNotNull>
+              <isNotNull prepend = "," property= "P_BUSINESS_NO"      >BUSINESS_NO       = #P_BUSINESS_NO#     </isNotNull>
+              <isNotNull prepend = "," property= "P_CEO_NM"           >CEO_NM            = #P_CEO_NM#          </isNotNull>
+              <isNotNull prepend = "," property= "P_BUSINESS_KIND"    >BUSINESS_KIND     = #P_BUSINESS_KIND#   </isNotNull>
+              <isNotNull prepend = "," property= "P_BUSINESS_TYPE"    >BUSINESS_TYPE     = #P_BUSINESS_TYPE#   </isNotNull>
+              <isNotNull prepend = "," property= "P_IDENTITY_NO"      >IDENTITY_NO       = #P_IDENTITY_NO#     </isNotNull>
+              <isNotNull prepend = "," property= "P_ZIP_CD"           >ZIP_CD            = #P_ZIP_CD#          </isNotNull>
+              <isNotNull prepend = "," property= "P_ADDR_BASIC"       >ADDR_BASIC        = #P_ADDR_BASIC#      </isNotNull>
+              <isNotNull prepend = "," property= "P_ADDR_DETAIL"      >ADDR_DETAIL       = #P_ADDR_DETAIL#     </isNotNull>
+              <isNotNull prepend = "," property= "P_TEL_NO"           >TEL_NO            = #P_TEL_NO#          </isNotNull>
+              <isNotNull prepend = "," property= "P_FAX_NO"           >FAX_NO            = #P_FAX_NO#          </isNotNull>
+              <isNotNull prepend = "," property= "P_CHARGE_NM"        >CHARGE_NM         = #P_CHARGE_NM#       </isNotNull>
+              <isNotNull prepend = "," property= "P_CHARGE_DUTY"      >CHARGE_DUTY       = #P_CHARGE_DUTY#     </isNotNull>
+              <isNotNull prepend = "," property= "P_CHARGE_TEL"       >CHARGE_TEL        = #P_CHARGE_TEL#      </isNotNull>
+              <isNotNull prepend = "," property= "P_CHARGE_HP"        >CHARGE_HP         = #P_CHARGE_HP#       </isNotNull>
+              <isNotNull prepend = "," property= "P_EMAIL_ADDR"       >EMAIL_ADDR        = #P_EMAIL_ADDR#      </isNotNull>
+              <isNotNull prepend = "," property= "P_DEAL_DIV"         >DEAL_DIV          = #P_DEAL_DIV#        </isNotNull>
+              <isNotNull prepend = "," property= "P_OPEN_DATE"        >OPEN_DATE         = #P_OPEN_DATE#       </isNotNull>
+              <isNotNull prepend = "," property= "P_CLOSE_DATE"       >CLOSE_DATE        = #P_CLOSE_DATE#      </isNotNull>
+              <isNotNull prepend = "," property= "P_REMARK1"          >REMARK1           = #P_REMARK1#         </isNotNull>
+              ,REG_USER_ID       = #P_REG_USER_ID#
+              ,REG_DATETIME      = SYSDATE
+         WHERE CUST_CD           = #P_CUST_CD#
+           AND VENDOR_CD         = #P_VENDOR_CD#
+    </update>
+    <!-- [E] - UPDATE_CMVENDOR [공급처마스터] -->
+
+
+    <!-- [S] - DELETE_CMVENDOR [공급처마스터] -->
+    <delete id="DELETE_CMVENDOR" parameterClass="java.util.Map">
+        DELETE 
+          FROM CMVENDOR
+         WHERE CUST_CD           = #P_CUST_CD#
+           AND VENDOR_CD         = #P_VENDOR_CD#
+    </delete>
+    <!-- [E] - DELETE_CMVENDOR [공급처마스터] -->
+
+
+</sqlMap>

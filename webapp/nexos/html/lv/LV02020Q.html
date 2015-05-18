@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- jqPlot Chart CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery.jqplot.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- jqPlot Chart -->
+<script src="../common/js/jqplot/jquery.jqplot.js"></script>
+<script src="../common/js/jqplot/jqplot.barRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.pieRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.pointLabels.js"></script>
+<script src="../common/js/jqplot/jqplot.canvasTextRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.canvasAxisLabelRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.canvasAxisTickRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.categoryAxisRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.highlighter.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- LV02020Q CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/lv/LV02020Q.css" />
+<script src="js/LV02020Q.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 조회 조건 -->
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+          <select id="cboQCenter_Cd" class="ui-cbo-key" style="width: 150px;"></select>
+        </td>
+        <td>
+          <div id="lblPopup_Cust_Cd" class="ui-lbl-condition">위탁사</div>
+          <input class="ui-edt-normal" type="text" id="edtQCust_Cd" style="width: 60px;"/>
+          <input class="ui-btn-popup" type="button" id="btnQCust" />
+          <input class="ui-edt-display" type="text" id="edtQCust_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+          <input class="ui-edt-normal" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+        <td id="tdQDsp_Brand_Cd">
+          <div id="lblQPopup_Brand_Cd" class="ui-lbl-condition">브랜드</div>
+          <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBrand_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBrand_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+  </div>
+  <div id="divMasterView" style="border-width: 1px; border-style: solid; overflow: hidden;">
+    <div id="divLeftView" class="ui-ctnr-left">
+      <!-- 로케이션적재 현황 -->
+      <div class="ui-gbox-title">로케이션적재 현황</div>
+      <div class="ui-gbox-content">
+        <div>
+          <div id="chtPiePutawayReport"></div>
+          <div id="putawayTotalQty" class="totalQty">보유재고 : <span>0</span></div>
+        </div>
+        <div>
+          <div id="chtBarPutawayReport"></div>
+          <div id="putawayLegend" class="legend">
+            <div class="label"> ✓ 존</div>
+            <div class="legendBox"><div class="colorBox" style="background: #ff9900;">&nbsp;</div>미지정</div>
+          </div>
+        </div>
+      </div>
+      <!-- 장기재고 현황 -->
+      <div class="ui-gbox-title">장기재고 현황</div>
+      <div class="ui-gbox-content">
+        <div>
+          <div id="chtPieLongTermReport"></div>
+          <div id="longtermTotalQty" class="totalQty">장기재고 : <span>0</span></div>
+        </div>
+        <div>
+          <div id="chtBarLongTermReport"></div>
+          <div id="longtermLegend" class="legend">
+            <div class="label"> ✓ 기간</div>
+            <div class="legendBox"><div class="colorBox" style="background: #ff9900;">&nbsp;</div>미지정</div>
+          </div>
+        </div>
+        <div class="cboBox">
+          <div id="lblQLong_Term_Month" class="ui-lbl-condition" style="width: 100px;">장기재고 Setting</div>
+          <select id="cboQLong_Term_Month" class="ui-cbo-key"></select>
+        </div>
+      </div>
+    </div>
+    <div id="divRightView" class="ui-ctnr-right">
+      <!-- 회전일수 현황 -->
+      <div class="ui-gbox-title">회전일수 현황</div>
+      <div class="ui-gbox-content">
+        <div>
+          <div id="chtPieRotateReport"></div>
+          <div id="rotateTotalQty" class="totalQty">고회전상품수 : <span>0</span></div>
+        </div>
+        <div>
+          <div id="chtBarRotateReport"></div>
+          <div id="rotateLegend" class="legend">
+            <div class="label"> ✓ 회수</div>
+            <div class="legendBox"><div class="colorBox" style="background: #ff9900;">&nbsp;</div>미지정</div>
+          </div>
+        </div>
+        <div class="cboBox">
+          <div id="lblQHigh_Rotate_Day" class="ui-lbl-condition" style="width: 110px;">고회전 상품 Setting</div>
+          <select id="cboQHigh_Rotate_Day" class="ui-cbo-key"></select>
+        </div>
+      </div>
+      <!-- 유통기한 도래 현황 -->
+      <div class="ui-gbox-title">유통기한 도래 현황</div>
+      <div class="ui-gbox-content">
+        <div>
+          <div id="chtPieValidReport"></div>
+          <div id="validTotalQty" class="totalQty">임박재고 : <span>0</span></div>
+        </div>
+        <div>
+          <div id="chtBarValidReport"></div>
+          <div id="validLegend" class="legend">
+            <div class="label"> ✓ 기간</div>
+            <div class="legendBox"><div class="colorBox" style="background: #ff9900;">&nbsp;</div>미지정</div>
+          </div>
+        </div>
+        <div class="cboBox">
+          <div id="lblQQImpend_Day" class="ui-lbl-condition" style="width: 120px;">유통기한 임박 Setting</div>
+          <select id="cboQImpend_Day" class="ui-cbo-key"></select>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

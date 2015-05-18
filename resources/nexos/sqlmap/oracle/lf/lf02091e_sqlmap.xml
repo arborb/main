@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2013-08-07
+  // Description
+  //  LF02091E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LF02091E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+  <!-- [S] - RS_MASTER -->
+  <parameterMap id="paramRS_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CARRIER_CD"            mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    
+  </parameterMap>
+  <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+    { ? = call LF02091E.RS_MASTER(?, ?, ? ,?) }
+  </procedure>
+  <!-- [E] - RS_MASTER -->
+
+
+  <!-- [S] - RS_SUB -->
+  <parameterMap id="paramRS_SUB" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+  </parameterMap>
+  <procedure id="RS_SUB" parameterMap="paramRS_SUB" resultClass="java.util.HashMap">
+    { ? = call LF02091E.RS_SUB }
+  </procedure>
+  <!-- [E] - RS_SUB -->
+
+
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+  <!-- [S] - INSERT_LFRENT [임대수수료기준마스터] -->
+  <insert id="INSERT_LFRENT" parameterClass="java.util.Map">
+    INSERT INTO LFRENT
+               (
+                CENTER_CD
+               ,BU_CD
+               ,FEE_BASE_CD
+               ,FEE_HEAD_CD
+               ,CONTRACT_START_DATE
+               <isNotEmpty prepend = "," property= "P_PERIOD_DIV"              >PERIOD_DIV                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_RENT_UNIT_DIV"           >RENT_UNIT_DIV              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_RENT_PRICE"              >RENT_PRICE                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_RENT_QTY"                >RENT_QTY                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_CENTER_CD#
+               ,#P_BU_CD#
+               ,#P_FEE_BASE_CD#
+               ,#P_FEE_HEAD_CD#
+               ,#P_CONTRACT_START_DATE#
+               <isNotEmpty prepend = "," property= "P_PERIOD_DIV"              >#P_PERIOD_DIV#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_RENT_UNIT_DIV"           >#P_RENT_UNIT_DIV#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_RENT_PRICE"              >#P_RENT_PRICE#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_RENT_QTY"                >#P_RENT_QTY#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_LFRENT [임대수수료기준마스터] -->
+
+
+  <!-- [S] - UPDATE_LFRENT [임대수수료기준마스터] -->
+  <update id="UPDATE_LFRENT" parameterClass="java.util.Map">
+    UPDATE LFRENT
+       SET PERIOD_DIV               = #P_PERIOD_DIV#
+          <isNotNull prepend = "," property= "P_RENT_UNIT_DIV"           >RENT_UNIT_DIV            = #P_RENT_UNIT_DIV#          </isNotNull>
+          <isNotNull prepend = "," property= "P_RENT_PRICE"              >RENT_PRICE               = #P_RENT_PRICE#             </isNotNull>
+          <isNotNull prepend = "," property= "P_RENT_QTY"                >RENT_QTY                 = #P_RENT_QTY#               </isNotNull>
+          <isNotNull prepend = "," property= "P_REMARK1"                 >REMARK1                  = #P_REMARK1#                </isNotNull>
+          ,REG_USER_ID              = #P_REG_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE CENTER_CD                = #P_CENTER_CD#
+       AND BU_CD                    = #P_BU_CD#
+       AND FEE_BASE_CD              = #P_FEE_BASE_CD#
+       AND FEE_HEAD_CD              = #P_FEE_HEAD_CD#
+       AND CONTRACT_START_DATE      = #P_CONTRACT_START_DATE#
+  </update>
+  <!-- [E] - UPDATE_LFRENT [임대수수료기준마스터] -->
+
+
+  <!-- [S] - DELETE_LFRENT [임대수수료기준마스터] -->
+  <delete id="DELETE_LFRENT" parameterClass="java.util.Map">
+    DELETE 
+      FROM LFRENT
+     WHERE CENTER_CD                = #P_CENTER_CD#
+       AND BU_CD                    = #P_BU_CD#
+       AND FEE_BASE_CD              = #P_FEE_BASE_CD#
+       AND FEE_HEAD_CD              = #P_FEE_HEAD_CD#
+       AND CONTRACT_START_DATE      = #P_CONTRACT_START_DATE#
+  </delete>
+  <!-- [E] - DELETE_LFRENT [임대수수료기준마스터] -->
+   <!-- [S] - INSERT_LFDELIVERYPAY [운송지급기준마스터] -->
+  <insert id="INSERT_LFDELIVERYPAY" parameterClass="java.util.Map">
+    INSERT INTO LFDELIVERYPAY
+               (
+                CENTER_CD
+               ,BU_CD
+               ,FEE_HEAD_CD
+               ,FEE_BASE_CD
+               ,CONTRACT_START_DATE
+               ,KEEP_DIV
+               ,DEPART_CD
+               ,LINE_CD
+               ,CLASS_CD
+               ,BRAND_CD
+               ,ITEM_CD
+                <isNotEmpty prepend = "," property= "P_PAY_UNIT_DIV"         >PAY_UNIT_DIV            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DIST_PRICE_A"            >DIST_PRICE_A               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CALC_QTY_DIV"            >CALC_QTY_DIV               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CALC_AMT_DIV"            >CALC_AMT_DIV               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CARRIER_CD"              >CARRIER_CD                 </isNotEmpty>
+                <isNotEmpty prepend = "," property= "P_BOX_DIV"                 >BOX_DIV                    </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_CENTER_CD#
+               ,#P_BU_CD#
+               ,#P_FEE_HEAD_CD#
+               ,#P_FEE_BASE_CD#
+               ,#P_CONTRACT_START_DATE#
+               ,#P_KEEP_DIV#
+               ,#P_DEPART_CD#
+               ,#P_LINE_CD#
+               ,#P_CLASS_CD#
+               ,#P_BRAND_CD#
+               ,#P_ITEM_CD#
+                 <isNotEmpty prepend = "," property= "P_PAY_UNIT_DIV"         >#P_PAY_UNIT_DIV#        </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DIST_PRICE_A"            >#P_DIST_PRICE_A#           </isNotEmpty>
+                <isNotEmpty prepend = "," property= "P_CALC_QTY_DIV"            >#P_CALC_QTY_DIV#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CALC_AMT_DIV"            >#P_CALC_AMT_DIV#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CARRIER_CD"              >#P_CARRIER_CD#             </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_BOX_DIV"                 >#P_BOX_DIV#                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_LFDELIVERYPAY [운송지급기준마스터] -->
+
+
+  <!-- [S] - UPDATE_LFDELIVERYPAY [운송지급기준마스터] -->
+  <update id="UPDATE_LFDELIVERYPAY" parameterClass="java.util.Map">
+    UPDATE LFDELIVERYPAY
+       SET PAY_UNIT_DIV               = #P_PAY_UNIT_DIV#
+          <isNotNull prepend = "," property= "P_DIST_PRICE_A"            >DIST_PRICE_A             = #P_DIST_PRICE_A#           </isNotNull>
+          ,REG_USER_ID              = #P_REG_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE CENTER_CD                = #P_CENTER_CD#
+       AND BU_CD                    = #P_BU_CD#
+       AND FEE_HEAD_CD              = #P_FEE_HEAD_CD#
+       AND FEE_BASE_CD              = #P_FEE_BASE_CD#
+       AND KEEP_DIV                 = #P_KEEP_DIV#
+       AND DEPART_CD                = #P_DEPART_CD#
+       AND LINE_CD                  = #P_LINE_CD#
+       AND CLASS_CD                 = #P_CLASS_CD#
+       AND ITEM_CD                  = #P_ITEM_CD#
+       AND CARRIER_CD               = #P_CARRIER_CD#
+       AND BOX_DIV                  = #P_BOX_DIV#
+  </update>
+  <!-- [E] - UPDATE_LFDELIVERYPAY [운송지급기준마스터] -->
+
+
+  <!-- [S] - DELETE_LFDELIVERYPAY [운송지급기준마스터] -->
+  <delete id="DELETE_LFDELIVERYPAY" parameterClass="java.util.Map">
+    DELETE 
+      FROM LFDELIVERYPAY
+     WHERE CENTER_CD                = #P_CENTER_CD#
+       AND BU_CD                    = #P_BU_CD#
+       AND FEE_HEAD_CD              = #P_FEE_HEAD_CD#
+       AND FEE_BASE_CD              = #P_FEE_BASE_CD#
+       <isNotEmpty prepend = " AND " property= "P_DEPART_CD"   >KEEP_DIV          = #P_KEEP_DIV#       </isNotEmpty>
+       <isNotEmpty prepend = " AND " property= "P_DEPART_CD"   >DEPART_CD         = #P_DEPART_CD#      </isNotEmpty>
+       <isNotEmpty prepend = " AND " property= "P_LINE_CD"     >LINE_CD           = #P_LINE_CD#        </isNotEmpty>
+       <isNotEmpty prepend = " AND " property= "P_CLASS_CD"    >CLASS_CD          = #P_CLASS_CD#       </isNotEmpty>
+       <isNotEmpty prepend = " AND " property= "P_ITEM_CD"     >ITEM_CD           = #P_ITEM_CD#        </isNotEmpty>
+       <isNotEmpty prepend = " AND " property= "P_CARRIER_CD"  >CARRIER_CD        = #P_CARRIER_CD#     </isNotEmpty>
+       <isNotEmpty prepend = " AND " property= "P_BOX_DIV"     >BOX_DIV           = #P_BOX_DIV#        </isNotEmpty>
+  
+  </delete>
+  <!-- [E] - DELETE_LFDELIVERYPAY [운송지급기준마스터] -->
+  
+
+
+</sqlMap>

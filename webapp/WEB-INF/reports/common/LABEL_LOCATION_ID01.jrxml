@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LABEL_LOCATION_ID01" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="745" leftMargin="50" rightMargin="47" topMargin="0" bottomMargin="0">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0245201830476096"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="P_SYSDATE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2008-01-01 01:01:01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_USER_ID" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_USER_NM" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="FSUBTOTAL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="FTOTAL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="HPRINTTIME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="HPUSER" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="HPAGE" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT M1.CENTER_CD                                       AS CENTER_CD
+            ,M1.LOCATION_ID                                     AS LOCATION_ID
+            ,C1.CODE_NM                                         AS INOUT_NM
+            ,WF.D_TO_CHAR(M2.INBOUND_DATE)                      AS INBOUND_DATE
+            ,M1.INBOUND_NO                                      AS INBOUND_NO
+            ,WF.DSP_COMBO(M2.BU_CD ,B1.BU_NM)                   AS BU_CD_F
+            ,M2.ITEM_CD                                         AS ITEM_CD
+            ,T1.ITEM_NM                                         AS ITEM_NM
+            ,T1.ITEM_SPEC                                       AS ITEM_SPEC
+            ,M2.PUTAWAY_LOCATION_CD                             AS PUTAWAY_LOCATION_CD
+            ,M2.BU_CD                                           AS BU_CD
+            ,B1.BU_NM                                           AS BU_NM
+            ,M1,BRAND_CD
+            ,B2.BRAND_NM
+            ,'(' ||
+             WF.GET_B_BOX(M2.ENTRY_QTY ,T1.QTY_IN_BOX) || '/' ||
+             WF.GET_B_EA (M2.ENTRY_QTY ,T1.QTY_IN_BOX) ||
+             ')'                                                AS ENTRY_BOX_EA
+            ,WF.DSP_COMBO(M2.ITEM_STATE ,C2.CODE_NM)            AS ITEM_STATE_F
+            ,M2.ITEM_LOT                                        AS ITEM_LOT
+            ,WF.D_TO_CHAR(M2.VALID_DATE)                        AS VALID_DATE
+            ,M2.BATCH_NO                                        AS BATCH_NO
+            ,T1.QTY_IN_BOX                                      AS QTY_IN_BOX
+            ,T1.BOX_WEIGHT                                      AS BOX_WEIGHT
+            ,T1.BOX_CBM                                         AS BOX_CBM
+            ,T1.BOX_IN_PLT                                      AS BOX_IN_PLT
+            ,T1.PLT_PLACE                                       AS PLT_PLACE
+            ,T1.PLT_STAIR                                       AS PLT_STAIR
+            ,M2.ENTRY_QTY
+            ,WF.GET_B_BOX(M2.ENTRY_QTY ,T1.QTY_IN_BOX)          AS ENTRY_BOX
+        FROM CMLOCATIONID M1
+             JOIN LI030NM M2 ON M2.CENTER_CD    = M1.CENTER_CD
+                            AND M2.BU_CD     = M1.BU_CD
+                            AND M2.INBOUND_DATE = M1.INBOUND_DATE
+                            AND M2.INBOUND_NO   = M1.INBOUND_NO
+                            AND M2.LOCATION_ID  = M1.LOCATION_ID
+             JOIN CMBU B1 ON B1.BU_CD = M2.BU_CD
+             JOIN CMITEM  T1 ON T1.BU_CD = M2.BU_CD
+                            AND T1.ITEM_CD  = M2.ITEM_CD
+             JOIN CMCODE  C1 ON C1.CODE_CD  = M2.INOUT_CD
+                            AND C1.CODE_GRP = WF.GET_CODE_GRP('INOUT_CD')
+             JOIN CMCODE  C2 ON C2.CODE_CD  = M2.ITEM_STATE
+                            AND C2.CODE_GRP = WF.GET_CODE_GRP('ITEM_STATE')
+       WHERE ROWNUM < 100
+       ORDER BY INBOUND_NO
+               ,LOCATION_ID]]>
+	</queryString>
+	<field name="CENTER_CD" class="java.lang.String"/>
+	<field name="LOCATION_ID" class="java.lang.String"/>
+	<field name="INOUT_NM" class="java.lang.String"/>
+	<field name="INBOUND_DATE" class="java.lang.String"/>
+	<field name="INBOUND_NO" class="java.lang.String"/>
+	<field name="BU_CD_F" class="java.lang.String"/>
+	<field name="ITEM_CD" class="java.lang.String"/>
+	<field name="ITEM_NM" class="java.lang.String"/>
+	<field name="ITEM_SPEC" class="java.lang.String"/>
+	<field name="PUTAWAY_LOCATION_CD" class="java.lang.String"/>
+	<field name="BU_CD" class="java.lang.String"/>
+	<field name="BU_NM" class="java.lang.String"/>
+  <field name="BRAND_CD" class="java.lang.String"/>
+  <field name="BRAND_NM" class="java.lang.String"/>
+	<field name="ENTRY_BOX_EA" class="java.lang.String"/>
+	<field name="ITEM_STATE_F" class="java.lang.String"/>
+	<field name="ITEM_LOT" class="java.lang.String"/>
+	<field name="VALID_DATE" class="java.lang.String"/>
+	<field name="BATCH_NO" class="java.lang.String"/>
+	<field name="QTY_IN_BOX" class="java.math.BigDecimal"/>
+	<field name="BOX_WEIGHT" class="java.math.BigDecimal"/>
+	<field name="BOX_CBM" class="java.math.BigDecimal"/>
+	<field name="BOX_IN_PLT" class="java.math.BigDecimal"/>
+	<field name="PLT_PLACE" class="java.math.BigDecimal"/>
+	<field name="PLT_STAIR" class="java.math.BigDecimal"/>
+	<field name="ENTRY_QTY" class="java.math.BigDecimal"/>
+	<field name="ENTRY_BOX" class="java.math.BigDecimal"/>
+	<group name="GRP_ITEM_CD" isStartNewPage="true" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{INBOUND_NO} + $F{ITEM_CD}]]></groupExpression>
+	</group>
+	<detail>
+		<band height="565" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="29" width="145" height="215"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="25" isBold="true"/>
+				</textElement>
+				<text><![CDATA[로케이션ID]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-16" x="145" y="354" width="235" height="50"/>
+				<box leftPadding="20" bottomPadding="5">
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{INBOUND_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-16" x="515" y="350" width="228" height="50"/>
+				<box leftPadding="20">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="35" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{VALID_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="354" width="145" height="50"/>
+				<box bottomPadding="6">
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="false"/>
+				</textElement>
+				<text><![CDATA[입고일자]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-16" x="604" y="404" width="139" height="50"/>
+				<box bottomPadding="3" rightPadding="10">
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PLT_PLACE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="474" y="404" width="130" height="50"/>
+				<box bottomPadding="5">
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="28" isBold="true"/>
+				</textElement>
+				<text><![CDATA[면BOX수]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-16" x="354" y="404" width="120" height="50"/>
+				<box bottomPadding="3" rightPadding="10">
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PLT_STAIR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-16" x="102" y="404" width="122" height="50"/>
+				<box bottomPadding="3" rightPadding="10">
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{BOX_IN_PLT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="354" width="135" height="50"/>
+				<box bottomPadding="6">
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[유통기한]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-18" x="520" y="463" width="99" height="61"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="50" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-16" x="517" y="296" width="220" height="55"/>
+				<box leftPadding="20" bottomPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BU_NM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="512" width="205" height="29"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="굴림체" size="20" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(BOX/EA/총수량(EA))]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="404" width="130" height="50"/>
+				<box bottomPadding="5">
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="28" isBold="true"/>
+				</textElement>
+				<text><![CDATA[단BOX수]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="145" y="299" width="235" height="55"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="true"/>
+					<paragraph tabStopWidth="45"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement key="textField-16" x="376" y="511" width="139" height="29"/>
+				<box rightPadding="20">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="25" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ENTRY_QTY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="145" y="244" width="598" height="55"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="true"/>
+					<paragraph tabStopWidth="45"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField evaluationTime="Group" evaluationGroup="GRP_ITEM_CD" isBlankWhenNull="true">
+				<reportElement key="textField-18" x="657" y="463" width="87" height="61"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="50" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="textField-19" x="602" y="463" width="70" height="61"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="50" isBold="true"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="244" width="145" height="55"/>
+				<box bottomPadding="5">
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="true"/>
+					<paragraph tabStopWidth="45"/>
+				</textElement>
+				<text><![CDATA[로케이션]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="FixRelativeToBottom" x="150" y="37" width="590" height="148"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barHeight="70">
+					<jr:codeExpression><![CDATA[$F{LOCATION_ID}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="515" y="299" width="228" height="55"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="true"/>
+					<paragraph tabStopWidth="45"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="404" width="102" height="50"/>
+				<box bottomPadding="5">
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="25" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P/L입수]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="145" y="29" width="598" height="214"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="25" isBold="true"/>
+					<paragraph tabStopWidth="45"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-16" x="379" y="329" width="146" height="24"/>
+				<box leftPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="15" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["( " + $F{BU_CD} + " )"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="454" width="205" height="90"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="38" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="518" y="454" width="225" height="90"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="28" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-16" x="336" y="217" width="225" height="28"/>
+				<box leftPadding="10">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="15" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOCATION_ID}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-16" x="144" y="238" width="598" height="55"/>
+				<box leftPadding="20" bottomPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="45" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PUTAWAY_LOCATION_CD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="205" y="454" width="313" height="90"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="38" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="515" y="354" width="228" height="50"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="299" width="135" height="55"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="굴림체" size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[화   주]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="299" width="145" height="55"/>
+				<box bottomPadding="4">
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[상 품 명]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-16" stretchType="RelativeToTallestObject" x="145" y="296" width="235" height="55"/>
+				<box leftPadding="20" bottomPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="30" isBold="true" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="AtLeast"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ITEM_NM}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-16" x="205" y="443" width="313" height="83"/>
+				<box rightPadding="20">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="60" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ENTRY_BOX_EA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="463" width="205" height="83"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="굴림체" size="38" isBold="true"/>
+				</textElement>
+				<text><![CDATA[실적재수량]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="FixRelativeToBottom" x="150" y="76" width="590" height="148"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barHeight="70">
+					<jr:codeExpression><![CDATA[$F{LOCATION_ID}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
+				<reportElement positionType="FixRelativeToBottom" x="150" y="99" width="590" height="148"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barHeight="70">
+					<jr:codeExpression><![CDATA[$F{LOCATION_ID}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

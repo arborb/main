@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  //  CS01050E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CS01050E">
+
+
+  <!-- [S] - RS_MASTER -->
+  <parameterMap id="paramRS_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_CLIENT_IP"               mode="IN" />
+  </parameterMap>
+  <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+    { ? = call CS01050E.RS_MASTER(?, ?) }
+  </procedure>
+  <!-- [E] - RS_MASTER -->
+
+
+  <!--
+    //================================================================================================================
+    // INSERT/UPDATE/DELETE SQLMAP
+    //================================================================================================================
+  -->
+  <!-- [S] - INSERT_CSUSERSYSINFO_PRINT [사용자시스템정보] -->
+  <insert id="INSERT_CSUSERSYSINFO_PRINT" parameterClass="java.util.Map">
+    INSERT INTO CSUSERSYSINFO
+               (
+                USER_ID
+               ,CLIENT_IP
+               <isNotEmpty prepend = "," property= "P_PRINT_LI_BILL"           >PRINT_LI_BILL              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_LO_BILL"           >PRINT_LO_BILL              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_RI_BILL"           >PRINT_RI_BILL              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_RO_BILL"           >PRINT_RO_BILL              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_INBOUND_SEQ"       >PRINT_INBOUND_SEQ          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_LOCATION_ID"       >PRINT_LOCATION_ID          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_SHIP_ID"           >PRINT_SHIP_ID              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_WB_NO"             >PRINT_WB_NO                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_LO_BOX"            >PRINT_LO_BOX               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_CARD"              >PRINT_CARD                 </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_USER_ID#
+               ,#P_CLIENT_IP#
+               <isNotEmpty prepend = "," property= "P_PRINT_LI_BILL"           >#P_PRINT_LI_BILL#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_LO_BILL"           >#P_PRINT_LO_BILL#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_RI_BILL"           >#P_PRINT_RI_BILL#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_RO_BILL"           >#P_PRINT_RO_BILL#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_INBOUND_SEQ"       >#P_PRINT_INBOUND_SEQ#      </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_LOCATION_ID"       >#P_PRINT_LOCATION_ID#      </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_SHIP_ID"           >#P_PRINT_SHIP_ID#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_WB_NO"             >#P_PRINT_WB_NO#            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_LO_BOX"            >#P_PRINT_LO_BOX#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PRINT_CARD"              >#P_PRINT_CARD#             </isNotEmpty>
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_CSUSERSYSINFO_PRINT [사용자시스템정보] -->
+
+
+  <!-- [S] - UPDATE_CSUSERSYSINFO_PRINT [사용자시스템정보] -->
+  <update id="UPDATE_CSUSERSYSINFO_PRINT" parameterClass="java.util.Map">
+    UPDATE CSUSERSYSINFO
+       SET REG_USER_ID        = #P_REG_USER_ID#
+          ,REG_DATETIME       = SYSDATE
+          <isNotNull prepend = "," property= "P_PRINT_LI_BILL"           >PRINT_LI_BILL            = #P_PRINT_LI_BILL#          </isNotNull>
+          <isNotNull prepend = "," property= "P_PRINT_LO_BILL"           >PRINT_LO_BILL            = #P_PRINT_LO_BILL#          </isNotNull>
+          <isNotNull prepend = "," property= "P_PRINT_RI_BILL"           >PRINT_RI_BILL            = #P_PRINT_RI_BILL#          </isNotNull>
+          <isNotNull prepend = "," property= "P_PRINT_RO_BILL"           >PRINT_RO_BILL            = #P_PRINT_RO_BILL#          </isNotNull>
+          <isNotNull prepend = "," property= "P_PRINT_INBOUND_SEQ"       >PRINT_INBOUND_SEQ        = #P_PRINT_INBOUND_SEQ#      </isNotNull>
+          <isNotNull prepend = "," property= "P_PRINT_LOCATION_ID"       >PRINT_LOCATION_ID        = #P_PRINT_LOCATION_ID#      </isNotNull>
+          <isNotNull prepend = "," property= "P_PRINT_SHIP_ID"           >PRINT_SHIP_ID            = #P_PRINT_SHIP_ID#          </isNotNull>
+          <isNotNull prepend = "," property= "P_PRINT_WB_NO"             >PRINT_WB_NO              = #P_PRINT_WB_NO#            </isNotNull>
+          <isNotNull prepend = "," property= "P_PRINT_LO_BOX"            >PRINT_LO_BOX             = #P_PRINT_LO_BOX#           </isNotNull>
+          <isNotNull prepend = "," property= "P_PRINT_CARD"              >PRINT_CARD               = #P_PRINT_CARD#             </isNotNull>
+     WHERE USER_ID           = #P_USER_ID#
+       AND CLIENT_IP         = #P_CLIENT_IP#
+  </update>
+  <!-- [E] - UPDATE_CSUSERSYSINFO_PRINT [사용자시스템정보] -->
+
+
+</sqlMap>

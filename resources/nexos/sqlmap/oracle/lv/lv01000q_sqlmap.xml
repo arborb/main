@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // Dashboard
+  // Author : ASETEC
+  // Date : 2014-04-22
+  // Description
+  //  LV01000Q 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LV01000Q">
+
+
+  <!--
+    //==================================================================================================================
+    // SELECT SQLMAP
+    //==================================================================================================================
+  -->
+  <!-- [S] - RS_EMPTYLOC -->
+  <parameterMap id="paramRS_EMPTYLOC" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+  </parameterMap>
+  <procedure id="RS_EMPTYLOC" parameterMap="paramRS_EMPTYLOC" resultClass="java.util.HashMap">
+    { ? = call LV01000Q.RS_EMPTYLOC(?) }
+  </procedure>
+  <!-- [E] - RS_EMPTYLOC -->
+
+
+  <!-- [S] - RS_LIPROCESS -->
+  <parameterMap id="paramRS_LIPROCESS" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LIPROCESS" parameterMap="paramRS_LIPROCESS" resultClass="java.util.HashMap">
+    { ? = call LV01000Q.RS_LIPROCESS(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LIPROCESS -->
+
+
+  <!-- [S] - RS_LOABSTRACT -->
+  <parameterMap id="paramRS_LOABSTRACT" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LOABSTRACT" parameterMap="paramRS_LOABSTRACT" resultClass="java.util.HashMap">
+    { ? = call LV01000Q.RS_LOABSTRACT(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LOABSTRACT -->
+
+
+  <!-- [S] - RS_LOPROCESS -->
+  <parameterMap id="paramRS_LOPROCESS" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LOPROCESS" parameterMap="paramRS_LOPROCESS" resultClass="java.util.HashMap">
+    { ? = call LV01000Q.RS_LOPROCESS(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LOPROCESS -->
+
+
+  <!-- [S] - RS_NOCONFIRM -->
+  <parameterMap id="paramRS_NOCONFIRM" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+  </parameterMap>
+  <procedure id="RS_NOCONFIRM" parameterMap="paramRS_NOCONFIRM" resultClass="java.util.HashMap">
+    { ? = call LV01000Q.RS_NOCONFIRM(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_NOCONFIRM -->
+
+
+  <!-- [S] - RS_NOTICE -->
+  <parameterMap id="paramRS_NOTICE" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_LIST_CNT"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_NOTICE" parameterMap="paramRS_NOTICE" resultClass="java.util.HashMap">
+    { ? = call LV01000Q.RS_NOTICE(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_NOTICE -->
+
+
+  <!-- [S] - RS_RIPROCESS -->
+  <parameterMap id="paramRS_RIPROCESS" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+  </parameterMap>
+  <procedure id="RS_RIPROCESS" parameterMap="paramRS_RIPROCESS" resultClass="java.util.HashMap">
+    { ? = call LV01000Q.RS_RIPROCESS(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_RIPROCESS -->
+
+
+  <!-- [S] - RS_ROPROCESS -->
+  <parameterMap id="paramRS_ROPROCESS" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+  </parameterMap>
+  <procedure id="RS_ROPROCESS" parameterMap="paramRS_ROPROCESS" resultClass="java.util.HashMap">
+    { ? = call LV01000Q.RS_ROPROCESS(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_ROPROCESS -->
+
+
+</sqlMap>

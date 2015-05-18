@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2013-08-21
+  // Description
+  // LC02020E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LC02020E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+  <!-- [S] - RS_T1_MASTER -->
+  <parameterMap id="paramRS_T1_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ETC_DATE1"               mode="IN" />
+    <parameter property="P_ETC_DATE2"               mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_NM"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_MASTER" parameterMap="paramRS_T1_MASTER" resultClass="java.util.HashMap">
+    { ? = call LC02020E.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_MASTER -->
+
+
+  <!-- [S] - RS_T1_DETAIL -->
+  <parameterMap id="paramRS_T1_DETAIL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ETC_DATE"                mode="IN" />
+    <parameter property="P_ETC_NO"                  mode="IN" />
+    <parameter property="P_LINK_CENTER_CD"          mode="IN" />
+    <parameter property="P_LINK_BU_CD"              mode="IN" />
+    <parameter property="P_LINK_ETC_DATE"           mode="IN" />
+    <parameter property="P_LINK_ETC_NO"             mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_DETAIL" parameterMap="paramRS_T1_DETAIL" resultClass="java.util.HashMap">
+    { ? = call LC02020E.RS_T1_DETAIL(?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_DETAIL -->
+
+
+  <!-- [S] - RS_T2_MASTER -->
+  <parameterMap id="paramRS_T2_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ETC_DATE1"               mode="IN" />
+    <parameter property="P_ETC_DATE2"               mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_NM"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
+    { ? = call LC02020E.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T2_MASTER -->
+
+
+  <!-- [S] - RS_POP_SUB1 -->
+  <parameterMap id="paramRS_POP_SUB1" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_VALID_DATE"              mode="IN" />
+    <parameter property="P_BATCH_NO"                mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_STOCK_DATE"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_POP_SUB1" parameterMap="paramRS_POP_SUB1" resultClass="java.util.HashMap">
+    { ? = call LC02020E.RS_POP_SUB1(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_POP_SUB1 -->
+
+
+  <!-- [S] - RS_POP_SUB2 -->
+  <parameterMap id="paramRS_POP_SUB2" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ETC_DATE"                mode="IN" />
+    <parameter property="P_ETC_NO"                  mode="IN" />
+  </parameterMap>
+  <procedure id="RS_POP_SUB2" parameterMap="paramRS_POP_SUB2" resultClass="java.util.HashMap">
+    { ? = call LC02020E.RS_POP_SUB2(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_POP_SUB2 -->
+
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+
+
+  <!-- [S] - UPDATE_LC010ND [기타입출고상세내역] -->
+  <update id="UPDATE_LC010ND" parameterClass="java.util.Map">
+      UPDATE LC010ND
+         SET ETC_DIV                  = #P_ETC_DIV#
+            ,ETC_COMMENT              = #P_ETC_COMMENT# 
+       WHERE CENTER_CD                = #P_CENTER_CD#
+         AND BU_CD                    = #P_BU_CD#
+         AND ETC_DATE                 = #P_ETC_DATE#
+         AND ETC_NO                   = #P_ETC_NO#
+         AND LINE_NO                  = #P_LINE_NO#
+  </update>
+  <!-- [E] - UPDATE_LC010ND [기타입출고상세내역] -->
+</sqlMap>

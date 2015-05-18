@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LS01010Q_R01" pageWidth="595" pageHeight="842" columnWidth="567" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.652892561983471"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="P_SYSDATE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2008-01-01 01:01:01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_USER_ID" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_USER_NM" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="START_DATE" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[조회 시작일자]]></parameterDescription>
+		<defaultValueExpression><![CDATA["2008-01-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="END_DATE" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[조회 마지막 일자]]></parameterDescription>
+		<defaultValueExpression><![CDATA["2008-01-01"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="C0001" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="C0002" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="C0003" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="C0004" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="C0005" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="C0006" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="C0007" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="H0001" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="H0002" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="H0003" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="Title" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="HPRINTTIME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="HPUSER" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="HPAGE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="FTOTAL" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="WAREHOUSE_CD" class="java.lang.String"/>
+	<parameter name="WAREHOUSE_NM" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISP_LOCATION(M1.WAREHOUSE_CD ,M1.BANK_CD ,M1.BAY_CD ,M1.LEV_CD)       AS LOCATION
+            ,M1.ITEM_CD
+            ,C2.ITEM_NM
+            ,DISP_ITEM_SPEC(C1.DISPLAY_DIV ,C2.ITEM_SPEC ,C2.ITEM_STYLE ,C2.ITEM_COLOR ,C2.ITEM_SIZE) AS ITEM_SPEC
+            ,M1.ITEM_STATE
+            ,DISP_ITEMSTATE_TITLE(M1.ITEM_STATE) AS ITEM_STATE_TITLE
+            ,M1.ITEM_LOT
+            ,M1.INBOUND_SEQ
+            ,M1.STOCK_QTY
+            ,GETB_BOX(M1.STOCK_QTY, C2.BOX_UNIT_QTY)                    AS STOCK_BOX
+            ,GETB_EA (M1.STOCK_QTY, C2.BOX_UNIT_QTY)                    AS STOCK_EA
+,GET_AVAILABLE_QTY2(M1.CENTER_CD, M1.BU_CD, M1.WAREHOUSE_CD, M1.BANK_CD, M1.BAY_CD, M1.LEV_CD, M1.ITEM_CD, M1.ITEM_STATE, M1.ITEM_LOT, M1.BONDED_YN, M1.INBOUND_SEQ) AS PSTOCK_QTY
+            ,M1.STOCK_WEIGHT
+            ,C2.BOX_UNIT_QTY
+            ,M1.OUT_ORDER
+            ,M1.IN_ORDER
+            ,M1.INBOUND_DATE
+            ,M1.INBOUND_NO
+            ,C3.CODE_NM                                                   AS INOUT_NM
+            ,M1.MADE_DATE
+            ,M1.HOLD_YN
+            ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.WAREHOUSE_CD,M1.BANK_CD,M1.BAY_CD,M1.LEV_CD
+                               ORDER BY M1.ITEM_CD ,M1.ITEM_LOT ,M1.ITEM_STATE ,M1.INBOUND_SEQ)     AS FIRST_YN_LOC
+            ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.WAREHOUSE_CD,M1.BANK_CD,M1.BAY_CD,M1.LEV_CD, M1.ITEM_CD
+                               ORDER BY M1.ITEM_LOT ,M1.ITEM_STATE ,M1.INBOUND_SEQ)   AS FIRST_YN_ITEM
+            ,M1.CENTER_CD
+            ,C4.CENTER_NM
+            ,M1.BU_CD
+            ,C1.BU_NM
+            ,M1,BRAND_CD
+            ,B2.BRAND_NM
+            ,M1.WAREHOUSE_CD
+            ,C5.WAREHOUSE_NM
+        FROM LS010NM M1
+             JOIN CMBU      C1 ON C1.BU_CD        = M1.BU_CD
+             JOIN CMITEM       C2 ON C2.BU_CD        = M1.BU_CD
+                                 AND C2.ITEM_CD         = M1.ITEM_CD
+             JOIN VCMCODE      C3 ON C3.CODE_GRP        = 'LDIV03'
+                                 AND C3.CODE_CD         = M1.INOUT_CD
+             JOIN CMCENTER     C4 ON C4.CENTER_CD       = M1.CENTER_CD
+             JOIN CMWAREHOUSE  C5 ON C5.WAREHOUSE_CD    = M1.WAREHOUSE_CD
+       WHERE M1.CENTER_CD       = 'A1'
+         AND M1.BU_CD        = '9901'
+         AND M1.WAREHOUSE_CD LIKE '%'
+         AND M1.BANK_CD      LIKE '%'
+       ORDER BY LOCATION
+               ,ITEM_CD
+               ,ITEM_STATE
+               ,ITEM_LOT
+               ,INBOUND_SEQ]]>
+	</queryString>
+	<field name="LOCATION" class="java.lang.String"/>
+	<field name="ITEM_CD" class="java.lang.String"/>
+	<field name="ITEM_NM" class="java.lang.String"/>
+	<field name="ITEM_SPEC" class="java.lang.String"/>
+	<field name="ITEM_STATE" class="java.lang.String"/>
+	<field name="ITEM_STATE_TITLE" class="java.lang.String"/>
+	<field name="ITEM_LOT" class="java.lang.String"/>
+	<field name="INBOUND_SEQ" class="java.lang.String"/>
+	<field name="STOCK_QTY" class="java.math.BigDecimal"/>
+	<field name="STOCK_BOX" class="java.math.BigDecimal"/>
+	<field name="STOCK_EA" class="java.math.BigDecimal"/>
+	<field name="PSTOCK_QTY" class="java.math.BigDecimal"/>
+	<field name="STOCK_WEIGHT" class="java.math.BigDecimal"/>
+	<field name="BOX_UNIT_QTY" class="java.math.BigDecimal"/>
+	<field name="OUT_ORDER" class="java.math.BigDecimal"/>
+	<field name="IN_ORDER" class="java.lang.String"/>
+	<field name="INBOUND_DATE" class="java.util.Date"/>
+	<field name="INBOUND_NO" class="java.lang.String"/>
+	<field name="INOUT_NM" class="java.lang.String"/>
+	<field name="MADE_DATE" class="java.util.Date"/>
+	<field name="HOLD_YN" class="java.lang.String"/>
+	<field name="FIRST_YN_LOC" class="java.lang.String"/>
+	<field name="FIRST_YN_ITEM" class="java.lang.String"/>
+	<field name="CENTER_CD" class="java.lang.String"/>
+	<field name="CENTER_NM" class="java.lang.String"/>
+	<field name="BU_CD" class="java.lang.String"/>
+	<field name="BU_NM" class="java.lang.String"/>
+  <field name="BRAND_CD" class="java.lang.String"/>
+  <field name="BRAND_NM" class="java.lang.String"/>
+	<field name="WAREHOUSE_CD" class="java.lang.String"/>
+	<field name="WAREHOUSE_NM" class="java.lang.String"/>
+	<variable name="SUM_STOCK_QTY" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{STOCK_QTY}]]></variableExpression>
+	</variable>
+	<variable name="PAGE_SUM_STOCK_QTY" class="java.math.BigDecimal" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{STOCK_QTY}]]></variableExpression>
+	</variable>
+	<variable name="SUM_STOCK_BOX" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{STOCK_BOX}]]></variableExpression>
+	</variable>
+	<variable name="PAGE_SUM_STOCK_BOX" class="java.math.BigDecimal" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{STOCK_BOX}]]></variableExpression>
+	</variable>
+	<variable name="SUM_STOCK_EA" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{STOCK_EA}]]></variableExpression>
+	</variable>
+	<variable name="PAGE_SUM_STOCK_EA" class="java.math.BigDecimal" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{STOCK_EA}]]></variableExpression>
+	</variable>
+	<variable name="GROUP_LOCATION_SUM_STOCK_QTY" class="java.math.BigDecimal" resetType="Group" resetGroup="GROUP_LOCATION" calculation="Sum">
+		<variableExpression><![CDATA[$F{STOCK_QTY}]]></variableExpression>
+	</variable>
+	<variable name="GROUP_LOCATION_SUM_STOCK_BOX" class="java.math.BigDecimal" resetType="Group" resetGroup="GROUP_LOCATION" calculation="Sum">
+		<variableExpression><![CDATA[$F{STOCK_BOX}]]></variableExpression>
+	</variable>
+	<variable name="GROUP_LOCATION_SUM_STOCK_EA" class="java.math.BigDecimal" resetType="Group" resetGroup="GROUP_LOCATION" calculation="Sum">
+		<variableExpression><![CDATA[$F{STOCK_EA}]]></variableExpression>
+	</variable>
+	<variable name="GROUP_LOCATION_SUM_PSTOCK_QTY" class="java.math.BigDecimal" resetType="Group" resetGroup="GROUP_LOCATION" calculation="Sum">
+		<variableExpression><![CDATA[$F{PSTOCK_QTY}]]></variableExpression>
+	</variable>
+	<group name="GROUP_LOCATION">
+		<groupExpression><![CDATA[$F{LOCATION}]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="21" splitType="Stretch">
+				<line>
+					<reportElement key="line-9" x="0" y="19" width="566" height="1"/>
+				</line>
+				<textField evaluationTime="Group" evaluationGroup="GROUP_LOCATION" pattern="#,##0;-#,##0" isBlankWhenNull="true">
+					<reportElement key="textField-52" x="462" y="1" width="53" height="18"/>
+					<box>
+						<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+						<rightPen lineWidth="0.0" lineStyle="Dashed" lineColor="#999999"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="나눔고딕" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{GROUP_LOCATION_SUM_STOCK_QTY}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement key="textField-55" x="0" y="1" width="250" height="18"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="나눔고딕" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{LOCATION} + " - " + $P{FTOTAL}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0;-#,##0">
+					<reportElement x="515" y="1" width="52" height="18"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="나눔고딕" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{GROUP_LOCATION_SUM_PSTOCK_QTY}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="91" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-57" x="0" y="45" width="60" height="14"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{H0001}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-58" x="0" y="61" width="60" height="14"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{H0002}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-60" x="366" y="45" width="69" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{HPRINTTIME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-61" x="366" y="61" width="69" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{HPUSER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-62" x="366" y="77" width="69" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{HPAGE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-1" x="435" y="45" width="131" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_SYSDATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-2" x="435" y="61" width="131" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_USER_ID}+"/"+$P{P_USER_NM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-5" x="61" y="45" width="210" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{CENTER_CD}+"-"+$F{CENTER_NM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-6" x="61" y="61" width="210" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{BU_CD}+"-"+$F{BU_NM}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-23" x="480" y="77" width="86" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-24" x="435" y="77" width="98" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}+"/"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-56" x="173" y="5" width="227" height="29"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="20" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{Title}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-59" x="0" y="77" width="60" height="14"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{H0003}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-46" x="61" y="77" width="210" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{WAREHOUSE_CD}+"-"+$P{WAREHOUSE_NM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<line>
+				<reportElement key="line-10" x="0" y="16" width="566" height="1"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-64" x="66" y="1" width="67" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{C0002}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-65" x="133" y="1" width="165" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{C0003}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-66" x="298" y="1" width="22" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{C0004}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-1" x="0" y="0" width="566" height="1"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-68" x="392" y="1" width="70" height="15"/>
+				<box>
+					<rightPen lineWidth="0.0" lineStyle="Dashed" lineColor="#999999"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{C0006}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-67" x="320" y="1" width="72" height="15"/>
+				<box>
+					<rightPen lineWidth="0.0" lineStyle="Dashed" lineColor="#999999"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{C0005}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-63" x="0" y="1" width="65" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{C0001}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-69" x="462" y="1" width="53" height="15"/>
+				<box>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed" lineColor="#999999"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{C0007}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="515" y="1" width="52" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[가용수량]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-51" x="0" y="1" width="65" height="18">
+					<printWhenExpression><![CDATA[new Boolean($F{FIRST_YN_LOC}.equals("Y"))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{LOCATION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="133" y="1" width="165" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ITEM_NM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-8" x="298" y="1" width="22" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ITEM_STATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-19" x="66" y="1" width="67" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ITEM_CD}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-6" positionType="FixRelativeToBottom" mode="Opaque" x="64" y="19" width="502" height="1" forecolor="#CCCCCC" backcolor="#CCCCCC"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-26" x="392" y="1" width="70" height="18"/>
+				<box>
+					<rightPen lineWidth="0.0" lineStyle="Dashed" lineColor="#999999"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{INBOUND_SEQ}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-30" x="320" y="1" width="72" height="18"/>
+				<box>
+					<rightPen lineWidth="0.0" lineStyle="Dashed" lineColor="#999999"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ITEM_LOT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0" isBlankWhenNull="true">
+				<reportElement key="textField-47" x="462" y="1" width="53" height="18"/>
+				<box>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed" lineColor="#999999"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{STOCK_QTY}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;-#,##0">
+				<reportElement x="515" y="1" width="52" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="나눔고딕" size="10"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{PSTOCK_QTY}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

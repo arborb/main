@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!-- Grid Column Reorder CSS/JS -->
+<link rel="stylesheet" href="../../layout/popup/gridcolumnreorderpopup.css" />
+<script src="js/gridcolumnreorderpopup.js"></script>
+</head>
+<body>
+  <div id="divTopView" class="ui-gbox-popup">
+    <table class="ui-tbl-popup">
+      <tr>
+        <td>
+          <div class="ui-lbl-normal">프로그램명</div>
+          <input class="ui-edt-display" type="text" id="edtProgram_Nm" disabled="disabled" style="width: 200px;" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="ui-lbl-normal">그리드명</div>
+          <input class="ui-edt-display" type="text" id="edtGrid_Nm" disabled="disabled" style="width: 200px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divCenterView" class="ui-ctnr-normal">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdMaster" class="ui-grd-title">컬럼순서 조정</td>
+        <td>
+          <input type="button" id="btnColumnUp" class="ui-btn-trans" value="▲" style="width: 30px; height: 20px;" />
+          <input type="button" id="btnColumnDown" class="ui-btn-trans" value="▼" style="width: 30px; height: 20px;" />
+        </td>
+        <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdMaster"></div>
+  </div>
+  <div id="divBottomView" class="ui-ctnr-noborder" style="min-width: 100px; padding: 5px; text-align: right;">
+    <input type="button" id="btnOk" value="저장" class="ui-btn-cmd" style="width: 60px;" />
+    <input type="button" id="btnCancel" value="취소" class="ui-btn-cmd" style="width: 60px;" />
+  </div>
+</body>
+</html>

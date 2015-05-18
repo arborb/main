@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 재고분석현황
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  //  LS03010Q 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LS03010Q">
+
+
+  <!--
+    //================================================================================================================
+    // SELECT SQLMAP
+    //================================================================================================================
+  -->
+  <!-- [S] - RS_T1_MASTER -->
+  <parameterMap id="paramRS_T1_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"         mode="IN" />
+    <parameter property="P_BU_CD"             mode="IN" />
+    <parameter property="P_BASE_DATE"         mode="IN" />
+    <parameter property="P_MONTH_QTY"         mode="IN" />
+    <parameter property="P_BRAND_CD"          mode="IN" />
+    <parameter property="P_DEPART_CD"         mode="IN" />
+    <parameter property="P_LINE_CD"           mode="IN" />
+    <parameter property="P_CLASS_CD"          mode="IN" />
+    <parameter property="P_ITEM_CD"           mode="IN" />
+    <parameter property="P_ITEM_NM"           mode="IN" />
+    <parameter property="P_ITEM_STATE"        mode="IN" />
+    <parameter property="P_USER_ID"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_MASTER" parameterMap="paramRS_T1_MASTER" resultClass="java.util.HashMap">
+    { ? = call LS03010Q.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_MASTER -->
+
+
+  <!-- [S] - RS_T2_MASTER -->
+  <parameterMap id="paramRS_T2_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"         mode="IN" />
+    <parameter property="P_BU_CD"             mode="IN" />
+    <parameter property="P_BASE_DATE"         mode="IN" />
+    <parameter property="P_MONTH_QTY"         mode="IN" />
+    <parameter property="P_BRAND_CD"          mode="IN" />
+    <parameter property="P_DEPART_CD"         mode="IN" />
+    <parameter property="P_LINE_CD"           mode="IN" />
+    <parameter property="P_CLASS_CD"          mode="IN" />
+    <parameter property="P_ITEM_CD"           mode="IN" />
+    <parameter property="P_ITEM_NM"           mode="IN" />
+    <parameter property="P_ITEM_STATE"        mode="IN" />
+    <parameter property="P_USER_ID"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
+    { ? = call LS03010Q.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T2_MASTER -->
+
+
+  <!-- [S] - RS_T3_MASTER -->
+  <parameterMap id="paramRS_T3_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"         mode="IN" />
+    <parameter property="P_BU_CD"             mode="IN" />
+    <parameter property="P_INOUT_DATE1"       mode="IN" />
+    <parameter property="P_INOUT_DATE2"       mode="IN" />
+    <parameter property="P_BRAND_CD"          mode="IN" />
+    <parameter property="P_DEPART_CD"         mode="IN" />
+    <parameter property="P_LINE_CD"           mode="IN" />
+    <parameter property="P_CLASS_CD"          mode="IN" />
+    <parameter property="P_ITEM_CD"           mode="IN" />
+    <parameter property="P_ITEM_NM"           mode="IN" />
+    <parameter property="P_ITEM_STATE"        mode="IN" />
+    <parameter property="P_USER_ID"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T3_MASTER" parameterMap="paramRS_T3_MASTER" resultClass="java.util.HashMap">
+    { ? = call LS03010Q.RS_T3_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T3_MASTER -->
+
+
+  <!-- [S] - RS_T4_MASTER -->
+  <parameterMap id="paramRS_T4_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"         mode="IN" />
+    <parameter property="P_BU_CD"             mode="IN" />
+    <parameter property="P_INOUT_DATE1"       mode="IN" />
+    <parameter property="P_INOUT_DATE2"       mode="IN" />
+    <parameter property="P_BRAND_CD"          mode="IN" />
+    <parameter property="P_DEPART_CD"         mode="IN" />
+    <parameter property="P_LINE_CD"           mode="IN" />
+    <parameter property="P_CLASS_CD"          mode="IN" />
+    <parameter property="P_ITEM_CD"           mode="IN" />
+    <parameter property="P_ITEM_NM"           mode="IN" />
+    <parameter property="P_ITEM_STATE"        mode="IN" />
+    <parameter property="P_USER_ID"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T4_MASTER" parameterMap="paramRS_T4_MASTER" resultClass="java.util.HashMap">
+    { ? = call LS03010Q.RS_T4_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T4_MASTER -->
+
+
+  <!-- [S] - RS_T4_DETAIL -->
+  <parameterMap id="paramRS_T4_DETAIL" class="java.util.Map">
+    <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"         mode="IN" />
+    <parameter property="P_BU_CD"             mode="IN" />
+    <parameter property="P_INOUT_DATE1"       mode="IN" />
+    <parameter property="P_INOUT_DATE2"       mode="IN" />
+    <parameter property="P_BRAND_CD"          mode="IN" />
+    <parameter property="P_ITEM_CD"           mode="IN" />
+    <parameter property="P_ITEM_STATE"        mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T4_DETAIL" parameterMap="paramRS_T4_DETAIL" resultClass="java.util.HashMap">
+    { ? = call LS03010Q.RS_T4_DETAIL(?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T4_DETAIL -->
+
+
+  <!-- [S] - RS_T5_MASTER -->
+  <parameterMap id="paramRS_T5_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"         mode="IN" />
+    <parameter property="P_BU_CD"             mode="IN" />
+    <parameter property="P_INOUT_DATE1"       mode="IN" />
+    <parameter property="P_INOUT_DATE2"       mode="IN" />
+    <parameter property="P_BRAND_CD"          mode="IN" />
+    <parameter property="P_DEPART_CD"         mode="IN" />
+    <parameter property="P_LINE_CD"           mode="IN" />
+    <parameter property="P_CLASS_CD"          mode="IN" />
+    <parameter property="P_ITEM_CD"           mode="IN" />
+    <parameter property="P_ITEM_NM"           mode="IN" />
+    <parameter property="P_ITEM_STATE"        mode="IN" />
+    <parameter property="P_USER_ID"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T5_MASTER" parameterMap="paramRS_T5_MASTER" resultClass="java.util.HashMap">
+    { ? = call LS03010Q.RS_T5_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T5_MASTER -->
+
+
+  <!-- [S] - RS_T6_MASTER -->
+  <parameterMap id="paramRS_T6_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"         mode="IN" />
+    <parameter property="P_BU_CD"             mode="IN" />
+    <parameter property="P_INOUT_DATE1"       mode="IN" />
+    <parameter property="P_INOUT_DATE2"       mode="IN" />
+    <parameter property="P_BRAND_CD"          mode="IN" />
+    <parameter property="P_DEPART_CD"         mode="IN" />
+    <parameter property="P_LINE_CD"           mode="IN" />
+    <parameter property="P_CLASS_CD"          mode="IN" />
+    <parameter property="P_ITEM_CD"           mode="IN" />
+    <parameter property="P_ITEM_NM"           mode="IN" />
+    <parameter property="P_ITEM_STATE"        mode="IN" />
+    <parameter property="P_USER_ID"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T6_MASTER" parameterMap="paramRS_T6_MASTER" resultClass="java.util.HashMap">
+    { ? = call LS03010Q.RS_T6_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T6_MASTER -->
+
+
+  <!--
+    //================================================================================================================
+    // INSERT/UPDATE/DELETE SQLMAP
+    //================================================================================================================
+  -->
+
+
+</sqlMap>

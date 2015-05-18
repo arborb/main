@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2014-06-03
+  // Description
+  // CM10020E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CM10020E">
+
+
+
+  <!--
+    //================================================================================================================
+    // SELECT SQLMAP
+    //================================================================================================================
+  -->
+    <!-- [S] - RS_MASTER -->
+  <parameterMap id="paramRS_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_SELLER_CD"               mode="IN" />
+    <parameter property="P_DEAL_CD"                 mode="IN" />
+    <parameter property="P_EVENT_NM"                mode="IN" />
+    <parameter property="P_MALL_CD"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+    { ? = call CM10020E.RS_MASTER(?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_MASTER -->
+
+
+  <!-- [S] - RS_DETAIL -->
+  <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_DEAL_CD"                 mode="IN" />
+<!--     <parameter property="P_EVENT_CD"                mode="IN" /> -->
+  </parameterMap>
+  <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+    { ? = call CM10020E.RS_DETAIL(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_DETAIL -->
+
+
+  <!--
+    //================================================================================================================
+    // INSERT/UPDATE/DELETE SQLMAP
+    //================================================================================================================
+  -->
+    <!-- [S] - INSERT_CMEVENTM [이벤트마스터] -->
+  <insert id="INSERT_CMEVENTM" parameterClass="java.util.Map">
+    INSERT INTO CMEVENTM
+               (
+                BU_CD
+               ,BRAND_CD
+               ,DEAL_CD
+               <isNotEmpty prepend = "," property= "P_EVENT_DIV"               >EVENT_DIV                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EVENT_NM"                >EVENT_NM                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EVENT_FROM_DATE"         >EVENT_FROM_DATE            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EVENT_TO_DATE"           >EVENT_TO_DATE              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EVENT_VALUE"             >EVENT_VALUE                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_BU_CD#
+               ,#P_BRAND_CD#
+               ,#P_DEAL_CD#
+               <isNotEmpty prepend = "," property= "P_EVENT_DIV"               >#P_EVENT_DIV#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EVENT_NM"                >#P_EVENT_NM#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EVENT_FROM_DATE"         >#P_EVENT_FROM_DATE#        </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EVENT_TO_DATE"           >#P_EVENT_TO_DATE#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EVENT_VALUE"             >#P_EVENT_VALUE#            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+               ,#P_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_CMEVENTM [이벤트마스터] -->
+
+  <!-- [S] - UPDATE_CMEVENTM [이벤트마스터] -->
+  <update id="UPDATE_CMEVENTM" parameterClass="java.util.Map">
+    UPDATE CMEVENTM
+       SET EVENT_FROM_DATE                = #P_FROM_DATE#
+          <isNotNull prepend = "," property= "P_TO_DATE"                 >EVENT_TO_DATE            = #P_TO_DATE#                </isNotNull>
+          <isNotNull prepend = "," property= "P_EVENT_DIV"               >EVENT_DIV                = #P_EVENT_DIV#              </isNotNull>
+          <isNotNull prepend = "," property= "P_EVENT_VALUE"             >EVENT_VALUE              = #P_EVENT_VALUE#            </isNotNull>
+          <isNotNull prepend = "," property= "P_REMARK1"                 >REMARK1                  = #P_REMARK1#                </isNotNull>
+          ,REG_USER_ID              = #P_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE BU_CD                    = #P_BU_CD#
+       AND BRAND_CD                 = #P_BRAND_CD#
+       AND EVENT_NM                 = #P_EVENT_NM#
+       AND DEAL_CD                  = #P_DEAL_CD#
+  </update>
+  <!-- [E] - UPDATE_CMEVENTM [이벤트마스터] -->
+  
+  <!-- [S] - DELETE_CMEVENTM [이벤트마스터] -->
+  <delete id="DELETE_CMEVENTM" parameterClass="java.util.Map">
+    DELETE 
+      FROM CMEVENTM
+     WHERE BU_CD                    = #P_BU_CD#
+       AND BRAND_CD                 = #P_BRAND_CD#
+       AND EVENT_NM                 = #P_EVENT_NM#
+       AND DEAL_CD                  = #P_DEAL_CD#
+  </delete>
+  <!-- [E] - DELETE_CMEVENTM [이벤트마스터] -->
+
+  <!-- [S] - INSERT_CMEVENTD [이벤트디테일] -->
+  <insert id="INSERT_CMEVENTD" parameterClass="java.util.Map">
+    INSERT INTO CMEVENTD
+               (
+                BU_CD
+               ,BRAND_CD
+               ,DEAL_CD
+               ,OPTION_CD
+               ,LINE_NO
+               <isNotEmpty prepend = "," property= "P_ITEM_CD"                 >ITEM_CD                    </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EVENT_QTY"               >EVENT_QTY                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_BU_CD#
+               ,#P_BRAND_CD#
+               ,#P_DEAL_CD#
+               ,#P_OPTION_CD#
+               ,#P_LINE_NO#
+               <isNotEmpty prepend = "," property= "P_ITEM_CD"                 >#P_ITEM_CD#                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EVENT_QTY"               >#P_EVENT_QTY#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+               ,#P_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_CMEVENTD [이벤트디테일] -->
+  
+
+  <!-- [S] - UPDATE_CMEVENTD [이벤트디테일] -->
+  <update id="UPDATE_CMEVENTD" parameterClass="java.util.Map">
+    UPDATE CMEVENTD
+       SET ITEM_CD                  = #P_ITEM_CD#
+          <isNotNull prepend = "," property= "P_EVENT_QTY"               >EVENT_QTY                = #P_EVENT_QTY#              </isNotNull>
+          <isNotNull prepend = "," property= "P_REMARK1"                 >REMARK1                  = #P_REMARK1#                </isNotNull>
+          ,REG_USER_ID              = #P_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE BU_CD                    = #P_BU_CD#
+       AND BRAND_CD                 = #P_BRAND_CD#
+       AND DEAL_CD                  = #P_DEAL_CD#
+       AND OPTION_CD                = #P_OPTION_CD#
+       AND LINE_NO                  = #P_LINE_NO#
+       
+  </update>
+  <!-- [E] - UPDATE_CMEVENTD [이벤트디테일] -->
+
+
+  <!-- [S] - DELETE_CMEVENTD [이벤트디테일] -->
+  <delete id="DELETE_CMEVENTD" parameterClass="java.util.Map">
+    DELETE 
+      FROM CMEVENTD
+     WHERE BU_CD                    = #P_BU_CD#
+       AND BRAND_CD                 = #P_BRAND_CD#
+       AND DEAL_CD                  = #P_DEAL_CD#
+       AND LINE_NO                  = #P_LINE_NO#
+       AND OPTION_CD                = #P_OPTION_CD#
+  </delete>
+  <!-- [E] - DELETE_CMEVENTD [이벤트디테일] -->
+  
+  
+  <!-- [S] - DELETE_CMEVENTD_ALL [이벤트디테일 전체] -->
+  <delete id="DELETE_CMEVENTD_ALL" parameterClass="java.util.Map">
+      DELETE 
+        FROM CMEVENTD
+     WHERE BU_CD                    = #P_BU_CD#
+       AND BRAND_CD                 = #P_BRAND_CD#
+       AND DEAL_CD                  = #P_DEAL_CD#
+  </delete>
+  <!-- [E] - DELETE_CMEVENTD_ALL [이벤트디테일 전체] --> 
+
+  <!-- [S] - CM10020E.CM_EVENT_GETNO -->
+  <!--
+  <parameterMap id="paramRS.CM_EVENT_GETNO" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_EVENT_CD"                mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.lang.Number"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM10020E.CM_EVENT_GETNO" parameterMap="paramRS.CM_EVENT_GETNO" resultClass="java.util.HashMap">
+      { call CM10020E.CM_EVENT_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+    -->
+  <!-- [E] - CM10020E.CM_EVENT_GETNO -->
+</sqlMap>

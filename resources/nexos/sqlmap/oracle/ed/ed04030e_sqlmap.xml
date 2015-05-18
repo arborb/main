@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // [송신]반입확정 관리
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  //  ED04030E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="ED04030E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - RS_MASTER -->
+    <parameterMap id="paramRS_MASTER" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_CENTER_CD"         mode="IN" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_DEFINE_NO"         mode="IN" />
+        <parameter property="P_SEND_DATE1"        mode="IN" />
+        <parameter property="P_SEND_DATE2"        mode="IN" />
+        <parameter property="P_VIEW_DIV"          mode="IN" />
+    </parameterMap>
+    <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+        { ? = call ED04030E.RS_MASTER(?, ?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_MASTER -->
+
+
+    <!-- [S] - RS_DETAIL -->
+    <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_CENTER_CD"         mode="IN" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_DEFINE_NO"         mode="IN" />
+        <parameter property="P_SEND_DATE"         mode="IN" />
+        <parameter property="P_SEND_NO"           mode="IN" />
+        <parameter property="P_VIEW_DIV"          mode="IN" />
+    </parameterMap>
+    <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+        { ? = call ED04030E.RS_DETAIL(?, ?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_DETAIL -->
+
+
+    <!-- [S] - RS_SUB -->
+    <parameterMap id="paramRS_SUB" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_EDI_DIV"           mode="IN" />
+        <parameter property="P_DEFINE_NO"         mode="IN" />
+        <parameter property="P_SEND_DATE"         mode="IN" />
+        <parameter property="P_SEND_NO"           mode="IN" />
+        <parameter property="P_SEND_SEQ"          mode="IN" />
+    </parameterMap>
+    <procedure id="RS_SUB" parameterMap="paramRS_SUB" resultClass="java.util.HashMap">
+        { ? = call ED04030E.RS_SUB(?, ?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_SUB -->
+
+
+    <!-- [S] - RS_SUB1 -->
+    <parameterMap id="paramRS_SUB1" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_BU_CD"             mode="IN" />
+    </parameterMap>
+    <procedure id="RS_SUB1" parameterMap="paramRS_SUB1" resultClass="java.util.HashMap">
+        { ? = call ED04030E.RS_SUB1(?) }
+    </procedure>
+    <!-- [E] - RS_SUB1 -->
+
+
+    <!-- [S] - RS_SUB2 -->
+    <parameterMap id="paramRS_SUB2" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_CENTER_CD"         mode="IN" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_SEND_DATE1"        mode="IN" />
+        <parameter property="P_SEND_DATE2"        mode="IN" />
+    </parameterMap>
+    <procedure id="RS_SUB2" parameterMap="paramRS_SUB2" resultClass="java.util.HashMap">
+        { ? = call ED04030E.RS_SUB2(?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_SUB2 -->
+
+
+    <!-- [S] - RS_SUB3 -->
+    <parameterMap id="paramRS_SUB3" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_CENTER_CD"         mode="IN" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_SEND_DATE1"        mode="IN" />
+        <parameter property="P_SEND_DATE2"        mode="IN" />
+    </parameterMap>
+    <procedure id="RS_SUB3" parameterMap="paramRS_SUB3" resultClass="java.util.HashMap">
+        { ? = call ED04030E.RS_SUB3(?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_SUB3 -->
+
+
+</sqlMap>

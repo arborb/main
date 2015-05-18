@@ -1,0 +1,1255 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  // PROCEDURE 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap>
+ 
+
+  <!--
+    //==================================================================================================================
+    // PROCEDURE SQLMAP
+    //==================================================================================================================
+  -->
+  <!--
+    //==================================================================================================================
+    // WF PACKAGE
+    //==================================================================================================================
+  -->
+  <!-- [S] - WF.CHK_LOCATION -->
+  <parameterMap id="paramWF.CHK_LOCATION01" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.CHK_LOCATION01" parameterMap="paramWF.CHK_LOCATION01" resultClass="java.util.HashMap">
+      { call WF.CHK_LOCATION(?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.CHK_LOCATION -->
+
+  <!-- [S] - WF.CHK_LOCATION -->
+  <parameterMap id="paramWF.CHK_LOCATION02" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_ZONE_CD"                 mode="IN" />
+    <parameter property="P_BANK_CD"                 mode="IN" />
+    <parameter property="P_BAY_CD"                  mode="IN" />
+    <parameter property="P_LEV_CD"                  mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.CHK_LOCATION02" parameterMap="paramWF.CHK_LOCATION02" resultClass="java.util.HashMap">
+      { call WF.CHK_LOCATION(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.CHK_LOCATION -->
+
+  <!-- [S] - WF.GET_LA_REQUEST_YN -->
+  <parameterMap id="paramWF.GET_LA_REQUEST_YN" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_REQUEST_DATE"            mode="IN" />
+    <parameter property="P_REQUEST_NO"              mode="IN" />
+    <parameter property="O_REQUEST_YN"              mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_LA_REQUEST_YN" parameterMap="paramWF.GET_LA_REQUEST_YN" resultClass="java.util.HashMap">
+      { call WF.GET_LA_REQUEST_YN(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_LA_REQUEST_YN -->
+  
+  <!-- [S] - WF.GET_AVAILABLE_QTY -->
+  <parameterMap id="paramWF.GET_AVAILABLE_QTY01" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_POLICY_LO310"            mode="IN" />
+    <parameter property="P_POLICY_LO320"            mode="IN" />
+    <parameter property="O_AVAILABLE_QTY"           mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_AVAILABLE_QTY01" parameterMap="paramWF.GET_AVAILABLE_QTY01" resultClass="java.util.HashMap">
+      { call WF.GET_AVAILABLE_QTY(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_AVAILABLE_QTY -->
+
+  <!-- [S] - WF.GET_AVAILABLE_QTY -->
+  <parameterMap id="paramWF.GET_AVAILABLE_QTY02" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_STOCK_DATE"              mode="IN" />
+    <parameter property="P_STOCK_IN_GRP"            mode="IN" />
+    <parameter property="P_STOCK_ID"                mode="IN" />
+    <parameter property="P_STOCK_QTY"               mode="IN" />
+  </parameterMap>
+    <procedure id="WF.GET_AVAILABLE_QTY02" parameterMap="paramWF.GET_AVAILABLE_QTY02" resultClass="java.util.HashMap">
+      { call WF.GET_AVAILABLE_QTY(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_AVAILABLE_QTY -->
+
+  <!-- [S] - WF.GET_AVAILABLE_QTY -->
+  <parameterMap id="paramWF.GET_AVAILABLE_QTY03" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_STOCK_DATE"              mode="IN" />
+    <parameter property="P_STOCK_IN_GRP"            mode="IN" />
+    <parameter property="P_STOCK_ID"                mode="IN" />
+    <parameter property="P_STOCK_QTY"               mode="IN" />
+    <parameter property="O_AVAILABLE_QTY"           mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_AVAILABLE_QTY03" parameterMap="paramWF.GET_AVAILABLE_QTY03" resultClass="java.util.HashMap">
+      { call WF.GET_AVAILABLE_QTY(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_AVAILABLE_QTY -->
+
+  <!-- [S] - WF.GET_AVAILABLE_QTY -->
+  <parameterMap id="paramWF.GET_AVAILABLE_QTY04" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+  </parameterMap>
+    <procedure id="WF.GET_AVAILABLE_QTY04" parameterMap="paramWF.GET_AVAILABLE_QTY04" resultClass="java.util.HashMap">
+      { call WF.GET_AVAILABLE_QTY(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_AVAILABLE_QTY -->
+
+  <!-- [S] - WF.GET_CLOSE_TERM -->
+  <parameterMap id="paramWF.GET_CLOSE_TERM" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="O_CLOSE_START_DATE"        mode="OUT" javaType="java.util.Date"       jdbcType="TIMESTAMP" />
+    <parameter property="O_CLOSE_END_DATE"          mode="OUT" javaType="java.util.Date"       jdbcType="TIMESTAMP" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_CLOSE_TERM" parameterMap="paramWF.GET_CLOSE_TERM" resultClass="java.util.HashMap">
+      { call WF.GET_CLOSE_TERM(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_CLOSE_TERM -->
+
+  <!-- [S] - WF.GET_IMPLEMENT_POLICY -->
+  <parameterMap id="paramWF.GET_IMPLEMENT_POLICY" class="java.util.Map">
+    <parameter property="P_POLICY_CD"               mode="IN" />
+    <parameter property="P_POLICY_VAL"              mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_IMPLEMENT_POLICY" parameterMap="paramWF.GET_IMPLEMENT_POLICY" resultClass="java.util.HashMap">
+      { call WF.GET_IMPLEMENT_POLICY(?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_IMPLEMENT_POLICY -->
+
+  <!-- [S] - WF.GET_LC_CONFIRM_YN -->
+  <parameterMap id="paramWF.GET_LC_CONFIRM_YN" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ETC_DATE"                mode="IN" />
+    <parameter property="P_ETC_NO"                  mode="IN" />
+    <parameter property="P_TABLE_DIV"               mode="IN" />
+    <parameter property="O_CONFIRM_YN"              mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_LC_CONFIRM_YN" parameterMap="paramWF.GET_LC_CONFIRM_YN" resultClass="java.util.HashMap">
+      { call WF.GET_LC_CONFIRM_YN(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_LC_CONFIRM_YN -->
+
+  <!-- [S] - WF.GET_LI_INBOUND_STATE -->
+  <parameterMap id="paramWF.GET_LI_INBOUND_STATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INBOUND_DATE"            mode="IN" />
+    <parameter property="P_INBOUND_NO"              mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="P_STATE_DIV"               mode="IN" />
+    <parameter property="O_INBOUND_STATE"           mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_LI_INBOUND_STATE" parameterMap="paramWF.GET_LI_INBOUND_STATE" resultClass="java.util.HashMap">
+      { call WF.GET_LI_INBOUND_STATE(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_LI_INBOUND_STATE -->
+
+  <!-- [S] - WF.GET_LOCATION -->
+  <parameterMap id="paramWF.GET_LOCATION" class="java.util.Map">
+    <parameter property="P_LOCATION"                mode="IN" />
+    <parameter property="O_ZONE_CD"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_BANK_CD"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_BAY_CD"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_LEV_CD"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_LOCATION" parameterMap="paramWF.GET_LOCATION" resultClass="java.util.HashMap">
+      { call WF.GET_LOCATION(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_LOCATION -->
+
+  <!-- [S] - WF.GET_LO_OUTBOUND_STATE -->
+  <parameterMap id="paramWF.GET_LO_OUTBOUND_STATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="P_STATE_DIV"               mode="IN" />
+    <parameter property="O_OUTBOUND_STATE"          mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_LO_OUTBOUND_STATE" parameterMap="paramWF.GET_LO_OUTBOUND_STATE" resultClass="java.util.HashMap">
+      { call WF.GET_LO_OUTBOUND_STATE(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_LO_OUTBOUND_STATE -->
+
+  <!-- [S] - WF.GET_LO_PSTOCK_QTY -->
+  <parameterMap id="paramWF.GET_LO_PSTOCK_QTY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_POLICY_LO310"            mode="IN" />
+    <parameter property="P_POLICY_LO320"            mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="O_STOCK_QTY"               mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_OUT_WAIT_QTY"            mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_VIRTUAL_QTY"             mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_PSTOCK_QTY"              mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_LO_PSTOCK_QTY" parameterMap="paramWF.GET_LO_PSTOCK_QTY" resultClass="java.util.HashMap">
+      { call WF.GET_LO_PSTOCK_QTY(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_LO_PSTOCK_QTY -->
+  
+  <!-- [S] - WF.GET_LX_XDOCK_STATE -->
+  <parameterMap id="paramWF.GET_LX_XDOCK_STATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_XDOCK_DATE"              mode="IN" />
+    <parameter property="P_XDOCK_NO"                mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_XDOCK_TYPE"              mode="IN" />
+    <parameter property="P_DELIVERY_BATCH"          mode="IN" />
+    <parameter property="P_DELIVERY_CD"             mode="IN" />
+    <parameter property="P_RDELIVERY_CD"            mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="P_STATE_DIV"               mode="IN" />
+    <parameter property="O_XDOCK_STATE"             mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_LX_XDOCK_STATE" parameterMap="paramWF.GET_LX_XDOCK_STATE" resultClass="java.util.HashMap">
+      { call WF.GET_LX_XDOCK_STATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_LX_XDOCK_STATE -->
+
+  <!-- [S] - WF.GET_POLICY_VAL -->
+  <parameterMap id="paramWF.GET_POLICY_VAL" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_POLICY_CD"               mode="IN" />
+    <parameter property="O_POLICY_VAL"              mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_POLICY_VAL" parameterMap="paramWF.GET_POLICY_VAL" resultClass="java.util.HashMap">
+      { call WF.GET_POLICY_VAL(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_POLICY_VAL -->
+
+  <!-- [S] - WF.GET_PROCESS_STATE -->
+  <parameterMap id="paramWF.GET_PROCESS_STATE01" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_PROCESS_GRP"             mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="O_PRE_STATE"               mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_CUR_STATE"               mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_NXT_STATE"               mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_PROCESS_STATE01" parameterMap="paramWF.GET_PROCESS_STATE01" resultClass="java.util.HashMap">
+      { call WF.GET_PROCESS_STATE(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_PROCESS_STATE -->
+
+  <!-- [S] - WF.GET_PROCESS_STATE -->
+  <parameterMap id="paramWF.GET_PROCESS_STATE02" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_PROCESS_GRP"             mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+  </parameterMap>
+    <procedure id="WF.GET_PROCESS_STATE02" parameterMap="paramWF.GET_PROCESS_STATE02" resultClass="java.util.HashMap">
+      { call WF.GET_PROCESS_STATE(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_PROCESS_STATE -->
+
+  <!-- [S] - WF.GET_PROCESS_STATE_FWBW -->
+  <parameterMap id="paramWF.GET_PROCESS_STATE_FWBW" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_PROCESS_GRP"             mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="O_STATE_CONFIRM"           mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_STATE_CANCEL"            mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_PROCESS_STATE_FWBW" parameterMap="paramWF.GET_PROCESS_STATE_FWBW" resultClass="java.util.HashMap">
+      { call WF.GET_PROCESS_STATE_FWBW(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_PROCESS_STATE_FWBW -->
+
+  <!-- [S] - WF.GET_PROTECT -->
+  <parameterMap id="paramWF.GET_PROTECT" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_PROTECT_DATE"            mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_PROTECT" parameterMap="paramWF.GET_PROTECT" resultClass="java.util.HashMap">
+      { call WF.GET_PROTECT(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_PROTECT -->
+
+  <!-- [S] - WF.GET_PSTOCK_QTY -->
+  <parameterMap id="paramWF.GET_PSTOCK_QTY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_POLICY_LO310"            mode="IN" />
+    <parameter property="P_POLICY_LO320"            mode="IN" />
+    <parameter property="O_STOCK_QTY"               mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_OUT_WAIT_QTY"            mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_VIRTUAL_QTY"             mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_PSTOCK_QTY"              mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_PSTOCK_QTY" parameterMap="paramWF.GET_PSTOCK_QTY" resultClass="java.util.HashMap">
+      { call WF.GET_PSTOCK_QTY(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_PSTOCK_QTY -->
+
+  <!-- [S] - WF.GET_RECOMMEND_LOCATION -->
+  <parameterMap id="paramWF.GET_RECOMMEND_LOCATION01" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_DEPART_CD"               mode="IN" />
+    <parameter property="P_LINE_CD"                 mode="IN" />
+    <parameter property="P_CLASS_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_POLICY_LI310"            mode="IN" />
+    <parameter property="P_POLICY_LI311"            mode="IN" />
+    <parameter property="O_LOCATION_CD"             mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_RECOMMEND_LOCATION01" parameterMap="paramWF.GET_RECOMMEND_LOCATION01" resultClass="java.util.HashMap">
+      { call WF.GET_RECOMMEND_LOCATION(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_RECOMMEND_LOCATION -->
+
+  <!-- [S] - WF.GET_RECOMMEND_LOCATION -->
+  <parameterMap id="paramWF.GET_RECOMMEND_LOCATION02" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_VENDOR_CD"               mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_POLICY_RI310"            mode="IN" />
+    <parameter property="O_LOCATION_CD"             mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_RECOMMEND_LOCATION02" parameterMap="paramWF.GET_RECOMMEND_LOCATION02" resultClass="java.util.HashMap">
+      { call WF.GET_RECOMMEND_LOCATION(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_RECOMMEND_LOCATION -->
+
+  <!-- [S] - WF.GET_RI_INBOUND_STATE -->
+  <parameterMap id="paramWF.GET_RI_INBOUND_STATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INBOUND_DATE"            mode="IN" />
+    <parameter property="P_INBOUND_NO"              mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="P_STATE_DIV"               mode="IN" />
+    <parameter property="O_INBOUND_STATE"           mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_RI_INBOUND_STATE" parameterMap="paramWF.GET_RI_INBOUND_STATE" resultClass="java.util.HashMap">
+      { call WF.GET_RI_INBOUND_STATE(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_RI_INBOUND_STATE -->
+
+  <!-- [S] - WF.GET_RO_OUTBOUND_STATE -->
+  <parameterMap id="paramWF.GET_RO_OUTBOUND_STATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="P_STATE_DIV"               mode="IN" />
+    <parameter property="O_OUTBOUND_STATE"          mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_RO_OUTBOUND_STATE" parameterMap="paramWF.GET_RO_OUTBOUND_STATE" resultClass="java.util.HashMap">
+      { call WF.GET_RO_OUTBOUND_STATE(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_RO_OUTBOUND_STATE -->
+
+  <!-- [S] - WF.GET_RO_PSTOCK_QTY -->
+  <parameterMap id="paramWF.GET_RO_PSTOCK_QTY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_POLICY_LO310"            mode="IN" />
+    <parameter property="P_POLICY_LO320"            mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="O_STOCK_QTY"               mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_OUT_WAIT_QTY"            mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_VIRTUAL_QTY"             mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_PSTOCK_QTY"              mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_RO_PSTOCK_QTY" parameterMap="paramWF.GET_RO_PSTOCK_QTY" resultClass="java.util.HashMap">
+      { call WF.GET_RO_PSTOCK_QTY(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_RO_PSTOCK_QTY -->
+
+  <!-- [S] - WF.GET_NEWORDER_CHK -->
+  <parameterMap id="paramWF.GET_NEWORDER_CHK" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="O_RESULT"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_NEWORDER_CHK" parameterMap="paramWF.GET_NEWORDER_CHK" resultClass="java.util.HashMap">
+      { call WF.GET_NEWORDER_CHK(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_NEWORDER_CHK -->
+  
+  <!-- [S] - WF.GET_ORDERCAN_CHK -->
+  <parameterMap id="paramWF.GET_ORDERCAN_CHK" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="O_RESULT"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_ORDERCAN_CHK" parameterMap="paramWF.GET_ORDERCAN_CHK" resultClass="java.util.HashMap">
+      { call WF.GET_ORDERCAN_CHK(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_ORDERCAN_CHK -->
+  
+  <!-- [S] - WF.GET_DELVIERY_TYPE_APPLY_YN -->
+  <parameterMap id="paramWF.GET_DELVIERY_TYPE_APPLY_YN" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_BATCH"          mode="IN" />
+    <parameter property="P_DELIVERY_TYPE"           mode="IN" />
+    <parameter property="O_CHK_YN"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_DELVIERY_TYPE_APPLY_YN" parameterMap="paramWF.GET_DELVIERY_TYPE_APPLY_YN" resultClass="java.util.HashMap">
+      { call WF.GET_DELVIERY_TYPE_APPLY_YN(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_DELVIERY_TYPE_APPLY_YN -->
+
+  <!-- [S] - WF.GET_LA_DELETE_YN -->
+  <parameterMap id="paramWF.GET_LA_DELETE_YN" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_REQUEST_DATE"            mode="IN" />
+    <parameter property="P_REQUEST_NO"              mode="IN" />
+    <parameter property="O_APPOINT_CHK_YN"          mode="OUT" javaType="java.util.Date"       jdbcType="VARCHAR" />
+    <parameter property="O_ORDER_CHK_YN"            mode="OUT" javaType="java.util.Date"       jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_LA_DELETE_YN" parameterMap="paramWF.GET_LA_DELETE_YN" resultClass="java.util.HashMap">
+      { call WF.GET_LA_DELETE_YN(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_LA_DELETE_YN -->
+  <!--
+    //==================================================================================================================
+    // WT PACKAGE
+    //==================================================================================================================
+  -->
+  <!-- [S] - WT.CM_INOUTNO_GETNO -->
+  <parameterMap id="paramWT.CM_INOUTNO_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+    <parameter property="P_TABLE_NM"                mode="IN" />
+    <parameter property="O_INOUT_NO"                mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.CM_INOUTNO_GETNO" parameterMap="paramWT.CM_INOUTNO_GETNO" resultClass="java.util.HashMap">
+      { call WT.CM_INOUTNO_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.CM_INOUTNO_GETNO -->
+
+  <!-- [S] - WT.CM_LOCATIONID_GETNO -->
+  <parameterMap id="paramWT.CM_LOCATIONID_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INBOUND_DATE"            mode="IN" />
+    <parameter property="P_INBOUND_NO"              mode="IN" />
+    <parameter property="P_INOUT_CD"                mode="IN" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_VENDOR_CD"               mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_CREATE_DATE"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_LOCATION_ID"             mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.CM_LOCATIONID_GETNO" parameterMap="paramWT.CM_LOCATIONID_GETNO" resultClass="java.util.HashMap">
+      { call WT.CM_LOCATIONID_GETNO(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.CM_LOCATIONID_GETNO -->
+
+  <!-- [S] - WT.CM_LOCATIONID_GETNOS -->
+  <parameterMap id="paramWT.CM_LOCATIONID_GETNOS" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INBOUND_DATE"            mode="IN" />
+    <parameter property="P_INBOUND_NO"              mode="IN" />
+    <parameter property="P_INOUT_CD"                mode="IN" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_VENDOR_CD"               mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_CREATE_DATE"             mode="IN" />
+    <parameter property="P_LOCATION_ID_CNT"         mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.CM_LOCATIONID_GETNOS" parameterMap="paramWT.CM_LOCATIONID_GETNOS" resultClass="java.util.HashMap">
+      { call WT.CM_LOCATIONID_GETNOS(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.CM_LOCATIONID_GETNOS -->
+
+  <!-- [S] - WT.CM_PALLET_GETNO -->
+  <parameterMap id="paramWT.CM_PALLET_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INOUT_CD"                mode="IN" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_VENDOR_CD"               mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_VALID_DATE"              mode="IN" />
+    <parameter property="P_BATCH_NO"                mode="IN" />
+    <parameter property="P_QTY_IN_BOX"              mode="IN" />
+    <parameter property="P_BOX_IN_PLT"              mode="IN" />
+    <parameter property="P_ENTRY_QTY"               mode="IN" />
+    <parameter property="P_CREATE_DATE"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_INBOUND_SEQ"             mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.CM_PALLET_GETNO" parameterMap="paramWT.CM_PALLET_GETNO" resultClass="java.util.HashMap">
+      { call WT.CM_PALLET_GETNO(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.CM_PALLET_GETNO -->
+
+  <!-- [S] - WT.CM_SHIPID_GETNO -->
+  <parameterMap id="paramWT.CM_SHIPID_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_CREATE_DATE"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_SHIP_ID"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.CM_SHIPID_GETNO" parameterMap="paramWT.CM_SHIPID_GETNO" resultClass="java.util.HashMap">
+      { call WT.CM_SHIPID_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.CM_SHIPID_GETNO -->
+
+  <!-- [S] - WT.CM_SHIPID_GETNOS -->
+  <parameterMap id="paramWT.CM_SHIPID_GETNOS" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_CREATE_DATE"             mode="IN" />
+    <parameter property="P_SHIP_ID_CNT"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_SHIP_ID1"                mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_SHIP_ID2"                mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.CM_SHIPID_GETNOS" parameterMap="paramWT.CM_SHIPID_GETNOS" resultClass="java.util.HashMap">
+      { call WT.CM_SHIPID_GETNOS(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.CM_SHIPID_GETNOS -->
+  
+    <!-- [S] - WT.CM_EVENT_GETNO -->
+  <parameterMap id="paramWT.CM_EVENT_GETNO" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_DEAL_CD"                mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.CM_EVENT_GETNO" parameterMap="paramWT.CM_EVENT_GETNO" resultClass="java.util.HashMap">
+      { call WT.CM_EVENT_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.RI_050ND_GETNO -->
+
+  <!-- [S] - WT.CS_NOTICEREPLY_GETNO -->
+  <parameterMap id="paramWT.CS_NOTICEREPLY_GETNO" class="java.util.Map">
+    <parameter property="P_WRITE_NO"                mode="IN" />
+    <parameter property="P_REPLY_DIV"               mode="IN" />
+    <parameter property="O_REPLY_NO"                mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.CS_NOTICEREPLY_GETNO" parameterMap="paramWT.CS_NOTICEREPLY_GETNO" resultClass="java.util.HashMap">
+      { call WT.CS_NOTICEREPLY_GETNO(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.CS_NOTICEREPLY_GETNO -->
+
+  <!-- [S] - WT.CS_NOTICE_GETNO -->
+  <parameterMap id="paramWT.CS_NOTICE_GETNO" class="java.util.Map">
+    <parameter property="O_WRITE_NO"                mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.CS_NOTICE_GETNO" parameterMap="paramWT.CS_NOTICE_GETNO" resultClass="java.util.HashMap">
+      { call WT.CS_NOTICE_GETNO(?, ?) }
+    </procedure>
+  <!-- [E] - WT.CS_NOTICE_GETNO -->
+
+  <!-- [S] - WT.ER_RECV_GETNO -->
+  <parameterMap id="paramWT.ER_RECV_GETNO" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="O_RECV_NO"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.ER_RECV_GETNO" parameterMap="paramWT.ER_RECV_GETNO" resultClass="java.util.HashMap">
+      { call WT.ER_RECV_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.ER_RECV_GETNO -->
+
+  <!-- [S] - WT.ES_SEND_GETNO -->
+  <parameterMap id="paramWT.ES_SEND_GETNO" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="O_SEND_NO"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.ES_SEND_GETNO" parameterMap="paramWT.ES_SEND_GETNO" resultClass="java.util.HashMap">
+      { call WT.ES_SEND_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.ES_SEND_GETNO -->
+
+  <!-- [S] - WT.LC_010ND_GETNO -->
+  <parameterMap id="paramWT.LC_010ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ETC_DATE"                mode="IN" />
+    <parameter property="P_ETC_NO"                  mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LC_010ND_GETNO" parameterMap="paramWT.LC_010ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.LC_010ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LC_010ND_GETNO -->
+
+  <!-- [S] - WT.LC_010NM_GETNO -->
+  <parameterMap id="paramWT.LC_010NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ETC_DATE"                mode="IN" />
+    <parameter property="O_ETC_NO"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LC_010NM_GETNO" parameterMap="paramWT.LC_010NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.LC_010NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LC_010NM_GETNO -->
+
+  <!-- [S] - WT.LC_030NM_GETNO -->
+  <parameterMap id="paramWT.LC_030NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MOVE_DATE"               mode="IN" />
+    <parameter property="O_MOVE_NO"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LC_030NM_GETNO" parameterMap="paramWT.LC_030NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.LC_030NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LC_030NM_GETNO -->
+
+  <!-- [S] - WT.LC_030NM_LINE_GETNO -->
+  <parameterMap id="paramWT.LC_030NM_LINE_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MOVE_DATE"               mode="IN" />
+    <parameter property="P_MOVE_NO"                 mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LC_030NM_LINE_GETNO" parameterMap="paramWT.LC_030NM_LINE_GETNO" resultClass="java.util.HashMap">
+      { call WT.LC_030NM_LINE_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LC_030NM_LINE_GETNO -->
+
+  <!-- [S] - WT.LC_040ND_GETNO -->
+  <parameterMap id="paramWT.LC_040ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INVEST_DATE"             mode="IN" />
+    <parameter property="P_INVEST_NO"               mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LC_040ND_GETNO" parameterMap="paramWT.LC_040ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.LC_040ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LC_040ND_GETNO -->
+
+  <!-- [S] - WT.LC_040NM_GETNO -->
+  <parameterMap id="paramWT.LC_040NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INVEST_DATE"             mode="IN" />
+    <parameter property="O_INVEST_NO"               mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LC_040NM_GETNO" parameterMap="paramWT.LC_040NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.LC_040NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LC_040NM_GETNO -->
+
+  <!-- [S] - WT.LC_050ND_GETNO -->
+  <parameterMap id="paramWT.LC_050ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_PROCEED_DATE"            mode="IN" />
+    <parameter property="P_PROCEED_NO"              mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LC_050ND_GETNO" parameterMap="paramWT.LC_050ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.LC_050ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LC_050ND_GETNO -->
+
+  <!-- [S] - WT.LC_050NM_GETNO -->
+  <parameterMap id="paramWT.LC_050NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_PROCEED_DATE"            mode="IN" />
+    <parameter property="O_PROCEED_NO"              mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LC_050NM_GETNO" parameterMap="paramWT.LC_050NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.LC_050NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LC_050NM_GETNO -->
+
+  <!-- [S] - WT.LD_030ND_GETNO -->
+  <parameterMap id="paramWT.LD_030ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_DELIVERY_DATE"           mode="IN" />
+    <parameter property="P_DELIVERY_NO"             mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LD_030ND_GETNO" parameterMap="paramWT.LD_030ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.LD_030ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LD_030ND_GETNO -->
+
+  <!-- [S] - WT.LD_030NM_GETNO -->
+  <parameterMap id="paramWT.LD_030NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_DELIVERY_DATE"           mode="IN" />
+    <parameter property="O_DELIVERY_NO"             mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LD_030NM_GETNO" parameterMap="paramWT.LD_030NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.LD_030NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LD_030NM_GETNO -->
+  
+    <!-- [S] - WT.LA_010ND_GETNO -->
+  <parameterMap id="paramWT.LA_010ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_REQUEST_DATE"            mode="IN" />
+    <parameter property="P_REQUEST_NO"              mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LA_010ND_GETNO" parameterMap="paramWT.LA_010ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.LA_010ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LA_010ND_GETNO -->
+
+  <!-- [S] - WT.LA_010NM_GETNO -->
+  <parameterMap id="paramWT.LA_010NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_REQUEST_DATE"            mode="IN" />
+    <parameter property="O_REQUEST_NO"              mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LA_010NM_GETNO" parameterMap="paramWT.LA_010NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.LA_010NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LA_010NM_GETNO -->
+
+  <!-- [S] - WT.LA_020ND_GETNO -->
+  <parameterMap id="paramWT.LA_020ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_APPOINT_DATE"            mode="IN" />
+    <parameter property="P_APPOINT_NO"              mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LA_020ND_GETNO" parameterMap="paramWT.LA_020ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.LA_020ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LA_020ND_GETNO -->
+
+  <!-- [S] - WT.LA_020NM_GETNO -->
+  <parameterMap id="paramWT.LA_020NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_APPOINT_DATE"            mode="IN" />
+    <parameter property="O_APPOINT_NO"              mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LA_020NM_GETNO" parameterMap="paramWT.LA_020NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.LA_020NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LA_020NM_GETNO -->
+
+  <!-- [S] - WT.LI_010ND_GETNO -->
+  <parameterMap id="paramWT.LI_010ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LI_010ND_GETNO" parameterMap="paramWT.LI_010ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.LI_010ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LI_010ND_GETNO -->
+
+  <!-- [S] - WT.LI_010NM_GETNO -->
+  <parameterMap id="paramWT.LI_010NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="O_ORDER_NO"                mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LI_010NM_GETNO" parameterMap="paramWT.LI_010NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.LI_010NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LI_010NM_GETNO -->
+
+  <!-- [S] - WT.LI_020ND_GETNO -->
+  <parameterMap id="paramWT.LI_020ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INBOUND_DATE"            mode="IN" />
+    <parameter property="P_INBOUND_NO"              mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LI_020ND_GETNO" parameterMap="paramWT.LI_020ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.LI_020ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LI_020ND_GETNO -->
+
+  <!-- [S] - WT.LI_020NM_GETNO -->
+  <parameterMap id="paramWT.LI_020NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INBOUND_DATE"            mode="IN" />
+    <parameter property="O_INBOUND_NO"              mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LI_020NM_GETNO" parameterMap="paramWT.LI_020NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.LI_020NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LI_020NM_GETNO -->
+
+  <!-- [S] - WT.LO_010ND_GETNO -->
+  <parameterMap id="paramWT.LO_010ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LO_010ND_GETNO" parameterMap="paramWT.LO_010ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.LO_010ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LO_010ND_GETNO -->
+
+  <!-- [S] - WT.LO_010NM_GETNO -->
+  <parameterMap id="paramWT.LO_010NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="O_ORDER_NO"                mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LO_010NM_GETNO" parameterMap="paramWT.LO_010NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.LO_010NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LO_010NM_GETNO -->
+
+  <!-- [S] - WT.LO_020ND_GETNO -->
+  <parameterMap id="paramWT.LO_020ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LO_020ND_GETNO" parameterMap="paramWT.LO_020ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.LO_020ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LO_020ND_GETNO -->
+
+  <!-- [S] - WT.LO_020NM_GETNO -->
+  <parameterMap id="paramWT.LO_020NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="O_OUTBOUND_NO"             mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LO_020NM_GETNO" parameterMap="paramWT.LO_020NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.LO_020NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LO_020NM_GETNO -->
+
+  <!-- [S] - WT.LO_020NT_BOX_GETNO -->
+  <parameterMap id="paramWT.LO_020NT_BOX_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="O_BOX_NO"                  mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LO_020NT_BOX_GETNO" parameterMap="paramWT.LO_020NT_BOX_GETNO" resultClass="java.util.HashMap">
+      { call WT.LO_020NT_BOX_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LO_020NT_BOX_GETNO -->
+
+  <!-- [S] - WT.LO_DELIVERY_BATCH_GETNO -->
+  <parameterMap id="paramWT.LO_DELIVERY_BATCH_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_DELIVERY_BATCH_NM"       mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_DELIVERY_BATCH"          mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LO_DELIVERY_BATCH_GETNO" parameterMap="paramWT.LO_DELIVERY_BATCH_GETNO" resultClass="java.util.HashMap">
+      { call WT.LO_DELIVERY_BATCH_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LO_DELIVERY_BATCH_GETNO -->
+
+  <!-- [S] - WT.LO_OUTBOUND_BATCH_GETNO -->
+  <parameterMap id="paramWT.LO_OUTBOUND_BATCH_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_BATCH_NM"       mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_OUTBOUND_BATCH"          mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.LO_OUTBOUND_BATCH_GETNO" parameterMap="paramWT.LO_OUTBOUND_BATCH_GETNO" resultClass="java.util.HashMap">
+      { call WT.LO_OUTBOUND_BATCH_GETNO(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.LO_OUTBOUND_BATCH_GETNO -->
+
+  <!-- [S] - WT.RI_010ND_GETNO -->
+  <parameterMap id="paramWT.RI_010ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.RI_010ND_GETNO" parameterMap="paramWT.RI_010ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.RI_010ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.RI_010ND_GETNO -->
+
+  <!-- [S] - WT.RI_010NM_GETNO -->
+  <parameterMap id="paramWT.RI_010NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="O_ORDER_NO"                mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.RI_010NM_GETNO" parameterMap="paramWT.RI_010NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.RI_010NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.RI_010NM_GETNO -->
+
+  <!-- [S] - WT.RI_020ND_GETNO -->
+  <parameterMap id="paramWT.RI_020ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INBOUND_DATE"            mode="IN" />
+    <parameter property="P_INBOUND_NO"              mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.RI_020ND_GETNO" parameterMap="paramWT.RI_020ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.RI_020ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.RI_020ND_GETNO -->
+
+  <!-- [S] - WT.RI_020NM_GETNO -->
+  <parameterMap id="paramWT.RI_020NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INBOUND_DATE"            mode="IN" />
+    <parameter property="O_INBOUND_NO"              mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.RI_020NM_GETNO" parameterMap="paramWT.RI_020NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.RI_020NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.RI_020NM_GETNO -->
+ 
+  <!-- [S] - WT.RI_050ND_GETNO -->
+  <parameterMap id="paramWT.RI_050ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INBOUND_DATE"            mode="IN" />
+    <parameter property="P_INBOUND_NO"              mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.RI_050ND_GETNO" parameterMap="paramWT.RI_050ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.RI_050ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.RI_050ND_GETNO -->
+
+  <!-- [S] - WT.RI_050NM_GETNO -->
+  <parameterMap id="paramWT.RI_050NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INBOUND_DATE"            mode="IN" />
+    <parameter property="O_INBOUND_NO"              mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.RI_050NM_GETNO" parameterMap="paramWT.RI_050NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.RI_050NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.RI_050NM_GETNO -->
+  
+  <!-- [S] - WT.RO_010ND_GETNO -->
+  <parameterMap id="paramWT.RO_010ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.RO_010ND_GETNO" parameterMap="paramWT.RO_010ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.RO_010ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.RO_010ND_GETNO -->
+
+  <!-- [S] - WT.RO_010NM_GETNO -->
+  <parameterMap id="paramWT.RO_010NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="O_ORDER_NO"                mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.RO_010NM_GETNO" parameterMap="paramWT.RO_010NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.RO_010NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.RO_010NM_GETNO -->
+
+  <!-- [S] - WT.RO_020ND_GETNO -->
+  <parameterMap id="paramWT.RO_020ND_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.RO_020ND_GETNO" parameterMap="paramWT.RO_020ND_GETNO" resultClass="java.util.HashMap">
+      { call WT.RO_020ND_GETNO(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.RO_020ND_GETNO -->
+
+  <!-- [S] - WT.RO_020NM_GETNO -->
+  <parameterMap id="paramWT.RO_020NM_GETNO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="O_OUTBOUND_NO"             mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WT.RO_020NM_GETNO" parameterMap="paramWT.RO_020NM_GETNO" resultClass="java.util.HashMap">
+      { call WT.RO_020NM_GETNO(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WT.RO_020NM_GETNO -->
+
+
+  <!-- [S] - WB.CM_WBNOBAND_GETNO -->
+  <parameterMap id="paramWB.CM_WBNOBAND_GETNO" class="java.util.Map">
+    <parameter property="P_CARRIER_CD"              mode="IN" />
+    <parameter property="O_LINE_NO"                 mode="OUT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WB.CM_WBNOBAND_GETNO" parameterMap="paramWB.CM_WBNOBAND_GETNO" resultClass="java.util.HashMap">
+      { call WB.CM_WBNOBAND_GETNO(?, ?, ?) }
+    </procedure>
+  <!-- [E] - WB.CM_WBNOBAND_GETNO -->
+
+  <!-- [S] - WB.GET_HDC_DIV_YN -->
+  <parameterMap id="paramWB.GET_HDC_DIV_YN" class="java.util.Map">
+    <parameter property="P_HDC_DIV"                 mode="IN" />
+    <parameter property="O_HDC_DIV_YN"              mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WB.GET_HDC_DIV_YN" parameterMap="paramWB.GET_HDC_DIV_YN" resultClass="java.util.HashMap">
+      { call WB.GET_HDC_DIV_YN(?, ?, ?) }
+    </procedure>
+  <!-- [E] - WB.GET_HDC_DIV_YN -->
+  
+  <!-- [S] - WB.GET_WB_NO -->
+  <parameterMap id="paramWB.GET_WB_NO" class="java.util.Map">
+    <parameter property="P_CARRIER_CD"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_WB_NO"                   mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WB.GET_WB_NO" parameterMap="paramWB.GET_WB_NO" resultClass="java.util.HashMap">
+      { call WB.GET_WB_NO(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WB.GET_WB_NO -->
+
+  <!-- [S] - WB.SET_WBNO_CREATE -->
+  <parameterMap id="paramWB.SET_WBNO_CREATE" class="java.util.Map">
+    <parameter property="P_CARRIER_CD"              mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_HDC_DIV"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WB.SET_WBNO_CREATE" parameterMap="paramWB.SET_WBNO_CREATE" resultClass="java.util.HashMap">
+      { call WB.SET_WBNO_CREATE(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WB.SET_WBNO_CREATE -->
+
+  <!-- [S] - WB.SET_WBNO_DELETE -->
+  <parameterMap id="paramWB.SET_WBNO_DELETE" class="java.util.Map">
+    <parameter property="P_CARRIER_CD"              mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WB.SET_WBNO_DELETE" parameterMap="paramWB.SET_WBNO_DELETE" resultClass="java.util.HashMap">
+      { call WB.SET_WBNO_DELETE(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WB.SET_WBNO_DELETE -->
+
+  <!-- [S] - WF.GET_OUTBOUND_YN -->
+  <parameterMap id="paramWF.GET_OUTBOUND_YN" class="java.util.Map">
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_CHK_YN"              mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_OUTBOUND_YN" parameterMap="paramWF.GET_OUTBOUND_YN" resultClass="java.util.HashMap">
+      { call WF.GET_OUTBOUND_YN(?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_OUTBOUND_YN -->
+  
+  
+  <!-- [S] - WF.GET_TEMP_LOCNT_30 -->
+  <parameterMap id="paramWF.GET_TEMP_LOCNT_30" class="java.util.Map">
+    <parameter property="P_ERR_CNT"                 mode="IN" />
+    <parameter property="O_CHK_YN"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_TEMP_LOCNT_30" parameterMap="paramWF.GET_TEMP_LOCNT_30" resultClass="java.util.HashMap">
+      { call WF.GET_TEMP_LOCNT_30(?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_TEMP_LOCNT_30 -->
+  
+  <!-- [S] - WF.GET_TEMP_LOCNT_40 -->
+  <parameterMap id="paramWF.GET_TEMP_LOCNT_40" class="java.util.Map">
+    <parameter property="P_ERR_CNT"                 mode="IN" />
+    <parameter property="O_CHK_YN"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_TEMP_LOCNT_40" parameterMap="paramWF.GET_TEMP_LOCNT_40" resultClass="java.util.HashMap">
+      { call WF.GET_TEMP_LOCNT_40(?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_TEMP_LOCNT_40 -->
+</sqlMap>

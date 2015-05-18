@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  //  CS01000E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CS01000E">
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - RS_MASTER -->
+    <parameterMap id="paramRS_MASTER" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_NOTICE_TITLE"      mode="IN" />
+        <parameter property="P_CONTENT_TEXT"      mode="IN" />
+        <parameter property="P_USER_ID"           mode="IN" />
+    </parameterMap>
+    <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+        { ? = call CS01000E.RS_MASTER(?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_MASTER -->
+
+
+    <!-- [S] - RS_DETAIL -->
+    <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_WRITE_NO"          mode="IN" />
+    </parameterMap>
+    <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+        { ? = call CS01000E.RS_DETAIL(?) }
+    </procedure>
+    <!-- [E] - RS_DETAIL -->
+
+    <!-- [S] - RS_SUB1 -->
+    <parameterMap id="paramRS_SUB1" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_WRITE_NO"          mode="IN" />
+        <parameter property="P_USER_ID"           mode="IN" />
+    </parameterMap>
+    <procedure id="RS_SUB1" parameterMap="paramRS_SUB1" resultClass="java.util.HashMap">
+        { ? = call CS01000E.RS_SUB1(?, ?) }
+    </procedure>
+    <!-- [E] - RS_SUB1 -->
+
+
+    <!-- [S] - RS_SUB2 -->
+    <parameterMap id="paramRS_SUB2" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_WRITE_NO"          mode="IN" />
+    </parameterMap>
+    <procedure id="RS_SUB2" parameterMap="paramRS_SUB2" resultClass="java.util.HashMap">
+        { ? = call CS01000E.RS_SUB2(?) }
+    </procedure>
+    <!-- [E] - RS_SUB2 -->
+
+
+    <!-- [S] - RS_SUB3 -->
+    <parameterMap id="paramRS_SUB3" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_WRITE_NO"          mode="IN" />
+        <parameter property="P_NOTICE_DIV"        mode="IN" />
+        <parameter property="P_NOTICE_FROM_DATE"  mode="IN" />
+    </parameterMap>
+    <procedure id="RS_SUB3" parameterMap="paramRS_SUB3" resultClass="java.util.HashMap">
+        { ? = call CS01000E.RS_SUB3(?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_SUB3 -->
+    
+    <!-- [S] - RS_SUB4 -->
+    <parameterMap id="paramRS_SUB4" class="java.util.Map">
+       <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+     </parameterMap>
+    <procedure id="RS_SUB4" parameterMap="paramRS_SUB4" resultClass="java.util.HashMap">
+       { ? = call CS01000E.RS_SUB4 }
+     </procedure>
+     <!-- [E] - RS_SUB4 -->
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - INSERT_CSNOTICEREPLY [공지사항리플] -->
+    <!-- [S] - INSERT_CSNOTICE [공지사항] -->
+    <!-- [S] - INSERT_CSNOTICEGROUP [공지사항그룹] -->
+    <insert id="INSERT_CSNOTICE" parameterClass="java.util.Map">
+        INSERT INTO CSNOTICE
+                   (
+                    WRITE_NO
+                   <isNotEmpty prepend = "," property= "P_CENTER_CD"               >CENTER_CD                </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_BU_CD"                   >BU_CD                    </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_DIV"              >NOTICE_DIV               </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_TITLE"            >NOTICE_TITLE             </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CONTENT_HTML"            >CONTENT_HTML             </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CONTENT_TEXT"            >CONTENT_TEXT             </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_READ_CNT"                >READ_CNT                 </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_FROM_DATE"        >NOTICE_FROM_DATE         </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_TO_DATE"          >NOTICE_TO_DATE           </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_FILE_NM"                 >FILE_NM                  </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_FILE_SIZE"               >FILE_SIZE                </isNotEmpty>
+                   ,USER_ID
+                   ,UPD_DATETIME
+                   ,REG_DATETIME
+                   )
+            VALUES (
+                    #P_WRITE_NO#
+                   <isNotEmpty prepend = "," property= "P_CENTER_CD"               >#P_CENTER_CD#              </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_BU_CD"                   >#P_BU_CD#                  </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_DIV"              >#P_NOTICE_DIV#             </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_TITLE"            >#P_NOTICE_TITLE#           </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CONTENT_HTML"            >#P_CONTENT_HTML#           </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CONTENT_TEXT"            >#P_CONTENT_TEXT#           </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_READ_CNT"                >#P_READ_CNT#               </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_FROM_DATE"        >#P_NOTICE_FROM_DATE#       </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_TO_DATE"          >#P_NOTICE_TO_DATE#         </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_FILE_NM"                 >#P_FILE_NM#                </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_FILE_SIZE"               >#P_FILE_SIZE#              </isNotEmpty>
+                   ,#P_REG_USER_ID#
+                   ,SYSDATE
+                   ,SYSDATE
+                   )
+    </insert>
+    <!-- [E] - INSERT_CSNOTICE [공지사항] -->
+
+
+    <!-- [S] - UPDATE_CSNOTICE [공지사항] -->
+    <update id="UPDATE_CSNOTICE" parameterClass="java.util.Map">
+        UPDATE CSNOTICE
+           SET USER_ID                  = #P_REG_USER_ID#
+              <isNotNull prepend = "," property= "P_CENTER_CD"               >CENTER_CD                = #P_CENTER_CD#              </isNotNull>
+              <isNotNull prepend = "," property= "P_BU_CD"                   >BU_CD                    = #P_BU_CD#                  </isNotNull>
+              <isNotNull prepend = "," property= "P_NOTICE_DIV"              >NOTICE_DIV               = #P_NOTICE_DIV#             </isNotNull>
+              <isNotNull prepend = "," property= "P_NOTICE_TITLE"            >NOTICE_TITLE             = #P_NOTICE_TITLE#           </isNotNull>
+              <isNotNull prepend = "," property= "P_CONTENT_HTML"            >CONTENT_HTML             = #P_CONTENT_HTML#           </isNotNull>
+              <isNotNull prepend = "," property= "P_CONTENT_TEXT"            >CONTENT_TEXT             = #P_CONTENT_TEXT#           </isNotNull>
+              <isNotNull prepend = "," property= "P_READ_CNT"                >READ_CNT                 = #P_READ_CNT#               </isNotNull>
+              <isNotNull prepend = "," property= "P_NOTICE_FROM_DATE"        >NOTICE_FROM_DATE         = #P_NOTICE_FROM_DATE#       </isNotNull>
+              <isNotNull prepend = "," property= "P_NOTICE_TO_DATE"          >NOTICE_TO_DATE           = #P_NOTICE_TO_DATE#         </isNotNull>
+              <isNotNull prepend = "," property= "P_FILE_NM"                 >FILE_NM                  = #P_FILE_NM#                </isNotNull>
+              <isNotNull prepend = "," property= "P_FILE_SIZE"               >FILE_SIZE                = #P_FILE_SIZE#              </isNotNull>
+              ,UPD_DATETIME             = SYSDATE
+         WHERE WRITE_NO                 = #P_WRITE_NO#
+    </update>
+    <!-- [E] - UPDATE_CSNOTICE [공지사항] -->
+
+
+    <!-- [S] - DELETE_CSNOTICE [공지사항] -->
+    <delete id="DELETE_CSNOTICE" parameterClass="java.util.Map">
+        DELETE 
+          FROM CSNOTICE
+         WHERE WRITE_NO                 = #P_WRITE_NO#
+    </delete>
+    <!-- [E] - DELETE_CSNOTICE [공지사항] -->
+
+
+    <insert id="INSERT_CSNOTICEREPLY" parameterClass="java.util.Map">
+        INSERT INTO CSNOTICEREPLY
+                   (
+                    WRITE_NO
+                   ,REPLY_DIV
+                   ,REPLY_NO
+                   <isNotEmpty prepend = "," property= "P_CONTENT_HTML"            >CONTENT_HTML             </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CONTENT_TEXT"            >CONTENT_TEXT             </isNotEmpty>
+                   ,USER_ID
+                   ,UPD_DATETIME
+                   ,REG_DATETIME
+                   )
+            VALUES (
+                    #P_WRITE_NO#
+                   ,#P_REPLY_DIV#
+                   ,#P_REPLY_NO#
+                   <isNotEmpty prepend = "," property= "P_CONTENT_HTML"            >#P_CONTENT_HTML#           </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CONTENT_TEXT"            >#P_CONTENT_TEXT#           </isNotEmpty>
+                   ,#P_REG_USER_ID#
+                   ,SYSDATE
+                   ,SYSDATE
+                   )
+    </insert>
+    <!-- [E] - INSERT_CSNOTICEREPLY [공지사항리플] -->
+
+
+    <!-- [S] - UPDATE_CSNOTICEREPLY [공지사항리플] -->
+    <update id="UPDATE_CSNOTICEREPLY" parameterClass="java.util.Map">
+        UPDATE CSNOTICEREPLY
+           SET USER_ID                  = #P_REG_USER_ID#
+              <isNotNull prepend = "," property= "P_CONTENT_HTML"            >CONTENT_HTML             = #P_CONTENT_HTML#           </isNotNull>
+              <isNotNull prepend = "," property= "P_CONTENT_TEXT"            >CONTENT_TEXT             = #P_CONTENT_TEXT#           </isNotNull>
+              ,UPD_DATETIME             = SYSDATE
+         WHERE WRITE_NO                 = #P_WRITE_NO#
+           AND REPLY_DIV                = #P_REPLY_DIV#
+           AND REPLY_NO                 = #P_REPLY_NO#
+    </update>
+    <!-- [E] - UPDATE_CSNOTICEREPLY [공지사항리플] -->
+
+
+    <!-- [S] - DELETE_CSNOTICEREPLY [공지사항리플] -->
+    <delete id="DELETE_CSNOTICEREPLY" parameterClass="java.util.Map">
+        DELETE 
+          FROM CSNOTICEREPLY
+         WHERE WRITE_NO                 = #P_WRITE_NO#
+              <isNotEmpty prepend = " AND " property= "P_REPLY_DIV"     >REPLY_DIV           = #P_REPLY_DIV#        </isNotEmpty>
+              <isNotEmpty prepend = " AND " property= "P_REPLY_NO"      >REPLY_NO            = #P_REPLY_NO#         </isNotEmpty>
+    </delete>
+    <!-- [E] - DELETE_CSNOTICEREPLY [공지사항리플] -->
+
+
+    <insert id="INSERT_CSNOTICEGROUP" parameterClass="java.util.Map">
+        INSERT INTO CSNOTICEGROUP
+                   (
+                    WRITE_NO
+                   <isNotEmpty prepend = "," property= "P_NOTICE_DIV"                 >NOTICE_DIV                  </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_GROUP_CD"            >NOTICE_GROUP_CD             </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_GROUP_NM"            >NOTICE_GROUP_NM             </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_FROM_DATE"           >NOTICE_FROM_DATE            </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CHECK_YN"                   >CHECK_YN                    </isNotEmpty>
+                   ,REG_USER_ID
+                   ,REG_DATETIME
+                   )
+            VALUES (
+                    #P_WRITE_NO#
+                   <isNotEmpty prepend = "," property= "P_NOTICE_DIV"                 >#P_NOTICE_DIV#                </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_GROUP_CD"            >#P_NOTICE_GROUP_CD#           </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_GROUP_NM"            >#P_NOTICE_GROUP_NM#           </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_NOTICE_FROM_DATE"           >#P_NOTICE_FROM_DATE#          </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CHECK_YN"                   >#P_CHECK_YN#                  </isNotEmpty>
+                   ,#P_USER_ID#
+                   ,SYSDATE
+                   )
+    </insert>
+    <!-- [E] - INSERT_CSNOTICEGROUP [공지사항그룹] -->
+
+
+
+
+</sqlMap>

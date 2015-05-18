@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CM02040E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cm/CM02040E.css" />
+<script src="js/CM02040E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+          <select id="cboQCenter_Cd" class="ui-cbo-key" style="width: 150px;"></select>
+        </td>
+        <td>
+          <div id="lblQPopup_Area_Cd" class="ui-lbl-condition">운송권역</div>
+          <input class="ui-edt-normal" type="text" id="edtQArea_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQArea_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQArea_Nm" disabled="disabled" style="width: 90px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divMasterView" class="ui-ctnr-normal">
+    <div id="divMaster">
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdMaster" class="ui-grd-title">물류센터별 차량관리</td>
+          <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdMaster"></div>
+    </div>
+    <div id="divSub">
+      <div style="padding: 5px" id="divAreaCd">
+        <div id="lblPopup_Area_Cd" class="ui-lbl-normal">운송권역</div>
+        <input class="ui-edt-normal" type="text" id="edtArea_Cd" style="width: 60px;" />
+        <input class="ui-btn-popup" type="button" id="btnArea_Cd" />
+        <input class="ui-edt-display" type="text" id="edtArea_Nm" disabled="disabled" style="width: 90px;" />
+        <input type="button" id="btnReg" value="차량등록" class="ui-btn-cmd" style="width: 80px;" />
+      </div>
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdSub" class="ui-grd-title">미등록 차량</td>
+          <td id="divRowCount_grdSub" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdSub"></div>
+    </div>
+  </div>
+</body>
+</html>

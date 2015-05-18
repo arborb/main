@@ -1,0 +1,40 @@
+.ui-ctnr-bottom {
+  margin-top: 5px;
+  border-width: 0px;
+}
+
+.ui-lbl-wrapper {
+  display: table-cell;
+  padding: 5px;
+  min-width: 65px;
+  vertical-align: middle;
+}
+
+.ui-ctnr-wrapper {
+  display: table-cell;
+  padding: 15px;
+  width: 100%;
+  vertical-align: middle;
+}
+
+.ui-progressbar-value.ui-widget-header {
+  background: #5c9ccc;
+}
+
+.ui-progressbar {
+  width: 100%;
+  border: 1px solid #85b5d9;
+  padding: 2px;
+  text-align: center;
+  height: 24px;
+}
+
+.ui-lbl-progress {
+  float: left;
+  margin-left: 35%;
+  font-size: 20px;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 #fff;
+  text-align: center;
+  line-height: 24px;
+}

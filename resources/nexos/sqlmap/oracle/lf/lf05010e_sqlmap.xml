@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2013-08-13
+  // Description
+  // LC02010E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LF05010E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+  <!-- [S] - RS_T1_MASTER -->
+  <parameterMap id="paramRS_T1_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_DELIVERY_DATE1"          mode="IN" />
+    <parameter property="P_DELIVERY_DATE2"          mode="IN" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_CAR_CD"                  mode="IN" />
+    <parameter property="P_VENDOR_CD"               mode="IN" />
+    <parameter property="P_DELIVERY_CD"             mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_MASTER" parameterMap="paramRS_T1_MASTER" resultClass="java.util.HashMap">
+    { ? = call LF05010E.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_MASTER -->
+
+
+  <!-- [S] - RS_T1_DETAIL -->
+  <parameterMap id="paramRS_T1_DETAIL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_DELIVERY_DATE"           mode="IN" />
+    <parameter property="P_DELIVERY_NO"             mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_DETAIL" parameterMap="paramRS_T1_DETAIL" resultClass="java.util.HashMap">
+    { ? = call LF05010E.RS_T1_DETAIL(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_DETAIL -->
+
+
+  <!-- [S] - RS_T2_MASTER -->
+  <parameterMap id="paramRS_T2_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_DELIVERY_DATE1"          mode="IN" />
+    <parameter property="P_DELIVERY_DATE2"          mode="IN" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_CAR_CD"                  mode="IN" />
+    <parameter property="P_VENDOR_CD"               mode="IN" />
+    <parameter property="P_DELIVERY_CD"             mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
+    { ? = call LF05010E.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T2_MASTER -->
+
+
+  <!-- [S] - RS_SUB1 -->
+  <parameterMap id="paramRS_SUB1" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+  </parameterMap>
+  <procedure id="RS_SUB1" parameterMap="paramRS_SUB1" resultClass="java.util.HashMap">
+    { ? = call LF05010E.RS_SUB1 }
+  </procedure>
+  <!-- [E] - RS_SUB1 -->
+
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+  <!-- [S] - INSERT_LD030NM [예외운송비마스터] -->
+  <insert id="INSERT_LD030NM" parameterClass="java.util.Map">
+    INSERT INTO LD030NM
+               (
+                CENTER_CD
+               ,BU_CD
+               ,DELIVERY_DATE
+               ,DELIVERY_NO
+               <isNotEmpty prepend = "," property= "P_DELIVERY_JOB_DIV"        >DELIVERY_JOB_DIV           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CUST_CD"                 >CUST_CD                    </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_VENDOR_CD"               >VENDOR_CD                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DELIVERY_CD"             >DELIVERY_CD                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CAR_CD"                  >CAR_CD                     </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_CENTER_CD#
+               ,#P_BU_CD#
+               ,#P_DELIVERY_DATE#
+               ,#P_DELIVERY_NO#
+               <isNotEmpty prepend = "," property= "P_DELIVERY_JOB_DIV"        >#P_DELIVERY_JOB_DIV#       </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CUST_CD"                 >#P_CUST_CD#                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_VENDOR_CD"               >#P_VENDOR_CD#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DELIVERY_CD"             >#P_DELIVERY_CD#            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CAR_CD"                  >#P_CAR_CD#                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+               ,#P_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_LD030NM [예외운송비마스터] -->
+
+
+
+  <!-- [S] - UPDATE_LD030NM [예외운송비마스터] -->
+  <update id="UPDATE_LD030NM" parameterClass="java.util.Map">
+    UPDATE LD030NM
+       SET DELIVERY_JOB_DIV         = #P_DELIVERY_JOB_DIV#
+          <isNotNull prepend = "," property= "P_CUST_CD"                 >CUST_CD                  = #P_CUST_CD#                </isNotNull>
+          <isNotNull prepend = "," property= "P_VENDOR_CD"               >VENDOR_CD                = #P_VENDOR_CD#              </isNotNull>
+          <isNotNull prepend = "," property= "P_DELIVERY_CD"             >DELIVERY_CD              = #P_DELIVERY_CD#            </isNotNull>
+          <isNotNull prepend = "," property= "P_CAR_CD"                  >CAR_CD                   = #P_CAR_CD#                 </isNotNull>
+          <isNotNull prepend = "," property= "P_REMARK1"                 >REMARK1                  = #P_REMARK1#                </isNotNull>
+          ,REG_USER_ID              = #P_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE CENTER_CD                = #P_CENTER_CD#
+       AND BU_CD                    = #P_BU_CD#
+       AND DELIVERY_DATE            = #P_DELIVERY_DATE#
+       AND DELIVERY_NO              = #P_DELIVERY_NO#
+  </update>
+  <!-- [E] - UPDATE_LD030NM [예외운송비마스터] -->
+
+
+  <!-- [S] - DELETE_LD030NM [예외운송비마스터] -->
+  <delete id="DELETE_LD030NM" parameterClass="java.util.Map">
+    DELETE 
+      FROM LD030NM
+     WHERE CENTER_CD                = #P_CENTER_CD#
+       AND BU_CD                    = #P_BU_CD#
+       AND DELIVERY_DATE            = #P_DELIVERY_DATE#
+       AND DELIVERY_NO              = #P_DELIVERY_NO#
+  </delete>
+  <!-- [E] - DELETE_LD030NM [예외운송비마스터] -->
+
+
+
+  <!-- [S] - INSERT_LD030ND [예외운송비디테일] -->
+  <insert id="INSERT_LD030ND" parameterClass="java.util.Map">
+    INSERT INTO LD030ND
+               (
+                CENTER_CD
+               ,BU_CD
+               ,DELIVERY_DATE
+               ,DELIVERY_NO
+               ,LINE_NO
+               <isNotEmpty prepend = "," property= "P_BRAND_CD"                >BRAND_CD                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_CD"                 >ITEM_CD                    </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DELIVERY_QTY"            >DELIVERY_QTY               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DELIVERY_WEIGHT"         >DELIVERY_WEIGHT            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DELIVERY_CBM"            >DELIVERY_CBM               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CHARGE_AMT"              >CHARGE_AMT                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PAY_AMT"                 >PAY_AMT                    </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_BU_DATE"                 >BU_DATE                    </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_BU_NO"                   >BU_NO                      </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_BU_LINE_NO"              >BU_LINE_NO                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_CENTER_CD#
+               ,#P_BU_CD#
+               ,#P_DELIVERY_DATE#
+               ,#P_DELIVERY_NO#
+               ,#P_LINE_NO#
+               <isNotEmpty prepend = "," property= "P_BRAND_CD"                >#P_BRAND_CD#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_ITEM_CD"                 >#P_ITEM_CD#                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DELIVERY_QTY"            >#P_DELIVERY_QTY#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DELIVERY_WEIGHT"         >#P_DELIVERY_WEIGHT#        </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DELIVERY_CBM"            >#P_DELIVERY_CBM#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CHARGE_AMT"              >#P_CHARGE_AMT#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PAY_AMT"                 >#P_PAY_AMT#                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_BU_DATE"                 >#P_BU_DATE#                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_BU_NO"                   >#P_BU_NO#                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_BU_LINE_NO"              >#P_BU_LINE_NO#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+               ,#P_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_LD030ND [예외운송비디테일] -->
+
+
+
+  <!-- [S] - UPDATE_LD030ND [예외운송비디테일] -->
+  <update id="UPDATE_LD030ND" parameterClass="java.util.Map">
+    UPDATE LD030ND
+       SET BRAND_CD                 = #P_BRAND_CD#
+          <isNotNull prepend = "," property= "P_ITEM_CD"                 >ITEM_CD                  = #P_ITEM_CD#                </isNotNull>
+          <isNotNull prepend = "," property= "P_DELIVERY_QTY"            >DELIVERY_QTY             = #P_DELIVERY_QTY#           </isNotNull>
+          <isNotNull prepend = "," property= "P_DELIVERY_WEIGHT"         >DELIVERY_WEIGHT          = #P_DELIVERY_WEIGHT#        </isNotNull>
+          <isNotNull prepend = "," property= "P_DELIVERY_CBM"            >DELIVERY_CBM             = #P_DELIVERY_CBM#           </isNotNull>
+          <isNotNull prepend = "," property= "P_CHARGE_AMT"              >CHARGE_AMT               = #P_CHARGE_AMT#             </isNotNull>
+          <isNotNull prepend = "," property= "P_PAY_AMT"                 >PAY_AMT                  = #P_PAY_AMT#                </isNotNull>
+          <isNotNull prepend = "," property= "P_BU_DATE"                 >BU_DATE                  = #P_BU_DATE#                </isNotNull>
+          <isNotNull prepend = "," property= "P_BU_NO"                   >BU_NO                    = #P_BU_NO#                  </isNotNull>
+          <isNotNull prepend = "," property= "P_BU_LINE_NO"              >BU_LINE_NO               = #P_BU_LINE_NO#             </isNotNull>
+          <isNotNull prepend = "," property= "P_REMARK1"                 >REMARK1                  = #P_REMARK1#                </isNotNull>
+          ,REG_USER_ID              = #P_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE CENTER_CD                = #P_CENTER_CD#
+       AND BU_CD                    = #P_BU_CD#
+       AND DELIVERY_DATE            = #P_DELIVERY_DATE#
+       AND DELIVERY_NO              = #P_DELIVERY_NO#
+       AND LINE_NO                  = #P_LINE_NO#
+  </update>
+  <!-- [E] - UPDATE_LD030ND [예외운송비디테일] -->
+
+
+  <!-- [S] - DELETE_LD030ND [예외운송비디테일] -->
+  <delete id="DELETE_LD030ND" parameterClass="java.util.Map">
+    DELETE 
+      FROM LD030ND
+     WHERE CENTER_CD                = #P_CENTER_CD#
+       AND BU_CD                    = #P_BU_CD#
+       AND DELIVERY_DATE            = #P_DELIVERY_DATE#
+       AND DELIVERY_NO              = #P_DELIVERY_NO#
+       AND LINE_NO                  = #P_LINE_NO#
+  </delete>
+  <!-- [E] - DELETE_LD030ND [예외운송비디테일] -->
+
+
+  <!-- [S] - DELETE_LD030ND [예외운송비디테일] -->
+  <delete id="DELETE_LD030ND_ALL" parameterClass="java.util.Map">
+    DELETE 
+      FROM LD030ND
+     WHERE CENTER_CD                = #P_CENTER_CD#
+       AND BU_CD                    = #P_BU_CD#
+       AND DELIVERY_DATE            = #P_DELIVERY_DATE#
+       AND DELIVERY_NO              = #P_DELIVERY_NO#
+  </delete>
+  <!-- [E] - DELETE_LD030ND [예외운송비디테일] -->
+
+
+</sqlMap>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2013-08-14
+  // Description
+  //  ED02020E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="ED02020E">
+
+  <!--
+    //================================================================================================================
+    // SELECT SQLMAP
+    //================================================================================================================
+  -->
+  
+    <!-- [S] - RS_MASTER -->
+    <parameterMap id="paramRS_MASTER" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_EDI_DIV"           mode="IN" />
+    </parameterMap>
+    <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+        { ? = call ED02020E.RS_MASTER(?, ?) }
+    </procedure>
+    <!-- [E] - RS_MASTER -->
+
+
+    <!-- [S] - RS_DETAIL -->
+    <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_EDI_DIV"           mode="IN" />
+        <parameter property="P_DEFINE_NO"         mode="IN" />
+    </parameterMap>
+    <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+        { ? = call ED02020E.RS_DETAIL(?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_DETAIL -->
+
+
+    <!-- [S] - RS_SUB1 -->
+    <parameterMap id="paramRS_SUB1" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_EDI_DIV"           mode="IN" />
+    </parameterMap>
+    <procedure id="RS_SUB1" parameterMap="paramRS_SUB1" resultClass="java.util.HashMap">
+        { ? = call ED02020E.RS_SUB1(?) }
+    </procedure>
+    <!-- [E] - RS_SUB1 -->
+
+
+  <!--
+    //================================================================================================================
+    // INSERT/UPDATE/DELETE SQLMAP
+    //================================================================================================================
+  -->
+
+  <!-- [S] - INSERT_EMDEFINE [EDI송수신정의마스터] -->
+  <insert id="INSERT_EMDEFINE" parameterClass="java.util.Map">
+    INSERT INTO EMDEFINE
+               (
+                BU_CD
+               ,EDI_DIV
+               ,DEFINE_NO
+               <isNotEmpty prepend = "," property= "P_DEFINE_NM"               >DEFINE_NM                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DATA_DIV"                >DATA_DIV                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DEFINE_DIV"              >DEFINE_DIV                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_LINK_DB_NM"              >LINK_DB_NM                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_LINK_TABLE_NM"           >LINK_TABLE_NM              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_LINK_WHERE_TEXT"         >LINK_WHERE_TEXT            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_XLS_FIRST_ROW"           >XLS_FIRST_ROW              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_TXT_DELIMETER_YN"        >TXT_DELIMETER_YN           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_TXT_COL_DELIMETER"       >TXT_COL_DELIMETER          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_XML_TAG_ROOT"            >XML_TAG_ROOT               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_XML_TAG_BUNCH"           >XML_TAG_BUNCH              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_XML_TAG_SUB_BUNCH"       >XML_TAG_SUB_BUNCH          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PREFIX_FILE_NM"          >PREFIX_FILE_NM             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_AUTO_EXEC_YN"            >AUTO_EXEC_YN               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_DIV"              >REMOTE_DIV                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_IP"               >REMOTE_IP                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_PORT"             >REMOTE_PORT                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_PASSIVE_YN"       >REMOTE_PASSIVE_YN          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_USER_ID"          >REMOTE_USER_ID             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_USER_PWD"         >REMOTE_USER_PWD            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_DIR"              >REMOTE_DIR                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_CHARSET"          >REMOTE_CHARSET             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EDI_DIR"                 >EDI_DIR                    </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DATA_CYCLE_DIV"          >DATA_CYCLE_DIV             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REPEAT_EXEC_TIME"        >REPEAT_EXEC_TIME           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_WEBSERVICE_URL"          >WEBSERVICE_URL             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_WEBSERVICE_METHOD"       >WEBSERVICE_METHOD          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_BU_CD#
+               ,#P_EDI_DIV#
+               ,#P_DEFINE_NO#
+               <isNotEmpty prepend = "," property= "P_DEFINE_NM"               >#P_DEFINE_NM#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DATA_DIV"                >#P_DATA_DIV#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DEFINE_DIV"              >#P_DEFINE_DIV#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_LINK_DB_NM"              >#P_LINK_DB_NM#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_LINK_TABLE_NM"           >#P_LINK_TABLE_NM#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_LINK_WHERE_TEXT"         >#P_LINK_WHERE_TEXT#        </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_XLS_FIRST_ROW"           >#P_XLS_FIRST_ROW#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_TXT_DELIMETER_YN"        >#P_TXT_DELIMETER_YN#       </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_TXT_COL_DELIMETER"       >#P_TXT_COL_DELIMETER#      </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_XML_TAG_ROOT"            >#P_XML_TAG_ROOT#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_XML_TAG_BUNCH"           >#P_XML_TAG_BUNCH#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_XML_TAG_SUB_BUNCH"       >#P_XML_TAG_SUB_BUNCH#      </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PREFIX_FILE_NM"          >#P_PREFIX_FILE_NM#         </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_AUTO_EXEC_YN"            >#P_AUTO_EXEC_YN#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_DIV"              >#P_REMOTE_DIV#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_IP"               >#P_REMOTE_IP#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_PORT"             >#P_REMOTE_PORT#            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_PASSIVE_YN"       >#P_REMOTE_PASSIVE_YN#      </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_USER_ID"          >#P_REMOTE_USER_ID#         </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_USER_PWD"         >#P_REMOTE_USER_PWD#        </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_DIR"              >#P_REMOTE_DIR#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMOTE_CHARSET"          >#P_REMOTE_CHARSET#         </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_EDI_DIR"                 >#P_EDI_DIR#                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DATA_CYCLE_DIV"          >#P_DATA_CYCLE_DIV#         </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REPEAT_EXEC_TIME"        >#P_REPEAT_EXEC_TIME#       </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_WEBSERVICE_URL"          >#P_WEBSERVICE_URL#         </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_WEBSERVICE_METHOD"       >#P_WEBSERVICE_METHOD#      </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_EMDEFINE [EDI송수신정의마스터] -->
+
+
+  <!-- [S] - UPDATE_EMDEFINE [EDI송수신정의마스터] -->
+  <update id="UPDATE_EMDEFINE" parameterClass="java.util.Map">
+    UPDATE EMDEFINE
+       SET DEFINE_NM                = #P_DEFINE_NM#
+          <isNotNull prepend = "," property= "P_DATA_DIV"                >DATA_DIV                 = #P_DATA_DIV#               </isNotNull>
+          <isNotNull prepend = "," property= "P_DEFINE_DIV"              >DEFINE_DIV               = #P_DEFINE_DIV#             </isNotNull>
+          <isNotNull prepend = "," property= "P_LINK_DB_NM"              >LINK_DB_NM               = #P_LINK_DB_NM#             </isNotNull>
+          <isNotNull prepend = "," property= "P_LINK_TABLE_NM"           >LINK_TABLE_NM            = #P_LINK_TABLE_NM#          </isNotNull>
+          <isNotNull prepend = "," property= "P_LINK_WHERE_TEXT"         >LINK_WHERE_TEXT          = #P_LINK_WHERE_TEXT#        </isNotNull>
+          <isNotNull prepend = "," property= "P_XLS_FIRST_ROW"           >XLS_FIRST_ROW            = #P_XLS_FIRST_ROW#          </isNotNull>
+          <isNotNull prepend = "," property= "P_TXT_DELIMETER_YN"        >TXT_DELIMETER_YN         = #P_TXT_DELIMETER_YN#       </isNotNull>
+          <isNotNull prepend = "," property= "P_TXT_COL_DELIMETER"       >TXT_COL_DELIMETER        = #P_TXT_COL_DELIMETER#      </isNotNull>
+          <isNotNull prepend = "," property= "P_XML_TAG_ROOT"            >XML_TAG_ROOT             = #P_XML_TAG_ROOT#           </isNotNull>
+          <isNotNull prepend = "," property= "P_XML_TAG_BUNCH"           >XML_TAG_BUNCH            = #P_XML_TAG_BUNCH#          </isNotNull>
+          <isNotNull prepend = "," property= "P_XML_TAG_SUB_BUNCH"       >XML_TAG_SUB_BUNCH        = #P_XML_TAG_SUB_BUNCH#      </isNotNull>
+          <isNotNull prepend = "," property= "P_PREFIX_FILE_NM"          >PREFIX_FILE_NM           = #P_PREFIX_FILE_NM#         </isNotNull>
+          <isNotNull prepend = "," property= "P_AUTO_EXEC_YN"            >AUTO_EXEC_YN             = #P_AUTO_EXEC_YN#           </isNotNull>
+          <isNotNull prepend = "," property= "P_REMOTE_DIV"              >REMOTE_DIV               = #P_REMOTE_DIV#             </isNotNull>
+          <isNotNull prepend = "," property= "P_REMOTE_IP"               >REMOTE_IP                = #P_REMOTE_IP#              </isNotNull>
+          <isNotNull prepend = "," property= "P_REMOTE_PORT"             >REMOTE_PORT              = #P_REMOTE_PORT#            </isNotNull>
+          <isNotNull prepend = "," property= "P_REMOTE_PASSIVE_YN"       >REMOTE_PASSIVE_YN        = #P_REMOTE_PASSIVE_YN#      </isNotNull>
+          <isNotNull prepend = "," property= "P_REMOTE_USER_ID"          >REMOTE_USER_ID           = #P_REMOTE_USER_ID#         </isNotNull>
+          <isNotNull prepend = "," property= "P_REMOTE_USER_PWD"         >REMOTE_USER_PWD          = #P_REMOTE_USER_PWD#        </isNotNull>
+          <isNotNull prepend = "," property= "P_REMOTE_DIR"              >REMOTE_DIR               = #P_REMOTE_DIR#             </isNotNull>
+          <isNotNull prepend = "," property= "P_REMOTE_CHARSET"          >REMOTE_CHARSET           = #P_REMOTE_CHARSET#         </isNotNull>
+          <isNotNull prepend = "," property= "P_EDI_DIR"                 >EDI_DIR                  = #P_EDI_DIR#                </isNotNull>
+          <isNotNull prepend = "," property= "P_DATA_CYCLE_DIV"          >DATA_CYCLE_DIV           = #P_DATA_CYCLE_DIV#         </isNotNull>
+          <isNotNull prepend = "," property= "P_REPEAT_EXEC_TIME"        >REPEAT_EXEC_TIME         = #P_REPEAT_EXEC_TIME#       </isNotNull>
+          <isNotNull prepend = "," property= "P_WEBSERVICE_URL"          >WEBSERVICE_URL           = #P_WEBSERVICE_URL#         </isNotNull>
+          <isNotNull prepend = "," property= "P_WEBSERVICE_METHOD"       >WEBSERVICE_METHOD        = #P_WEBSERVICE_METHOD#       </isNotNull>
+          <isNotNull prepend = "," property= "P_REMARK1"                 >REMARK1                  = #P_REMARK1#                </isNotNull>
+          ,REG_USER_ID              = #P_REG_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE BU_CD                    = #P_BU_CD#
+       AND EDI_DIV                  = #P_EDI_DIV#
+       AND DEFINE_NO                = #P_DEFINE_NO#
+  </update>
+  <!-- [E] - UPDATE_EMDEFINE [EDI송수신정의마스터] -->
+
+
+  <!-- [S] - DELETE_EMDEFINE [EDI송수신정의마스터] -->
+  <delete id="DELETE_EMDEFINE" parameterClass="java.util.Map">
+    DELETE 
+      FROM EMDEFINE
+     WHERE BU_CD                    = #P_BU_CD#
+       AND EDI_DIV                  = #P_EDI_DIV#
+       AND DEFINE_NO                = #P_DEFINE_NO#
+  </delete>
+  <!-- [E] - DELETE_EMDEFINE [EDI송수신정의마스터] -->
+
+
+  <!-- [S] - INSERT_EMDEFINESUB [EDI송수신정의상세내역] -->
+  <insert id="INSERT_EMDEFINESUB" parameterClass="java.util.Map">
+      INSERT INTO EMDEFINESUB
+                 (
+                  BU_CD
+                 ,EDI_DIV
+                 ,DEFINE_NO
+                 ,COLUMN_NM
+                 <isNotEmpty prepend = "," property= "P_COLUMN_ID"               >COLUMN_ID                </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_DATA_TYPE"               >DATA_TYPE                </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_DATA_NULL_YN"            >DATA_NULL_YN             </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_DATA_DEFAULT"            >DATA_DEFAULT             </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_DATE_FORMAT_DIV"         >DATE_FORMAT_DIV          </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_DATE_INPUT_DIV"          >DATE_INPUT_DIV           </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_IF_CODE_GRP"             >IF_CODE_GRP              </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_LINK_COLUMN_NM"          >LINK_COLUMN_NM           </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_TXT_POSITION"            >TXT_POSITION             </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_TXT_LENGTH"              >TXT_LENGTH               </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_XLS_COLUMN_NM"           >XLS_COLUMN_NM            </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                  </isNotEmpty>
+                 ,REG_USER_ID
+                 ,REG_DATETIME
+                 )
+          VALUES (
+                  #P_BU_CD#
+                 ,#P_EDI_DIV#
+                 ,#P_DEFINE_NO#
+                 ,#P_COLUMN_NM#
+                 <isNotEmpty prepend = "," property= "P_COLUMN_ID"               >#P_COLUMN_ID#              </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_DATA_TYPE"               >#P_DATA_TYPE#              </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_DATA_NULL_YN"            >#P_DATA_NULL_YN#           </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_DATA_DEFAULT"            >#P_DATA_DEFAULT#           </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_DATE_FORMAT_DIV"         >#P_DATE_FORMAT_DIV#        </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_DATE_INPUT_DIV"          >#P_DATE_INPUT_DIV#         </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_IF_CODE_GRP"             >#P_IF_CODE_GRP#            </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_LINK_COLUMN_NM"          >#P_LINK_COLUMN_NM#         </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_TXT_POSITION"            >#P_TXT_POSITION#           </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_TXT_LENGTH"              >#P_TXT_LENGTH#             </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_XLS_COLUMN_NM"           >#P_XLS_COLUMN_NM#          </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+                 ,#P_REG_USER_ID#
+                 ,SYSDATE
+                 )
+  </insert>
+  <!-- [E] - INSERT_EMDEFINESUB [EDI송수신정의상세내역] -->
+
+  <!-- [S] - UPDATE_EMDEFINESUB [EDI송수신정의상세내역] -->
+  <update id="UPDATE_EMDEFINESUB" parameterClass="java.util.Map">
+      UPDATE EMDEFINESUB
+         SET COLUMN_ID                = #P_COLUMN_ID#
+            <isNotNull prepend = "," property= "P_DATA_TYPE"               >DATA_TYPE                = #P_DATA_TYPE#              </isNotNull>
+            <isNotNull prepend = "," property= "P_DATA_NULL_YN"            >DATA_NULL_YN             = #P_DATA_NULL_YN#           </isNotNull>
+            <isNotNull prepend = "," property= "P_DATA_DEFAULT"            >DATA_DEFAULT             = #P_DATA_DEFAULT#           </isNotNull>
+            <isNotNull prepend = "," property= "P_DATE_FORMAT_DIV"         >DATE_FORMAT_DIV          = #P_DATE_FORMAT_DIV#        </isNotNull>
+            <isNotNull prepend = "," property= "P_DATE_INPUT_DIV"          >DATE_INPUT_DIV           = #P_DATE_INPUT_DIV#         </isNotNull>
+            <isNotNull prepend = "," property= "P_IF_CODE_GRP"             >IF_CODE_GRP              = #P_IF_CODE_GRP#            </isNotNull>
+            <isNotNull prepend = "," property= "P_LINK_COLUMN_NM"          >LINK_COLUMN_NM           = #P_LINK_COLUMN_NM#         </isNotNull>
+            <isNotNull prepend = "," property= "P_TXT_POSITION"            >TXT_POSITION             = #P_TXT_POSITION#           </isNotNull>
+            <isNotNull prepend = "," property= "P_TXT_LENGTH"              >TXT_LENGTH               = #P_TXT_LENGTH#             </isNotNull>
+            <isNotNull prepend = "," property= "P_XLS_COLUMN_NM"           >XLS_COLUMN_NM            = #P_XLS_COLUMN_NM#          </isNotNull>
+            <isNotNull prepend = "," property= "P_REMARK1"                 >REMARK1                  = #P_REMARK1#                </isNotNull>
+            ,REG_USER_ID              = #P_REG_USER_ID#
+            ,REG_DATETIME             = SYSDATE
+       WHERE BU_CD                    = #P_BU_CD#
+         AND EDI_DIV                  = #P_EDI_DIV#
+         AND DEFINE_NO                = #P_DEFINE_NO#
+         AND COLUMN_NM                = #P_COLUMN_NM#
+  </update>
+  <!-- [E] - UPDATE_EMDEFINESUB [EDI송수신정의상세내역] -->
+
+  <!-- [S] - DELETE_EMDEFINESUB [EDI송수신정의상세내역] -->
+  <delete id="DELETE_EMDEFINESUB" parameterClass="java.util.Map">
+      DELETE 
+        FROM EMDEFINESUB
+       WHERE BU_CD                    = #P_BU_CD#
+         AND EDI_DIV                  = #P_EDI_DIV#
+         AND DEFINE_NO                = #P_DEFINE_NO#
+  </delete>
+  <!-- [E] - DELETE_EMDEFINESUB [EDI송수신정의상세내역] -->
+
+</sqlMap>

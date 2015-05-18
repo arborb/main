@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+
+  //====================================================================================================================
+  // 
+  
+ 
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  //  CS01010E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CS01010E">
+    <!--
+      //=============h===================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - RS_MASTER -->
+    <parameterMap class="java.util.Map" id="paramRS_MASTER">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_CENTER_CD"         mode="IN" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_CERTIFY_DIV"       mode="IN" />
+        <parameter property="P_USER_ID"           mode="IN" />
+    </parameterMap>
+    <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+        { ? = call CS01010E.RS_MASTER(?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_MASTER -->
+
+
+    <!-- [S] - RS_SUB1 -->
+    <parameterMap class="java.util.Map" id="paramRS_SUB1">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    </parameterMap>
+    <procedure id="RS_SUB1" parameterMap="paramRS_SUB1" resultClass="java.util.HashMap">
+        { ? = call CS01010E.RS_SUB1 }
+    </procedure>
+    <!-- [E] - RS_SUB1 -->
+
+
+    <!-- [S] - RS_SUB2 -->
+    <parameterMap class="java.util.Map" id="paramRS_SUB2">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    </parameterMap>
+    <procedure id="RS_SUB2" parameterMap="paramRS_SUB2" resultClass="java.util.HashMap">
+        { ? = call CS01010E.RS_SUB2 }
+    </procedure>
+    <!-- [E] - RS_SUB2 -->
+
+
+    <!-- [S] - RS_SUB3 -->
+    <parameterMap class="java.util.Map" id="paramRS_SUB3">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_USER_ID"           mode="IN" />
+    </parameterMap>
+    <procedure id="RS_SUB3" parameterMap="paramRS_SUB3" resultClass="java.util.HashMap">
+        { ? = call CS01010E.RS_SUB3(?) }
+    </procedure>
+    <!-- [E] - RS_SUB3 -->
+    
+        <!-- [S] - RS_SUB4 -->
+    <parameterMap class="java.util.Map" id="paramRS_SUB4">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+ 
+    </parameterMap>
+    <procedure id="RS_SUB4" parameterMap="paramRS_SUB4" resultClass="java.util.HashMap">
+        { ? = call CS01010E.RS_SUB4 }
+    </procedure>
+    <!-- [E] - RS_SUB2 -->
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - INSERT_CSUSER [사용자마스터] -->
+    <insert id="INSERT_CSUSER" parameterClass="java.util.Map">
+        INSERT INTO CSUSER
+                   (
+                    USER_ID
+                   <isNotEmpty prepend = "," property= "P_USER_NM"                 >USER_NM                  </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_USER_PWD"                >USER_PWD                 </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CERTIFY_DIV"             >CERTIFY_DIV              </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CENTER_CD"               >CENTER_CD                </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_BU_CD"                   >BU_CD                    </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_SYS_LANG"                >SYS_LANG                 </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_GROUP_NOTICE_DIV"        >GROUP_NOTICE_DIV         </isNotEmpty>
+                   ,REG_USER_ID
+                   ,REG_DATETIME
+                   )
+            VALUES (
+                    #P_USER_ID#
+                   <isNotEmpty prepend = "," property= "P_USER_NM"                 >#P_USER_NM#                </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_USER_PWD"                >#P_USER_PWD#               </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CERTIFY_DIV"             >#P_CERTIFY_DIV#            </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CENTER_CD"               >#P_CENTER_CD#              </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_BU_CD"                   >#P_BU_CD#                  </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_SYS_LANG"                >#P_SYS_LANG#               </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_GROUP_NOTICE_DIV"        >#P_GROUP_NOTICE_DIV#       </isNotEmpty>
+                   ,#P_REG_USER_ID#
+                   ,SYSDATE
+                   )
+                   
+    </insert>
+    <!-- [E] - INSERT_CSUSER [사용자마스터] -->
+    
+    <!-- [S] - UPDATE_CSUSER [사용자마스터] -->
+    <update id="UPDATE_CSUSER" parameterClass="java.util.Map">
+        UPDATE CSUSER
+           SET USER_NM                  = #P_USER_NM#
+              <isNotNull prepend = "," property= "P_USER_PWD"                >USER_PWD                 = #P_USER_PWD#               </isNotNull>
+              <isNotNull prepend = "," property= "P_CERTIFY_DIV"             >CERTIFY_DIV              = #P_CERTIFY_DIV#            </isNotNull>
+              <isNotNull prepend = "," property= "P_CENTER_CD"               >CENTER_CD                = #P_CENTER_CD#              </isNotNull>
+              <isNotNull prepend = "," property= "P_BU_CD"                   >BU_CD                    = #P_BU_CD#                  </isNotNull>
+              <isNotNull prepend = "," property= "P_SYS_LANG"                >SYS_LANG                 = #P_SYS_LANG#               </isNotNull>
+              <isNotNull prepend = "," property= "P_USER_ENABLE"             >ENABLE                   = #P_USER_ENABLE#            </isNotNull>
+              <isNotNull prepend = "," property= "P_GROUP_NOTICE_DIV"        >GROUP_NOTICE_DIV         = #P_GROUP_NOTICE_DIV#       </isNotNull>
+              ,REG_USER_ID              = #P_REG_USER_ID#
+              ,REG_DATETIME             = SYSDATE
+         WHERE USER_ID                  = #P_USER_ID#
+    </update>
+    <!-- [E] - UPDATE_CSUSER [사용자마스터] -->
+
+    <!-- [S] - DELETE_CSUSER [사용자마스터] -->
+    <delete id="DELETE_CSUSER" parameterClass="java.util.Map">
+        DELETE 
+          FROM CSUSER
+         WHERE USER_ID                  = #P_USER_ID#
+    </delete>
+    <!-- [E] - DELETE_CSUSER [사용자마스터] -->
+
+    <!-- [S] - INSERT_CSUSERCENTER [사용자별운영센터등록마스터] -->
+    <insert id="INSERT_CSUSERCENTER" parameterClass="java.util.Map">
+        INSERT INTO CSUSERCENTER
+                   (
+                    USER_ID
+                   ,CENTER_CD
+                   ,REG_USER_ID
+                   ,REG_DATETIME
+                   )
+            VALUES (
+                    #P_USER_ID#
+                   ,#P_CENTER_CD#
+                   ,#P_REG_USER_ID#
+                   ,SYSDATE
+                   )
+    </insert>
+    <!-- [E] - INSERT_CSUSERCENTER [사용자별운영센터등록마스터] -->
+        
+    <!-- [S] - DELETE_CSUSERCENTER [사용자별운영센터등록마스터] -->
+    <delete id="DELETE_CSUSERCENTER" parameterClass="java.util.Map">
+        DELETE 
+          FROM CSUSERCENTER
+         WHERE USER_ID                  = #P_USER_ID#
+           AND CENTER_CD                = #P_CENTER_CD#
+    </delete>
+    <!-- [E] - DELETE_CSUSERCENTER [사용자별운영센터등록마스터] -->
+
+    <!-- [S] - INSERT_CSUSERBU [사용자별운영사업부등록마스터] -->
+    <insert id="INSERT_CSUSERBU" parameterClass="java.util.Map">
+        INSERT INTO CSUSERBU
+                   (
+                    USER_ID
+                   ,BU_CD
+                   ,REG_USER_ID
+                   ,REG_DATETIME
+                   )
+            VALUES (
+                    #P_USER_ID#
+                   ,#P_BU_CD#
+                   ,#P_REG_USER_ID#
+                   ,SYSDATE
+                   )
+    </insert>
+    <!-- [E] - INSERT_CSUSERBU [사용자별운영사업부등록마스터] -->
+
+    <!-- [S] - DELETE_CSUSERBU [사용자별운영사업부등록마스터] -->
+    <delete id="DELETE_CSUSERBU" parameterClass="java.util.Map">
+        DELETE 
+          FROM CSUSERBU
+         WHERE USER_ID                  = #P_USER_ID#
+           AND BU_CD                    = #P_BU_CD#
+    </delete>
+    <!-- [E] - DELETE_CSUSERBU [사용자별운영사업부등록마스터] -->
+    
+    
+    
+    <!-- [S] - INSERT_CSUSERBRAND [사용자별운영사업부등록마스터] -->
+    <insert id="INSERT_CSUSERBRAND" parameterClass="java.util.Map">
+        INSERT INTO CSUSERBRAND
+                   (
+                    USER_ID
+                   ,BRAND_CD
+                   ,REG_USER_ID
+                   ,REG_DATETIME
+                   )
+            VALUES (
+                    #P_USER_ID#
+                   ,#P_BRAND_CD#
+                   ,#P_REG_USER_ID#
+                   ,SYSDATE
+                   )
+    </insert>
+    <!-- [E] - INSERT_CSUSERBRAND [사용자별운영사업부등록마스터] -->
+
+    <!-- [S] - DELETE_CSUSERBRAND [사용자별운영사업부등록마스터] -->
+    <delete id="DELETE_CSUSERBRAND" parameterClass="java.util.Map">
+        DELETE 
+          FROM CSUSERBRAND
+         WHERE USER_ID                  = #P_USER_ID#
+           AND BRAND_CD                 = #P_BRAND_CD#
+    </delete>
+    <!-- [E] - DELETE_CSUSERBRAND [사용자별운영사업부등록마스터] -->
+
+    <!-- [S] - INSERT_CSUSERPROGRAM [사용자별실행프로그램마스터] -->
+    <insert id="INSERT_CSUSERPROGRAM" parameterClass="java.util.Map">
+        INSERT INTO CSUSERPROGRAM
+                   (
+                    USER_ID
+                   ,PROGRAM_ID
+                   <isNotEmpty prepend = "," property= "P_EXE_LEVEL1"              >EXE_LEVEL1               </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_EXE_LEVEL2"              >EXE_LEVEL2               </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_EXE_LEVEL3"              >EXE_LEVEL3               </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_EXE_LEVEL4"              >EXE_LEVEL4               </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_FAVORITE_YN"             >FAVORITE_YN              </isNotEmpty>
+                   ,REG_USER_ID
+                   ,REG_DATETIME
+                   )
+            VALUES (
+                    #P_USER_ID#
+                   ,#P_PROGRAM_ID#
+                   <isNotEmpty prepend = "," property= "P_EXE_LEVEL1"              >#P_EXE_LEVEL1#             </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_EXE_LEVEL2"              >#P_EXE_LEVEL2#             </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_EXE_LEVEL3"              >#P_EXE_LEVEL3#             </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_EXE_LEVEL4"              >#P_EXE_LEVEL4#             </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_FAVORITE_YN"             >#P_FAVORITE_YN#            </isNotEmpty>
+                   ,#P_REG_USER_ID#
+                   ,SYSDATE
+                   )
+    </insert>
+    <!-- [E] - INSERT_CSUSERPROGRAM [사용자별실행프로그램마스터] -->
+                
+    <!-- [S] - UPDATE_CSUSERPROGRAM [사용자별실행프로그램마스터] -->
+    <update id="UPDATE_CSUSERPROGRAM" parameterClass="java.util.Map">
+        UPDATE CSUSERPROGRAM
+           SET EXE_LEVEL1               = #P_EXE_LEVEL1#
+              <isNotNull prepend = "," property= "P_EXE_LEVEL2"              >EXE_LEVEL2               = #P_EXE_LEVEL2#             </isNotNull>
+              <isNotNull prepend = "," property= "P_EXE_LEVEL3"              >EXE_LEVEL3               = #P_EXE_LEVEL3#             </isNotNull>
+              <isNotNull prepend = "," property= "P_EXE_LEVEL4"              >EXE_LEVEL4               = #P_EXE_LEVEL4#             </isNotNull>
+              <isNotNull prepend = "," property= "P_FAVORITE_YN"             >FAVORITE_YN              = #P_FAVORITE_YN#            </isNotNull>
+              ,REG_USER_ID              = #P_REG_USER_ID#
+              ,REG_DATETIME             = SYSDATE
+         WHERE USER_ID                  = #P_USER_ID#
+           AND PROGRAM_ID               = #P_PROGRAM_ID#
+    </update>
+    <!-- [E] - UPDATE_CSUSERPROGRAM [사용자별실행프로그램마스터] -->
+    
+    <!-- [S] - DELETE_CSUSERPROGRAM [사용자별실행프로그램마스터] -->
+    <delete id="DELETE_CSUSERPROGRAM" parameterClass="java.util.Map">
+        DELETE 
+          FROM CSUSERPROGRAM
+         WHERE USER_ID                  = #P_USER_ID#
+              <isNotNull prepend = "AND " property= "P_PROGRAM_ID"              >PROGRAM_ID               = #P_PROGRAM_ID#             </isNotNull>
+    </delete>
+    <!-- [E] - DELETE_CSUSERPROGRAM [사용자별실행프로그램마스터] -->
+</sqlMap>

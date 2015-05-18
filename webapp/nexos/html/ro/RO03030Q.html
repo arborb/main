@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- RO03020Q CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/ro/RO03020Q.css" />
+<script src="js/RO03030Q.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 조회조건 -->
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+          <select class="ui-cbo-key" id="cboQCenter_Cd" style="width: 150px;"></select>
+        </td>
+        <td>
+          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+          <input class="ui-edt-key" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+        <td>
+          <div id="lblQOutbound_Date" class="ui-lbl-condition">반출일자</div>
+          <input class="ui-dtp-key" type="text" id="dtpQOutbound_Date1" style="width: 80px;" />
+          <span class="ui-span-normal">▶</span>
+          <input class="ui-dtp-key" type="text" id="dtpQOutbound_Date2" style="width: 80px;" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblQInout_Cd" class="ui-lbl-condition">반출구분</div>
+          <select class="ui-cbo-normal" id="cboQInout_Cd" style="width: 150px;"></select>
+        </td>
+        <td id="tdQDsp_Brand_Cd">
+          <div id="lblQPopup_Brand_Cd" class="ui-lbl-condition">브랜드</div>
+          <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBrand_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBrand_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divMasterView" style="padding: 1px;">
+    <!-- Tab Handler -->
+    <ul>
+      <li id="divTab1"><a href="#divT1TabSheetView">상품별 집계반출내역</a></li>
+      <li id="divTab2"><a href="#divT2TabSheetView">위탁사별 집계반출내역</a></li>
+    </ul>
+    <!-- 상품별 반출내역 -->
+    <div id="divT1TabSheetView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div id="divConditionViewT1" style="padding: 5px;">
+        <table>
+          <tr>
+            <td width="200px">
+              <div id="lblQT1_Item_Cd" class="ui-lbl-condition">상품코드</div>
+              <input class="ui-edt-normal" type="text" id="edtQT1_Item_Cd" style="width: 80px;" />
+            </td>
+            <td width="270px">
+              <div id="lblQT1_Item_Nm" class="ui-lbl-condition">상품명</div>
+              <input class="ui-edt-normal" type="text" id="edtQT1_Item_Nm" style="width: 150px;" />
+            </td>
+          </tr>
+        </table>
+      </div>
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdMasterT1" class="ui-grd-title">상품별 집계반출내역</td>
+          <td id="divRowCount_grdMasterT1" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdMasterT1"></div>
+    </div>
+    <!-- 공급처별 반출내역 -->
+    <div id="divT2TabSheetView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div id="divConditionViewT2" style="padding: 5px;">
+      </div>
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdMasterT2" class="ui-grd-title">위탁사별 집계반출내역</td>
+          <td id="divRowCount_grdMasterT2" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdMasterT2"></div>
+    </div>
+  </div>
+</body>
+</html>

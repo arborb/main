@@ -1,0 +1,13 @@
+.ui-top-line {
+  margin: 0;
+  padding: 0;
+  background-color: silver;
+  width: 100%;
+  height: 2px;
+}
+
+.ui-ctnr-right {
+    margin-left: 5px;
+    border-width: 1px;
+    border-style: solid;
+}

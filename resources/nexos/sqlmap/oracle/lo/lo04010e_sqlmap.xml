@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2013-07-29
+  // Description
+  // LO04010E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LO04010E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - RS_T1_MASTER -->
+    <parameterMap id="paramRS_T1_MASTER" class="java.util.Map">
+      <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"               mode="IN" />
+      <parameter property="P_BU_CD"                   mode="IN" />
+      <parameter property="P_OUTBOUND_DATE1"          mode="IN" />
+      <parameter property="P_OUTBOUND_DATE2"          mode="IN" />
+      <parameter property="P_VIEW_DIV"                mode="IN" />
+      <parameter property="P_INOUT_CD"                mode="IN" />
+      <parameter property="P_DELIVERY_CD"             mode="IN" />
+      <parameter property="P_DELIVERY_NM"             mode="IN" />
+      <parameter property="P_RDELIVERY_CD"            mode="IN" />
+      <parameter property="P_RDELIVERY_NM"            mode="IN" />
+      <parameter property="P_BRAND_CD"                mode="IN" />
+      <parameter property="P_USER_ID"                 mode="IN" />
+    </parameterMap>
+    <procedure id="RS_T1_MASTER" parameterMap="paramRS_T1_MASTER" resultClass="java.util.HashMap">
+      { ? = call LO04010E.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_T1_MASTER -->
+  
+  
+    <!-- [S] - RS_T2_MASTER -->
+    <parameterMap id="paramRS_T2_MASTER" class="java.util.Map">
+      <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"               mode="IN" />
+      <parameter property="P_BU_CD"                   mode="IN" />
+      <parameter property="P_OUTBOUND_DATE1"          mode="IN" />
+      <parameter property="P_OUTBOUND_DATE2"          mode="IN" />
+      <parameter property="P_INOUT_CD"                mode="IN" />
+      <parameter property="P_DELIVERY_CD"             mode="IN" />
+      <parameter property="P_DELIVERY_NM"             mode="IN" />
+      <parameter property="P_RDELIVERY_CD"            mode="IN" />
+      <parameter property="P_RDELIVERY_NM"            mode="IN" />
+      <parameter property="P_BRAND_CD"                mode="IN" />
+      <parameter property="P_USER_ID"                 mode="IN" />
+    </parameterMap>
+    <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
+      { ? = call LO04010E.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_T2_MASTER -->
+
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - UPDATE_LO020ND [출고등록상세내역] -->
+    <update id="UPDATE_LO020ND" parameterClass="java.util.Map">
+        UPDATE LO020ND
+           SET SHORTAGE_DIV    = #P_SHORTAGE_DIV#
+              <isNotNull prepend = "," property= "P_SHORTAGE_COMMENT" >SHORTAGE_COMMENT  = #P_SHORTAGE_COMMENT#</isNotNull>
+              <isNotNull prepend = "," property= "P_REMARK1" >REMARK1  = #P_REMARK1#</isNotNull>
+         WHERE CENTER_CD         = #P_CENTER_CD#
+           AND BU_CD             = #P_BU_CD#
+           AND OUTBOUND_DATE     = #P_OUTBOUND_DATE#
+           AND OUTBOUND_NO       = #P_OUTBOUND_NO#
+           AND LINE_NO           = #P_LINE_NO#
+    </update>
+    <!-- [E] - UPDATE_LO020ND [출고등록상세내역] -->
+
+
+</sqlMap>

@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2013-08-07
+  // Description
+  //  LF02080E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="LF02080E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+  <!-- [S] - RS_MASTER -->
+  <parameterMap id="paramRS_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    
+  </parameterMap>
+  <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+
+    { ? = call LF02080E.RS_MASTER(?, ?) }
+  </procedure>
+  <!-- [E] - RS_MASTER -->
+
+
+  <!-- [S] - RS_DETAIL -->
+  <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+  </parameterMap>
+  <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+    { ? = call LF02080E.RS_DETAIL(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_DETAIL -->
+
+
+
+    <!--
+      //================================================================================================================
+      // INSERT/UPDATE/DELETE SQLMAP
+      //================================================================================================================
+    -->
+  <!-- [S] - INSERT_LFHEAD [정산항목마스터] -->
+  <insert id="INSERT_LFHEAD" parameterClass="java.util.Map">
+    INSERT INTO LFHEAD
+               (
+                BU_CD
+                FEE_HEAD_CD
+               <isNotEmpty prepend = "," property= "P_FEE_HEAD_NM"             >FEE_HEAD_NM                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PAY_CHA_DIV"             >PAY_CHA_DIV                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_BU_CD#
+                #P_FEE_HEAD_CD#
+               <isNotEmpty prepend = "," property= "P_FEE_HEAD_NM"             >#P_FEE_HEAD_NM#            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_PAY_CHA_DIV"             >#P_PAY_CHA_DIV#            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_LFHEAD [정산항목마스터] -->
+
+
+  <!-- [S] - UPDATE_LFHEAD [정산항목마스터] -->
+  <update id="UPDATE_LFHEAD" parameterClass="java.util.Map">
+    UPDATE LFHEAD
+       SET FEE_HEAD_NM              = #P_FEE_HEAD_NM#
+          <isNotNull prepend = "," property= "P_PAY_CHA_DIV"             >PAY_CHA_DIV              = #P_PAY_CHA_DIV#            </isNotNull>
+          <isNotNull prepend = "," property= "P_REMARK1"                 >REMARK1                  = #P_REMARK1#                </isNotNull>
+          ,REG_USER_ID              = #P_REG_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE FEE_HEAD_CD              = #P_FEE_HEAD_CD#
+  </update>
+  <!-- [E] - UPDATE_LFHEAD [정산항목마스터] -->
+
+
+  <!-- [S] - DELETE_LFHEAD [정산항목마스터] -->
+  <delete id="DELETE_LFHEAD" parameterClass="java.util.Map">
+    DELETE 
+      FROM LFHEAD
+     WHERE FEE_HEAD_CD              = #P_FEE_HEAD_CD#
+  </delete>
+  <!-- [E] - DELETE_LFHEAD [정산항목마스터] -->
+
+
+  <!-- [S] - INSERT_LFBASE [정산항목기준마스터] -->
+  <insert id="INSERT_LFBASE" parameterClass="java.util.Map">
+    INSERT INTO LFBASE
+               (
+                BU_CD
+               ,FEE_HEAD_CD
+               ,FEE_BASE_CD
+               <isNotEmpty prepend = "," property= "P_CHARGE_UNIT_DIV"         >CHARGE_UNIT_DIV            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CHARGE_PRICE"            >CHARGE_PRICE               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_FEE_BASE_NM"             >FEE_BASE_NM                </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_BU_CD#
+               ,#P_FEE_HEAD_CD#
+               ,#P_FEE_BASE_CD#
+               <isNotEmpty prepend = "," property= "P_CHARGE_UNIT_DIV"         >#P_CHARGE_UNIT_DIV#        </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_CHARGE_PRICE"            >#P_CHARGE_PRICE#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_FEE_BASE_NM"             >#P_FEE_BASE_NM#            </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_LFBASE [정산항목기준마스터] -->
+
+
+  <!-- [S] - UPDATE_LFBASE [정산항목기준마스터] -->
+  <update id="UPDATE_LFBASE" parameterClass="java.util.Map">
+    UPDATE LFBASE
+       SET FEE_BASE_NM              = #P_FEE_BASE_NM#
+          <isNotNull prepend = "," property= "P_CHARGE_UNIT_DIV"              >CHARGE_UNIT_DIV          = #P_CHARGE_UNIT_DIV#             </isNotNull>
+          <isNotNull prepend = "," property= "P_CHARGE_PRICE"                 >CHARGE_PRICE             = #P_CHARGE_PRICE#                </isNotNull>
+          <isNotNull prepend = "," property= "P_REMARK1"                      >REMARK1                  = #P_REMARK1#                     </isNotNull>
+          ,REG_USER_ID              = #P_REG_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE FEE_HEAD_CD              = #P_FEE_HEAD_CD#
+       AND FEE_BASE_CD              = #P_FEE_BASE_CD#
+  </update>
+  <!-- [E] - UPDATE_LFBASE [정산항목기준마스터] -->
+
+
+
+  <!-- [S] - DELETE_LFBASE [정산항목기준마스터] -->
+  <delete id="DELETE_LFBASE" parameterClass="java.util.Map">
+    DELETE 
+      FROM LFBASE
+     WHERE FEE_HEAD_CD              = #P_FEE_HEAD_CD#
+       AND FEE_BASE_CD              = #P_FEE_BASE_CD#
+  </delete>
+  <!-- [E] - DELETE_LFBASE [정산항목기준마스터] -->
+
+
+</sqlMap>

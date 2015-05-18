@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LABEL_LOM06_SUB" pageWidth="282" pageHeight="235" orientation="Landscape" columnWidth="282" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0265a66a-8475-4f04-b2b9-5ad42ca984c6">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_CENTER_CD" class="java.lang.String"/>
+	<parameter name="P_BOX_NO" class="java.lang.String"/>
+	<parameter name="P_OUTBOUND_DATE" class="java.lang.String"/>
+	<parameter name="P_OUTBOUND_NO" class="java.lang.String"/>
+	<parameter name="P_BU_CD" class="java.lang.String"/>
+	<parameter name="P_WB_NO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT M1.ITEM_CD
+      ,M2.LOCATION_CD
+      ,C1.ITEM_NM
+      ,M4.DEAL_ID
+      ,M1.CONFIRM_QTY
+  FROM LO020NT M1
+       JOIN CMITEM C1 ON C1.BRAND_CD       = M1.BRAND_CD
+                     AND C1.ITEM_CD        = M1.ITEM_CD
+       JOIN LO030NM M2 ON M2.CENTER_CD     = M1.CENTER_CD
+                      AND M2.BU_CD         = M1.BU_CD
+                      AND M2.OUTBOUND_DATE = M1.OUTBOUND_DATE
+                      AND M2.OUTBOUND_NO   = M1.OUTBOUND_NO
+                      AND M2.LINE_NO       = M1.LINE_NO
+       JOIN LO020NM M3 ON M3.CENTER_CD     = M1.CENTER_CD
+                      AND M3.BU_CD         = M1.BU_CD
+                      AND M3.OUTBOUND_DATE = M1.OUTBOUND_DATE
+                      AND M3.OUTBOUND_NO   = M1.OUTBOUND_NO
+       JOIN LO020ND M4 ON M4.CENTER_CD     = M1.CENTER_CD
+                      AND M4.BU_CD         = M1.BU_CD
+                      AND M4.OUTBOUND_DATE = M1.OUTBOUND_DATE
+                      AND M4.OUTBOUND_NO   = M1.OUTBOUND_NO
+                      AND M4.LINE_NO       = M1.LINE_NO
+ WHERE M1.CENTER_CD = $P{P_CENTER_CD}
+   AND M1.BU_CD = $P{P_BU_CD}
+   AND M1.OUTBOUND_DATE = $P{P_OUTBOUND_DATE}
+   AND M3.PACKING_BATCH = $P{P_OUTBOUND_NO}
+   AND M1.BOX_NO        = $P{P_BOX_NO}
+   AND M1.WB_NO         = $P{P_WB_NO}
+ ORDER BY M1.LINE_NO]]>
+	</queryString>
+	<field name="ITEM_CD" class="java.lang.String"/>
+	<field name="LOCATION_CD" class="java.lang.String"/>
+	<field name="ITEM_NM" class="java.lang.String"/>
+	<field name="DEAL_ID" class="java.lang.String"/>
+	<field name="CONFIRM_QTY" class="java.math.BigDecimal"/>
+	<group name="PAGE_GRP" isStartNewPage="true">
+		<groupExpression><![CDATA[$V{REPORT_COUNT} >= 6]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<detail>
+		<band height="29">
+			<textField>
+				<reportElement x="0" y="0" width="65" height="13" uuid="1ff34575-90e6-410c-8d24-db7930ba18f3"/>
+				<textElement>
+					<font fontName="굴림체" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCATION_CD}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="65" y="0" width="187" height="27" uuid="806b9603-a956-44ce-b69f-2220f986fa01"/>
+				<textElement>
+					<font fontName="굴림체" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_NM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="252" y="0" width="29" height="13" uuid="b52c1a4e-301b-4abc-a7cb-1c321f07d7cd"/>
+				<textElement textAlignment="Right">
+					<font fontName="굴림체" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONFIRM_QTY}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="27" width="280" height="1" uuid="837d91bb-533f-4cd1-83c9-66b11b9f7a9f"/>
+			</line>
+			<staticText>
+				<reportElement x="-1" y="12" width="34" height="14" uuid="4cca11cb-f966-4417-9f26-77da3c52a459"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="굴림체" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[딜번호:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="32" y="12" width="42" height="13" uuid="46b66b6d-d534-4998-90e7-ce0c21f133db"/>
+				<textElement>
+					<font fontName="굴림체" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DEAL_ID}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

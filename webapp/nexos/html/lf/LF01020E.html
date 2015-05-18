@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- LF01020E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/lf/LF01020E.css" />
+<script src="js/LF01020E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 조회 조건 -->
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+          <select id="cboQCenter_Cd" class="ui-cbo-key" style="width: 150px;"></select>
+        </td>
+        <td>
+          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+          <input class="ui-edt-normal" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 150px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divMasterView" class="ui-ctnr-normal">
+    <div id="divMaster">
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdMaster" class="ui-grd-title">사업부별 마감내역</td>
+          <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdMaster"></div>
+      <div class="ui-gbox-header">
+        <div id="lblChange" class="ui-lbl-header">마감처리</div>
+      </div>
+      <table id="divProc" class="ui-tbl-normal">
+        <tr>
+          <td>
+            <input class="ui-checkbox-normal" type="checkbox" id="chkQClosing_Level1" value="Y" style="vertical-align: middle;" />
+            이월 기초재고 생성
+          </td>
+          <td style="width: 100%;">▶전월 수불자료를 기초로 금월 기초재고를 생성합니다.</td>
+          <td rowspan="3">
+            <div id="lblClose_Month" class="ui-ctnr-row">
+              <div id="lblClose_Month" class="ui-lbl-normal">마감월</div>
+              <input class="ui-dtp-key" type="text" id="dtpClose_Month" style="width: 80px;" />
+            </div>
+            <div id="lblProtect_date" class="ui-ctnr-row">
+              <div id="lblProtect_date" class="ui-lbl-normal">보안설정일자</div>
+              <input class="ui-dtp-key" type="text" id="dtpProtect_date" style="width: 80px;" />
+            </div>
+          </td>
+          <td id="editConfirm" rowspan="3">
+            <input type="button" id="btnConfirm" value="마감처리" class="ui-btn-cmd" style="width: 100px; height: 50px;" />
+          </td>
+        </tr>
+        <tr>
+          <td id="editQClosing_Level">
+            <input class="ui-checkbox-normal" type="checkbox" id="chkQClosing_Level2" value="Y" style="vertical-align: middle;" />
+            위탁 수수료 정산
+          </td>
+          <td>▶계약 기준에 의한 수수료를 정산합니다.</td>
+        </tr>
+        <tr>
+          <td>
+            <input class="ui-checkbox-normal" type="checkbox" id="chkQClosing_Level3" value="Y" style="vertical-align: middle;" />
+            보안일자 설정
+          </td>
+          <td>▶최종 마감일자로 보안설정을 처리합니다.</td>
+        </tr>
+      </table>
+    </div>
+    <div id="divDetail">
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdDetail" class="ui-grd-title">입출고전표 기준 수불 불일치 내역</td>
+          <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdDetail"></div>
+    </div>
+  </div>
+</body>
+</html>

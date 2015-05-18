@@ -1,0 +1,72 @@
+.ui-gbox-title {
+  padding: 3px 5px;
+  width: 110px;
+}
+
+.ui-gbox-content {
+  margin-top: 0;
+  padding: 5px;
+}
+
+.ui-ctnr-left,.ui-ctnr-right {
+  border-width: 0;
+  padding: 5px 0;
+}
+
+.jqplot-point-label {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.jqplot-series-0 {
+  color: #4f4f4f;
+}
+
+.jqplot-series-1 {
+  color: #f2f2f2;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .7);
+}
+
+.jqplot-target {
+  font-family: 'NanumGothic', 'Malgun Gothic', GulimChe, 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 12px;
+}
+
+.jqplot-title {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.jqplot-highlighter-tooltip,.jqplot-canvasOverlay-tooltip {
+  border: 1px solid #939393;
+  font-family: 'NanumGothic', 'Malgun Gothic', GulimChe, 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  background: rgba(253, 255, 170, 0.9);
+  padding: 2px 5px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+  z-index: 2;
+}
+
+.jqplot-point-label {
+  line-height: 10px;
+  font-size: 0.8em;
+  font-weight: normal;
+  color: #B4ABA9;
+}
+
+table.jqplot-table-legend {
+  border: 0px;
+  margin: 10px 10px;
+}
+
+table.jqplot-table-legend td {
+  font-size: 11px;
+  padding: 2px;
+}
+
+div.jqplot-table-legend-swatch-outline {
+  line-height: 0;
+}

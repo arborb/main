@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- RIM1011P CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/ri/RIM5011P.css" />
+<script src="js/RIM5011P.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 출고등록 마스터 -->
+  <div id="divMasterView" class="ui-gbox-popup">
+    <table class="ui-tbl-popup" >
+      <tr>
+        <td>
+          <div id="lblCenter_Cd_F" class="ui-lbl-normal">물류센터</div>
+          <input class="ui-edt-display" type="text" id="edtCenter_Cd_F" disabled="disabled" style="width: 170px;" />
+        </td>
+        <td>
+          <div class="ui-gbox-title" style="margin: 0; min-width: 325px;">온라인고객 - 수령자정보</div>
+        </td>
+        <td>
+          <div class="ui-gbox-title" style="margin: 0; min-width: 325px;">온라인고객 - 운송사정보</div>
+        </td>
+        
+      </tr>
+      <tr>
+        <td>
+          <div id="lblPopup_Bu_Cd" class="ui-lbl-normal">사업부</div>
+          <input class="ui-edt-display" type="text" id="edtBu_Cd" disabled="disabled" style="width: 60px;" />
+          <input class="ui-edt-display" type="text" id="edtBu_Nm" disabled="disabled" style="width: 100px;" />
+          <input type="hidden" id="edtCust_Cd" />
+        </td>
+        <td>
+          <div id="lblShipper_Nm" class="ui-lbl-key">수령자명</div>
+          <input class="ui-edt-key sub-table-data" type="text" id="edtShipper_Nm" style="width: 225px;" tabindex="16" />
+        </td>
+        <td>
+          <div id="lblPopup_Carrier_Cd" class="ui-lbl-normal">운송사</div>
+          <input class="ui-edt-normal sub-table-data" type="text" id="edtCarrier_Cd" tabindex="8" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnCarrier_Cd" tabindex="9" />
+          <input class="ui-edt-display" type="text" id="edtCarrier_Nm" disabled="disabled" style="width: 127px;" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblInbound_Date" class="ui-lbl-key">예정일자</div>
+          <input class="ui-dtp-key" type="text" id="dtpInbound_Date" style="width: 80px;" tabindex="1" />
+        </td>
+        <td>
+          <div id="lblShipper_Tel" class="ui-lbl-normal">전화번호</div>
+          <input class="ui-edt-normal sub-table-data" type="text" id="edtShipper_Tel" style="width: 95px;" tabindex="17" />
+        </td>
+        <td>
+          <div id="lblWb_No" class="ui-lbl-normal">운송장번호</div>
+          <input class="ui-edt-normal sub-table-data" type="text" id="edtWb_No" style="width: 95px;" tabindex="17" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblInbound_No" class="ui-lbl-normal">예정번호</div>
+          <input class="ui-edt-display" type="text" id="edtInbound_No" disabled="disabled" style="width: 95px;" />
+        </td>
+        <td>
+          <div id="lblShipper_Hp" class="ui-lbl-normal">휴대폰번호</div>
+          <input class="ui-edt-normal sub-table-data" type="text" id="edtShipper_Hp" style="width: 95px;" tabindex="18" />
+        </td>
+        <td>
+          <div id="lblShip_Cost_Div" class="ui-lbl-normal">운임구분</div>
+          <select id="cboShip_Cost_Div" class="ui-cbo-normal sub-table-data" style="width: 100px;"></select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblInout_Cd" class="ui-lbl-key">반입구분</div>
+          <select class="ui-cbo-key" id="cboInout_Cd" style="width: 160px;" tabindex="2"></select>
+        </td>
+        <td>
+          <div id="lblShipper_Zip_Cd" class="ui-lbl-normal sub-table-data">우편번호</div>
+          <input class="ui-edt-display " type="text" id="edtShipper_Zip_Cd" disabled="disabled" style="width: 95px;" />
+          <input class="ui-btn-popup" type="button" id="btnShipper_Zip_Cd" tabindex="19" />
+        </td>
+          <td>
+          <div id="lblShip_Cost" class="ui-lbl-normal">운송운임</div>
+          <input class="ui-edt-normal sub-table-data" type="text" id="edtShip_Cost" style="width: 95px;" tabindex="18" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblBu_Date" class="ui-lbl-normal">전표일자</div>
+          <input class="ui-edt-display" type="text" id="edtBu_Date" disabled="disabled" style="width: 95px;" />
+        </td>
+        <td>
+          <div id="lblShipper_Addr_Basic" class="ui-lbl-normal">기본주소</div>
+          <input class="ui-edt-display sub-table-data" type="text" id="edtShipper_Addr_Basic" disabled="disabled" style="width: 225px;" maxlength="150" tabindex="20" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblBu_No" class="ui-lbl-normal">전표번호</div>
+          <input class="ui-edt-display" type="text" id="edtBu_No" disabled="disabled" style="width: 96px;" maxlength="30" />
+        </td>
+        <td>
+          <div id="lblShipper_Addr_Detail" class="ui-lbl-normal">상세주소</div>
+          <input class="ui-edt-normal sub-table-data" type="text" id="edtShipper_Addr_Detail" style="width: 225px;" maxlength="150" tabindex="21" />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div id="lblRemark1" class="ui-lbl-normal">비고</div>
+          <input class="ui-edt-normal sub-table-data" type="text" id="edtRemark1" style="width: 522px;" maxlength="255" tabindex="23" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- 반입예정등록 디테일-->
+  <div id="divDetailView" style="padding: 0; border-width: 1px; border-style: solid; margin-top: 5px">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdDetail" class="ui-grd-title">반입예정등록 상세정보</td>
+        <td>
+          <input type="button" id="btnEntryNew" class="ui-grd-btnnew" style="width: 30px; height: 20px;" />
+          <input type="button" id="btnEntryDelete" class="ui-grd-btndelete" style="width: 30px; height: 20px;" />
+          <input type="button" id="btnEntrySave" class="ui-grd-btnsave" style="width: 30px; height: 20px;" />
+        </td>
+        <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdDetail"></div>
+  </div>
+  <div id="divBottomView" style="text-align: right; padding: 5px;">
+    <input type="button" id="btnClose" value="닫기" class="ui-btn-cmd" style="width: 80px;" />
+  </div>
+</body>
+</html>

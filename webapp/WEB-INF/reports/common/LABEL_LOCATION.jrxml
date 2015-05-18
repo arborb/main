@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CM03030R_R02" printOrder="Horizontal" pageWidth="425" pageHeight="283" orientation="Landscape" columnWidth="425" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b88e4590-4552-41b5-aa5b-13f6c8e9edd2">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<queryString>
+		<![CDATA[SELECT M1.ZONE_CD
+          ,M1.BANK_CD
+          ,M1.BAY_CD
+          ,M1.LEV_CD
+          ,M1.LOCATION_CD
+          ,Z1.ZONE_NM
+          ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.ZONE_CD ORDER BY M1.BANK_CD ,M1.BAY_CD ,M1.LEV_CD) AS ZONE_FIRST_YN
+          ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.ZONE_CD ,M1.BANK_CD ORDER BY M1.BAY_CD ,M1.LEV_CD) AS BANK_FIRST_YN
+          ,LAG('N' ,1 ,'Y') OVER(PARTITION BY M1.ZONE_CD ,M1.BANK_CD ,M1.BAY_CD ORDER BY M1.LEV_CD) AS BAY_FIRST_YN
+      FROM CMLOCATION M1
+           JOIN CMZONE Z1 ON Z1.CENTER_CD = M1.CENTER_CD
+                         AND Z1.ZONE_CD   = M1.ZONE_CD
+     WHERE M1.CENTER_CD  = 'A1'
+        AND BANK_CD      = '00'
+        AND BANK_CD      = '00'
+        AND LEV_CD       = '00'
+     ORDER BY BANK_CD
+             ,BAY_CD
+             ,LEV_CD]]>
+	</queryString>
+	<field name="ZONE_CD" class="java.lang.String"/>
+	<field name="BANK_CD" class="java.lang.String"/>
+	<field name="BAY_CD" class="java.lang.String"/>
+	<field name="LEV_CD" class="java.lang.String"/>
+	<field name="LOCATION_CD" class="java.lang.String"/>
+	<field name="ZONE_NM" class="java.lang.String"/>
+	<field name="ZONE_FIRST_YN" class="java.lang.String"/>
+	<field name="BANK_FIRST_YN" class="java.lang.String"/>
+	<field name="BAY_FIRST_YN" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="283" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle-1" x="15" y="18" width="394" height="248" uuid="dd0a2788-6a53-41a7-9b76-20ea67f869d9"/>
+			</rectangle>
+			<componentElement>
+				<reportElement positionType="FixRelativeToBottom" x="42" y="38" width="341" height="112" isRemoveLineWhenBlank="true" uuid="ffcf102d-8c80-42ec-b2a9-8a581cd240a8"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="3of9" drawText="false" checksumRequired="false" barWidth="0" barHeight="50">
+					<jr:codeExpression><![CDATA[$F{LOCATION_CD}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-1" x="15" y="165" width="394" height="84" uuid="b6568efd-9ced-465e-af00-1169962d6a8f"/>
+				<textElement textAlignment="Center">
+					<font fontName="굴림체" size="60" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCATION_CD}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

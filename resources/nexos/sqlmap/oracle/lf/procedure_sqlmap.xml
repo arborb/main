@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2013-08-08
+  // Description
+  // PROCEDURE 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap>
+
+
+  <!--
+    //==================================================================================================================
+    // PROCEDURE SQLMAP
+    //==================================================================================================================
+  -->
+  <!-- [S] - LF_ACCOUNT_CONTRACT -->
+  <parameterMap id="paramLF_ACCOUNT_CONTRACT" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_CONTRACT" parameterMap="paramLF_ACCOUNT_CONTRACT" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_CONTRACT(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_CONTRACT -->
+
+  <!-- [S] - LF_ACCOUNT_DELIVERYCHARGE -->
+  <parameterMap id="paramLF_ACCOUNT_DELIVERYCHARGE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_DELIVERYCHARGE" parameterMap="paramLF_ACCOUNT_DELIVERYCHARGE" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_DELIVERYCHARGE(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_DELIVERYCHARGE -->
+
+  <!-- [S] - LF_ACCOUNT_DELIVERYPAY -->
+  <parameterMap id="paramLF_ACCOUNT_DELIVERYPAY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_DELIVERYPAY" parameterMap="paramLF_ACCOUNT_DELIVERYPAY" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_DELIVERYPAY(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_DELIVERYPAY -->
+
+  <!-- [S] - LF_ACCOUNT_EXTRANS_CHARGE -->
+  <parameterMap id="paramLF_ACCOUNT_EXTRANS_CHARGE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_EXTRANS_CHARGE" parameterMap="paramLF_ACCOUNT_EXTRANS_CHARGE" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_EXTRANS_CHARGE(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_EXTRANS_CHARGE -->
+
+  <!-- [S] - LF_ACCOUNT_EXTRANS_PAY -->
+  <parameterMap id="paramLF_ACCOUNT_EXTRANS_PAY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_EXTRANS_PAY" parameterMap="paramLF_ACCOUNT_EXTRANS_PAY" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_EXTRANS_PAY(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_EXTRANS_PAY -->
+
+  <!-- [S] - LF_ACCOUNT_KEEP_1DAY -->
+  <parameterMap id="paramLF_ACCOUNT_KEEP_1DAY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_KEEP_1DAY" parameterMap="paramLF_ACCOUNT_KEEP_1DAY" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_KEEP_1DAY(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_KEEP_1DAY -->
+
+  <!-- [S] - LF_ACCOUNT_KEEP_1HALF -->
+  <parameterMap id="paramLF_ACCOUNT_KEEP_1HALF" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_KEEP_1HALF" parameterMap="paramLF_ACCOUNT_KEEP_1HALF" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_KEEP_1HALF(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_KEEP_1HALF -->
+
+  <!-- [S] - LF_ACCOUNT_KEEP_1MONTH -->
+  <parameterMap id="paramLF_ACCOUNT_KEEP_1MONTH" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_KEEP_1MONTH" parameterMap="paramLF_ACCOUNT_KEEP_1MONTH" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_KEEP_1MONTH(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_KEEP_1MONTH -->
+
+  <!-- [S] - LF_ACCOUNT_KEEP_2AVG -->
+  <parameterMap id="paramLF_ACCOUNT_KEEP_2AVG" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_KEEP_2AVG" parameterMap="paramLF_ACCOUNT_KEEP_2AVG" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_KEEP_2AVG(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_KEEP_2AVG -->
+
+  <!-- [S] - LF_ACCOUNT_KEEP_2MAX -->
+  <parameterMap id="paramLF_ACCOUNT_KEEP_2MAX" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_KEEP_2MAX" parameterMap="paramLF_ACCOUNT_KEEP_2MAX" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_KEEP_2MAX(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_KEEP_2MAX -->
+
+  <!-- [S] - LF_ACCOUNT_PROCEED -->
+  <parameterMap id="paramLF_ACCOUNT_PROCEED" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_PROCEED" parameterMap="paramLF_ACCOUNT_PROCEED" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_PROCEED(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_PROCEED -->
+
+  <!-- [S] - LF_ACCOUNT_RENT -->
+  <parameterMap id="paramLF_ACCOUNT_RENT" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_RENT" parameterMap="paramLF_ACCOUNT_RENT" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_RENT(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_RENT -->
+
+  <!-- [S] - LF_ACCOUNT_WORK_1DAY -->
+  <parameterMap id="paramLF_ACCOUNT_WORK_1DAY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_WORK_1DAY" parameterMap="paramLF_ACCOUNT_WORK_1DAY" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_WORK_1DAY(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_WORK_1DAY -->
+
+  <!-- [S] - LF_ACCOUNT_WORK_1HALF -->
+  <parameterMap id="paramLF_ACCOUNT_WORK_1HALF" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_WORK_1HALF" parameterMap="paramLF_ACCOUNT_WORK_1HALF" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_WORK_1HALF(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_WORK_1HALF -->
+
+  <!-- [S] - LF_ACCOUNT_WORK_1MONTH -->
+  <parameterMap id="paramLF_ACCOUNT_WORK_1MONTH" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"        mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"          mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_ACCOUNT_WORK_1MONTH" parameterMap="paramLF_ACCOUNT_WORK_1MONTH" resultClass="java.util.HashMap">
+      { call LF_ACCOUNT_WORK_1MONTH(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_ACCOUNT_WORK_1MONTH -->
+
+  <!-- [S] - LF_AGGREGATE_CONSIGN -->
+  <parameterMap id="paramLF_AGGREGATE_CONSIGN" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ADJUST_MONTH"            mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_AGGREGATE_CONSIGN" parameterMap="paramLF_AGGREGATE_CONSIGN" resultClass="java.util.HashMap">
+      { call LF_AGGREGATE_CONSIGN(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_AGGREGATE_CONSIGN -->
+
+  <!-- [S] - LF_PROCESSING_ACCOUNT -->
+  <parameterMap id="paramLF_PROCESSING_ACCOUNT" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_PROCESSING_ACCOUNT" parameterMap="paramLF_PROCESSING_ACCOUNT" resultClass="java.util.HashMap">
+      { call LF_PROCESSING_ACCOUNT(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_PROCESSING_ACCOUNT -->
+
+  <!-- [S] - LF_PROCESSING_CLOSING -->
+  <parameterMap id="paramLF_PROCESSING_CLOSING" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_PROTECT_DATE"            mode="IN" />
+    <parameter property="P_CLOSING_LEVEL1_YN"       mode="IN" />
+    <parameter property="P_CLOSING_LEVEL2_YN"       mode="IN" />
+    <parameter property="P_CLOSING_LEVEL3_YN"       mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_PROCESSING_CLOSING" parameterMap="paramLF_PROCESSING_CLOSING" resultClass="java.util.HashMap">
+      { call LF_PROCESSING_CLOSING(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_PROCESSING_CLOSING -->
+
+  <!-- [S] - LF_BRAND_COPY -->
+  <parameterMap id="paramLF_BRAND_COPY" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_FROM_BRAND_CD"           mode="IN" />
+    <parameter property="P_TO_BRAND_CD"             mode="IN" />
+    <parameter property="P_REG_USER_ID"             mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_BRAND_COPY" parameterMap="paramLF_BRAND_COPY" resultClass="java.util.HashMap">
+      { call LF_BRAND_COPY(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_BRAND_COPY -->
+  
+    <!-- [S] - LF_CARRIER_COPY -->
+  <parameterMap id="paramLF_CARRIER_COPY" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_FROM_CARRIER_CD"         mode="IN" />
+    <parameter property="P_TO_CARRIER_CD"           mode="IN" />
+    <parameter property="P_REG_USER_ID"             mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_CARRIER_COPY" parameterMap="paramLF_CARRIER_COPY" resultClass="java.util.HashMap">
+      { call LF_CARRIER_COPY(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_CARRIER_COPY -->
+
+    <!-- [S] - LF_PROCESSING_ACCOUNT_START -->
+  <parameterMap id="paramLF_PROCESSING_ACCOUNT_START" class="java.util.Map">
+    <parameter property="P_CENTER_CD"                   mode="IN" />
+    <parameter property="P_BU_CD"                       mode="IN" />
+    <parameter property="P_BRAND_CD"                    mode="IN" />
+    <parameter property="P_CLOSE_START_DATE"            mode="IN" />
+    <parameter property="P_CLOSE_END_DATE"              mode="IN" />
+    <parameter property="P_CLOSE_MONTH"                 mode="IN" />
+    <parameter property="P_CLOSE_GUBN"                  mode="IN" />
+    <parameter property="P_REG_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                         mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LF_PROCESSING_ACCOUNT_START" parameterMap="paramLF_PROCESSING_ACCOUNT_START" resultClass="java.util.HashMap">
+      { call LF_PROCESSING_ACCOUNT_START(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LF_PROCESSING_ACCOUNT_START -->
+
+
+
+</sqlMap>

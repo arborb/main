@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CM07010E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cm/CM07010E.css" />
+<script src="js/CM07010E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQZip_Cd" class="ui-lbl-condition">우편번호</div>
+          <input class="ui-edt-normal" type="text" id="edtQZip_Cd" style="width: 100px;" />
+        </td>
+        <td>
+          <div id="lblQAddr_Nm" class="ui-lbl-condition">주소</div>
+          <input class="ui-edt-normal" type="text" id="edtQAddr_Nm" style="width: 150px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divLeftView" class="ui-ctnr-left">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdMaster" class="ui-grd-title">우편번호</td>
+        <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdMaster"></div>
+  </div>
+  <div id="divRightView" class="ui-ctnr-right">
+    <div class="ui-gbox-header">
+      <div class="ui-lbl-header">기본정보</div>
+    </div>
+    <div id="divMasterInfoView" class="ui-gbox-content ui-noborder">
+      <div class="ui-ctnr-row">
+        <div id="lblZip_Cd" class="ui-lbl-key" style="width: 85px;">우편번호</div>
+        <input class="ui-edt-key" type="text" id="edtZip_Cd" maxlength="6" style="width: 100px; margin-left: 6px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblAddr_Nm1" class="ui-lbl-normal">시도</div>
+        <input class="ui-edt-normal" type="text" id="edtAddr_Nm1" maxlength="50" style="width: 309px; margin-left: 6px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblAddr_Nm2" class="ui-lbl-normal">시군구</div>
+        <input class="ui-edt-normal" type="text" id="edtAddr_Nm2" maxlength="50" style="width: 309px; margin-left: 6px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblAddr_Nm3" class="ui-lbl-normal">읍면동</div>
+        <input class="ui-edt-normal" type="text" id="edtAddr_Nm3" maxlength="50" style="width: 309px; margin-left: 6px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblAddr_Detail" class="ui-lbl-normal">상세주소</div>
+        <input class="ui-edt-normal" type="text" id="edtAddr_Detail" maxlength="50" style="width: 309px; margin-left: 6px;" />
+      </div>
+      <div class="ui-gbox-title" id="hdrHdc_Div01">CJ대한통운 택배정보</div>
+      <div class="ui-gbox-content" id="gboxHdc_Div01" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <div id="lblCj_Dlv_Cd" class="ui-lbl-normal">관할점소코드</div>
+          <input class="ui-edt-normal" type="text" id="edtCj_Dlv_Cd" style="width: 301px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblCj_Dlv_Nm" class="ui-lbl-normal">관할점소명</div>
+          <input class="ui-edt-normal" type="text" id="edtCj_Dlv_Nm" style="width: 301px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblCj_Tml_Cd" class="ui-lbl-normal">도착점코드</div>
+          <input class="ui-edt-normal" type="text" id="edtCj_Tml_Cd" style="width: 301px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblCj_Tml_Sub_Cd" class="ui-lbl-normal">서브도착점코드</div>
+          <input class="ui-edt-normal" type="text" id="edtCj_Tml_Sub_Cd" style="width: 301px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblCj_Tml_Nm" class="ui-lbl-normal">도착점명</div>
+          <input class="ui-edt-normal" type="text" id="edtCj_Tml_Nm" style="width: 301px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblCj_Postman_Nm" class="ui-lbl-normal">집배사원명</div>
+          <input class="ui-edt-normal" type="text" id="edtCj_Postman_Nm" style="width: 301px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblCj_Ship_Yn" class="ui-lbl-normal">도선여부</div>
+          <input class="ui-chk-normal" type="checkbox" id="chkCj_Ship_Yn" style="width: 20px;" />
+          <div id="lblCj_Air_Yn" class="ui-lbl-normal" style="margin-left: 80px;">항공여부</div>
+          <input class="ui-chk-normal" type="checkbox" id="chkCj_Air_Yn" style="width: 20px;" />
+        </div>
+      </div>
+      <div class="ui-gbox-title" id="hdrHdc_Div02">한진 택배정보</div>
+      <div class="ui-gbox-content" id="gboxHdc_Div02" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <div id="lblHj_Dlv_Nm" class="ui-lbl-normal">배송점소명</div>
+          <input class="ui-edt-normal" type="text" id="edtHj_Dlv_Nm" style="width: 301px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblHj_Tml_Cd" class="ui-lbl-normal">터미널코드</div>
+          <input class="ui-edt-normal" type="text" id="edtHj_Tml_Cd" style="width: 301px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblHj_Tml_Nm" class="ui-lbl-normal">터미널명</div>
+          <input class="ui-edt-normal" type="text" id="edtHj_Tml_Nm" style="width: 301px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblHj_Filt_Cd" class="ui-lbl-normal">도착지코드</div>
+          <input class="ui-edt-normal" type="text" id="edtHj_Filt_Cd" style="width: 301px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblHj_Ship_Fare" class="ui-lbl-normal">도선료</div>
+          <input class="ui-edt-normal" type="text" id="edtHj_Ship_Fare" maxlength="20" style="width: 91px;" />
+          <div id="lblHj_Air_Fare" class="ui-lbl-normal">항공료</div>
+          <input class="ui-edt-normal" type="text" id="edtHj_Air_Fare" maxlength="20" style="width: 93px;" />
+        </div>
+      </div>
+      <div class="ui-gbox-title" id="hdrHdc_Div03">우체국 택배정보</div>
+      <div class="ui-gbox-content" id="gboxHdc_Div03" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <div id="lblEp_Dlv_Nm" class="ui-lbl-normal">우체국배송국명</div>
+          <input class="ui-edt-normal" type="text" id="edtEp_Dlv_Nm" style="width: 301px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblEp_Tml_Nm" class="ui-lbl-normal">도착집중국명</div>
+          <input class="ui-edt-normal" type="text" id="edtEp_Tml_Nm" style="width: 301px;" />
+        </div>
+      </div>
+      <div class="ui-gbox-title" id="hdrHdc_Div04">GTX 택배정보</div>
+      <div class="ui-gbox-content" id="gboxHdc_Div04" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <div id="lblGtx_Ship_Code1" class="ui-lbl-normal">터미널코드1</div>
+          <input class="ui-edt-normal" type="text" id="edtGtx_Ship_Code1" style="width: 301px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblGtx_Ship_Code2" class="ui-lbl-normal">터미널코드2</div>
+          <input class="ui-edt-normal" type="text" id="edtGtx_Ship_Code2" style="width: 301px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblGtx_Addr3" class="ui-lbl-normal">배송대리점</div>
+          <input class="ui-edt-normal" type="text" id="edtGtx_Addr3" style="width: 301px;" />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

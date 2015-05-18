@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // [수신] 주문리스트 출고예정 관리
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  //  ED03120E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="ED03120E">
+
+
+    <!--
+      //================================================================================================================
+      // SELECT SQLMAP
+      //================================================================================================================
+    -->
+    <!-- [S] - RS_MASTER -->
+    <parameterMap id="paramRS_MASTER" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_DEFINE_NO"         mode="IN" />
+        <parameter property="P_RECV_DATE1"        mode="IN" />
+        <parameter property="P_RECV_DATE2"        mode="IN" />
+        <parameter property="P_VIEW_DIV"          mode="IN" />
+    </parameterMap>
+    <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+        { ? = call ED03120E.RS_MASTER(?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_MASTER -->
+
+
+    <!-- [S] - RS_DETAIL -->
+    <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_DEFINE_NO"         mode="IN" />
+        <parameter property="P_RECV_DATE"         mode="IN" />
+        <parameter property="P_RECV_NO"           mode="IN" />
+        <parameter property="P_VIEW_DIV"          mode="IN" />
+    </parameterMap>
+    <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+        { ? = call ED03120E.RS_DETAIL(?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_DETAIL -->
+
+
+    <!-- [S] - RS_SUB -->
+    <parameterMap id="paramRS_SUB" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_EDI_DIV"           mode="IN" />
+        <parameter property="P_DEFINE_NO"         mode="IN" />
+        <parameter property="P_RECV_DATE"         mode="IN" />
+        <parameter property="P_RECV_NO"           mode="IN" />
+        <parameter property="P_RECV_SEQ"          mode="IN" />
+    </parameterMap>
+    <procedure id="RS_SUB" parameterMap="paramRS_SUB" resultClass="java.util.HashMap">
+        { ? = call ED03120E.RS_SUB(?, ?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_SUB -->
+
+
+    <!-- [S] - RS_SUB1 -->
+    <parameterMap id="paramRS_SUB1" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_BU_CD"             mode="IN" />
+    </parameterMap>
+    <procedure id="RS_SUB1" parameterMap="paramRS_SUB1" resultClass="java.util.HashMap">
+        { ? = call ED03120E.RS_SUB1(?) }
+    </procedure>
+    <!-- [E] - RS_SUB1 -->
+    
+    
+    <!-- [S] - RS_TOTAL -->
+    <parameterMap id="paramRS_TOTAL" class="java.util.Map">
+        <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+        <parameter property="P_BU_CD"             mode="IN" />
+        <parameter property="P_EDI_DIV"           mode="IN" />
+        <parameter property="P_DEFINE_NO"         mode="IN" />
+        <parameter property="P_RECV_DATE"         mode="IN" />
+        <parameter property="P_RECV_NO"           mode="IN" />
+    </parameterMap>
+    <procedure id="RS_TOTAL" parameterMap="paramRS_TOTAL" resultClass="java.util.HashMap">
+        { ? = call ED03120E.RS_TOTAL(?, ?, ?, ?, ?) }
+    </procedure>
+    <!-- [E] - RS_SUB -->
+
+
+  <!-- [S] - UPDATE_ERLOORDER [EDI출고예정수신] -->
+  <update id="UPDATE_ERLOORDER" parameterClass="java.util.Map">
+    UPDATE ERLOORDER
+       SET REMARK1                  = #P_REMARK1# 
+          <isNotNull prepend = "," property= "P_ORDERER_NM"              >ORDERER_NM               = #P_ORDERER_NM#             </isNotNull>
+          <isNotNull prepend = "," property= "P_SHIPPER_NM"              >SHIPPER_NM               = #P_SHIPPER_NM#             </isNotNull>
+          <isNotNull prepend = "," property= "P_SHIPPER_TEL"             >SHIPPER_TEL              = #P_SHIPPER_TEL#            </isNotNull>
+          <isNotNull prepend = "," property= "P_SHIPPER_HP"              >SHIPPER_HP               = #P_SHIPPER_HP#             </isNotNull>
+          <isNotNull prepend = "," property= "P_SHIPPER_ZIP_CD"          >SHIPPER_ZIP_CD           = #P_SHIPPER_ZIP_CD#         </isNotNull>
+          <isNotNull prepend = "," property= "P_SHIPPER_ADDR_BASIC"      >SHIPPER_ADDR_BASIC       = #P_SHIPPER_ADDR_BASIC#     </isNotNull>
+          <isNotNull prepend = "," property= "P_DEAL_ID"                 >DEAL_ID                  = #P_DEAL_ID#                </isNotNull>
+     WHERE BU_CD                    = #P_BU_CD#
+       AND EDI_DIV                  = #P_EDI_DIV#
+       AND DEFINE_NO                = #P_DEFINE_NO#
+       AND RECV_DATE                = #P_RECV_DATE#
+       AND RECV_NO                  = #P_RECV_NO#
+       AND RECV_SEQ                 = #P_RECV_SEQ#
+  </update>
+  <!-- [E] - UPDATE_ERLOORDER [EDI출고예정수신] -->
+  
+
+</sqlMap>

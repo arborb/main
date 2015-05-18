@@ -1,0 +1,92 @@
+.ui-gbox-title {
+  padding: 3px 5px;
+  width: 120px;
+}
+
+.ui-gbox-content {
+  position: relative;
+  margin-top: 0;
+  padding: 5px;
+  line-height: 0;
+}
+
+.ui-ctnr-left,.ui-ctnr-right {
+  border-width: 0;
+  padding: 5px 0;
+}
+
+.ui-gbox-content > div {
+  display: inline-block;
+  position: relative;
+}
+.jqplot-highlighter-tooltip,.jqplot-canvasOverlay-tooltip {
+  border: 1px solid #939393;
+  font-family: 'NanumGothic', 'Malgun Gothic', GulimChe, 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 20px;
+  background: rgba(253, 255, 170, 0.9);
+  padding: 2px 5px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+  z-index: 2;
+}
+
+.jqplot-series-0 {
+  color: #C2BBB9;
+  line-height: 5px;
+}
+
+.jqplot-series-1 {
+  color: #fff;
+  line-height: 5px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .7);
+}
+
+table.jqplot-table-legend {
+  border: 0px;
+  margin: 10px 10px;
+}
+
+table.jqplot-table-legend td {
+  padding: 3px;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+#chtEmptyLocMeter div.jqplot-meterGauge-label,
+#chtPutAwayMeter div.jqplot-meterGauge-label {
+  margin-bottom: 110px;  
+}
+
+#chtEmptyLocBankMeter div.jqplot-meterGauge-label,
+#chtPutAwayBankMeter div.jqplot-meterGauge-label {
+  margin-bottom: 135px;  
+}
+
+div.jqplot-meterGauge-label {
+  background: #EFF5FA;
+  width: 100%;
+  text-align: center;
+}
+
+div.jqplot-meterGauge-label > div.zoneNm {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 25px;
+  color: #72AAD3;
+}
+
+div.jqplot-meterGauge-label > div.rate {
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 22px;
+  color: #72AAD3;
+}
+
+div.meterChtBox {
+  margin-left: 5px;
+}

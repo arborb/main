@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<script src="../common/js/slickgrid/slick.groupitemmetadataprovider.js"></script> 
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS : 팝업 JS - 사용시 추가 -->
+<script src="../popup/js/popup.js"></script>
+<!-- LF01010E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/lf/LF01030E.css" />
+<script src="js/LF01030E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <!-- 조회 조건 -->
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+          <input class="ui-edt-key" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
+        </td>
+        <td>
+          <div id="lblQPopup_Own_Brand_Cd" class="ui-lbl-condition">위탁사</div>
+          <input class="ui-edt-normal" type="text" id="edtQOwn_Brand_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQOwn_Brand_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQOwn_Brand_Nm"  disabled="disabled" style="width: 118px;" />
+        </td>
+        <td>
+          <div id="lblQtt_Date" class="ui-lbl-condition">정산년월</div>
+          <input class="ui-dtp-key" type="text" id="dtpQAdjust_Month" style="width: 80px;" />
+        </td> 
+      </tr>
+      <tr>
+        <td>
+          <div id="lblQFee_Head_Cd" class="ui-lbl-condition">정산항목</div>
+          <input class="ui-edt-normal" type="text" id="edtQFee_Head_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQFee_Head_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQFee_Head_Nm" style="width: 117px;" disabled="disabled" />
+        </td>
+        <td>
+          <div id="lblQFee_Base_Cd" class="ui-lbl-condition">세부항목</div>
+          <input class="ui-edt-normal" type="text" id="edtQFee_Base_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQFee_Base_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQFee_Base_Nm" style="width: 117px;" disabled="disabled" />
+        </td>
+        <td align="right">
+          <input type="button" id="lbl_Pop_Cd" value="정산처리" class="ui-btn-cmd" style="width: 110px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+  <div id="divMasterView" class="ui-ctnr-normal">
+    <div>
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdMaster" class="ui-grd-title">일자별마감내역</td>
+          <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdT1Master"></div>
+    </div>
+    <div>
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdT2Master" class="ui-grd-title">일자별마강내역상세</td>
+          <td>
+            <input type="button" id="btnNew" class="ui-grd-btnnew" style="width: 30px; height: 20px;" />
+            <input type="button" id="btnSave" class="ui-grd-btnsave" style="width: 30px; height: 20px;" />
+          </td>
+          <td id="divRowCount_grdT2Master" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdT1Detail"></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LABEL_LOCATION_ID" printOrder="Horizontal" pageWidth="283" pageHeight="226" orientation="Landscape" columnWidth="273" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="8ac4d3b9-6158-49b3-8110-e443d6aa6e2a">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.4200000000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<queryString>
+		<![CDATA[SELECT M1.CENTER_CD                                       AS CENTER_CD
+            ,M1.LOCATION_ID                                     AS LOCATION_ID
+            ,C1.CODE_NM                                         AS INOUT_NM
+            ,TO_CHAR(M1.INBOUND_DATE ,WD.C_DATE_FORMAT)         AS INBOUND_DATE
+            ,M1.INBOUND_NO                                      AS INBOUND_NO
+            ,WF.DSP_COMBO(M1.BU_CD    ,B1.BU_NM)                AS BU_CD_F
+            ,WF.DSP_COMBO(M1.BRAND_CD ,B1.BRAND_NM)             AS BRAND_CD_F
+            ,M1,BRAND_CD
+            ,B2.BRAND_NM
+            ,MIN(M1.ITEM_CD) || ' 상품 외 ' || TO_CHAR(COUNT(DISTINCT M1.ITEM_CD) - 1) || '상품' AS ITEM_INFO
+            ,TO_CHAR(SUM(M1.ENTRY_QTY))                                                          AS ENTRY_QTY
+        FROM LI030NM M1
+             JOIN CMBU B1    ON B1.BU_CD     = M1.BU_CD
+             JOIN CMBRAND B2 ON B2.BRAND_CD  = M1.BRAND_CD
+             JOIN CMCODE  C1 ON C1.CODE_CD  = M1.INOUT_CD
+                            AND C1.CODE_GRP = WF.GET_CODE_GRP('INOUT_CD')
+       WHERE ROWNUM < 3
+       GROUP BY M1.CENTER_CD
+               ,M1.LOCATION_ID
+               ,C1.CODE_NM
+               ,M1.INBOUND_DATE
+               ,M1.INBOUND_NO
+               ,WF.DSP_COMBO(M1.BU_CD ,B1.BU_NM)
+       ORDER BY INBOUND_NO
+               ,LOCATION_ID]]>
+	</queryString>
+	<field name="CENTER_CD" class="java.lang.String"/>
+	<field name="LOCATION_ID" class="java.lang.String"/>
+	<field name="INOUT_NM" class="java.lang.String"/>
+	<field name="INBOUND_DATE" class="java.lang.String"/>
+	<field name="INBOUND_NO" class="java.lang.String"/>
+	<field name="BU_CD_F" class="java.lang.String"/>
+	<field name="ITEM_INFO" class="java.lang.String"/>
+	<field name="ENTRY_QTY" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="216" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="57" height="25" uuid="0d847743-5724-4030-9444-03b66bfad752"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[물류센터]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="25" width="57" height="25" uuid="218539ba-96f7-4c94-9b95-61799cda5bab"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[사업구분]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="50" width="57" height="25" uuid="b9bd4371-9a38-4fc3-9319-e8137d5d1194"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[입고구분]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="75" width="57" height="25" uuid="9999737d-ec9c-420a-876e-c2ab7f1364b3"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[입고일자]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="75" width="64" height="25" uuid="6b4f4637-e1b2-4f19-bb4c-9619bffd851f"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[입고번호]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="57" y="0" width="216" height="25" uuid="db302f12-534c-49ca-a92a-3e39c1240e79"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CENTER_CD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="57" y="25" width="216" height="25" uuid="9f984b45-00a9-465f-80cd-13f79fe9f4ee"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BU_CD_F}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="57" y="50" width="216" height="25" uuid="5c95cdca-028b-443a-92da-162ead79e6e3"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INOUT_NM}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="57" y="75" width="80" height="25" uuid="dd5db197-25bc-409d-b584-26db6dd4a9f2"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="맑은 고딕" size="11" isBold="true" isItalic="false" isUnderline="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INBOUND_DATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="201" y="75" width="72" height="25" uuid="d46c7930-f050-4618-ba98-848a51c2db7d"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="맑은 고딕" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INBOUND_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="186" width="273" height="29" uuid="d9b27240-7e63-4fdf-8807-588b9c2e420b"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_INFO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="100" width="273" height="26" uuid="12473adc-7648-40e6-b158-786255a1ba05"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="18" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCATION_ID}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="3" y="135" width="270" height="55" uuid="827fd659-438a-45a5-87ab-bc971e6a9cf3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="2" barHeight="45">
+					<jr:codeExpression><![CDATA[$F{LOCATION_ID}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<staticText>
+				<reportElement x="0" y="126" width="273" height="60" uuid="0e93176d-87f6-411e-9468-cf5e10cd7ee6"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

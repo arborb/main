@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!-- Common Popup CSS/JS -->
+<link rel="stylesheet" href="../../layout/popup/commonpopup.css" />
+<script src="js/commonpopup.js"></script>
+</head>
+<body>
+  <div id="divTopView" class="ui-ctnr-noborder" style="padding: 5px;">
+    <table class="ui-tbl-popup" style="border-spacing: 0;">
+      <tr>
+        <td style="width: 90px;">
+          <div id="lblQSearchVal" class="ui-lbl-condition">검색</div>
+        </td>
+        <td style="width: 100%;">
+          <input type="text" id="edtSearchVal" class="ui-edt-normal" tabindex="1" maxlength="50" style="width: 96%;" />
+        </td>
+        <td style="width: 90px;">
+          <input type="button" id="btnSearch" onclick="btnSearchOnClick()" value="검색" class="ui-btn-cmd" style="width: 80px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divCenterView" class="ui-ctnr-normal">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdMaster" class="ui-grd-title"></td>
+        <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdMaster"></div>
+  </div>
+  <div id="divBottomView" class="ui-ctnr-noborder" style="min-width: 300px; padding: 5px; text-align: right;">
+    <input type="button" id="btnOk" value="선택" class="ui-btn-cmd" style="width: 80px;" />
+    <input type="button" id="btnCancel" value="취소" class="ui-btn-cmd" style="width: 80px;" />
+  </div>
+</body>
+</html>

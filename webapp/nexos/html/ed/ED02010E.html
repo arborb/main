@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- ED02010E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/ed/ED02010E.css" />
+<script src="js/ED02010E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 조회 조건 -->
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+          <input id="edtQBu_Cd" class="ui-edt-key" type="text" style="width: 60px;" />
+          <input id="btnQBu_Cd" class="ui-btn-popup" type="button" />
+          <input id="edtQBu_Nm" class="ui-edt-display" type="text" disabled="disabled" style="width: 118px;" />
+        </td>
+        <td>
+          <div id="lblQEdi_Div" class="ui-lbl-condition">수신구분</div>
+          <select id="cboQEdi_Div" class="ui-cbo-normal" style="width: 200px;"></select>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- 작업영역 -->
+  <div id="divSplitterArea" style="padding: 0; border-width: 1px; border-style: solid;">
+    <!-- split 상단-->
+    <div>
+      <!-- 수신정의 마스터 -->
+      <div id="divMaster" class="ui-ctnr-left" style="border-left: none;">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdMaster" class="ui-grd-title">수신정의</td>
+            <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="divMasterButton" class="ui-ctnr-row">
+          <input type="button" id="btnShowSub2" value="수신체크" class="button-group ui-btn-cmd" style="width: 90px;" />
+          <input type="button" id="btnShowSub3" value="수신플래그" class="button-group ui-btn-cmd" style="width: 90px;" />
+        </div>
+        <div id="grdMaster"></div>
+      </div>
+      <!-- 수신체크 -->
+      <div id="divSub2" class="ui-ctnr-right" style="border-right: none;">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdSub2" class="ui-grd-title">수신체크</td>
+            <td id="divRowCount_grdSub2" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="divSub2Button" class="ui-ctnr-row">
+          <input type="button" id="btnSub2" value="수신체크 등록" class="ui-btn-cmd ui-clr-selected" style="width: 110px;" />
+        </div>
+        <div id="grdSub2"></div>
+      </div>
+      <!-- 수신플래그 -->
+      <div id="divSub3" class="ui-ctnr-right" style="border-right: none;">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdSub3" class="ui-grd-title">수신플래그</td>
+            <td id="divRowCount_grdSub3" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="divSub3Button" class="ui-ctnr-row">
+          <input type="button" id="btnSub3" value="수신플래그 등록" class="ui-btn-cmd ui-clr-selected" style="width: 110px;" />
+        </div>
+        <div id="grdSub3"></div>
+      </div>
+    </div>
+    <!-- split 하단-->
+    <div>
+      <!-- 수신정의 상세내역 -->
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdDetail" class="ui-grd-title">수신정의 상세내역</td>
+          <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdDetail"></div>
+    </div>
+  </div>
+</body>
+</html>

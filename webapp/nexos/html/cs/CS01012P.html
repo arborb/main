@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CS01012P CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cs/CS01012P.css" />
+<script src="js/CS01012P.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQUser_Id" class="ui-lbl-condition">사용자ID/명</div>
+          <input class="ui-edt-display" type="text" id="edtQUser_Id" disabled="disabled" style="width: 80px;" />
+          <input class="ui-edt-display" type="text" id="edtQUser_Nm" disabled="disabled" style="width: 140px;" />
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divMasterView" style="padding: 5px; border-width: 1px; border-style: solid;">
+    <div id="lblExe_Level" class="ui-lbl-key" style="min-width: 170px;">프로그램 등록시 기본권한</div>
+    <div class="ui-gbox-normal">
+      <input class="ui-chk-normal" type="checkbox" name="EXE_LEVEL" id="chkExe_Level1" checked="checked" />
+      저장권한
+      <input class="ui-chk-normal" type="checkbox" name="EXE_LEVEL" id="chkExe_Level2" checked="checked" />
+      삭제권한
+      <input class="ui-chk-normal" type="checkbox" name="EXE_LEVEL" id="chkExe_Level3" checked="checked" />
+      확정권한
+      <input class="ui-chk-normal" type="checkbox" name="EXE_LEVEL" id="chkExe_Level4" checked="checked" />
+      취소권한
+    </div>
+  </div>
+  <div id="divSubView" style="padding: 0; border: none;">
+    <div id="divLeftView" class="ui-ctnr-left">
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdMaster" class="ui-grd-title">프로그램메뉴</td>
+          <td id="divRowCount_grdMaster" class="ui-grd-rowcount"></td>
+        </tr>
+      </table>
+      <div id="grdMaster"></div>
+    </div>
+    
+    <div id="divCenterView" style="margin-left: 5px; float: left; border: none;">
+      <div style="position: absolute; top: 50%; margin-top: -50px;">
+        <input type="button" id="btnAddUser" value="▶" title="프로그램 사용자 등록" class="ui-btn-cmd" style="width: 40px; height: 40px;" />
+        <br> <br>
+        <input type="button" id="btnDeleteUser" value="◀" title="프로그램 사용자 삭제" class="ui-btn-cmd" style="width: 40px; height: 40px;" />
+      </div>
+    </div>
+    <div id="divRightView" class="ui-ctnr-right">
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdDetail" class="ui-grd-title">등록 프로그램</td>
+          <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdDetail"></div>
+    </div>
+  </div>
+  <div id="divBottomView" style="text-align: right; padding: 5px;">
+    <input type="button" id="btnSave" value="저장" class="ui-btn-cmd" style="width: 80px;" />
+    <input type="button" id="btnCancel" value="닫기" class="ui-btn-cmd" style="width: 80px;" />
+  </div>
+</body>
+</html>

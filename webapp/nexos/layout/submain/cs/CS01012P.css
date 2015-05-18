@@ -1,0 +1,23 @@
+.ui-gbox-title {
+  width: 120px;
+}
+
+.slick-group-toggle.expanded {
+    background: url(../../main/image/tree_pgm_div_me.gif) no-repeat center center;
+}
+
+.slick-group-toggle.collapsed {
+    background: url(../../main/image/tree_pgm_div_mc.gif) no-repeat center center;
+}
+
+.ui-icon-q {
+    background: url(../../main/image/tree_pgm_div_s.gif) no-repeat center center;
+}
+
+.ui-icon-e {
+    background: url(../../main/image/tree_pgm_div_e.gif) no-repeat center center;
+}
+
+.ui-icon-r {
+    background: url(../../main/image/tree_pgm_div_r.gif) no-repeat center center;
+}

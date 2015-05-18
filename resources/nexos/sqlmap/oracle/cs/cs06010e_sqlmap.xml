@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 화면표시그룹관리
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  //  CS06010E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CS06010E">
+  <!--
+    //================================================================================================================
+    // SELECT SQLMAP
+    //================================================================================================================
+  -->
+  <!-- [S] - RS_MASTER -->
+  <parameterMap id="paramRS_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+  </parameterMap>
+  <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+    { ? = call CS06010E.RS_MASTER }
+  </procedure>
+  <!-- [E] - RS_MASTER -->
+
+
+  <!-- [S] - RS_DETAIL -->
+  <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_DISPLAY_GRP"             mode="IN" />
+  </parameterMap>
+  <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+    { ? = call CS06010E.RS_DETAIL(?) }
+  </procedure>
+  <!-- [E] - RS_DETAIL -->
+
+
+  <!-- [S] - RS_SUB -->
+  <parameterMap id="paramRS_SUB" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+  </parameterMap>
+  <procedure id="RS_SUB" parameterMap="paramRS_SUB" resultClass="java.util.HashMap">
+    { ? = call CS06010E.RS_SUB }
+  </procedure>
+  <!-- [E] - RS_SUB -->
+
+
+  <!--
+    //================================================================================================================
+    // INSERT/UPDATE/DELETE SQLMAP
+    //================================================================================================================
+  -->
+  <!-- [S] - INSERT_CSDISPLAY [화면표시정보마스터] -->
+  <insert id="INSERT_CSDISPLAY" parameterClass="java.util.Map">
+    INSERT INTO CSDISPLAY
+               (
+                DISPLAY_GRP
+               ,DISPLAY_NM
+               ,DISPLAY_YN
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_DISPLAY_GRP#
+               ,#P_DISPLAY_NM#
+               ,#P_DISPLAY_YN#
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_CSDISPLAY [화면표시정보마스터] -->
+
+
+  <!-- [S] - UPDATE_CSDISPLAY [화면표시정보마스터] -->
+  <update id="UPDATE_CSDISPLAY" parameterClass="java.util.Map">
+    UPDATE CSDISPLAY
+       SET DISPLAY_NM               = #P_DISPLAY_NM#
+          ,DISPLAY_YN               = #P_DISPLAY_YN#
+          <isNotNull prepend = "," property= "P_REMARK1"             >REMARK1            = #P_REMARK1#      </isNotNull>
+          ,REG_USER_ID              = #P_REG_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE DISPLAY_GRP              = #P_DISPLAY_GRP#
+  </update>
+  <!-- [E] - UPDATE_CSDISPLAY [화면표시정보마스터] -->
+
+
+  <!-- [S] - DELETE_CSDISPLAY [화면표시정보마스터] -->
+  <delete id="DELETE_CSDISPLAY" parameterClass="java.util.Map">
+    DELETE 
+      FROM CSDISPLAY
+     WHERE DISPLAY_GRP              = #P_DISPLAY_GRP#
+  </delete>
+  <!-- [E] - DELETE_CSDISPLAY [화면표시정보마스터] -->
+
+
+  <!-- [S] - INSERT_CSCHILDDISPLAY [화면표시정보마스터] -->
+  <insert id="INSERT_CSCHILDDISPLAY" parameterClass="java.util.Map">
+    INSERT INTO CSCHILDDISPLAY
+               (
+                DISPLAY_GRP
+               ,MSG_GRP
+               ,DISPLAY_YN
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_DISPLAY_GRP#
+               ,#P_MSG_GRP#
+               ,#P_DISPLAY_YN#
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_CSCHILDDISPLAY [화면표시정보마스터] -->
+
+
+  <!-- [S] - UPDATE_CSCHILDDISPLAY [화면표시정보마스터] -->
+  <update id="UPDATE_CSCHILDDISPLAY" parameterClass="java.util.Map">
+    UPDATE CSCHILDDISPLAY
+       SET DISPLAY_YN               = #P_DISPLAY_YN#
+          ,REG_USER_ID              = #P_REG_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE DISPLAY_GRP              = #P_DISPLAY_GRP#
+       AND MSG_GRP                  = #P_MSG_GRP#
+  </update>
+  <!-- [E] - UPDATE_CSCHILDDISPLAY [화면표시정보마스터] -->
+
+
+  <!-- [S] - DELETE_CSCHILDDISPLAY [화면표시정보마스터] -->
+  <delete id="DELETE_CSCHILDDISPLAY" parameterClass="java.util.Map">
+    DELETE 
+      FROM CSCHILDDISPLAY
+     WHERE DISPLAY_GRP              = #P_DISPLAY_GRP#
+          <isNotEmpty prepend = " AND " property= "P_MSG_GRP"     >MSG_GRP          = #P_MSG_GRP#         </isNotEmpty>
+  </delete>
+  <!-- [E] - DELETE_CSCHILDDISPLAY [화면표시정보마스터] -->
+
+
+</sqlMap>

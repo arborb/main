@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- LC04011P CSS -->
+<link rel="stylesheet" href="../../layout/submain/lc/LC04011P.css" />
+<script src="js/LC04011P.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divMasterView" style="padding: 0; border-width: 1px; border-style: solid;">
+    <table class="ui-tbl-popup">
+      <tr>
+        <td>
+          <div id="lblCenter_Cd_F" class="ui-lbl-key">물류센터</div>
+          <input class="ui-edt-display" type="text" id="edtCenter_Cd_F" style="width: 210px;" />
+        </td>
+        <td rowspan="7">
+          <div id="divInvest_Div" class="ui-ctnr-row" style="width: 500px; height: 30px;">
+            <div id="lblInvest_Div" class="ui-lbl-key">실사구분</div>
+            <select id="cboInvest_Div" class="ui-edt-key" style="width: 170px;"></select>
+            <input type="button" id="btnAddData" value="자료추가" class="ui-btn-cmd" style="width: 80px; margin-left: 15px;" />
+            <input type="hidden" id="edtInvest_Div_Org" />
+          </div>
+          <div class="ui-ctnr-subcondition">
+            <div class="ui-ctnr-right" style="width: 500px; height: 185px;">
+              <table class="ui-tbl-popup">
+                <tr id="grpConditionBrandInfo">
+                  <td id="divQL1Dsp_Brand_Cd">
+                    <div id="lblQL1_Popup_Brand_Cd" class="ui-lbl-condition">위탁사</div>
+                    <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 90px;" />
+                    <input class="ui-btn-popup" type="button" id="btnQBrand_Cd" />
+                    <input class="ui-edt-display" type="text" id="edtQBrand_Nm" disabled="disabled" style="width: 150px;" />
+                  </td>
+                </tr>
+                <tr id="grpKeyBrandInfo">
+                  <td>
+                    <div id="lblL2_Popup_Brand_Cd" class="ui-lbl-condition">위탁사</div>
+                    <input class="ui-edt-key" type="text" id="edtKBrand_Cd" style="width: 90px;" />
+                    <input class="ui-btn-popup" type="button" id="btnKBrand_Cd" />
+                    <input class="ui-edt-display" type="text" id="edtKBrand_Nm" disabled="disabled" style="width: 150px;" />
+                  </td>
+                </tr>
+                <tr id="grpDisplayBrandInfo">
+                  <td>
+                    <div id="lblL3_Popup_Brand_Cd" class="ui-lbl-key" style="margin-left: 4px;">위탁사</div>
+                    <input class="ui-edt-display" type="text" id="edtDBrand_Cd" disabled="disabled" style="width: 90px;" />
+                    <!--  
+                    <input class="ui-btn-popup" type="button" id="btnDBrand_Cd" />
+                    -->
+                    <input class="ui-edt-display" type="text" id="edtDBrand_Nm" disabled="disabled" style="width: 179px;" />
+                  </td>
+                </tr>
+                <tr id="grpInoutInfo">
+                  <td>
+                    <div class="ui-gbox-title">기간입출고</div>
+                    <div class="ui-gbox-content" style="margin-top: 0;">
+                      <div id="lblDeal_Div" class="ui-ctnr-row">
+                        <div id="lblDeal_Div" class="ui-lbl-condition">입출고구분</div>
+                        <div class="ui-gbox-normal" style="width: 215px; display: inline-block; padding-left: 5px;">
+                          <input class="ui-rgb-normal" type="radio" name="DEAL_DIV" id="rgbDeal_Div1" value="%" style="width: 20px;" checked />
+                          전체
+                          <input class="ui-rgb-normal" type="radio" name="DEAL_DIV" id="rgbDeal_Div2" value="E" style="width: 20px;" />
+                          입고
+                          <input class="ui-rgb-normal" type="radio" name="DEAL_DIV" id="rgbDeal_Div3" value="D" style="width: 20px;" />
+                          출고
+                        </div>
+                      </div>
+                      <div style="padding: 5px; padding-top: 0px">
+                        <div id="lblQInout_Date" class="ui-lbl-condition">기간</div>
+                        <input class="ui-dtp-key" type="text" id="dtpQInout_Date1" style="width: 80px;" />
+                        <span class="ui-span-normal">▶</span>
+                        <input class="ui-dtp-key" type="text" id="dtpQInout_Date2" style="width: 80px;" />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr id="grpLocationInfo">
+                  <td>
+                    <div class="ui-gbox-title">로케이션별</div>
+                    <div class="ui-gbox-content" style="margin-top: 0;">
+                      <div class="ui-ctnr-row">
+                        <div style="display: inline-block;">
+                          <div id="lblQZone_Cd" class="ui-lbl-condition">존구분</div>
+                          <select id="cboQZone_Cd1" class="ui-cbo-normal" style="width: 150px;"></select>
+                        </div>
+                        <div style="margin: 2px 0 0 0px; display: inline-block;">
+                          <div id="lblQBank_Cd" class="ui-lbl-condition" style="min-width: 10px; width: 10px">행</div>
+                          <input class="ui-edt-normal" type="text" id="edtQBank_Cd1" maxlength="3" style="width: 30px; margin: 2px;" />
+                        </div>
+                        <div style="margin: 2px 0 0 0px; display: inline-block;">
+                          <div id="lblQBay_Cd" class="ui-lbl-condition" style="min-width: 10px; width: 10px">열</div>
+                          <input class="ui-edt-normal" type="text" id="edtQBay_Cd1" maxlength="3" style="width: 30px; margin: 2px;" />
+                        </div>
+                        <div style="margin: 2px 0 0 0px; display: inline-block;">
+                          <div id="lblQLev_Cd" class="ui-lbl-condition" style="min-width: 10px; width: 10px">단</div>
+                          <input class="ui-edt-normal" type="text" id="edtQLev_Cd1" maxlength="3" style="width: 30px; margin: 2px;" />
+                        </div>
+                      </div>
+                      <div class="ui-ctnr-row">
+                        <div style="display: inline-block;">
+                          <div id="lblQZone_Cd" class="ui-lbl-condition">존구분</div>
+                          <select id="cboQZone_Cd2" class="ui-cbo-normal" style="width: 150px;"></select>
+                        </div>
+                        <div style="margin: 2px 0 0 0px; display: inline-block;">
+                          <div id="lblQBank_Cd" class="ui-lbl-condition" style="min-width: 10px; width: 10px">행</div>
+                          <input class="ui-edt-normal" type="text" id="edtQBank_Cd2" maxlength="3" style="width: 30px; margin: 2px;" />
+                        </div>
+                        <div style="margin: 2px 0 0 0px; display: inline-block;">
+                          <div id="lblQBay_Cd" class="ui-lbl-condition" style="min-width: 10px; width: 10px">열</div>
+                          <input class="ui-edt-normal" type="text" id="edtQBay_Cd2" maxlength="3" style="width: 30px; margin: 2px;" />
+                        </div>
+                        <div style="margin: 2px 0 0 0px; display: inline-block;">
+                          <div id="lblQLev_Cd" class="ui-lbl-condition" style="min-width: 10px; width: 10px">단</div>
+                          <input class="ui-edt-normal" type="text" id="edtQLev_Cd2" maxlength="3" style="width: 30px; margin: 2px;" />
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr id="grpItemGroupInfo">
+                  <td>
+                    <div class="ui-gbox-title">상품그룹별</div>
+                    <div class="ui-gbox-content" style="margin-top: 0;">
+                      <div class="ui-ctnr-row">
+                        <div id="lblQDepart_Cd" class="ui-lbl-condition">대분류</div>
+                        <select class="ui-cbo-normal" id="cboQDepart_Cd" style="width: 200px;"></select>
+                      </div>
+                      <div class="ui-ctnr-row">
+                        <div id="lblQLine_Cd" class="ui-lbl-condition">중분류</div>
+                        <select class="ui-cbo-normal" id="cboQLine_Cd" style="width: 200px;"></select>
+                      </div>
+                      <div class="ui-ctnr-row">
+                        <div id="lblQClass_Cd" class="ui-lbl-condition">소분류</div>
+                        <select class="ui-cbo-normal" id="cboQClass_Cd" style="width: 200px;"></select>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr id="grpItemInfo">
+                  <td>
+                    <div class="ui-gbox-title" style="width: 120px;">상품 &#38; 로케이션별</div>
+                    <div class="ui-gbox-content">
+                      <div class="ui-ctnr-row">
+                        <div id="lblQPopup_Item_Cd" class="ui-lbl-condition">상품</div>
+                        <input class="ui-edt-normal" type="text" id="edtQItem_Cd" style="width: 80px;" />
+                        <input class="ui-btn-popup" type="button" id="btnQItem_Cd" />
+                        <input class="ui-edt-display" type="text" id="edtQItem_Nm" disabled="disabled" style="width: 150px;" />
+                      </div>
+                      <div class="ui-ctnr-row">
+                        <div id="lblQL1_Popup_Location_Cd" class="ui-lbl-condition">로케이션</div>
+                        <input class="ui-edt-normal" type="text" id="edtQZone_Cd" style="text-align: center; width: 30px;" maxlength=3 />
+                        <input class="ui-btn-popup" type="button" id="btnQLocation" />
+                        <input class="ui-edt-normal" type="text" id="edtQZone_Nm" style="width: 120px;" disabled />
+                        <input class="ui-edt-normal" type="text" id="edtQBank_Cd" style="text-align: center; width: 30px;" maxlength=3 />
+                        <input class="ui-edt-normal" type="text" id="edtQBay_Cd" style="text-align: center; width: 30px;" maxlength=3 />
+                        <input class="ui-edt-normal" type="text" id="edtQLev_Cd" style="text-align: center; width: 30px;" maxlength=3 />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr id="grpItemAddInfo">
+                  <td>
+                    <table class="ui-tbl-popup">
+                      <tr>
+                        <td colspan="2">
+                          <div id="lblPopup_Item_Cd" class="ui-lbl-key">상품</div>
+                          <input class="ui-edt-key" type="text" id="edtKItem_Cd" style="width: 90px;" />
+                          <input class="ui-btn-popup" type="button" id="btnKItem_Cd" />
+                          <input class="ui-edt-display" type="text" id="edtKItem_Nm" disabled="disabled" style="width: 150px;" />
+                          <input type="hidden" id="edtItem_Spec" />
+                          <input type="hidden" id="edtQty_In_Box" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <div id="lblL2_Popup_Location_Cd" class="ui-lbl-key">로케이션이션</div>
+                          <input class="ui-edt-key" type="text" id="edtLocation_Cd" style="width: 90px;" maxlength=12 />
+                          <input class="ui-btn-popup" type="button" id="btnLocation" />
+                      </tr>
+                      <tr>
+                        <td>
+                          <div id="lblItem_State" class="ui-lbl-key">상품상태</div>
+                          <select id="cboItem_State" class="ui-edt-key" style="width: 102px;"></select>
+                        </td>
+                        <td id="tdDsp_Item_Lot">
+                          <div id="lblItem_Lot" class="ui-lbl-key">LOT번호</div>
+                          <input class="ui-edt-key" type="text" id="edtItem_Lot" style="width: 96px;" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div id="lblValid_Date" class="ui-lbl-normal">유통기한</div>
+                          <input class="ui-dtp-normal" type="text" id="dtpValid_Date" style="width: 80px;" />
+                        </td>
+                        <td>
+                          <div id="lblBatch_No" class="ui-lbl-normal">제조배치번호</div>
+                          <input class="ui-edt-normal" type="text" id="edtBatch_No" style="width: 96px;" />
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td id="grpItemStateInfo">
+                    <div id="lblQItem_State" class="ui-lbl-condition">상품상태</div>
+                    <select id="cboQItem_State" class="ui-cbo-normal" style="width: 150px;"></select>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblPopup_Bu_Cd" class="ui-lbl-key">사업부</div>
+          <input class="ui-edt-display" type="text" id="edtBu_Cd" style="width: 60px;" />
+          <input class="ui-edt-display" type="text" id="edtBu_Nm" disabled="disabled" style="width: 90px;" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblInvest_Date" class="ui-lbl-key">실사일자</div>
+          <input class="ui-dtp-key" type="text" id="dtpInvest_Date" style="width: 80px;" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblInvest_No" class="ui-lbl-key">실사번호</div>
+          <input class="ui-edt-normal" type="text" id="edtInvest_No" style="width: 96px;" disabled="disabled" />
+          <!-- 
+          <div id="lblInvest_Type" class="ui-lbl-key"  style="width: 54px;min-width: 54px;">실사타입</div>
+          <select id="cboInvest_Type" class="ui-edt-key" style="width: 70px;">
+            <option value="1">1- 정기</option>
+            <option value="2">2- 수시</option>
+          </select>
+          -->
+        </td>
+     
+      </tr>
+      <tr>
+        <td>
+          <div id="lblInvest_Start_Date" class="ui-lbl-normal">실사기간</div>
+          <input class="ui-dtp-key" type="text" id="dtpInvest_Start_Date" style="width: 80px;" />
+          <span class="ui-span-normal">▶</span>
+          <input class="ui-dtp-key" type="text" id="dtpInvest_End_Date" style="width: 80px;" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblPopup_Manager_Id" class="ui-lbl-normal">실사담당자</div>
+          <input class="ui-edt-normal" type="text" id="edtManager_Id" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnManager_Id" />
+          <input class="ui-edt-display" type="text" id="edtManager_Nm" style="width: 118px;" disabled="disabled" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblRemark1" class="ui-lbl-normal">비고</div>
+          <input class="ui-edt-normal" type="text" id="edtRemark1" style="width: 216px;" maxlength="255" />
+        </td>
+      </tr> 
+    </table>
+  </div>
+  <!-- 입고예정등록 디테일-->
+  <div id="divDetailView" style="padding: 0; border-width: 1px; border-style: solid; margin-top: 5px">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdDetail" class="ui-grd-title">실사등록 내역정보</td>
+        <td>
+          <input type="button" id="btnEntryDelete" class="ui-grd-btndelete" style="width: 30px; height: 20px;" />
+        </td>
+        <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdDetail"></div>
+  </div>
+  <div id="divBottomView" style="text-align: right; padding: 5px;">
+    <input type="button" id="btnSave" value="저장" class="ui-btn-cmd" style="width: 80px;" />
+    <input type="button" id="btnClose" value="닫기" class="ui-btn-cmd" style="width: 80px;" />
+  </div>
+</body>
+</html>

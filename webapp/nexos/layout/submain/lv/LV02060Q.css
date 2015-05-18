@@ -1,0 +1,11 @@
+.ui-gbox-title {
+  padding: 3px 5px;
+  width: 110px;
+}
+
+.ui-gbox-content {
+  position: relative;
+  margin-top: 0;
+  padding: 5px;
+  line-height: 0;
+}

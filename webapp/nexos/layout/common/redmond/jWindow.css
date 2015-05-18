@@ -1,0 +1,141 @@
+.jWindow-modalBackground {
+  background: url('image/jwin_modal.png');
+}
+
+.jWindow {
+  border: 2px solid #474b4b;
+}
+
+.jWindow-modalBackground .jWindow {
+  border: 2px solid #474b4b;
+}
+
+.jWindow-titleBar {
+  height: 23px;
+  background: #474b4b url('image/jwin_titlebar.png') 50% 50% repeat-x;
+}
+
+.jWindow-titleBar .jWindow-title {
+  width: calc(100% - 165px);
+  width: -moz-calc(100% - 165px);
+  width: -webkit-calc(100% - 165px);
+  height: 21px;
+  line-height: 21px;
+  padding-left: 5px;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  display: inline-block;
+  float: left;
+}
+
+.jWindow-titleBar .jWindow-subtitle {
+  width: 120px;
+  height: 21px;
+  line-height: 21px;
+  color: silver;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: right;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  display: inline-block;
+  clear: both;
+}
+
+/*
+.jWindow-titleBar .jWindow-title,.jWindow-titleBar .jWindow-subtitle {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: moz-none;
+  -ms-user-select: none;
+  user-select: none;  
+} 
+*/
+.jWindow-tabsBar {
+  height: 20px;
+  background-color: #000000;
+}
+
+.jWindow-tabsBar .jWindow-tabs {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 0 10px;
+}
+
+.jWindow-tabsBar .jWindow-tabs .jWindow-tab {
+  background-color: #232323;
+  padding: 0 10px;
+  margin-right: 5px;
+  height: 20px;
+  line-height: 20px;
+  color: white;
+  font-size: 11px;
+}
+
+.jWindow-tabsBar .jWindow-tabs .jWindow-tab:hover,.jWindow-tabsBar .jWindow-tabs .jWindow-tab.active {
+  background-color: #103c6b;
+}
+
+.jWindow-content {
+  background-color: grey;
+}
+
+.jWindow-statusBar {
+  height: 6px;
+  background-color: #474b4b
+}
+
+.jWindow-statusBar .jWindow-resizeIcon {
+  width: 15px;
+  height: 5px;
+  background: url('image/jwin_resize.png');
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+
+.jWindow-titleBar .jWindow-button {
+  cursor: pointer;
+  position: absolute;
+  width: 30px;
+  height: 21px;
+  background-color: #181818;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.jWindow-titleBar .jWindow-button:hover {
+  background-color: #9aa5a5; /*#0c2d51;*/
+}
+
+.jWindow-titleBar .jWindow-closeButton {
+  top: 0;
+  right: 0px;
+  background-image: url('image/jwin_close.png');
+}
+
+.jWindow-titleBar .jWindow-maximiseButton {
+  top: 1;
+  right: 30px;
+  background-image: url('image/jwin_max.png');
+}
+
+.jWindow-titleBar .jWindow-maximisedButton {
+  top: 1;
+  right: 30px;
+  background-image: url('image/jwin_maxed.png');
+}
+
+.jWindow-titleBar .jWindow-minimiseButton {
+  top: 1;
+  right: 60px;
+  background-image: url('image/jwin_min.png');
+}
+
+.jWindow-titleBar .jWindow-refreshButton {
+  top: 1;
+  right: 95px;
+  width: 24px;
+  background-image: url('image/jwin_refresh.png');
+}

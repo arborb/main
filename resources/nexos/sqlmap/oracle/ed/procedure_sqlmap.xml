@@ -1,0 +1,624 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  // PROCEDURE 관련 SqlMap
+  //
+  // ER%, ES%
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap>
+
+
+  <!--
+    //==================================================================================================================
+    // PROCEDURE SQLMAP
+    //==================================================================================================================
+  -->
+  <!-- [S] - EM_LAST_EXEC_TIME_UPDATE -->
+  <parameterMap id="paramEM_LAST_EXEC_TIME_UPDATE" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="EM_LAST_EXEC_TIME_UPDATE" parameterMap="paramEM_LAST_EXEC_TIME_UPDATE" resultClass="java.util.HashMap">
+      { call EM_LAST_EXEC_TIME_UPDATE(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - EM_LAST_EXEC_TIME_UPDATE -->
+
+  <!-- [S] - ER_CLOSING -->
+  <parameterMap id="paramER_CLOSING" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_CLOSING" parameterMap="paramER_CLOSING" resultClass="java.util.HashMap">
+      { call ER_CLOSING(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_CLOSING -->
+
+  <!-- [S] - ER_DBLINK_RECEIVING -->
+  <parameterMap id="paramER_DBLINK_RECEIVING" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_RECV_NO"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_DBLINK_RECEIVING" parameterMap="paramER_DBLINK_RECEIVING" resultClass="java.util.HashMap">
+      { call ER_DBLINK_RECEIVING(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_DBLINK_RECEIVING -->
+
+  <!-- [S] - ER_DELIVERY_TO_REAL -->
+  <parameterMap id="paramER_DELIVERY_TO_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_DELIVERY_TO_REAL" parameterMap="paramER_DELIVERY_TO_REAL" resultClass="java.util.HashMap">
+      { call ER_DELIVERY_TO_REAL(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_DELIVERY_TO_REAL -->
+
+  <!-- [S] - ER_ITEM_TO_REAL -->
+  <parameterMap id="paramER_ITEM_TO_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_ITEM_TO_REAL" parameterMap="paramER_ITEM_TO_REAL" resultClass="java.util.HashMap">
+      { call ER_ITEM_TO_REAL(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_ITEM_TO_REAL -->
+
+  <!-- [S] - ER_LCPROCEED_TO_REAL -->
+  <parameterMap id="paramER_LCPROCEED_TO_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_LCPROCEED_TO_REAL" parameterMap="paramER_LCPROCEED_TO_REAL" resultClass="java.util.HashMap">
+      { call ER_LCPROCEED_TO_REAL(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_LCPROCEED_TO_REAL -->
+
+  <!-- [S] - ER_LDORDER_TO_REAL -->
+  <parameterMap id="paramER_LDORDER_TO_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_LDORDER_TO_REAL" parameterMap="paramER_LDORDER_TO_REAL" resultClass="java.util.HashMap">
+      { call ER_LDORDER_TO_REAL(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_LDORDER_TO_REAL -->
+
+  <!-- [S] - ER_LIORDER_DELETE -->
+  <parameterMap id="paramER_LIORDER_DELETE" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_LIORDER_DELETE" parameterMap="paramER_LIORDER_DELETE" resultClass="java.util.HashMap">
+      { call ER_LIORDER_DELETE(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_LIORDER_DELETE -->
+
+  <!-- [S] - ER_LIORDER_TO_REAL -->
+  <parameterMap id="paramER_LIORDER_TO_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_LIORDER_TO_REAL" parameterMap="paramER_LIORDER_TO_REAL" resultClass="java.util.HashMap">
+      { call ER_LIORDER_TO_REAL(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_LIORDER_TO_REAL -->
+
+  <!-- [S] - ER_LOORDER_DELETE -->
+  <parameterMap id="paramER_LOORDER_DELETE" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_LOORDER_DELETE" parameterMap="paramER_LOORDER_DELETE" resultClass="java.util.HashMap">
+      { call ER_LOORDER_DELETE(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_LOORDER_DELETE -->
+
+  <!-- [S] - ER_LOORDER_TO_REAL -->
+  <parameterMap id="paramER_LOORDER_TO_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_LOORDER_TO_REAL" parameterMap="paramER_LOORDER_TO_REAL" resultClass="java.util.HashMap">
+      { call ER_LOORDER_TO_REAL(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_LOORDER_TO_REAL -->
+  
+  <!-- [S] - ER_LOORDER_XLS_TO_REAL_TYPE1 -->
+  <parameterMap id="paramER_LOORDER_XLS_TO_REAL_TYPE1" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_LOORDER_XLS_TO_REAL_TYPE1" parameterMap="paramER_LOORDER_XLS_TO_REAL_TYPE1" resultClass="java.util.HashMap">
+      { call ER_LOORDER_XLS_TO_REAL_TYPE1(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_LOORDER_XLS_TO_REAL_TYPE1 -->
+  
+  <!-- [S] - ER_LOORDER_XLS_TO_REAL_TYPE2 -->
+  <parameterMap id="paramER_LOORDER_XLS_TO_REAL_TYPE2" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_LOORDER_XLS_TO_REAL_TYPE2" parameterMap="paramER_LOORDER_XLS_TO_REAL_TYPE2" resultClass="java.util.HashMap">
+      { call ER_LOORDER_XLS_TO_REAL_TYPE2(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_LOORDER_XLS_TO_REAL_TYPE2 -->
+  
+  <!-- [S] - ER_LOORDER_XLS_TO_REAL_TYPE9 -->
+  <parameterMap id="paramER_LOORDER_XLS_TO_REAL_TYPE9" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_LOORDER_XLS_TO_REAL_TYPE9" parameterMap="paramER_LOORDER_XLS_TO_REAL_TYPE9" resultClass="java.util.HashMap">
+      { call ER_LOORDER_XLS_TO_REAL_TYPE9(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_LOORDER_XLS_TO_REAL_TYPE9 -->
+  
+  <!-- [S] - ER_LOORDER_RE_REAL -->
+  <parameterMap id="paramER_LOORDER_RE_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_LOORDER_RE_REAL" parameterMap="paramER_LOORDER_RE_REAL" resultClass="java.util.HashMap">
+      { call ER_LOORDER_RE_REAL(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_LOORDER_RE_REAL -->
+
+  <!-- [S] - ER_MASTER_COL_CHECKING -->
+  <parameterMap id="paramER_MASTER_COL_CHECKING" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_MASTER_COL_CHECKING" parameterMap="paramER_MASTER_COL_CHECKING" resultClass="java.util.HashMap">
+      { call ER_MASTER_COL_CHECKING(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_MASTER_COL_CHECKING -->
+
+  <!-- [S] - ER_ORDER_COL_CHECKING -->
+  <parameterMap id="paramER_ORDER_COL_CHECKING" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_ORDER_COL_CHECKING" parameterMap="paramER_ORDER_COL_CHECKING" resultClass="java.util.HashMap">
+      { call ER_ORDER_COL_CHECKING(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_ORDER_COL_CHECKING -->
+
+  <!-- [S] - ER_PROCESSING -->
+  <parameterMap id="paramER_PROCESSING" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_PROCESSING" parameterMap="paramER_PROCESSING" resultClass="java.util.HashMap">
+      { call ER_PROCESSING(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_PROCESSING -->
+
+  <!-- [S] - ER_PROCESSING_AFTER -->
+  <parameterMap id="paramER_PROCESSING_AFTER" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_PROCESSING_AFTER" parameterMap="paramER_PROCESSING_AFTER" resultClass="java.util.HashMap">
+      { call ER_PROCESSING_AFTER(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_PROCESSING_AFTER -->
+
+  <!-- [S] - ER_PROCESSING_RESULT -->
+  <parameterMap id="paramER_PROCESSING_RESULT" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_RECV_DATE"               mode="OUT" javaType="java.util.Date"       jdbcType="TIMESTAMP" />
+    <parameter property="O_RECV_NO"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_PROCESSING_RESULT" parameterMap="paramER_PROCESSING_RESULT" resultClass="java.util.HashMap">
+      { call ER_PROCESSING_RESULT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_PROCESSING_RESULT -->
+
+  <!-- [S] - ER_RIORDER_DELETE -->
+  <parameterMap id="paramER_RIORDER_DELETE" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_RIORDER_DELETE" parameterMap="paramER_RIORDER_DELETE" resultClass="java.util.HashMap">
+      { call ER_RIORDER_DELETE(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_RIORDER_DELETE -->
+
+  <!-- [S] - ER_RIORDER_TO_REAL -->
+  <parameterMap id="paramER_RIORDER_TO_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_RIORDER_TO_REAL" parameterMap="paramER_RIORDER_TO_REAL" resultClass="java.util.HashMap">
+      { call ER_RIORDER_TO_REAL(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_RIORDER_TO_REAL -->
+
+  <!-- [S] - ER_ROORDER_DELETE -->
+  <parameterMap id="paramER_ROORDER_DELETE" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_ROORDER_DELETE" parameterMap="paramER_ROORDER_DELETE" resultClass="java.util.HashMap">
+      { call ER_ROORDER_DELETE(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_ROORDER_DELETE -->
+
+  <!-- [S] - ER_ROORDER_TO_REAL -->
+  <parameterMap id="paramER_ROORDER_TO_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_ROORDER_TO_REAL" parameterMap="paramER_ROORDER_TO_REAL" resultClass="java.util.HashMap">
+      { call ER_ROORDER_TO_REAL(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_ROORDER_TO_REAL -->
+
+  <!-- [S] - ER_VENDOR_TO_REAL -->
+  <parameterMap id="paramER_VENDOR_TO_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_VENDOR_TO_REAL" parameterMap="paramER_VENDOR_TO_REAL" resultClass="java.util.HashMap">
+      { call ER_VENDOR_TO_REAL(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_VENDOR_TO_REAL -->
+
+
+
+  <!-- [S] - ES_DBLINK_SENDING -->
+  <parameterMap id="paramES_DBLINK_SENDING" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="P_SEND_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_DBLINK_SENDING" parameterMap="paramES_DBLINK_SENDING" resultClass="java.util.HashMap">
+      { call ES_DBLINK_SENDING(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_DBLINK_SENDING -->
+
+  <!-- [S] - ES_FILE_NM_UPDATE -->
+  <parameterMap id="paramES_FILE_NM_UPDATE" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="P_SEND_NO"                 mode="IN" />
+    <parameter property="P_FILE_NM"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_FILE_NM_UPDATE" parameterMap="paramES_FILE_NM_UPDATE" resultClass="java.util.HashMap">
+      { call ES_FILE_NM_UPDATE(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_FILE_NM_UPDATE -->
+
+  <!-- [S] - ES_FILE_SENDING -->
+  <parameterMap id="paramES_FILE_SENDING" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="P_SEND_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_FILE_SENDING" parameterMap="paramES_FILE_SENDING" resultClass="java.util.HashMap">
+      { call ES_FILE_SENDING(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_FILE_SENDING -->
+
+  <!-- [S] - ES_LCORDER_FROM_REAL -->
+  <parameterMap id="paramES_LCORDER_FROM_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_SEND_NO"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_LCORDER_FROM_REAL" parameterMap="paramES_LCORDER_FROM_REAL" resultClass="java.util.HashMap">
+      { call ES_LCORDER_FROM_REAL(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_LCORDER_FROM_REAL -->
+
+  <!-- [S] - ES_LIORDER_FROM_REAL -->
+  <parameterMap id="paramES_LIORDER_FROM_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_SEND_NO"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_LIORDER_FROM_REAL" parameterMap="paramES_LIORDER_FROM_REAL" resultClass="java.util.HashMap">
+      { call ES_LIORDER_FROM_REAL(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_LIORDER_FROM_REAL -->
+
+  <!-- [S] - ES_LOORDER_FROM_REAL -->
+  <parameterMap id="paramES_LOORDER_FROM_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_SEND_NO"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_LOORDER_FROM_REAL" parameterMap="paramES_LOORDER_FROM_REAL" resultClass="java.util.HashMap">
+      { call ES_LOORDER_FROM_REAL(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_LOORDER_FROM_REAL -->
+
+  <!-- [S] - ES_ORDER_COL_CHECKING -->
+  <parameterMap id="paramES_ORDER_COL_CHECKING" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="P_SEND_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_ORDER_COL_CHECKING" parameterMap="paramES_ORDER_COL_CHECKING" resultClass="java.util.HashMap">
+      { call ES_ORDER_COL_CHECKING(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_ORDER_COL_CHECKING -->
+
+  <!-- [S] - ES_PROCESSING -->
+  <parameterMap id="paramES_PROCESSING" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="P_SEND_NO"                 mode="IN" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_PROCESSING" parameterMap="paramES_PROCESSING" resultClass="java.util.HashMap">
+      { call ES_PROCESSING(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_PROCESSING -->
+
+  <!-- [S] - ES_PROCESSING_RESULT -->
+  <parameterMap id="paramES_PROCESSING_RESULT" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="P_SEND_NO"                 mode="IN" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_SEND_DATE"               mode="OUT" javaType="java.util.Date"       jdbcType="TIMESTAMP" />
+    <parameter property="O_SEND_NO"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_PROCESSING_RESULT" parameterMap="paramES_PROCESSING_RESULT" resultClass="java.util.HashMap">
+      { call ES_PROCESSING_RESULT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_PROCESSING_RESULT -->
+
+  <!-- [S] - ES_RIORDER_FROM_REAL -->
+  <parameterMap id="paramES_RIORDER_FROM_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_SEND_NO"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_RIORDER_FROM_REAL" parameterMap="paramES_RIORDER_FROM_REAL" resultClass="java.util.HashMap">
+      { call ES_RIORDER_FROM_REAL(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_RIORDER_FROM_REAL -->
+
+  <!-- [S] - ES_ROORDER_FROM_REAL -->
+  <parameterMap id="paramES_ROORDER_FROM_REAL" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_SEND_NO"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_ROORDER_FROM_REAL" parameterMap="paramES_ROORDER_FROM_REAL" resultClass="java.util.HashMap">
+      { call ES_ROORDER_FROM_REAL(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_ROORDER_FROM_REAL -->
+
+
+  <!-- [S] - ES_PROCESSING_LSPSTOCK30 -->
+  <parameterMap id="paramES_PROCESSING_LSPSTOCK30" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_SEND_NO"                 mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_PROCESSING_LSPSTOCK30" parameterMap="paramES_PROCESSING_LSPSTOCK30" resultClass="java.util.HashMap">
+      { call ES_PROCESSING_LSPSTOCK30(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_PROCESSING_LSPSTOCK30 -->
+  
+  
+  <!-- [S] - ES_LO_ORDER_XLS_REAL -->
+  <parameterMap id="paramES_LO_ORDER_XLS_REAL" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_UPLOAD_DATE"             mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_LO_ORDER_XLS_REAL" parameterMap="paramES_LO_ORDER_XLS_REAL" resultClass="java.util.HashMap">
+      { call ES_LO_ORDER_XLS_REAL(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_LO_ORDER_XLS_REAL -->
+
+
+</sqlMap>

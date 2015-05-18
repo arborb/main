@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PAPER_LO07" pageWidth="595" pageHeight="842" columnWidth="517" leftMargin="39" rightMargin="39" topMargin="20" bottomMargin="20" uuid="ede72c5d-eb86-4124-ae2e-1ccf8b043176">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="184"/>
+	<parameter name="P_SYSDATE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2008-01-01 01:01:01"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT L1.BU_NM
+      ,L1.OUTBOUND_BATCH
+      ,WF.GET_SPLITSTR(L1.PICK_INFO ,1) AS PICKING_ZONE
+      ,L1.ORDER_COUNT
+      ,L1.WAVE_DATE
+      ,L1.SKU
+      ,L1.QTY_TO_PICK
+      ,L1.BAR_CODE1
+      ,L1.BAR_CODE2
+      ,WF.GET_SPLITSTR(L1.PICK_INFO ,2) AS ZONE_COUNT
+  FROM (
+        SELECT MAX(C1.BU_NM)                                                                   AS BU_NM
+              ,M1.OUTBOUND_BATCH                                                               AS OUTBOUND_BATCH
+              ,COUNT(DISTINCT M1.OUTBOUND_NO)                                                  AS ORDER_COUNT
+              ,TO_CHAR(M1.OUTBOUND_DATE, 'YYYY/MM/DD')                                         AS WAVE_DATE
+              ,(SELECT LISTAGG(PICK_AREA, ' / ') WITHIN GROUP(ORDER BY PICK_AREA)
+                    || ';' || COUNT(DISTINCT PICK_AREA)
+                 FROM (
+                       SELECT DISTINCT LTRIM(L1.PICK_AREA, '0') AS PICK_AREA
+                         FROM LO030NM M3
+                              JOIN CMLOCATION L1 ON L1.CENTER_CD   = M3.CENTER_CD
+                                                AND L1.LOCATION_CD = M3.LOCATION_CD
+                        WHERE M3.CENTER_CD      = 'E1'
+                          AND M3.BU_CD          = '3100'
+                          AND M3.OUTBOUND_DATE  = '2014-06-05'
+                          AND M3.OUTBOUND_BATCH = '004'
+                      )
+                ) AS PICK_INFO
+              ,COUNT(DISTINCT M1.ITEM_CD)                                                      AS SKU
+              ,SUM(M1.ENTRY_QTY)                                                               AS QTY_TO_PICK
+              ,M1.CENTER_CD || '-' || M1.BU_CD || '-' || TO_CHAR(M1.OUTBOUND_DATE ,'YYYYMMDD') || '-' || M1.OUTBOUND_BATCH AS BAR_CODE1
+              ,M1.CENTER_CD || '-' || M1.BU_CD || '-' || TO_CHAR(M1.OUTBOUND_DATE ,'YYYYMMDD')
+            || '-' || M1.OUTBOUND_BATCH || '(' || MAX(M2.OUTBOUND_BATCH_CHKDIGIT) || ')'       AS BAR_CODE2
+          FROM LO030NM M1
+               JOIN LO020NM M2 ON M2.CENTER_CD      = M1.CENTER_CD
+                              AND M2.BU_CD          = M1.BU_CD
+                              AND M2.OUTBOUND_DATE  = M1.OUTBOUND_DATE
+                              AND M2.OUTBOUND_NO    = M1.OUTBOUND_NO
+               JOIN CMBU    C1 ON C1.BU_CD = M1.BU_CD
+         WHERE M1.CENTER_CD      = 'E1'
+           AND M1.BU_CD          = '3100'
+           AND M1.OUTBOUND_DATE  = '2014-06-05'
+           AND M1.OUTBOUND_BATCH = '004'
+         GROUP BY M1.CENTER_CD
+                 ,M1.BU_CD
+                 ,M1.OUTBOUND_DATE
+                 ,M1.OUTBOUND_BATCH
+       ) L1]]>
+	</queryString>
+	<field name="BU_NM" class="java.lang.String"/>
+	<field name="OUTBOUND_BATCH" class="java.lang.String"/>
+	<field name="PICKING_ZONE" class="java.lang.String"/>
+	<field name="ORDER_COUNT" class="java.math.BigDecimal"/>
+	<field name="WAVE_DATE" class="java.lang.String"/>
+	<field name="SKU" class="java.math.BigDecimal"/>
+	<field name="QTY_TO_PICK" class="java.math.BigDecimal"/>
+	<field name="BAR_CODE1" class="java.lang.String"/>
+	<field name="BAR_CODE2" class="java.lang.String"/>
+	<field name="ZONE_COUNT" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="100">
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="100" uuid="29faa6a4-8ab7-4bb7-a393-6b1bc025d40d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="42" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Picking List]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="625" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="257" height="120" uuid="1cd082a3-3b09-4798-b65e-2d893ee3ec59"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="257" y="0" width="258" height="120" uuid="b9c87a17-93e7-4a60-aaf0-d65119005af8"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="120" width="515" height="153" uuid="3e553997-12e4-477d-a949-2c4ac41edfaa"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="273" width="257" height="80" uuid="483827be-79b7-4b85-a5bb-5f9fbeba52c9"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="257" y="273" width="258" height="80" uuid="8011c292-7335-4854-9bc3-758d7ada6688"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="353" width="257" height="80" uuid="04b8cf1c-79a6-43ab-bfcf-9f225b95ef8e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="257" y="353" width="258" height="80" uuid="12045fd2-ce95-4f8a-8e1a-cbdc8974fea7"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="433" width="515" height="192" uuid="d36cbfbb-76c7-45aa-9061-fdc96dbca145"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="180" height="25" uuid="3e581478-75bb-44b0-8285-96c2ff4bc02a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="18" isBold="false"/>
+					<paragraph leftIndent="6"/>
+				</textElement>
+				<text><![CDATA[ONLINE MALL :]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="0" y="0" width="257" height="120" uuid="2d492d12-5286-4d78-96c7-4501f4a1633e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="28" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BU_NM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="595" width="180" height="25" uuid="df7c9366-23b0-4aaa-9395-775e072bca87"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="맑은 고딕" size="18" isBold="false"/>
+					<paragraph leftIndent="6"/>
+				</textElement>
+				<text><![CDATA[ZONE COUNT :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="257" y="0" width="180" height="25" uuid="e76f857c-a856-453b-b353-95058146d44a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="18" isBold="false"/>
+					<paragraph leftIndent="6"/>
+				</textElement>
+				<text><![CDATA[WAVE # :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="120" width="180" height="25" uuid="9eff0cd8-0e96-481b-bec9-c3ec034f4954"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="18" isBold="false"/>
+					<paragraph leftIndent="6"/>
+				</textElement>
+				<text><![CDATA[PICKING ZONE :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="14" y="155" width="484" height="106" uuid="02fc0cf6-cf01-4791-bdda-6026e24264f7"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="맑은 고딕" size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PICKING_ZONE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="273" width="257" height="80" uuid="9af963bb-1e21-4a5b-b435-8126acf86e0c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="28" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ORDER_COUNT}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement mode="Opaque" x="109" y="459" width="300" height="136" uuid="60d5e7c6-2e3c-4350-b9ed-0e80c266d709"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="true" barWidth="0" barHeight="80">
+					<jr:codeExpression><![CDATA[$F{BAR_CODE1}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="96" y="556" width="328" height="38" uuid="d5be5fbd-9af0-402e-a678-be10dde9b86e"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="맑은 고딕" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BAR_CODE2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="273" width="180" height="25" uuid="231ce660-f9df-4bf5-813a-6fcd117c55ca"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="18" isBold="false"/>
+					<paragraph leftIndent="6"/>
+				</textElement>
+				<text><![CDATA[ORDER COUNT :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="257" y="273" width="180" height="25" uuid="40c6fd66-84f5-4a2d-9e7a-f1aa2df894c4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="18" isBold="false"/>
+					<paragraph leftIndent="6"/>
+				</textElement>
+				<text><![CDATA[WAVE DATE :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="257" y="0" width="258" height="120" uuid="61fa43df-8541-4380-92ba-d4018c0ab147"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="70" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OUTBOUND_BATCH}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="257" y="353" width="180" height="25" uuid="0689b6d3-b6ba-4f21-891e-11f9c8309e26"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="18" isBold="false"/>
+					<paragraph leftIndent="6"/>
+				</textElement>
+				<text><![CDATA[QTY TO PICK :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="257" y="273" width="258" height="80" uuid="a386230d-4f36-4dfa-8026-05d0331b08ef"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="28" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{WAVE_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="353" width="257" height="80" uuid="785bf548-0079-4044-900d-b946fc58ca2e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="28" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SKU}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0;" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="257" y="353" width="207" height="80" forecolor="#000000" backcolor="#FFFFFF" uuid="16322f92-eb08-467e-880a-34449c78c1e6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="맑은 고딕" size="28" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QTY_TO_PICK}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="353" width="180" height="25" uuid="e977449e-9cf7-4edc-937e-06a28ccbc85b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="맑은 고딕" size="18" isBold="false"/>
+					<paragraph leftIndent="6"/>
+				</textElement>
+				<text><![CDATA[SKU :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="150" y="595" width="175" height="25" uuid="24f358b3-1178-4d15-ab5c-fc78697ff220"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="맑은 고딕" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZONE_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="454" y="375" width="61" height="41" forecolor="#000000" backcolor="#FFFFFF" uuid="a4f79e46-fd82-426b-b5ca-4b5a043f691d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="맑은 고딕" size="23" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" leftIndent="6"/>
+				</textElement>
+				<text><![CDATA[EA]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="77" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="399" y="2" width="116" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="3941515d-c00f-4b6d-add7-a4c54ed7d38d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="맑은 고딕" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="malgun.ttf" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_SYSDATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

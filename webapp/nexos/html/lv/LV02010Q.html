@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- jqPlot Chart CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery.jqplot.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- jqPlot Chart -->
+<script src="../common/js/jqplot/jquery.jqplot.js"></script>
+<script src="../common/js/jqplot/jqplot.barRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.pointLabels.js"></script>
+<script src="../common/js/jqplot/jqplot.canvasTextRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.canvasAxisLabelRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.canvasAxisTickRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.categoryAxisRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.meterGaugeRenderer.js"></script>
+<script src="../common/js/jqplot/jqplot.highlighter.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- LV02010Q CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/lv/LV02010Q.css" />
+<script src="js/LV02010Q.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 조회 조건 -->
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+          <select id="cboQCenter_Cd" class="ui-cbo-key" style="width: 150px;"></select>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divMasterView" style="border-width: 1px; border-style: solid; overflow: hidden;">
+    <div id="divLeftView" class="ui-ctnr-left">
+      <!-- 공셀 View -->
+      <div class="ui-gbox-title">공셀 View &lt;존 기준&gt;</div>
+      <div class="ui-gbox-content">
+        <div id="chtEmptyLocReport"></div>
+        <div id="chtEmptyLocMeter" class="meterChtBox"></div>
+      </div>
+      <!-- 공셀 상세 -->
+      <div class="ui-gbox-title">공셀 상세 &lt;행 기준&gt;</div>
+      <div class="ui-gbox-content">
+        <div id="chtEmptyLocBankReport"></div>
+        <div id="chtEmptyLocBankMeter" class="meterChtBox"></div>
+      </div>
+    </div>
+    <div id="divRightView" class="ui-ctnr-right">
+      <!-- 적재율 View -->
+      <div class="ui-gbox-title">적재율 View &lt;존 기준&gt;</div>
+      <div class="ui-gbox-content">
+        <div id="chtPutAwayReport"></div>
+        <div id="chtPutAwayMeter" class="meterChtBox"></div>
+      </div>
+      <!-- 적재율 상세 -->
+      <div class="ui-gbox-title">적재율 상세 &lt;행 기준&gt;</div>
+      <div class="ui-gbox-content">
+        <div id="chtPutAwayBankReport"></div>
+        <div id="chtPutAwayBankMeter" class="meterChtBox"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

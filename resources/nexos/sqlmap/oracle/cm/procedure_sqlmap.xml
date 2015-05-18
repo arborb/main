@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  // PROCEDURE 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap>
+
+
+
+  <!--
+    //==================================================================================================================
+    // PROCEDURE SQLMAP
+    //==================================================================================================================
+  -->
+  <!-- [S] - CM_BASIC_MASTER_CREATE -->
+  <parameterMap id="paramCM_BASIC_MASTER_CREATE" class="java.util.Map">
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_BASIC_MASTER_CREATE" parameterMap="paramCM_BASIC_MASTER_CREATE" resultClass="java.util.HashMap">
+      { call CM_BASIC_MASTER_CREATE(?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_BASIC_MASTER_CREATE -->
+
+  <!-- [S] - CM_CHECK_FIXED_LOCATION -->
+  <parameterMap id="paramCM_CHECK_FIXED_LOCATION" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_CHECK_FIXED_LOCATION" parameterMap="paramCM_CHECK_FIXED_LOCATION" resultClass="java.util.HashMap">
+      { call CM_CHECK_FIXED_LOCATION(?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_CHECK_FIXED_LOCATION -->
+
+  <!-- [S] - CM_ITEM_DELETE -->
+  <parameterMap id="paramCM_ITEM_DELETE" class="java.util.Map">
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_ITEM_DELETE" parameterMap="paramCM_ITEM_DELETE" resultClass="java.util.HashMap">
+      { call CM_ITEM_DELETE(?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_ITEM_DELETE -->
+
+  <!-- [S] - CM_LOCATION_CREATE -->
+  <parameterMap id="paramCM_LOCATION_CREATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_ZONE_CD"                 mode="IN" />
+    <parameter property="P_BANK_CD1"                mode="IN" />
+    <parameter property="P_BANK_CD2"                mode="IN" />
+    <parameter property="P_BAY_CD1"                 mode="IN" />
+    <parameter property="P_BAY_CD2"                 mode="IN" />
+    <parameter property="P_LEV_CD1"                 mode="IN" />
+    <parameter property="P_LEV_CD2"                 mode="IN" />
+    <parameter property="P_LOC_DIV"                 mode="IN" />
+    <parameter property="P_CELL_DIV"                mode="IN" />
+    <parameter property="P_LOC_ORDER"               mode="IN" />
+    <parameter property="P_PLT_QTY"                 mode="IN" />
+    <parameter property="P_CELL_WEIGHT"             mode="IN" />
+    <parameter property="P_CELL_WIDTH"              mode="IN" />
+    <parameter property="P_CELL_LENGTH"             mode="IN" />
+    <parameter property="P_CELL_HEIGHT"             mode="IN" />
+    <parameter property="P_POLICY_CM120"            mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_LOCATION_CREATE" parameterMap="paramCM_LOCATION_CREATE" resultClass="java.util.HashMap">
+      { call CM_LOCATION_CREATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_LOCATION_CREATE -->
+
+  <!-- [S] - CM_SET_LOC_ORDER -->
+  <parameterMap id="paramCM_SET_LOC_ORDER" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_SET_LOC_ORDER" parameterMap="paramCM_SET_LOC_ORDER" resultClass="java.util.HashMap">
+      { call CM_SET_LOC_ORDER(?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_SET_LOC_ORDER -->
+
+  <!-- [S] - CM_WORKCALENDER_COPY -->
+  <parameterMap id="paramCM_WORKCALENDER_COPY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INOUT_MONTH"             mode="IN" />
+    <parameter property="P_TO_BU_CD"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_WORKCALENDER_COPY" parameterMap="paramCM_WORKCALENDER_COPY" resultClass="java.util.HashMap">
+      { call CM_WORKCALENDER_COPY(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_WORKCALENDER_COPY -->
+
+  <!-- [S] - CM_WORKCALENDER_CREATE -->
+  <parameterMap id="paramCM_WORKCALENDER_CREATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INOUT_MONTH"             mode="IN" />
+    <parameter property="P_HOLIDAY_WEEK"            mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_WORKCALENDER_CREATE" parameterMap="paramCM_WORKCALENDER_CREATE" resultClass="java.util.HashMap">
+      { call CM_WORKCALENDER_CREATE(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_WORKCALENDER_CREATE -->
+
+
+  <!-- [S] - CM_CENTERITEM_ALLOCATE -->
+  <parameterMap id="paramCM_CENTERITEM_ALLOCATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_CENTERITEM_ALLOCATE" parameterMap="paramCM_CENTERITEM_ALLOCATE" resultClass="java.util.HashMap">
+      { call CM_CENTERITEM_ALLOCATE(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_CENTERITEM_ALLOCATE -->
+  
+  
+  <!-- [S] - CM_ITEMBU_MATCH_OWNBRAND -->
+  <parameterMap id="paramCM_ITEMBU_MATCH_OWNBRAND" class="java.util.Map">
+    <parameter property="P_ITEMBU_CD"               mode="IN" />
+    <parameter property="P_ITEMBU_NM"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_ITEMBU_MATCH_OWNBRAND" parameterMap="paramCM_ITEMBU_MATCH_OWNBRAND" resultClass="java.util.HashMap">
+      { call CM_ITEMBU_MATCH_OWNBRAND(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_ITEMBU_MATCH_OWNBRAND -->
+  
+  
+  <!-- [S] - CM_OWNBRAND_MATCH_BRAND -->
+  <parameterMap id="paramCM_OWNBRAND_MATCH_BRAND" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OWN_BRAND_CD"            mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_OWNBRAND_MATCH_BRAND" parameterMap="paramCM_OWNBRAND_MATCH_BRAND" resultClass="java.util.HashMap">
+      { call CM_OWNBRAND_MATCH_BRAND(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_OWNBRAND_MATCH_BRAND -->
+
+
+  <!-- [S] - CM_CENTERITEM_CHECK_ALLOCATE -->
+  <parameterMap id="paramCM_CENTERITEM_CHECK_ALLOCATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_CENTERITEM_CHECK_ALLOCATE" parameterMap="paramCM_CENTERITEM_CHECK_ALLOCATE" resultClass="java.util.HashMap">
+      { call CM_CENTERITEM_CHECK_ALLOCATE(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_CENTERITEM_CHECK_ALLOCATE -->
+
+
+  <!-- [S] - CM_VENDORITEM_ITEM_ALLOCATE -->
+  <parameterMap id="paramCM_VENDORITEM_ITEM_ALLOCATE" class="java.util.Map">
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_VENDOR_CD"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_VENDORITEM_ITEM_ALLOCATE" parameterMap="paramCM_VENDORITEM_ITEM_ALLOCATE" resultClass="java.util.HashMap">
+      { call CM_VENDORITEM_ITEM_ALLOCATE(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_VENDORITEM_ITEM_ALLOCATE -->
+
+
+  <!-- [S] - CM_VENDORITEM_VENDOR_ALLOCATE -->
+  <parameterMap id="paramCM_VENDORITEM_VENDOR_ALLOCATE" class="java.util.Map">
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_VENDORITEM_VENDOR_ALLOCATE" parameterMap="paramCM_VENDORITEM_VENDOR_ALLOCATE" resultClass="java.util.HashMap">
+      { call CM_VENDORITEM_VENDOR_ALLOCATE(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_VENDORITEM_VENDOR_ALLOCATE -->
+
+  <!-- [S] - CM_REQ_ITEM_REAL -->
+  <parameterMap id="paramCM_REQ_ITEM_REAL" class="java.util.Map">
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_NM"                 mode="IN" />
+    <parameter property="P_REQ_NO"                  mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_REQ_ITEM_REAL" parameterMap="paramCM_REQ_ITEM_REAL" resultClass="java.util.HashMap">
+      { call CM_REQ_ITEM_REAL(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_REQ_ITEM_REAL -->
+  
+    <!-- [S] - CM_DEAL_COPY -->
+  <parameterMap id="paramCM_DEAL_COPY" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_FR_DEAL_ID"              mode="IN" />
+    <parameter property="P_TO_DEAL_ID"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_DEAL_COPY" parameterMap="paramCM_DEAL_COPY" resultClass="java.util.HashMap">
+      { call CM_DEAL_COPY(?, ?, ?, ?, ?) }
+    </procedure>
+    
+    
+  <!-- [S] - CM_DEALITEMGROUP -->
+  <parameterMap id="paramCM_DEALITEMGROUP" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MALL_CD"                 mode="IN" />
+    <parameter property="P_DEAL_ID"                 mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_DEAL_ITEM_CD"            mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_DEALITEMGROUP" parameterMap="paramCM_DEALITEMGROUP" resultClass="java.util.HashMap">
+      { call CM_DEALITEMGROUP(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_DEALITEMGROUP -->
+  
+  <!-- [S] - CM_OWNBRAND_CRE -->
+  <parameterMap id="paramCM_OWNBRAND_CRE" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_OWNBRAND_CRE" parameterMap="paramCM_OWNBRAND_CRE" resultClass="java.util.HashMap">
+      { call CM_OWNBRAND_CRE(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_OWNBRAND_CRE -->
+  
+  <!-- [S] - CM_OWNBRAND_CRE3 -->
+  <parameterMap id="paramCM_OWNBRAND_CRE3" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OWN_BRAND_CD"            mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_OWNBRAND_CRE3" parameterMap="paramCM_OWNBRAND_CRE3" resultClass="java.util.HashMap">
+      { call CM_OWNBRAND_CRE3(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_OWNBRAND_CRE3 -->
+  
+  
+</sqlMap>

@@ -1,0 +1,36 @@
+.ui-lbl-wrapper {
+  display: table-cell;
+  padding: 5px;
+  min-width: 65px;
+  vertical-align: middle;
+}
+
+.ui-lbl-normal.scan {
+  padding: 0;
+  margin-top: -4px;
+  background-image: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  width: 120px;
+  min-width: 70px;
+  height: 26px;
+}
+
+.ui-ctnr-wrapper {
+  display: table-cell;
+  padding: 5px 5px 5px 50px;
+  width: 100%;
+  vertical-align: middle;
+}
+
+.ui-edt-key.scan {
+  font-size: 26px;
+  font-weight: bold;
+  width: 100%;
+  height: 46px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}

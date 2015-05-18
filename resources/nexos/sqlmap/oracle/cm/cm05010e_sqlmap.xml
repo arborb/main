@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 상품별 로케이션 관리
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  //  CM05010E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CM05010E">
+
+
+  <!--
+    //================================================================================================================
+    // SELECT SQLMAP
+    //================================================================================================================
+  -->
+  <!-- [S] - RS_T1_MASTER -->
+  <parameterMap id="paramRS_T1_MASTER" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"         mode="IN" />
+      <parameter property="P_BRAND_CD"          mode="IN" />
+      <parameter property="P_ITEM_STATE"        mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_MASTER" parameterMap="paramRS_T1_MASTER" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T1_MASTER(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_MASTER -->
+
+
+  <!-- [S] - RS_T1_SUB1 -->
+  <parameterMap id="paramRS_T1_SUB1" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"         mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_SUB1" parameterMap="paramRS_T1_SUB1" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T1_SUB1(?) }
+  </procedure>
+  <!-- [E] - RS_T1_SUB1 -->
+
+
+  <!-- [S] - RS_T1_SUB2 -->
+  <parameterMap id="paramRS_T1_SUB2" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"         mode="IN" />
+      <parameter property="P_ZONE_CD"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_SUB2" parameterMap="paramRS_T1_SUB2" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T1_SUB2(?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_SUB2 -->
+
+
+  <!-- [S] - RS_T1_SUB3 -->
+  <parameterMap id="paramRS_T1_SUB3" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"         mode="IN" />
+      <parameter property="P_ZONE_CD"           mode="IN" />
+      <parameter property="P_BANK_CD"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_SUB3" parameterMap="paramRS_T1_SUB3" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T1_SUB3(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_SUB3 -->
+
+
+  <!-- [S] - RS_T1_SUB4 -->
+  <parameterMap id="paramRS_T1_SUB4" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"         mode="IN" />
+      <parameter property="P_ZONE_CD"           mode="IN" />
+      <parameter property="P_BANK_CD"           mode="IN" />
+      <parameter property="P_BAY_CD"            mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_SUB4" parameterMap="paramRS_T1_SUB4" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T1_SUB4(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_SUB4 -->
+
+
+  <!-- [S] - RS_T1_SUB5 -->
+  <parameterMap id="paramRS_T1_SUB5" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_BRAND_CD"          mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_SUB5" parameterMap="paramRS_T1_SUB5" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T1_SUB5(?) }
+  </procedure>
+  <!-- [E] - RS_T1_SUB5 -->
+
+
+  <!-- [S] - RS_T1_SUB6 -->
+  <parameterMap id="paramRS_T1_SUB6" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_BRAND_CD"          mode="IN" />
+      <parameter property="P_DEPART_CD"         mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_SUB6" parameterMap="paramRS_T1_SUB6" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T1_SUB6(?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_SUB6 -->
+
+
+  <!-- [S] - RS_T1_SUB7 -->
+  <parameterMap id="paramRS_T1_SUB7" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_BRAND_CD"          mode="IN" />
+      <parameter property="P_DEPART_CD"         mode="IN" />
+      <parameter property="P_LINE_CD"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_SUB7" parameterMap="paramRS_T1_SUB7" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T1_SUB7(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_SUB7 -->
+
+
+  <!-- [S] - RS_T1_SUB8 -->
+  <parameterMap id="paramRS_T1_SUB8" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"         mode="IN" />
+      <parameter property="P_BRAND_CD"          mode="IN" />
+      <parameter property="P_ITEM_STATE"        mode="IN" />
+      <parameter property="P_ITEM_CD"           mode="IN" />
+      <parameter property="P_ITEM_NM"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T1_SUB8" parameterMap="paramRS_T1_SUB8" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T1_SUB8(?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T1_SUB8 -->
+
+
+  <!-- [S] - RS_T2_MASTER -->
+  <parameterMap id="paramRS_T2_MASTER" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"         mode="IN" />
+      <parameter property="P_BRAND_CD"          mode="IN" />
+      <parameter property="P_ITEM_STATE"        mode="IN" />
+      <parameter property="P_ITEM_CD"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T2_MASTER(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T2_MASTER -->
+
+
+  <!-- [S] - RS_T2_SUB1 -->
+  <parameterMap id="paramRS_T2_SUB1" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"         mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T2_SUB1" parameterMap="paramRS_T2_SUB1" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T2_SUB1(?) }
+  </procedure>
+  <!-- [E] - RS_T2_SUB1 -->
+
+
+  <!-- [S] - RS_T2_SUB2 -->
+  <parameterMap id="paramRS_T2_SUB2" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"         mode="IN" />
+      <parameter property="P_ZONE_CD"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T2_SUB2" parameterMap="paramRS_T2_SUB2" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T2_SUB2(?, ?) }
+  </procedure>
+  <!-- [E] - RS_T2_SUB2 -->
+
+
+  <!-- [S] - RS_T2_SUB3 -->
+  <parameterMap id="paramRS_T2_SUB3" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"         mode="IN" />
+      <parameter property="P_ZONE_CD"           mode="IN" />
+      <parameter property="P_BANK_CD"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T2_SUB3" parameterMap="paramRS_T2_SUB3" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T2_SUB3(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T2_SUB3 -->
+
+
+  <!-- [S] - RS_T2_SUB4 -->
+  <parameterMap id="paramRS_T2_SUB4" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"         mode="IN" />
+      <parameter property="P_ZONE_CD"           mode="IN" />
+      <parameter property="P_BANK_CD"           mode="IN" />
+      <parameter property="P_BAY_CD"            mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T2_SUB4" parameterMap="paramRS_T2_SUB4" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T2_SUB4(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T2_SUB4 -->
+
+
+  <!-- [S] - RS_T2_SUB8 -->
+  <parameterMap id="paramRS_T2_SUB8" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"         mode="IN" />
+      <parameter property="P_BRAND_CD"          mode="IN" />
+      <parameter property="P_ITEM_STATE"        mode="IN" />
+      <parameter property="P_ITEM_CD"           mode="IN" />
+      <parameter property="P_ITEM_NM"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T2_SUB8" parameterMap="paramRS_T2_SUB8" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T2_SUB8(?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T2_SUB8 -->
+
+
+  <!-- [S] - RS_T3_MASTER -->
+  <parameterMap id="paramRS_T3_MASTER" class="java.util.Map">
+      <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+      <parameter property="P_CENTER_CD"         mode="IN" />
+      <parameter property="P_BRAND_CD"          mode="IN" />
+      <parameter property="P_ITEM_STATE"        mode="IN" />
+      <parameter property="P_ITEM_LOC_DIV"      mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T3_MASTER" parameterMap="paramRS_T3_MASTER" resultClass="java.util.HashMap">
+      { ? = call CM05010E.RS_T3_MASTER(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T3_MASTER -->
+
+
+  <!--
+    //================================================================================================================
+    // INSERT/UPDATE/DELETE SQLMAP
+    //================================================================================================================
+  -->
+  <!-- [S] - INSERT_CMITEMLOC [상품별로케이션마스터] -->
+  <insert id="INSERT_CMITEMLOC" parameterClass="java.util.Map">
+      INSERT INTO CMITEMLOC
+                 (
+                  CENTER_CD
+                 ,BRAND_CD
+                 ,ITEM_STATE
+                 ,ITEM_CD
+                 ,DEPART_CD
+                 ,LINE_CD
+                 ,CLASS_CD
+                 ,ITEM_LOC_DIV
+                 ,ZONE_CD
+                 ,BANK_CD
+                 ,BAY_CD
+                 ,LEV_CD
+                 <isNotEmpty prepend = "," property= "P_LOCATION_CD"      >LOCATION_CD       </isNotEmpty>
+                 ,MIN_UNIT_QTY
+                 ,MAX_UNIT_QTY
+                 ,FILL_UNIT_QTY
+                 ,REG_USER_ID
+                 ,REG_DATETIME
+                 )
+          VALUES (
+                  #P_CENTER_CD#
+                 ,#P_BRAND_CD#
+                 ,#P_ITEM_STATE#
+                 ,#P_ITEM_CD#
+                 ,#P_DEPART_CD#
+                 ,#P_LINE_CD#
+                 ,#P_CLASS_CD#
+                 ,#P_ITEM_LOC_DIV#
+                 ,#P_ZONE_CD#
+                 ,#P_BANK_CD#
+                 ,#P_BAY_CD#
+                 ,#P_LEV_CD#
+                 <isNotEmpty prepend = "," property= "P_LOCATION_CD"      >#P_LOCATION_CD#     </isNotEmpty>
+                 ,#P_MIN_UNIT_QTY#
+                 ,#P_MAX_UNIT_QTY#
+                 ,#P_FILL_UNIT_QTY#
+                 ,#P_REG_USER_ID#
+                 ,SYSDATE
+                 )
+  </insert>
+  <!-- [E] - INSERT_CMITEMLOC [상품별로케이션마스터] -->
+
+
+  <!-- [S] - UPDATE_CMITEMLOC [상품별로케이션마스터] -->
+  <update id="UPDATE_CMITEMLOC" parameterClass="java.util.Map">
+      UPDATE CMITEMLOC
+         SET LOCATION_CD       = #P_LOCATION_CD#
+            ,MIN_UNIT_QTY      = #P_MIN_UNIT_QTY#
+            ,MAX_UNIT_QTY      = #P_MAX_UNIT_QTY#
+            ,FILL_UNIT_QTY     = #P_FILL_UNIT_QTY#
+            ,REG_USER_ID       = #P_REG_USER_ID#
+            ,REG_DATETIME      = SYSDATE
+       WHERE CENTER_CD         = #P_CENTER_CD#
+         AND BRAND_CD          = #P_BRAND_CD#
+         AND ITEM_STATE        = #P_ITEM_STATE#
+         AND ITEM_CD           = #P_ITEM_CD#
+         AND DEPART_CD         = #P_DEPART_CD#
+         AND LINE_CD           = #P_LINE_CD#
+         AND CLASS_CD          = #P_CLASS_CD#
+         AND ITEM_LOC_DIV      = #P_ITEM_LOC_DIV#
+         AND ZONE_CD           = #P_ZONE_CD#
+         AND BANK_CD           = #P_BANK_CD#
+         AND BAY_CD            = #P_BAY_CD#
+         AND LEV_CD            = #P_LEV_CD#
+  </update>
+  <!-- [E] - UPDATE_CMITEMLOC [상품별로케이션마스터] -->
+
+
+  <!-- [S] - DELETE_CMITEMLOC [상품별로케이션마스터] -->
+  <delete id="DELETE_CMITEMLOC" parameterClass="java.util.Map">
+      DELETE 
+        FROM CMITEMLOC
+       WHERE CENTER_CD         = #P_CENTER_CD#
+         AND BRAND_CD          = #P_BRAND_CD#
+         AND ITEM_STATE        = #P_ITEM_STATE#
+         AND ITEM_CD           = #P_ITEM_CD#
+         AND DEPART_CD         = #P_DEPART_CD#
+         AND LINE_CD           = #P_LINE_CD#
+         AND CLASS_CD          = #P_CLASS_CD#
+         AND ITEM_LOC_DIV      = #P_ITEM_LOC_DIV#
+         <isNotEqual prepend = " AND " property="P_ITEM_LOC_DIV" compareValue="2">
+             ZONE_CD           = #P_ZONE_CD#
+         AND BANK_CD           = #P_BANK_CD#
+         AND BAY_CD            = #P_BAY_CD#
+         AND LEV_CD            = #P_LEV_CD#
+         </isNotEqual>
+  </delete>
+  <!-- [E] - DELETE_CMITEMLOC [상품별로케이션마스터] -->
+
+
+</sqlMap>

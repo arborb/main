@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CS06020E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cs/CS06020E.css" />
+<script src="js/CS06020E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQMsg_Grp" class="ui-lbl-condition">메시지그룹</div>
+          <select id="cboQMsg_Grp" class="ui-cbo-normal" style="width: 150px;"></select>
+        </td>
+        <td>
+          <div id="lblQMsg_Id" class="ui-lbl-condition">메시지ID</div>
+          <input class="ui-edt-normal" type="text" id="edtQMsg_Id" style="width: 100px;" />
+        </td>
+        <td>
+          <div id="lblQDisplay_Grp" class="ui-lbl-condition">화면표시그룹</div>
+          <select id="cboQDisplay_Grp" class="ui-cbo-normal" style="width: 150px;"></select>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="divTopView" class="ui-ctnr-normal ui-padding">
+    <div class="ui-gbox-title" style="margin: 0; width: 120px;">메시지속성 일괄수정</div>
+    <div class="ui-gbox-content" style="margin: 0;">
+      <table class="ui-tbl-normal">
+        <tr>
+          <td>
+            <div id="lblDisplay_Grp" class="ui-lbl-normal">화면표시그룹</div>
+            <select id="cboDisplay_Grp" class="ui-cbo-normal" style="width: 110px;"></select>
+            <input type="button" id="btnDisplay_Grp" value="수정" class="ui-btn-cmd" style="width: 60px;" />
+          </td>
+          <td>
+            <div id="lblRemark1" class="ui-lbl-normal">비고</div>
+            <input class="ui-edt-normal" type="text" id="edtRemark1" style="width: 295px" />
+            <input type="button" id="btnRemark1" value="수정" class="ui-btn-cmd" style="width: 60px;" />
+          </td>
+          <td style="width: 40%;"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div id="divMasterView" class="ui-ctnr-normal">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdMaster" class="ui-grd-title">메시지속성</td>
+        <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdMaster"></div>
+  </div>
+</body>
+</html>

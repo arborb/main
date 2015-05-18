@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2013-07-26
+  // Description
+  //  CS04010E 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="CS04010E">
+
+
+  <!-- [S] - RS_MASTER -->
+  <parameterMap id="paramRS_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+  </parameterMap>
+  <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+    { ? = call CS04010E.RS_MASTER }
+  </procedure>
+  <!-- [E] - RS_MASTER -->
+
+
+  <!-- [S] - RS_DETAIL -->
+  <parameterMap id="paramRS_DETAIL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_POLICY_CD"               mode="IN" />
+  </parameterMap>
+  <procedure id="RS_DETAIL" parameterMap="paramRS_DETAIL" resultClass="java.util.HashMap">
+    { ? = call CS04010E.RS_DETAIL(?) }
+  </procedure>
+  <!-- [E] - RS_DETAIL -->
+
+
+  <!--
+    //================================================================================================================
+    // INSERT/UPDATE/DELETE SQLMAP
+    //================================================================================================================
+  -->
+  <!-- [S] - INSERT_CPPOLICY [정책마스터] -->
+  <insert id="INSERT_CPPOLICY" parameterClass="java.util.Map">
+    INSERT INTO CPPOLICY
+               (
+                POLICY_CD
+               <isNotEmpty prepend = "," property= "P_POLICY_NM"               >POLICY_NM                  </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_POLICY_DIV"              >POLICY_DIV                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_POLICY_GRP"              >POLICY_GRP                 </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_POLICY_CD#
+               <isNotEmpty prepend = "," property= "P_POLICY_NM"               >#P_POLICY_NM#              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_POLICY_DIV"              >#P_POLICY_DIV#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_POLICY_GRP"              >#P_POLICY_GRP#             </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_CPPOLICY [정책마스터] -->
+
+
+  <!-- [S] - UPDATE_CPPOLICY [정책마스터] -->
+  <update id="UPDATE_CPPOLICY" parameterClass="java.util.Map">
+    UPDATE CPPOLICY
+       SET POLICY_NM                = #P_POLICY_NM#
+          <isNotNull prepend = "," property= "P_POLICY_DIV"              >POLICY_DIV               = #P_POLICY_DIV#             </isNotNull>
+          <isNotNull prepend = "," property= "P_POLICY_GRP"              >POLICY_GRP               = #P_POLICY_GRP#             </isNotNull>
+          <isNotNull prepend = "," property= "P_REMARK1"                 >REMARK1                  = #P_REMARK1#                </isNotNull>
+          ,REG_USER_ID              = #P_REG_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE POLICY_CD                = #P_POLICY_CD#
+  </update>
+  <!-- [E] - UPDATE_CPPOLICY [정책마스터] -->
+
+
+  <!-- [S] - DELETE_CPPOLICY [정책마스터] -->
+  <delete id="DELETE_CPPOLICY" parameterClass="java.util.Map">
+    DELETE 
+      FROM CPPOLICY
+     WHERE POLICY_CD                = #P_POLICY_CD#
+  </delete>
+  <!-- [E] - DELETE_CPPOLICY [정책마스터] -->
+
+
+  <!-- [S] - INSERT_CPPOLICYVAL [정책마스터] -->
+  <insert id="INSERT_CPPOLICYVAL" parameterClass="java.util.Map">
+    INSERT INTO CPPOLICYVAL
+               (
+                POLICY_CD
+               ,POLICY_VAL
+               <isNotEmpty prepend = "," property= "P_POLICY_VAL_NM"           >POLICY_VAL_NM              </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_RECOMMEND_YN"            >RECOMMEND_YN               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_POLICY_CD#
+               ,#P_POLICY_VAL#
+               <isNotEmpty prepend = "," property= "P_POLICY_VAL_NM"           >#P_POLICY_VAL_NM#          </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_RECOMMEND_YN"            >#P_RECOMMEND_YN#           </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_CPPOLICYVAL [정책마스터] -->
+
+
+  <!-- [S] - UPDATE_CPPOLICYVAL [정책마스터] -->
+  <update id="UPDATE_CPPOLICYVAL" parameterClass="java.util.Map">
+    UPDATE CPPOLICYVAL
+       SET POLICY_VAL_NM            = #P_POLICY_VAL_NM#
+          <isNotNull prepend = "," property= "P_RECOMMEND_YN"            >RECOMMEND_YN             = #P_RECOMMEND_YN#           </isNotNull>
+          <isNotNull prepend = "," property= "P_REMARK1"                 >REMARK1                  = #P_REMARK1#                </isNotNull>
+          ,REG_USER_ID              = #P_REG_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE POLICY_CD                = #P_POLICY_CD#
+       AND POLICY_VAL               = #P_POLICY_VAL#
+  </update>
+  <!-- [E] - UPDATE_CPPOLICYVAL [정책마스터] -->
+
+
+  <!-- [S] - DELETE_CPPOLICYVAL [정책마스터] -->
+  <delete id="DELETE_CPPOLICYVAL" parameterClass="java.util.Map">
+    DELETE 
+      FROM CPPOLICYVAL
+     WHERE POLICY_CD                = #P_POLICY_CD#
+          <isNotEmpty prepend = " AND " property= "P_POLICY_VAL"     >POLICY_VAL           = #P_POLICY_VAL#        </isNotEmpty>
+  </delete>
+  <!-- [E] - DELETE_CPPOLICYVAL [정책마스터] -->
+
+
+</sqlMap>

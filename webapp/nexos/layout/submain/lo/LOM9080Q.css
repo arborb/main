@@ -1,0 +1,49 @@
+.ui-gbox-title {
+  padding: 3px 5px;
+  width: 110px;
+  height: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.ui-gbox-content {
+  position: relative;
+  margin-top: 0;
+  padding: 5px;
+  line-height: 0;
+}
+
+.ui-ctnr-left,.ui-ctnr-right {
+  border-width: 0;
+  padding: 5px 0;
+}
+
+
+.inline-block {
+  display: inline-block;
+}
+
+.ui-edt-display.full {
+  border-width: 0;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: right;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  width: 170px;
+  height: 35px;
+}
+
+.ui-gbox-title.inner {
+  margin: 0 4px 0 0;
+  padding: 3px 5px;
+  background-color: #72aad3;
+  border-width: 0;
+  border-style: solid;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  height: 20px;
+  width: auto;
+}

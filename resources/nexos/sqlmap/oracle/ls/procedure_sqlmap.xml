@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  // PROCEDURE 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap>
+
+
+  <!--
+    //==================================================================================================================
+    // PROCEDURE SQLMAP
+    //==================================================================================================================
+  -->
+  <!-- [S] - LS_010NM_CHECKING -->
+  <parameterMap id="paramLS_010NM_CHECKING" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LS_010NM_CHECKING" parameterMap="paramLS_010NM_CHECKING" resultClass="java.util.HashMap">
+      { call LS_010NM_CHECKING(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LS_010NM_CHECKING -->
+
+  <!-- [S] - LS_010NM_PROPERTIES_UPDATE -->
+  <parameterMap id="paramLS_010NM_PROPERTIES_UPDATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_STOCK_DATE"              mode="IN" />
+    <parameter property="P_STOCK_IN_GRP"            mode="IN" />
+    <parameter property="P_STOCK_ID"                mode="IN" />
+    <parameter property="P_VALID_DATE"              mode="IN" />
+    <parameter property="P_BATCH_NO"                mode="IN" />
+    <parameter property="P_HOLD_YN"                 mode="IN" />
+    <parameter property="P_OUT_ORDER"               mode="IN" />
+    <parameter property="P_REMARK1"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LS_010NM_PROPERTIES_UPDATE" parameterMap="paramLS_010NM_PROPERTIES_UPDATE" resultClass="java.util.HashMap">
+      { call LS_010NM_PROPERTIES_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LS_010NM_PROPERTIES_UPDATE -->
+
+  <!-- [S] - LS_010NM_UPDATE_OUT_WAIT_QTY -->
+  <parameterMap id="paramLS_010NM_UPDATE_OUT_WAIT_QTY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LS_010NM_UPDATE_OUT_WAIT_QTY" parameterMap="paramLS_010NM_UPDATE_OUT_WAIT_QTY" resultClass="java.util.HashMap">
+      { call LS_010NM_UPDATE_OUT_WAIT_QTY(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LS_010NM_UPDATE_OUT_WAIT_QTY -->
+
+  <!-- [S] - LS_020NM_CHECKING -->
+  <parameterMap id="paramLS_020NM_CHECKING" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LS_020NM_CHECKING" parameterMap="paramLS_020NM_CHECKING" resultClass="java.util.HashMap">
+      { call LS_020NM_CHECKING(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LS_020NM_CHECKING -->
+
+  <!-- [S] - LS_020NM_SHIFTING -->
+  <parameterMap id="paramLS_020NM_SHIFTING" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CLOSE_MONTH"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LS_020NM_SHIFTING" parameterMap="paramLS_020NM_SHIFTING" resultClass="java.util.HashMap">
+      { call LS_020NM_SHIFTING(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LS_020NM_SHIFTING -->
+
+  <!-- [S] - LS06010Q_DEAL_DELETE -->
+  <parameterMap id="paramLS06010Q_DEAL_DELETE" class="java.util.Map">
+    <parameter property="P_TEST"                    mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LS06010Q_DEAL_DELETE" parameterMap="paramLS06010Q_DEAL_DELETE" resultClass="java.util.HashMap">
+      { call LS06010Q_DEAL_DELETE(?, ?) }
+    </procedure>
+  <!-- [E] - LS06010Q_DEAL_DELETE -->
+  
+
+
+
+
+
+</sqlMap>

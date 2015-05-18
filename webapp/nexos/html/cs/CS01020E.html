@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- CS01020E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cs/CS01020E.css" />
+<script src="js/CS01020E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divLeftView" class="ui-ctnr-left">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdMaster" class="ui-grd-title">프로그램 메뉴</td>
+        <td id="divRowCount_grdMaster" class="ui-grd-rowcount"></td>
+      </tr>
+    </table>
+    <div id="grdMaster"></div>
+  </div>
+  <div id="divRightView" class="ui-ctnr-right">
+    <div class="ui-gbox-header">
+      <div class="ui-lbl-header">프로그램 상세정보</div>
+    </div>
+    <div id="divMasterInfoView" class="ui-gbox-content ui-noborder">
+      <div class="ui-ctnr-row">
+        <div id="lblProgram_Id" class="ui-lbl-key">프로그램ID</div>
+        <input class="ui-edt-key" type="text" id="edtProgram_Id" maxlength="30" style="width: 120px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblProgram_Nm" class="ui-lbl-key">프로그램명</div>
+        <input class="ui-edt-key" type="text" id="edtProgram_Nm" maxlength="200" style="width: 276px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblWeb_Url" class="ui-lbl-key">WEB URL</div>
+        <input class="ui-edt-key" type="text" id="edtWeb_Url" maxlength="100" style="width: 276px;" />
+      </div>
+      <div class="ui-gbox-title">프로그램 구분</div>
+      <div class="ui-gbox-content" style="margin-top: 0;">
+        <div id="lblProgram_Div_M" class="ui-ctnr-row">
+          <input class="ui-rgb-normal" type="radio" name="PROGRAM_DIV" id="rgbProgram_Div_M" value="M" />
+          메뉴
+        </div>
+        <div id="lblProgram_Div_E" class="ui-ctnr-row">
+          <input class="ui-rgb-normal" type="radio" name="PROGRAM_DIV" id="rgbProgram_Div_E" value="E" />
+          등록
+        </div>
+        <div id="lblProgram_Div_Q" class="ui-ctnr-row">
+          <input class="ui-rgb-normal" type="radio" name="PROGRAM_DIV" id="rgbProgram_Div_Q" value="Q" />
+          조회
+        </div>
+        <div id="lblProgram_Div_R" class="ui-ctnr-row">
+          <input class="ui-rgb-normal" type="radio" name="PROGRAM_DIV" id="rgbProgram_Div_R" value="R" />
+          출력
+        </div>
+      </div>
+      <div class="ui-gbox-title">화면 와이드 표시여부</div>
+      <div class="ui-gbox-content" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <input class="ui-rgb-normal" type="radio" name="WIDE_YN" id="rgbWide_Yn_Y" value="Y" />
+          활성화 <span style="display: inline-block; min-width: 40px;"></span>
+          <input class="ui-rgb-normal" type="radio" name="WIDE_YN" id="rgbWide_Yn_N" value="N" />
+          비활성화
+        </div>
+      </div>
+      <div class="ui-gbox-title">프로그램 그룹</div>
+      <div class="ui-gbox-content" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <div id="lblProgram_Grp1" class="ui-lbl-normal">그룹 1단계</div>
+          <input class="ui-edt-display" type="text" id="edtProgram_Grp1" disabled style="width: 40px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblProgram_Grp2" class="ui-lbl-normal">그룹 2단계</div>
+          <input class="ui-edt-display" type="text" id="edtProgram_Grp2" disabled style="width: 40px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblProgram_Grp3" class="ui-lbl-normal">그룹 3단계</div>
+          <input class="ui-edt-display" type="text" id="edtProgram_Grp3" disabled style="width: 40px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblProgram_Grp4" class="ui-lbl-normal">그룹 4단계</div>
+          <input class="ui-edt-display" type="text" id="edtProgram_Grp4" disabled style="width: 40px;" />
+        </div>
+      </div>
+      <div class="ui-ctnr-row">
+        <input type="button" id="btnEntryUserProgram" class="ui-btn-cmd" value="프로그램 사용자 등록" style="width: 150px;" />
+      </div>
+    </div>
+  </div>
+</body>
+</html>
