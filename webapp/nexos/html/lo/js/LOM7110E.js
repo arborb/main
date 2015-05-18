@@ -1001,6 +1001,7 @@ function onGetLabelInfo(ajaxData) {
   setProgressBar(G_GRDMASTER.data.getLength(), rowData.PICK_CNT);
   setItemInfoValue(rowData);
   onCalcSummary();
+  onBoxComplete();
 
   // 검수완료,합포장대상,주문취소 체크
   $NC.G_VAR.ORDERCAN_CHK = rowData.ORDER_CAN; // 주문취소
@@ -1181,7 +1182,6 @@ function onGetItemInfoForLabel(ajaxData) {
   }
   rowData.CONFIRM_QTY = CONFIRM_QTY;
   G_GRDMASTER.data.updateItem(rowData.id, rowData);
-
   setFocusScan();
   setProgressBar();
 }
@@ -1460,11 +1460,7 @@ function onBtnDeliveryChange(e) {
 /**
  * 담기완료
  */
-function onBoxComplete(e) {
-  if ($(e.target).hasClass("disabled")) {
-    return;
-  }
-  
+function onBoxComplete() { 
   var rowDatas = G_GRDMASTER.data.getItems()
     ,dsMaster = [];
   for (var i in rowDatas) {
