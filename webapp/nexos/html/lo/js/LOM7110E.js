@@ -8,7 +8,7 @@ function _Initialize() {
     labelList: [],
     ORDERCAN_CHK: "",// 주문취소
     ORDERHOLD_CHK: "" //주문보류
-  });
+  });    
 
   $NC.G_JWINDOW.set({
     "minWidth": 1050,
