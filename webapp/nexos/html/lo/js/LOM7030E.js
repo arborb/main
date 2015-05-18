@@ -453,6 +453,7 @@ function onChangingCondition() {
   $NC.setValue("#edtQOutbound_No");
   $NC.setValue("#edtQPaper_No");
   $NC.setValue("#edtQItem_Barcd");
+  $NC.setValue("#edtQHas_Qty", 0);
   $NC.setValue("#cboQOutbound_Batch");
 
   setOrderInfoValue();
@@ -527,7 +528,8 @@ function _Inquiry() {
 
   G_GRDMASTER.queryId = "LOM7030E.RS_MASTER";
   // 데이터 조회
-  $NC.serviceCall("/LOM7030E/getDataSet.do", $NC.getGridParams(G_GRDMASTER), onGetMaster, onError);
+  $NC.serviceCall("/LOM7030E/getDataSet.do", 
+      $NC.getGridParams(G_GRDMASTER), onGetMaster, onError, null, '7030E_GET_ITEM_INFO');
 
 }
 
@@ -2077,6 +2079,7 @@ function onCalcSummary() {
     $NC.G_VAR.SUM_INSPECT_QTY = 0;
     $NC.G_VAR.SUM_NONINSPECT_QTY = 0;
     $NC.G_VAR.SUM_CANCEL_QTY = 0;
+    $NC.G_VAR.SUM_HAS_QTY = 0;
     TOTAL_INSPECT_QTY = 0;
 //    $NC.setValue("#divProgressVal", "0 / 0 [ 0 %]");
 //    $("#divProgressbar").progressbar("value", 0);
@@ -2084,7 +2087,7 @@ function onCalcSummary() {
   } else {
 
     var summary = $NC.getGridSumVal(G_GRDMASTER, {
-      sumKey: ["ENTRY_QTY", "CONFIRM_QTY", "INSPECT_QTY","REMAIN_QTY"]
+      sumKey: ["ENTRY_QTY", "CONFIRM_QTY", "INSPECT_QTY","REMAIN_QTY","HAS_QTY"]
     });
     
     var summaryCancel = $NC.getGridSumVal(G_GRDMASTER, {
@@ -2099,12 +2102,14 @@ function onCalcSummary() {
     $NC.G_VAR.SUM_CANCEL_QTY = (summaryCancel.ENTRY_QTY === "" ? 0 : summaryCancel.ENTRY_QTY);
     TOTAL_INSPECT_QTY = summary.CONFIRM_QTY + summary.INSPECT_QTY;
     $NC.G_VAR.SUM_NONINSPECT_QTY = summary.REMAIN_QTY;
+    $NC.G_VAR.SUM_HAS_QTY = summary.HAS_QTY;
     
   }
   $NC.setValue("#edtQEntry_Qty",$NC.G_VAR.SUM_ENTRY_QTY);
   $NC.setValue("#edtQInspect_Qty",TOTAL_INSPECT_QTY);
   $NC.setValue("#edtQNonInspect_Qty",$NC.G_VAR.SUM_NONINSPECT_QTY);
   $NC.setValue("#edtQCancel_Qty",$NC.G_VAR.SUM_CANCEL_QTY);
+  $NC.setValue("#edtQHas_Qty",$NC.G_VAR.SUM_HAS_QTY);
 }
 
 /**
