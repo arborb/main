@@ -235,6 +235,15 @@ function _Initialize() {
   $("#btnT3Proc_InvnoLine").click(setT3OrderDiv); // 주문유형 리마킹 SP 버튼 클릭(개별등록탭)
   
   $("#btnT1Order_Adjust").click(setOrder_Adjustment); // 출고할당량 부족재고 조정
+  $('#chkQOrder_Div').on('change', function(e){
+    if ($(this).is(':checked')) {
+      $NC.setEnable('#dtpQOrder_Date1', false);
+      $NC.setEnable('#dtpQOrder_Date2', false);
+    } else {
+      $NC.setEnable('#dtpQOrder_Date1');
+      $NC.setEnable('#dtpQOrder_Date2');
+    }
+  });
   $('#chkQOutbound_Div').on('change', function(e){
     if ($(this).is(':checked')) {
       $NC.setEnable('#dtpQOutbound_Date1', false);
@@ -243,7 +252,7 @@ function _Initialize() {
       $NC.setEnable('#dtpQOutbound_Date1');
       $NC.setEnable('#dtpQOutbound_Date2');
     }
-  })
+  });
 }
 
 /**
@@ -1885,6 +1894,14 @@ function getDataT1Master() {
   $NC.setInitGridVar(G_GRDT1DETAIL);
   $NC.setInitGridVar(G_GRDT1SUB);
 
+  if ($('#chkQOrder_Div').is(':checked')) {
+    ORDER_DATE1 = "";
+    ORDER_DATE2 = "";
+  } else {
+    ORDER_DATE1 = $NC.getValue('#dtpQOrder_Date1');
+    ORDER_DATE2 = $NC.getValue('#dtpQOrder_Date2');
+  }
+  
   // 파라메터 세팅
   G_GRDT1MASTER.queryParams = $NC.getParams({
     P_CENTER_CD: CENTER_CD,
@@ -1912,13 +1929,21 @@ function getDataT1Detail(rowData) {
   // T1 DETAIL 조회시 전역 변수 값 초기화
   $NC.setInitGridVar(G_GRDT1DETAIL);
 
+  if ($('#chkQOrder_Div').is(':checked')) {
+    ORDER_DATE1 = "";
+    ORDER_DATE2 = "";
+  } else {
+    ORDER_DATE1 = $NC.getValue('#dtpQOrder_Date1');
+    ORDER_DATE2 = $NC.getValue('#dtpQOrder_Date2');
+  }
+  
   //{"P_CENTER_CD": "G1","P_BU_CD": "5000","P_ORDER_DATE": "2015-03-14","P_INOUT_CD": "","P_OWN_BRAND_CD": "%",
   //"P_USER_ID": "WMS7","P_DEAL_ID": "%","P_ORDER_TYPE": "12" }
   G_GRDT1DETAIL.queryParams = $NC.getParams({
     P_CENTER_CD: CENTER_CD,
     P_BU_CD: BU_CD,
-    P_ORDER_DATE1: $NC.getValue('#dtpQOrder_Date1'),
-    P_ORDER_DATE2: $NC.getValue('#dtpQOrder_Date2'),
+    P_ORDER_DATE1: ORDER_DATE1,
+    P_ORDER_DATE2: ORDER_DATE2,
     P_INOUT_CD: INOUT_CD,
     P_OWN_BRAND_CD: BRAND_CD,
     P_USER_ID: USER_ID,
