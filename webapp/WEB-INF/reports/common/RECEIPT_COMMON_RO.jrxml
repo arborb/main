@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RECEIPT_COMMON_RO" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a3495187-6c89-42e8-9601-6b5ccf6f7a5b">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="0.47878409873832717"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="Detail" fontSize="12"/>
+	<parameter name="P_SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\JqueryApplicaction\\workspace_new\\000_NEXOS_HTML5\\src\\main\\webapp\\WEB-INF\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_CENTER_CD" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["A1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_BU_CD" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["1100"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_INOUT_DATE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2013-11-22"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PROCESS_CD" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["LI"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM DUAL]]>
+	</queryString>
+	<field name="DUMMY" class="java.lang.String"/>
+	<detail>
+		<band height="842" splitType="Stretch">
+			<subreport isUsingCache="false" runToBottom="false">
+				<reportElement x="0" y="0" width="595" height="420" uuid="73cd005b-c325-4397-acca-bb41b9d7c782"/>
+				<subreportParameter name="P_INOUT_DATE">
+					<subreportParameterExpression><![CDATA[$P{P_INOUT_DATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_BU_CD">
+					<subreportParameterExpression><![CDATA[$P{P_BU_CD}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PROCESS_CD">
+					<subreportParameterExpression><![CDATA[$P{P_PROCESS_CD}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CENTER_CD">
+					<subreportParameterExpression><![CDATA[$P{P_CENTER_CD}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{P_SUBREPORT_DIR} + "common/RECEIPT_COMMON_subreport3.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="false" runToBottom="false">
+				<reportElement x="0" y="420" width="595" height="420" uuid="6a4ab5a8-2155-4726-af11-6c0574a43f64"/>
+				<subreportParameter name="P_INOUT_DATE">
+					<subreportParameterExpression><![CDATA[$P{P_INOUT_DATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_BU_CD">
+					<subreportParameterExpression><![CDATA[$P{P_BU_CD}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PROCESS_CD">
+					<subreportParameterExpression><![CDATA[$P{P_PROCESS_CD}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CENTER_CD">
+					<subreportParameterExpression><![CDATA[$P{P_CENTER_CD}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{P_SUBREPORT_DIR} + "common/RECEIPT_COMMON_subreport4.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>
