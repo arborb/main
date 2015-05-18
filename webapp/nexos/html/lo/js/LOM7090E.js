@@ -550,7 +550,7 @@ function _Print(printIndex, printName) {
         internalQueryYn: internalQueryYn
       }],
       onAfterPrint: function() {
-        alert('출력 되었습니다.');
+        _Inquiry();
       }
     });
   }
