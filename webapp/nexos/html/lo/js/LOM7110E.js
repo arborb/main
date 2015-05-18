@@ -138,7 +138,7 @@ function _OnResize(parent) {
   if (resizeVal != resizeView.data("resizeVal")) {
     resizeView.css({
       "height": 70 + resizeVal,
-      "font-size": 20 + resizeVal
+      "font-size": 32
     }).data("resizeVal", resizeVal);
     resizeLabelView.css({
       "height": 70 + resizeVal,
