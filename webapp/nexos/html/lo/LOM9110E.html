@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 <html lang="ko">
-
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -37,13 +36,14 @@
 <script src="../common/js/common.js"></script>
 <!--  Popup JS -->
 <script src="../popup/js/popup.js"></script>
-<!-- LO03020Q CSS/JS -->
+<!-- LS01010Q CSS/JS -->
 <link rel="stylesheet" href="../../layout/submain/lo/LOM9110E.css" />
 <script src="js/LOM9110E.js"></script>
 </head>
 <body>
   <div id="divTopLine" class="ui-top-line"></div>
   <div id="divConditionView" class="ui-ctnr-condition">
+    <!-- 조회 조건 -->
     <table class="ui-tbl-condition">
       <tr>
         <td>
@@ -58,13 +58,13 @@
           <input type="hidden" id="edtQCust_Cd" />
         </td>
         <td>
-          <div id="lblQPopup_Own_Brand_Cd" class="ui-lbl-condition">위탁사</div>
+          <div id="lblQPopup_Own_Brand_Cd" class="ui-lbl-normal">위탁사</div>
           <input class="ui-edt-normal" type="text" id="edtQOwn_Brand_Cd" style="width: 60px;" />
           <input class="ui-btn-popup" type="button" id="btnQOwn_Brand_Cd" />
           <input class="ui-edt-display" type="text" id="edtQOwn_Brand_Nm"  disabled="disabled" style="width: 118px;" />
         </td>
         <td>
-          <div id="lblQPopup_Haslocation_Cd" class="ui-lbl-condition">합포장LOC</div>
+          <div id="lblQPopup_Haslocation_Cd" class="ui-lbl-normal">합포장LOC</div>
           <input class="ui-edt-normal" type="text" id="edtQHaslocation_Cd" style="width: 120px;" />
           <input class="ui-btn-popup" type="button" id="btnQHaslocation_Cd" />
         </td>
@@ -74,9 +74,15 @@
           <div id="lblQHas_Date" class="ui-lbl-condition">합포장일자</div>
           <input class="ui-dtp-key" type="text" id="dtpQHas_Date" style="width: 80px;" />
         </td>
+        <!--
         <td>
           <div id="lblQEnd_Yn" class="ui-lbl-normal">합포장구분</div>
           <select id="cboQEnd_Yn" class="ui-cbo-normal" style="width: 150px;"></select>
+        </td>
+        -->
+        <td>
+          <div id="lblOutbound_No" class="ui-lbl-normal">출고번호</div>
+          <input class="ui-edt-normal" type="text" id="edtOutbound_No" style="width: 150px;" maxlength="255" />
         </td>
          <td>
           <div id="lblOrderer_Nm" class="ui-lbl-normal">주문자명</div>
@@ -89,61 +95,51 @@
        </tr>
     </table>
   </div>
-  
   <div id="divMasterView" style="padding: 1px;">
     <!-- Tab Handler -->
     <ul>
-      <li id="divTab1"><a href="#divDetailViewT1">합포장관리</a></li>
-      <li id="divTab2"><a href="#divDetailViewT2">합포장처리완료내역</a></li>
+      <li id="divTab1"><a href="#divT1DetailView">합포장관리</a></li>
+      <li id="divTab2"><a href="#divT2DetailView">합포장처리완료내역</a></li>
+      <li id="divTab3"><a href="#divT3DetailView">합포장라벨재발행</a></li>
     </ul>
-    
-    <div id="divDetailViewT1" style="padding: 0; border-width: 1px; border-style: solid;">
-    <div>
-      <table class="ui-tbl-grid">
-        <tr>
-          <td id="divTitle_grdMasterT1" class="ui-grd-title">합포장관리 내역</td>
-            <td style="text-align: left; padding: 5px;" >
-              <div id="lblLo_Cnt1" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">총건수 :</div>
+    <!-- 상품별 입고내역 -->
+    <div id="divT1DetailView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div style="border: none;">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT1Master" class="ui-grd-title">합포장 내역</td>
+            <td>
+              <div id="lblLo_Cnt_A" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">총 셀 :</div>
             </td>
-            <td style="text-align: left; padding: 5px;" >
-              <div id="lblLo_Cnt2" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">적치건수 :</div>
+            <td>
+              <div id="lblLo_Cnt_B" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">사용중인 셀 :</div>
             </td>
-            <td style="text-align: left; padding: 5px;" >
-              <div id="lblLo_Cnt3" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">완료건수 :</div>
+            <td>
+              <div id="lblLo_Cnt_C" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">빈 셀 :</div>
             </td>
-            <td style="text-align: left; padding: 5px;" >
+            <td>
               <input type="button" id="btnERPSend" value="합포장처리" class="ui-btn-cmd" style="width: 130px;">
             </td>
-            <!-- 
-            <td style="text-align: left; padding: 5px;">
-              <input type="button" id="btnReConfrim" value="합포장취소" class="ui-btn-cmd" style="width: 130px;">
-            </td>
-             -->
-            <td id="divRowCount_grdMasterT1" class="ui-grd-rowcount">0/0 Rows</td>
-        </tr>
-      </table>
-      <div id="grdMasterT1"></div>
+            <td id="divRowCount_grdT1Master" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT1Master"></div>
       </div>
-      
-    <div id="divDetailViewT3" style="padding: 0; border-width: 0px; border-style: solid;">
-     <div>
-      <table class="ui-tbl-grid">
-        <tr>
-          <td id="divTitle_grdT1Detail" class="ui-grd-title">합포장내역</td>
-            <td style="text-align: left; padding: 5px;" >
-              <input type="button" id="Ts1" value="합포장취소건확인" class="ui-btn-cmd" style="width: 110px;">
-            </td>
-          <!-- 
+      <div id="test" style="padding: 0; border-width: 0px; border-style: solid;">
+  
+      <div style="border: none;">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT1Detail" class="ui-grd-title">합포장상세 내역</td>
             <td>
-              <input type="button" id="Ts2" value="합포장 재작업" class="ui-btn-cmd" style="width: 100px;">
+              <input type="button" id="Ts1" value="합포장 분류취소" class="ui-btn-cmd" style="width: 100px;">
             </td>
-          -->        
-          <td id="divRowCount_grdT1Detail" class="ui-grd-rowcount">0/0 Rows</td>
-        </tr>
-      </table>
-      <div id="grdT1Detail"></div>
-    </div>
-    <div>
+            <td id="divRowCount_grdT1Detail" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT1Detail"></div>
+      </div>
+      <div style="border: none;">
         <table class="ui-tbl-grid">
           <tr>
             <td id="divTitle_grdSub" class="ui-grd-title">상품정보</td>
@@ -151,21 +147,57 @@
           </tr>
         </table>
         <div id="grdSub"></div>
-    </div> 
-    </div>     
+      </div>
+      
+      </div>
     </div>
-    <!-- 배송처별 출고내역 -->
-    <div id="divDetailViewT2" style="padding: 0; border-width: 1px; border-style: solid;">
+    <!-- 배송처별 입고내역 -->
+    <div id="divT2DetailView" style="padding: 0; border-width: 1px; border-style: solid;">
       <div style="border: none;">
-      <table class="ui-tbl-grid">
-        <tr>
-          <td id="divTitle_grdMasterT2" class="ui-grd-title">합포장 처리완료내역</td>
-          
-          <td id="divRowCount_grdMasterT2" class="ui-grd-rowcount">0/0 Rows</td>
-        </tr>
-      </table>
-      <div id="grdMasterT2"></div>
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT2Master" class="ui-grd-title">합포장 처리완료/삭제 내역</td>
+            <td>
+              <div id="lblQEnd_Yn" class="ui-lbl-normal">합포장구분</div>
+              <select id="cboQEnd_Yn" class="ui-cbo-normal" style="width: 150px;"></select>
+            </td>
+            <td id="divRowCount_grdT2Master" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT2Master"></div>
+      </div>
+      <div style="border: none;">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT2Detail" class="ui-grd-title">상품정보</td>
+            <td id="divRowCount_grdT2Detail" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT2Detail"></div>
+      </div>
     </div>
+        <div id="divT3DetailView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div style="border: none;">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT3Master" class="ui-grd-title">합포장완료/취소라벨재출력</td>
+            <td>
+              <input type="button" id="RePrint" value="합포장완료재출력" class="ui-btn-cmd" style="width: 130px;">
+            </td>
+            <td id="divRowCount_grdT3Master" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT3Master"></div>
+      </div>
+      <div style="border: none;">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT3Detail" class="ui-grd-title">상품정보</td>
+            <td id="divRowCount_grdT3Detail" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT3Detail"></div>
+      </div>
     </div>
   </div>
 </body>

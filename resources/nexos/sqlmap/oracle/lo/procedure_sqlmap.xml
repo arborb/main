@@ -1422,25 +1422,43 @@
   <!-- [E] - LO_SHIPPER_UPDATE -->
  
  
+  <!-- [S] - LO_FW_SCAN_PICK_PROC -->
+  <parameterMap id="paramLO_FW_SCAN_PICK_PROC" class="java.util.Map">
+    <parameter property="P_SCAN_INFO"               mode="IN" />
+    <parameter property="P_PICK_BOX_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_SCAN_PICK_PROC" parameterMap="paramLO_FW_SCAN_PICK_PROC" resultClass="java.util.HashMap">
+      { call LO_FW_SCAN_PICK_PROC(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_SCAN_PICK_PROC -->
+
   <!-- [S] - LO_HAS_CALL_PROC_T1 -->
   <parameterMap id="paramLO_HAS_CALL_PROC_T1" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
     <parameter property="P_SCAN_INFO"               mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
     <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
   </parameterMap>
     <procedure id="LO_HAS_CALL_PROC_T1" parameterMap="paramLO_HAS_CALL_PROC_T1" resultClass="java.util.HashMap">
       { call LO_HAS_CALL_PROC_T1(?, ?, ?) }
+      { call LO_HAS_CALL_PROC_T1(?, ?, ?, ?, ?) }
     </procedure>
   <!-- [E] - LO_HAS_CALL_PROC_T2 -->
  
    <!-- [S] - LO_HAS_CALL_PROC_T2 -->
   <parameterMap id="paramLO_HAS_CALL_PROC_T2" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
     <parameter property="P_SCAN_INFO"               mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
     <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
   </parameterMap>
     <procedure id="LO_HAS_CALL_PROC_T2" parameterMap="paramLO_HAS_CALL_PROC_T2" resultClass="java.util.HashMap">
       { call LO_HAS_CALL_PROC_T2(?, ?, ?) }
+      { call LO_HAS_CALL_PROC_T2(?, ?, ?, ?, ?) }
     </procedure>
   <!-- [E] - LO_HAS_CALL_PROC_T2 -->
 
