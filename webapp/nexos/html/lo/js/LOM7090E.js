@@ -507,7 +507,7 @@ function _Print(printIndex, printName) {
     };
     saveDs.push(saveData);
     if (rowData.PRINT_YN === 'Y') {
-      alert('이미 출력되었습니다. 재출력화면에서 출력하세요.');
+      alert('출력되었습니다.');
       return false;
     }
   }
