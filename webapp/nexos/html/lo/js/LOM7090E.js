@@ -1,5 +1,5 @@
 /**
- * 화면 초기화 - 화면 로드시 자동 호출 됨 안녕..
+ * 화면 초기화 - 화면 로드시 자동 호출 됨.
  */
 function _Initialize() {
   // 단위화면에서 사용될 일반 전역 변수 정의
@@ -507,7 +507,7 @@ function _Print(printIndex, printName) {
     };
     saveDs.push(saveData);
     if (rowData.PRINT_YN === 'Y') {
-      alert('출력되었습니다.');
+      alert('이미 출력되었습니다.\n재출력화면에서 출력하세요.');
       return false;
     }
   }
