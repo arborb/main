@@ -274,7 +274,7 @@ function _OnLoaded() {
  */
 function _SetResizeOffset() {
   $NC.G_OFFSET.leftViewWidth = 380;
-  $NC.G_OFFSET.rightViewHeight = 450;
+  $NC.G_OFFSET.rightViewHeight = 250;
   $NC.G_OFFSET.nonClientHeight = $("#divConditionView").outerHeight() + $NC.G_LAYOUT.nonClientHeight;
   $NC.G_OFFSET.tabHeaderHeight = $("#divTabView").children(".ui-tabs-nav:first").outerHeight();
 }
