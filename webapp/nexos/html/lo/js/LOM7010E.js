@@ -513,7 +513,7 @@ function onScan(scanVal, flag) {
     }
     var policyVal460 = parseInt($NC.G_VAR.policyVal.LO460, 10)
     if (ENTRY_QTY <= policyVal460) {
-      showMessage("수량으로 검수할 수 없습니다.");
+      showMessage("유효하지 않은 상품바코드 입니다.");
       return false;
     }
 
