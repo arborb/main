@@ -1472,6 +1472,7 @@ function onBoxComplete() {
       ,P_OUTBOUND_NO: rowDatas[i].OUTBOUND_NO
       ,P_LINE_NO: rowDatas[i].LINE_NO
       ,P_DIRECTIONS_INFO: rowDatas[i].DIRECTIONS_INFO
+      ,P_LOCATION_CD: rowDatas[i].LOCATION_CD
       ,P_PICK_BOX_NO: rowDatas[i].PICK_BOX_NO
       ,P_CONFIRM_QTY: rowDatas[i].CONFIRM_QTY
       ,P_USER_ID: $NC.G_USERINFO.USER_ID
@@ -1488,7 +1489,8 @@ function onBoxComplete() {
   }, onComplete, onError, null, '7110E_FW_SCAN_CONFIRM');
 }
 function onComplete(ajaxData) {
-  var resultData = $NC.toArray(ajaxData);
+  var resultData = $NC.toArray(ajaxData)
+    ,boxNo = $NC.getValue('#edtBox_No')
   if ($NC.isNull(resultData)) {
     return false;
   }
@@ -1497,6 +1499,7 @@ function onComplete(ajaxData) {
     showMessage(resultData.RESULT_DATA);
     return false;
   }
+  $NC.setValue('#edtBox_No', boxNo+'(매칭완료)');
   showMessage('용기 피킹작업이 완료되었습니다.');
   setFocusScan();
 }
