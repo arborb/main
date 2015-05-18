@@ -483,11 +483,12 @@ function _Print(printIndex, printName) {
   PRINT_DIV = rowData.PRINT_DIV;
   internalQueryYn = "N";
 
-  if (PRINT_DIV === 1) {
-    reportDoc = "lo/LABEL_LOM_LABLE";
-  } else if (PRINT_DIV === 2) {
-    reportDoc = "lo/LABEL_LOM_LABLE1";
-  }
+//  if (PRINT_DIV === 1) {
+//    reportDoc = "lo/LABEL_LOM_LABLE";
+//  } else if (PRINT_DIV === 2) {
+//    reportDoc = "lo/LABEL_LOM_LABLE1";
+//  }
+  reportDoc = "lo/LABEL_LOM_LABLE";
   queryId = "WR.RS_LABEL_LOM_LABEL";
 
   var checkedValueDS = [ ];
@@ -540,8 +541,8 @@ function _Print(printIndex, printName) {
     queryParams.P_OUTBOUND_BATCH = OUTBOUND_BATCH;
     $NC.G_MAIN.silentPrint({
       printParams: [{
-        reportDoc: "lo/PAPER_LOM02",
-        queryId: "WR.RS_PAPER_LOM02",
+        reportDoc: "lo/PAPER_LOM02_3",
+        queryId: "WR.RS_PAPER_LOM02_3",
         queryParams: queryParams,
         iFrameNo: 1,
         checkedValue: checkedValueDS.toString(),
