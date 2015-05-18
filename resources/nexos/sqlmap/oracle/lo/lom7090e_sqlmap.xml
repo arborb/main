@@ -94,7 +94,8 @@
     <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
     <parameter property="P_CENTER_CD"               mode="IN" />
     <parameter property="P_BU_CD"                   mode="IN" />
-    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_DATE1"          mode="IN" />
+    <parameter property="P_OUTBOUND_DATE2"          mode="IN" />
     <parameter property="P_INOUT_CD"                mode="IN" />
     <parameter property="P_OWN_BRAND_CD"            mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
@@ -102,7 +103,7 @@
     <parameter property="P_ORDER_TYPE"              mode="IN" />
   </parameterMap>
   <procedure id="RS_T2_DETAIL" parameterMap="paramRS_T2_DETAIL" resultClass="java.util.HashMap">
-    { ? = call LOM7090E.RS_T2_DETAIL(?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LOM7090E.RS_T2_DETAIL(?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T2_DETAIL -->
 

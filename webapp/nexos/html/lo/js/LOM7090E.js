@@ -2025,13 +2025,25 @@ function getDataT2Detail(rowData) {
   }
   // T1 DETAIL 조회시 전역 변수 값 초기화
   $NC.setInitGridVar(G_GRDT2DETAIL);
-
+  
+  if(rowData['ORDER_TYPE']==="%" && $('#chkQOutbound_Div').is(':checked') ) {
+    OUTBOUND_DATE1 = "";
+    OUTBOUND_DATE2 = "";
+  } else if (rowData['ORDER_TYPE']==="%"){
+    OUTBOUND_DATE1 = $NC.getValue('#dtpQOutbound_Date1');
+    OUTBOUND_DATE2 = $NC.getValue('#dtpQOutbound_Date2');
+  } else {
+    OUTBOUND_DATE1 = rowData['OUTBOUND_DATE'];
+    OUTBOUND_DATE2 = rowData['OUTBOUND_DATE'];
+  }
+  
   //{"P_CENTER_CD": "G1","P_BU_CD": "5000","P_OUTBOUND_DATE": "2015-03-17","P_INOUT_CD": "%",
   // "P_OWN_BRAND_CD": "%","P_USER_ID": "WMS7","P_DEAL_ID": "%","P_ORDER_TYPE": "12" }
   G_GRDT2DETAIL.queryParams = $NC.getParams({
     P_CENTER_CD: CENTER_CD,
     P_BU_CD: BU_CD,
-    P_OUTBOUND_DATE: rowData['OUTBOUND_DATE'],
+    P_OUTBOUND_DATE1: OUTBOUND_DATE1,
+    P_OUTBOUND_DATE2: OUTBOUND_DATE2,
     P_INOUT_CD: INOUT_CD,
     P_OWN_BRAND_CD: BRAND_CD,
     P_USER_ID: USER_ID,
