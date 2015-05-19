@@ -468,12 +468,10 @@ function _Cancel() {
  *          선택한 출력물 Index
  */
 function _Print(printIndex, printName) {
-  var CARRIER_CD = "";
   var CENTER_CD = "";
   var BU_CD = "";
   var OUTBOUND_DATE = "";
   var OUTBOUND_BATCH = "";
-  var GRID_MASTER;
   var internalQueryYn = "";
 
   var reportDoc;
@@ -488,7 +486,7 @@ function _Print(printIndex, printName) {
   BU_CD = rowData.BU_CD;
   OUTBOUND_DATE = rowData.OUTBOUND_DATE;
   OUTBOUND_BATCH = rowData.OUTBOUND_BATCH;
-  GRID_MASTER = G_GRDT3DETAIL;
+  //GRID_MASTER = G_GRDT3DETAIL;
   PRINT_DIV = rowData.PRINT_DIV;
   internalQueryYn = "N";
 
@@ -498,15 +496,14 @@ function _Print(printIndex, printName) {
 //    reportDoc = "lo/LABEL_LOM_LABLE1";
 //  }
   reportDoc = "lo/LABEL_LOM_LABLE";
-  queryId = "WR.RS_LABEL_LOM_LABEL";
+  queryId = "WR.RS_LABEL_LOM_LABEL1";
 
   var checkedValueDS = [ ];
+  var checkedValueDS1 = [ ];
   var saveDs = [ ];
-  var checkCnt = 0;
-  var rowCount = GRID_MASTER.data.getLength();
+  var rowCount = G_GRDT3DETAIL.data.getLength();
   for (var row = 0; row < rowCount; row++) {
-    var rowData = GRID_MASTER.data.getItem(row);
-    checkCnt++;
+    var rowData = G_GRDT3DETAIL.data.getItem(row);
     checkedValueDS.push(rowData.OUTBOUND_NO);
     var saveData = {
       P_CENTER_CD: rowData.CENTER_CD,
@@ -521,7 +518,16 @@ function _Print(printIndex, printName) {
       return false;
     }
   }
-
+  
+  var rowCount_M = G_GRDT3MASTER.data.getLength();
+  for (var row = 0; row < rowCount_M; row++) {
+    var rowData = G_GRDT3MASTER.data.getItem(row);
+    if (rowData.CHECK_YN === "Y"){
+      checkedValueDS1.push(rowData.OUTBOUND_BATCH || ";" || rowData.ORDER_DIV);  
+    }
+  }
+  var rowDataM = G_GRDT3DETAIL.data.getItem(G_GRDT3MASTER.lastRow);
+  
   cksave(saveDs);
 
   //출고라벨 파라미터
@@ -536,10 +542,10 @@ function _Print(printIndex, printName) {
     reportDoc: reportDoc,
     queryId: queryId,
     queryParams: queryParams,
-    checkedValue: checkedValueDS.toString(),
+    checkedValue: checkedValueDS1.toString(),
     internalQueryYn: internalQueryYn,
     printFn: exeSilentPrint,
-    print_div: rowData.PRINT_DIV
+    print_div: rowDataM.PRINT_DIV
   });
 
   // 미리보기 후 출력하기 rowData.PRINT_DIV == '2'일 경우에만 실행
@@ -555,7 +561,7 @@ function _Print(printIndex, printName) {
         queryParams: queryParams,
         iFrameNo: 1,
         checkedValue: checkedValueDS.toString(),
-        silentPrinterName: "FinePrint",
+        silentPrinterName: $NC.G_USERINFO.PRINT_WB_NO,
         internalQueryYn: internalQueryYn
       }],
       onAfterPrint: function() {
@@ -1487,6 +1493,18 @@ function grdT3MasterOnGetColumns() {
     minWidth: 100,
     cssClass: "align-right"
   });
+  $NC.setGridColumn(columns, {
+    id: "PRINT_TYPE",
+    field: "PRINT_TYPE",
+    name: "출력구분",
+    minWidth: 90
+  });
+  $NC.setGridColumn(columns, {
+    id: "PRINT_YN",
+    field: "PRINT_YN",
+    name: "출력여부",
+    minWidth: 90
+  });  
 
   return $NC.setGridColumnDefaultFormatter(columns);
 }
@@ -1543,18 +1561,6 @@ function grdT3DetailOnGetColumns() {
       valueChecked: "Y",
       valueUnChecked: "N"
     }
-  });
-  $NC.setGridColumn(columns, {
-    id: "PRINT_TYPE",
-    field: "PRINT_TYPE",
-    name: "출력구분",
-    minWidth: 90
-  });
-  $NC.setGridColumn(columns, {
-    id: "PRINT_YN",
-    field: "PRINT_YN",
-    name: "출력여부",
-    minWidth: 90
   });
   $NC.setGridColumn(columns, {
     id: "INOUT_NM",
