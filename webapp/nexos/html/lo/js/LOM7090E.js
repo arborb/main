@@ -1463,11 +1463,29 @@ function grdT3MasterInitialize() {
   G_GRDT3MASTER.view.onSelectedRowsChanged.subscribe(grdT3MasterOnAfterScroll);
   //G_GRDT3MASTER.view.onBeforeEditCell.subscribe(grdT3MasterOnBeforeEditCell);
   //G_GRDT3MASTER.view.onCellChange.subscribe(grdT3MasterOnCellChange);
+  
+  
+  G_GRDT3MASTER.view.onHeaderClick.subscribe(grdT3MASTEROnHeaderClick);
+  $NC.setGridColumnHeaderCheckBox(G_GRDT3MASTER, "CHECK_YN");
 }
 
 function grdT3MasterOnGetColumns() {
 
   var columns = [ ];
+  $NC.setGridColumn(columns, {
+    id: "CHECK_YN",
+    field: "CHECK_YN",
+    minWidth: 30,
+    width: 30,
+    sortable: false,
+    cssClass: "align-center",
+    formatter: Slick.Formatters.CheckBox,
+    editor: Slick.Editors.CheckBox,
+    editorOptions: {
+      valueChecked: "Y",
+      valueUnChecked: "N"
+    }
+  });
   $NC.setGridColumn(columns, {
     id: "ORDER_TYPE_NM",
     field: "ORDER_TYPE_NM",
@@ -2924,6 +2942,41 @@ function onSaveErrorT3OrderDiv(ajaxData) {
   $NC.onError(ajaxData);
 }
 
+
+// 0519-gb
+function grdT3MasterOnHeaderClick(e, args) {
+
+  G_GRDT3MASTER.view.getCanvasNode().focus();
+
+  if (args.column.id == "CHECK_YN") {
+
+    if ($(e.target).is(":checkbox")) {
+
+      if (G_GRDT3MASTER.data.getLength() == 0) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
+
+      var checkVal = $(e.target).is(":checked") ? "Y" : "N";
+      var rowCount = G_GRDT3MASTER.data.getLength();
+      var rowData;
+      G_GRDT3MASTER.data.beginUpdate();
+      for ( var row = 0; row < rowCount; row++) {
+        rowData = G_GRDT3MASTER.data.getItem(row);
+        if (rowData.CHECK_YN !== checkVal) {
+          rowData.CHECK_YN = checkVal;
+          G_GRDT3MASTER.data.updateItem(rowData.id, rowData);
+        }
+      }
+      G_GRDT3MASTER.data.endUpdate();
+
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }
+  }
+}
+//0519 - gb
 
 function grdT3DetailOnHeaderClick(e, args) {
 
