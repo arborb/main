@@ -406,7 +406,8 @@ function onScan(scanVal, flag) {
       });
 
       G_GRDMASTER.queryId = "LOM7010E.RS_MASTER";
-      $NC.serviceCall("/LOM7010E/getDataSet.do", $NC.getGridParams(G_GRDMASTER), onGetMaster, onError);
+      $NC.serviceCall("/LOM7010E/getDataSet.do", 
+        $NC.getGridParams(G_GRDMASTER), onGetMaster, onError, null, 'LOM7010E_RS_MASTER');
 
       setFocusScan();
     }
@@ -705,7 +706,8 @@ function _Inquiry() {
   });
 
   G_GRDMASTER.queryId = "LOM7010E.RS_MASTER";
-  $NC.serviceCall("/LOM7010E/getDataSet.do", $NC.getGridParams(G_GRDMASTER), onGetMaster, onError);
+  $NC.serviceCall("/LOM7010E/getDataSet.do", 
+    $NC.getGridParams(G_GRDMASTER), onGetMaster, onError, null, 'LOM7010E_RS_MASTER');
 }
 
 /**
@@ -765,7 +767,7 @@ function _Save(ITEM_QTY, procType) {
         P_PROC_TYPE: procType,
         P_USER_ID: $NC.G_USERINFO.USER_ID
       })
-    }, onSave, onError);
+    }, onSave, onError, null, 'LOM7010E_SAVE1');
   } else if (procType === "2") {
     // 카운트시 한건씩 저장
     $NC.serviceCall("/LOM7010E/callScanBoxComplete.do", {
@@ -781,7 +783,7 @@ function _Save(ITEM_QTY, procType) {
         P_PROC_TYPE: procType,
         P_USER_ID: $NC.G_USERINFO.USER_ID
       })
-    }, onSave, onError);
+    }, onSave, onError, null, 'LOM7010E_SAVE2');
   }
 
 }
@@ -1436,6 +1438,7 @@ function onSave(ajaxData) {
   _Cancel();
   
   setFocusScan();
+  $NC.showMessage('박스 완료했습니다.');
 }
 
 /**
