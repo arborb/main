@@ -87,6 +87,10 @@
             <input type="text" id="dtpQHas_Date1" type="hidden" style="width: 80px;"  disabled="disabled"/>
              
             </td>
+            <td>
+              <div id="lblQScan" class="ui-lbl-condition">지시서바코드</div>
+              <input class="ui-edt-key" type="text" id="edtQScan" style="width: 200px;" disabled="disabled"/>
+             </td>
             <td style="width: 100%; text-align: right; padding-right: 20px;">
               <div style="display: inline-block; line-height: 20px;">
                 <!-- <div id="btnShip" class="ui-btn-wrapper" style="width: 85px; font-size: 18px;position: absolute;right: 1px;padding: 3px;top: 3px;color: #fff;background: #72AAD3;border: 1px solid #306D9A;">취소처리</div> -->
@@ -109,25 +113,25 @@
     <table>
     <tr>
       <td>
-        <div style="width: 800px; height: 68px; background-color: #72aad3;">
+        <div style="width: 500px; height: 68px; background-color: #72aad3;">
           <div class="ui-lbl-wrapper" style="max-width: 65px;">
             <div class="ui-lbl-normal scan">SCAN</div>
           </div>
           <div class="ui-ctnr-wrapper"  style="margin-left: 35px" >
-            <input class="ui-edt-key scan ui-edt-keydown" type="text" id="edtScan" style="width: 650px"/>
+            <input  class="ui-edt-key scan ui-edt-keydown" type="text" id="edtScan" style="width: 370px;ime-mode:disabled"/>
           </div>
         </div>
         <div class="ui-gbox-title large" style="margin-left: 0px " >대상여부</div>
-          <div class="ui-gbox-content" style="width: 798px;height: 250px;margin-left: 0px">
-            <input class="ui-edt-display boxno" type="text" id="edtMessage" disabled="disabled" style="width: 798px;height: 250px" />
+          <div class="ui-gbox-content" style="width: 498px;height: 115px;margin-left: 0px">
+            <input class="ui-edt-display boxno" type="text" id="edtMessage" disabled="disabled" style="width: 498px;height: 115px" />
           </div>
           <div class="ui-gbox-title large"style="margin-left: 0px" >합포장로케이션</div>
-            <div class="ui-gbox-content" style="width: 798px;height: 250px; margin-left: 0px">
-              <input class="ui-edt-display boxno" type="text" id="edtLocation_Cd" disabled="disabled" style="width: 798px;height: 250px" />
+            <div class="ui-gbox-content" style="width: 498px;height: 115px; margin-left: 0px">
+              <input class="ui-edt-display boxno" type="text" id="edtLocation_Cd" disabled="disabled" style="width: 498px;height: 115px" />
             </div>
        </td>
        <td> 
-          <table style="width: 806px;height: 50px;margin-top: -301px" >
+          <table style="width: 806px;height: 50px;margin-top: -33px" >
      <tr>
        <td colspan="2">
          <div class="ui-gbox-title large12" >합포장주문 상세내역</div>
@@ -167,7 +171,7 @@
           </tr>
           <tr>
             <td>
-              <div id="lblHas_No" class="ui-lbl-normal large1 " style="width: 145px;">출고번호</div>
+              <div id="lblHas_No" class="ui-lbl-normal large1 " style="width: 145px;">합포장번호</div>
             </td>
             <td style="padding-left: 52px;">
               <input class="ui-edt-display normal1" type="text" id="edtHas_No" disabled="disabled" />
