@@ -26,7 +26,6 @@
   <!-- Application Loggers -->
   <logger name="nexos" additivity="false">
     <level value="DEBUG" />
-    <appender-ref ref="WMS-FILE" />
     <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
@@ -58,62 +57,62 @@
   -->
   <logger name="java.sql" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
   <logger name="java.sql.Connection" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
   <logger name="java.sql.Statement" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
   <logger name="java.sql.PreparedStatement" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
   <logger name="java.sql.ResultSet" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
   <logger name="com.ibatis" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
   <logger name="com.ibatis.common.jdbc.SimpleDataSource" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
   <logger name="com.ibatis.common.jdbc.ScriptRunner" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
   <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
   <logger name="com.mchange.v2" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
   <logger name="net.sf.jasperreports" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
   <logger name="org.apache" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
   <!-- 
@@ -132,12 +131,12 @@
 
   <logger name="org.quartz" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </logger>
 
   <!-- Root Logger -->
   <root>
     <level value="DEBUG" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="WMS-CONSOLE" />
   </root>
 </log4j:configuration>
