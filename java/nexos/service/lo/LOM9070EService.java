@@ -54,7 +54,7 @@ public class LOM9070EService {
    * @return
    * @throws Exception
    */
-  public String callWbProc1(String queryId, Map<String, Object> params) throws Exception {
+  public String callWbProc(String queryId, Map<String, Object> params) throws Exception {
 
     StringBuffer sbResult = new StringBuffer();
     TransactionStatus ts = transactionManager.getTransaction(new DefaultTransactionDefinition());
@@ -82,42 +82,6 @@ public class LOM9070EService {
   }
   
 
-  
-
-  /**
-   * 출고 취소처리 SP 호출
-   * 
-   * @param params
-   * @return
-   * @throws Exception
-   */
-  public String callWbProc2(String queryId, Map<String, Object> params) throws Exception {
-
-    StringBuffer sbResult = new StringBuffer();
-    TransactionStatus ts = transactionManager.getTransaction(new DefaultTransactionDefinition());
-
-    try {
-      HashMap<String, Object> mapResult = common.callSP(queryId, params);
-      String oMsg = (String)mapResult.get(Consts.PK_O_MSG);
-
-      // 오류면 Rollback
-      if (!Consts.T.equals(oMsg)) {
-        transactionManager.rollback(ts);
-        sbResult.append(oMsg);
-        sbResult.append(Consts.CRLF);
-      } else if (Consts.T.equals(oMsg)) {
-        transactionManager.commit(ts);
-        sbResult.append(Consts.T);
-      }
-    } catch (Exception e) {
-      // SP 내에서 오류가 아니면 Exit
-      transactionManager.rollback(ts);
-      throw new RuntimeException(e.getMessage());
-    }
-
-    return sbResult.toString();
-  }
-  
 
   /**
    * SP 실행 후 처리 결과를 Map 형태로 Return
