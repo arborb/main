@@ -308,6 +308,17 @@
   </procedure>
   <!-- [E] - RS_LABEL_LOM06 -->
 
+  <!-- [S] - RS_LABEL_LOM_LABEL -->
+  <parameterMap id="paramRS_LABEL_LOM_LABEL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM_LABEL" parameterMap="paramRS_LABEL_LOM_LABEL" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM_LABEL(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM_LABEL -->
 
   <!-- [S] - RS_LABEL_PALLET01 -->
   <parameterMap id="paramRS_LABEL_PALLET01" class="java.util.Map">
@@ -1302,25 +1313,4 @@
   </procedure>
   <!-- [E] - RS_PAPER_LOM07 -->
 
-  <!-- [S] - RS_LABEL_CMPICKNO -->
-  <parameterMap id="paramRS_LABEL_CMPICKNO" class="java.util.Map">
-    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
-    <parameter property="P_CENTER_CD"               mode="IN" />
-  </parameterMap>
-  <procedure id="RS_LABEL_CMPICKNO" parameterMap="paramRS_LABEL_CMPICKNO" resultClass="java.util.HashMap">
-    { ? = call WR.RS_LABEL_CMPICKNO(?) }
-  </procedure>
-  <!-- [E] - RS_LABEL_CMPICKNO -->
-  
-  <!-- [S] - RS_LABEL_LOM_LABEL -->
-  <parameterMap id="paramRS_LABEL_LOM_LABEL" class="java.util.Map">
-    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
-    <parameter property="P_CENTER_CD"               mode="IN" />
-    <parameter property="P_BU_CD"                   mode="IN" />
-    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
-  </parameterMap>
-  <procedure id="RS_LABEL_LOM_LABEL" parameterMap="paramRS_LABEL_LOM_LABEL" resultClass="java.util.HashMap">
-    { ? = call WR.RS_LABEL_LOM_LABEL(?, ?, ?) }
-  </procedure>
-  <!-- [E] - RS_LABEL_LOM_LABEL -->  
 </sqlMap>

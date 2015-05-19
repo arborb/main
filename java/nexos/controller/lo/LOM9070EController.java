@@ -44,8 +44,8 @@ public class LOM9070EController extends CommonController {
    * 
    * @param params 조회조건
    */
-  @RequestMapping(value = "/callWbProc1.do", method = RequestMethod.POST)
-  public ResponseEntity<String> callWbProc1(HttpServletRequest request,
+  @RequestMapping(value = "/callWbProc.do", method = RequestMethod.POST)
+  public ResponseEntity<String> callLoCancel(HttpServletRequest request,
     @RequestParam(Consts.PK_QUERY_ID) String queryId, @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
@@ -58,34 +58,7 @@ public class LOM9070EController extends CommonController {
     }
 
     try {
-      result = getResponseEntity(request, service.callWbProc1(queryId, params));
-    } catch (Exception e) {
-      result = getResponseEntityError(request, e);
-    }
-
-    return result;
-  }
-  
-  /**
-   * SP 처리 - 출고 취소처리
-   * 
-   * @param params 조회조건
-   */
-  @RequestMapping(value = "/callWbProc2.do", method = RequestMethod.POST)
-  public ResponseEntity<String> callWbProc2(HttpServletRequest request,
-    @RequestParam(Consts.PK_QUERY_ID) String queryId, @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
-
-    ResponseEntity<String> result = null;
-
-    Map<String, Object> params = getParameter(queryParams);
-    String oMsg = getResultMessage(params);
-    if (!Consts.OK.equals(oMsg)) {
-      result = getResponseEntityError(request, oMsg);
-      return result;
-    }
-
-    try {
-      result = getResponseEntity(request, service.callWbProc2(queryId, params));
+      result = getResponseEntity(request, service.callWbProc(queryId, params));
     } catch (Exception e) {
       result = getResponseEntityError(request, e);
     }
@@ -122,7 +95,6 @@ public class LOM9070EController extends CommonController {
   }
 
 
-  
   
   /**
    * 내역 조회

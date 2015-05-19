@@ -187,29 +187,7 @@ public class LOM9110EController extends CommonController {
       return result;
     }
     
-    @RequestMapping(value = "/callProc_Bw.do", method = RequestMethod.POST)
-    public ResponseEntity<String> callProc_Bw(HttpServletRequest request,
-        @RequestParam(Consts.PK_DS_MASTER) String masterDS, @RequestParam(Consts.PK_USER_ID) String user_Id) {
-
-      ResponseEntity<String> result = null;
-
-      // DataSet Map에 추가
-      Map<String, Object> params = getDataSet(masterDS, Consts.PK_DS_MASTER);
-      String oMsg = getResultMessage(params);
-      if (!Consts.OK.equals(oMsg)) {
-        result = getResponseEntityError(request, oMsg);
-        return result;
-      }
-      params.put(Consts.PK_USER_ID, user_Id);
-
-      try {
-        result = getResponseEntity(request, service.callProc_Bw(params));
-      } catch (Exception e) {
-        result = getResponseEntityError(request, e);
-      }
-
-      return result;
-  }
+  
   
 
 }

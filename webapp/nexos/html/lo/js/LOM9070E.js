@@ -8,9 +8,7 @@ function _Initialize() {
     // 입출고서브구분
     INOUT_SUB_CD1: "DM",
     INOUT_SUB_CD2: "",
-    SCAN_CD: "",
-    INQUIRY_DIV: "",
-    BARCD_DATA_DIV: "-"
+    SCAN_CD : ""
   });
 
   $NC.G_JWINDOW.set({
@@ -50,7 +48,7 @@ function _Initialize() {
 
   // 조회조건 - 출고예정일자 달력이미지 설정
   $NC.setInitDatePicker("#dtpQHas_Date");
-  // $NC.setInitDatePicker1("#dtpQHas_Date1");
+  //$NC.setInitDatePicker1("#dtpQHas_Date1");
 
   $NC.setEnable("#dtpQHas_Date1", false);
   $NC.setEnable("#btnProcBw", false);
@@ -101,21 +99,25 @@ function _OnResize(parent) {
   var clientWidth = parent.width() - $NC.G_LAYOUT.border1;
   var clientHeight = parent.height() - $NC.G_OFFSET.nonClientHeight;
 
-  // var masterViewWidth = Math.max($NC.getTruncVal(clientWidth * 0.35), 500);
-  // var detailViewWidth = clientWidth - masterViewWidth - $NC.G_LAYOUT.margin1 - $NC.G_LAYOUT.border1;
+ // var masterViewWidth = Math.max($NC.getTruncVal(clientWidth * 0.35), 500);
+  //var detailViewWidth = clientWidth - masterViewWidth - $NC.G_LAYOUT.margin1 - $NC.G_LAYOUT.border1;
 
   $NC.resizeContainer("#divCenterView", clientWidth, clientHeight);
-  // $NC.resizeContainer("#divDetailView", detailViewWidth, clientHeight);
-  // $NC.resizeContainer("#divMasterView", masterViewWidth, clientHeight);
+  //$NC.resizeContainer("#divDetailView", detailViewWidth, clientHeight);
+  //$NC.resizeContainer("#divMasterView", masterViewWidth, clientHeight);
 
   // 박스번호 사이즈를 적당히 조정
-  // var resizeVal = Math.max(Math.min($NC.getTruncVal((clientHeight - 400) / 20) * 10, 100), 0);
-  // var resizeView = $("#edtLocation_Cd");
-
+ // var resizeVal = Math.max(Math.min($NC.getTruncVal((clientHeight - 400) / 20) * 10, 100), 0);
+  //var resizeView = $("#edtLocation_Cd");
+  
   /**
-   * if (resizeVal != resizeView.data("resizeVal")) { resizeView.css({ "height": 90 + resizeVal, "font-size": 2 +
-   * resizeVal }).data("resizeVal", resizeVal); }
-   */
+  if (resizeVal != resizeView.data("resizeVal")) {
+    resizeView.css({
+      "height": 90 + resizeVal,
+      "font-size": 2 + resizeVal
+    }).data("resizeVal", resizeVal);
+  }
+  */
   // 마스터 정보 표시 라인수 계산, 현재 Max: 6, Min: 2
   resizeVal = $NC.G_OFFSET.masterInfoMaxLine;
   if (clientHeight < 600) {
@@ -137,8 +139,8 @@ function _OnResize(parent) {
   // }
 
   // Grid 높이 조정
-  // $NC.resizeGrid("#grdMaster", detailViewWidth, clientHeight
-  // - ($NC.G_LAYOUT.header + $NC.G_LAYOUT.border1 + $NC.G_OFFSET.subConditionHeight));
+  //$NC.resizeGrid("#grdMaster", detailViewWidth, clientHeight
+  //    - ($NC.G_LAYOUT.header + $NC.G_LAYOUT.border1 + $NC.G_OFFSET.subConditionHeight));
 }
 
 /**
@@ -149,26 +151,21 @@ function _OnResize(parent) {
  */
 
 function _OnInputKeyUp(e, view) {
-  // onChangingCondition();
 
-  // grdMasterInitialize();
   var id = view.prop("id").substr(3).toUpperCase();
 
   switch (id) {
   case "SCAN":
-    // $NC.clearGridData(G_GRDMASTER);
-    // var scanVal = "";
-    // $NC.G_VAR.SCAN_CD = "";
-    // $NC.G_VAR.INQUIRY_DIV = "";
+
+    var scanVal = "";
+    
+    
+
     // Enter Key
     if (e.keyCode == 13) {
-
-      var scanVal = "";
-      $NC.G_VAR.SCAN_CD = "";
-      $NC.G_VAR.INQUIRY_DIV = "";
       $NC.setValue("#edtMessage");
       scanVal = $NC.getValue(view);
-
+      
       scanVal = scanVal.toUpperCase();
       if ($NC.isNull(scanVal)) {
         e.stopImmediatePropagation();
@@ -197,35 +194,6 @@ function _OnInputKeyUp(e, view) {
   }
 }
 
-/*
-function  Chk_Text(scanVal){
-  var scan = scanVal;
-  var evt = window.event;
-  if(evt.keyCode >47 && evt.keyCode <58){
-  if(evt.keyCode == 48){
-  if(document.form.value == scan )evt.returnValue=false;
-  else return;
-  }else return;
-  }else{
-  evt.returnValue=false;
-  }
-  }
-  */
-/*
-function Chk_Text(scanVal ,re){
-  var scan = scanVal;
-  var ChkText=/(^[a-zA-Z0-9\-_]+$)/;
-
-  if(ChkText.test(scan)==false){
-          alert("'"+scanVal + "' 는 사용이 불가능 합니다. \n 영문문자나 숫자 아이디만 사용이 가능합니다.");
-          setFocusScan();
-          onChangingCondition();
-     
-          return false;
-    }
-  
-}
-*/
 /**
  * Input, Select Change Event 처리
  */
@@ -294,7 +262,7 @@ function onChangingCondition() {
 
   $NC.setValue("#edtQBoxY");
   $NC.setValue("#edtQBoxN");
-
+  
   // Row 데이터로 에디터 세팅
   $NC.setValue("#edtOrderer_Nm");
   $NC.setValue("#edtShipper_Nm");
@@ -311,19 +279,37 @@ function onChangingCondition() {
 /**
  * Inquiry Button Event - 메인 상단 조회 버튼 클릭시 호출 됨
  */
-function _Inquiry(Inquiry_Div) {
+function _Inquiry() {
 
+  var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  if ($NC.isNull(CENTER_CD)) {
+    alert("물류센터를 선택하십시오.");
+    $NC.setFocus("#cboQCenter_Cd");
+    return;
+  }
+  // var BU_CD = $NC.getValue("#edtQBu_Cd");
+  // if ($NC.isNull(BU_CD)) {
+  // alert("사업부 코드를 입력하십시오.");
+  // $NC.setFocus("#edtQBu_Cd");
+  // return;
+  // }
+  var HAS_DATE = $NC.getValue("#dtpQHas_Date");
+  if ($NC.isNull(HAS_DATE)) {
+    alert("출고예정 검색 시작일자를 입력하십시오.");
+    $NC.setFocus("#dtpQHas_Date");
+    return;
+  }
 
-  var INQUIRY_DIV = Inquiry_Div;
 
   // 조회시 전역 변수 값 초기화
   $NC.setInitGridVar(G_GRDMASTER);
 
   // 파라메터 세팅
   G_GRDMASTER.queryParams = $NC.getParams({
-    P_SCAN_INFO: $NC.getValue("#edtScan"),
-    P_USER_ID: $NC.G_USERINFO.USER_ID,
-    P_INQUIRY_DIV: INQUIRY_DIV,
+    P_CENTER_CD: CENTER_CD,
+    P_HAS_DATE: HAS_DATE,
+    P_WB_NO: $NC.getValue("#edtScan"),
+    P_USER_ID: $NC.G_USERINFO.USER_ID 
   });
 
   // 데이터 조회
@@ -526,10 +512,9 @@ function setItemInfoValue(rowData) {
   $NC.setValue("#edtLocation_Cd", rowData.LOCATION_CD);
   $NC.setValue("#edtShipper_Addr", rowData.SHIPPER_ADDR);
   $NC.setValue("#edtShip_Type", rowData.SHIP_TYPE_D);
-  $NC.setValue("#edtQScan", $NC.G_VAR.SCAN_CD);
 
-  // $NC.setValue("#edtQBoxY", rowData.Y_BOX_CNT);
-  // $NC.setValue("#edtQBoxN", rowData.N_BOX_CNT);
+  //$NC.setValue("#edtQBoxY", rowData.Y_BOX_CNT);
+  //$NC.setValue("#edtQBoxN", rowData.N_BOX_CNT);
 
   if (rowData.WB_CHK_YN && rowData.SHIP_TYPE !== "1") {
     alert("[" + rowData.SHIP_TYPE_D + "] 상품입니다.\n\n 포장 후 사무실로 전달바랍니다.");
@@ -545,52 +530,31 @@ function onWbUpdateProc() {
     $NC.setFocus("#cboQCenter_Cd");
     return;
   }
+  // var BU_CD = $NC.getValue("#edtQBu_Cd");
+  // if ($NC.isNull(BU_CD)) {
+  // alert("사업부 코드를 입력하십시오.");
+  // $NC.setFocus("#edtQBu_Cd");
+  // return;
+  // }
+
+  var HAS_DATE = $NC.getValue("#dtpQHas_Date");
 
   var PARAM_WB_NO = $NC.getValue("#edtScan");
-  $NC.G_VAR.SCAN_CD = $NC.getValue("#edtScan");
   if ($NC.isNull(PARAM_WB_NO)) {
     alert("송장번호를 스캔하십시오.");
     $NC.setFocus("#edtScan");
     return;
   }
-  
-  // 바코드 파싱
- 
-  var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
-  var BU_CD = $NC.getValue("#edtQBu_Cd");
 
-  var ChkText = /(^[a-zA-Z0-9\-_]+$)/;
-
-  if (ChkText.test(PARAM_WB_NO) == false) {
-    alert("'" + PARAM_WB_NO + "' 는 사용이 불가능 합니다. \n 영문문자나 숫자 만 입력 가능합니다.");
-    setFocusScan();
-    onChangingCondition();
-
-    return;
-  }
-
-  if (PARAM_WB_NO.substr(0, 2) == "OP") {
-    $NC.serviceCall("/LOM9070E/callWbProc1.do", {
-      P_QUERY_ID: "LO_HAS_CALL_PROC_T1",
-      P_QUERY_PARAMS: $NC.getParams({
-        P_CENTER_CD: CENTER_CD,
-        P_BU_CD: BU_CD,
-        P_SCAN_INFO: PARAM_WB_NO,
-        P_USER_ID: $NC.G_USERINFO.USER_ID
-      })
-    }, onExecSP1, onSaveError);
-
-  } else {
-    $NC.serviceCall("/LOM9070E/callWbProc1.do", {
-      P_QUERY_ID: "LO_HAS_CALL_PROC_T2",
-      P_QUERY_PARAMS: $NC.getParams({
-        P_CENTER_CD: CENTER_CD,
-        P_BU_CD: BU_CD,
-        P_SCAN_INFO: PARAM_WB_NO,
-        P_USER_ID: $NC.G_USERINFO.USER_ID
-      })
-    }, onExecSP2, onSaveError);
-  }
+  $NC.serviceCall("/LOM9070E/callWbProc.do", {
+    P_QUERY_ID: "LO_HAS_CHK_PROC",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CENTER_CD: CENTER_CD,
+      P_HAS_DATE: HAS_DATE,// $NC.setInitDatePicker(),
+      P_WB_NO: PARAM_WB_NO,
+      P_USER_ID: $NC.G_USERINFO.USER_ID
+    })
+  }, onExecSP, onSaveError);
 }
 
 /**
@@ -624,6 +588,7 @@ function onGetMaster(ajaxData) {
   $NC.G_VAR.buttons._save = "0";
   $NC.G_VAR.buttons._cancel = "0";
   $NC.G_VAR.buttons._delete = "0";
+
 
   doPrint1();
 }
@@ -664,110 +629,49 @@ function setFocusScan() {
   $NC.setValue("#edtScan");
 }
 
-function onExecSP1(ajaxData) {
+function onExecSP(ajaxData) {
 
   var resultData = $NC.toArray(ajaxData);
+  
   var TTTT = resultData.RESULT_DATA;
-
-  var cl2 = TTTT.substr(0, 1);
-  if (cl2 == 2) {
+   
+  var cl2= TTTT.substr(0,1);
+  if (cl2 == 2 ) {
     $NC.setValue("#edtMessage", '비대상');
-    $("#edtMessage").css("color", "red").text();
-
-    $NC.G_VAR.INQUIRY_DIV = '3';
-
     onChangingCondition();
-    _Inquiry($NC.G_VAR.INQUIRY_DIV);
-
-    // setFocusScan();
+    setFocusScan();
     return;
   } else if (cl2 == 3) {
     $NC.setValue("#edtMessage", '취소주문');
     onChangingCondition();
-
-    doPrint1();
     setFocusScan();
     return;
-
-  } else if (cl2 == 4) {
+    
+  
+  }else if (cl2 == 4) {
     alert(resultData.RESULT_DATA);
     onChangingCondition();
     setFocusScan();
     return;
-
-  } else if (cl2 == 1) {
+  
+  } else if (cl2 == 1){
     $NC.setValue("#edtMessage", '대상');
-    $("#edtMessage").css("color", "black").text();
-    if (!$NC.isNull(cl2)) {
-      if (cl2 !== "1" && cl2 !== "2" && cl2 !== "3") {
-        onChangingCondition();
-        alert(resultData.RESULT_DATA);
-        return;
-      }
+ 
+  if (!$NC.isNull(cl2)) {
+    if (cl2 !== "1" && cl2 !== "2" && cl2 !== "3") {
+      onChangingCondition();
+      alert(resultData.RESULT_DATA);
+      return;
     }
-    $NC.G_VAR.INQUIRY_DIV = '1';
-    _Inquiry($NC.G_VAR.INQUIRY_DIV);
+  } 
+  
+  _Inquiry();
 
-  } else {
-    alert(resultData.RESULT_DATA);
-    setFocusScan();
-    return;
   }
+
 
 }
 
-
-function onExecSP2(ajaxData) {
-
-  var resultData = $NC.toArray(ajaxData);
-  var TTTT = resultData.RESULT_DATA;
-
-  var cl2 = TTTT.substr(0, 1);
-  if (cl2 == 2) {
-    $NC.setValue("#edtMessage", '비대상');
-    $("#edtMessage").css("color", "red").text();
-
-    $NC.G_VAR.INQUIRY_DIV = '4';
-
-    onChangingCondition();
-    _Inquiry($NC.G_VAR.INQUIRY_DIV);
-
-    // setFocusScan();
-    return;
-  } else if (cl2 == 3) {
-    $NC.setValue("#edtMessage", '취소주문');
-    onChangingCondition();
-
-    doPrint1();
-    setFocusScan();
-    return;
-
-  } else if (cl2 == 4) {
-    alert(resultData.RESULT_DATA);
-    onChangingCondition();
-    setFocusScan();
-    return;
-
-  } else if (cl2 == 1) {
-    $NC.setValue("#edtMessage", '대상');
-    $("#edtMessage").css("color", "black").text();
-    if (!$NC.isNull(cl2)) {
-      if (cl2 !== "1" && cl2 !== "2" && cl2 !== "3") {
-        onChangingCondition();
-        alert(resultData.RESULT_DATA);
-        return;
-      }
-    }
-    $NC.G_VAR.INQUIRY_DIV = '2';
-    _Inquiry($NC.G_VAR.INQUIRY_DIV);
-
-  } else {
-    alert(resultData.RESULT_DATA);
-    setFocusScan();
-    return;
-  }
-
-}
 /*
 function onBtnShip(e) {
 
@@ -843,10 +747,9 @@ function onSaveError(ajaxData) {
 function doPrint1() {
 
   var rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
-  if ($NC.G_VAR.INQUIRY_DIV == '1') {
 
     $NC.G_MAIN.silentPrint({
-
+      
       printParams: [{
         reportDoc: "lo/LABEL_LOM12",
         queryId: "WR.LABEL_LOM12",
@@ -866,9 +769,5 @@ function doPrint1() {
       }
     });
 
-  } else {
-    setFocusScan();
-  }
-
-  // $NC.G_MAIN.silentPrint(printOptions);
+ // $NC.G_MAIN.silentPrint(printOptions);
 }

@@ -46,7 +46,6 @@
         ,M1.SHIPPER_NM
         ,L1.OUTBOUND_BATCH                              AS OUTBOUND_BATCH
         ,L1.BU_NO
-        ,NULL AS BU_CD
     FROM (
           SELECT M1.CENTER_CD         ,M1.BU_CD           ,M1.OUTBOUND_DATE
                 ,M1.OUTBOUND_NO       ,M1.LOCATION_CD     ,E1.ZONE_CD
@@ -236,7 +235,6 @@
 	<field name="SHIPPER_NM" class="java.lang.String"/>
 	<field name="OUTBOUND_BATCH" class="java.lang.String"/>
 	<field name="BU_NO" class="java.lang.String"/>
-	<field name="BU_CD" class="java.lang.String"/>
 	<variable name="SUM_CONFIRM_QTY" class="java.math.BigDecimal" resetType="Group" resetGroup="GRP_OUTBOUND_NO" calculation="Sum">
 		<variableExpression><![CDATA[$F{ENTRY_QTY}]]></variableExpression>
 	</variable>
@@ -389,6 +387,20 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{INOUT_CD_F}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement key="staticText-24" x="202" y="73" width="86" height="39" uuid="7ea1a59d-6d12-4bfc-b759-0b29421c5b7e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="14" isBold="true" isUnderline="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[박스번호:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-8" x="290" y="73" width="99" height="39" uuid="298de771-2fba-4617-8bc8-c471c0081e16"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="굴림체" size="14" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PACKING_BATCH}]]></textFieldExpression>
+			</textField>
 			<componentElement>
 				<reportElement positionType="FixRelativeToBottom" x="381" y="0" width="184" height="97" printWhenGroupChanges="GRP_OUTBOUND_NO" uuid="b28e701a-3310-4ea6-bb61-72e89c87d040"/>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="1" barHeight="80">
@@ -418,35 +430,19 @@
 				<textFieldExpression><![CDATA[$F{RANK_Q}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-24" x="202" y="51" width="72" height="35" uuid="43f7e46a-0ae4-46e8-baac-8e3538ba35f9"/>
+				<reportElement key="staticText-24" x="202" y="51" width="72" height="20" uuid="43f7e46a-0ae4-46e8-baac-8e3538ba35f9"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="14" isBold="true" isUnderline="false" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[출고차수:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-8" x="290" y="54" width="99" height="30" uuid="193e7d68-1624-43be-bc12-b3c8a6c8ce6b"/>
+				<reportElement key="textField-8" x="290" y="54" width="99" height="17" uuid="193e7d68-1624-43be-bc12-b3c8a6c8ce6b"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="굴림체" size="12" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{OUTBOUND_BATCH}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement key="staticText-24" x="248" y="31" width="72" height="12" uuid="aa9060fe-1def-4e36-bda1-f3e722e3bf91"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="굴림체" size="8" isBold="true" isUnderline="false" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[(혼합)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-24" mode="Opaque" x="202" y="86" width="72" height="26" forecolor="#FFFFFF" backcolor="#666666" uuid="06768276-d73b-47ff-8dd5-5c135910e701">
-					<printWhenExpression><![CDATA[($F{BU_CD}.toString().equals("6000"))]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="휴먼둥근헤드라인" size="16" isBold="true" isUnderline="false" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[3PL]]></text>
-			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>

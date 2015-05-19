@@ -23,16 +23,16 @@
     // SELECT SQLMAP
     //================================================================================================================
   -->
-
   <!-- [S] - RS_MASTER -->
   <parameterMap id="paramRS_MASTER" class="java.util.Map">
     <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
-    <parameter property="P_SCAN_INFO"               mode="IN" />
-    <parameter property="P_USER_ID"                mode="IN" />
-    <parameter property="P_INQUIRY_DIV"                   mode="IN" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_WB_NO"                   mode="IN" />
+    <parameter property="P_USER_ID"                   mode="IN" />
   </parameterMap>
   <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-    { ? = call LOM9070E.RS_MASTER(?, ?, ?) }
+    { ? = call LOM9070E.RS_MASTER(?, ?, ?, ?) }
   </procedure>
   
   <!-- [E] - RS_MASTER -->
