@@ -265,5 +265,28 @@
     </procedure>
   <!-- [E] - CM_OWNBRAND_CRE3 -->
   
+  <!-- [S] - CM_PICKNO_YN -->
+  <parameterMap id="paramCM_PICKNO_YN" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_PICK_BOX_NO"             mode="IN" />
+    <parameter property="P_BOX_BARCODE"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_PICKNO_YN" parameterMap="paramCM_PICKNO_YN" resultClass="java.util.HashMap">
+      { call CM_PICKNO_YN(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_PICKNO_YN -->
+
+
+  <!-- [S] - CM_CODE_OUTPROC_SYNC -->
+  <parameterMap id="paramCM_CODE_OUTPROC_SYNC" class="java.util.Map">
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_CODE_OUTPROC_SYNC" parameterMap="paramCM_CODE_OUTPROC_SYNC" resultClass="java.util.HashMap">
+      { call CM_CODE_OUTPROC_SYNC(?, ?) }
+    </procedure>
+  <!-- [E] - CM_CODE_OUTPROC_SYNC -->
   
 </sqlMap>

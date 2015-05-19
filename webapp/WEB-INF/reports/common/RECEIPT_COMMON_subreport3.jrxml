@@ -1,0 +1,1149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RECEIPT_COMMON_subreport3" pageWidth="595" pageHeight="400" whenNoDataType="AllSectionsNoDetail" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="0" whenResourceMissingType="Empty" uuid="2678932b-dbf1-4a60-9920-e2681f08b0c7">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_CENTER_CD" class="java.lang.String"/>
+	<parameter name="P_BU_CD" class="java.lang.String"/>
+	<parameter name="P_INOUT_DATE" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PROCESS_CD" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT L2.INOUT_NO || LPAD(L2.PAGE_NO, 4, '0') AS PAGE_NO, L2.INOUT_NO,L2.NO, T1.*
+      FROM (SELECT C1.NO
+                  ,L1.*
+                  ,TRUNC((C1.NO - 1) / 10) + 1 AS PAGE_NO
+              FROM (
+                    SELECT M1.OUTBOUND_NO   AS INOUT_NO
+                          ,COUNT(1)         AS LINE_CNT
+                      FROM LO020NM M1
+                           JOIN LO020ND M2 ON M2.CENTER_CD     = M1.CENTER_CD
+                                          AND M2.BU_CD         = M1.BU_CD
+                                          AND M2.OUTBOUND_DATE = M1.OUTBOUND_DATE
+                                          AND M2.OUTBOUND_NO   = M1.OUTBOUND_NO
+                     WHERE M1.CENTER_CD       = $P{P_CENTER_CD}
+                       AND M1.BU_CD           = $P{P_BU_CD}
+                       AND M1.OUTBOUND_DATE   = $P{P_INOUT_DATE}
+                       AND M1.OUTBOUND_NO    IN (SELECT CHECK_VALUE FROM CTCHECKVALUE)
+                       AND M1.OUTBOUND_STATE IN ('40')
+                       AND $P{P_PROCESS_CD} = 'LO'
+                     GROUP BY M1.OUTBOUND_NO
+                     UNION ALL
+                    SELECT M1.OUTBOUND_NO   AS INOUT_NO
+                          ,COUNT(1)         AS LINE_CNT
+                      FROM RO020NM M1
+                           JOIN RO020ND M2 ON M2.CENTER_CD     = M1.CENTER_CD
+                                          AND M2.BU_CD         = M1.BU_CD
+                                          AND M2.OUTBOUND_DATE = M1.OUTBOUND_DATE
+                                          AND M2.OUTBOUND_NO   = M1.OUTBOUND_NO
+                     WHERE M1.CENTER_CD       = $P{P_CENTER_CD}
+                       AND M1.BU_CD           = $P{P_BU_CD}
+                       AND M1.OUTBOUND_DATE   = $P{P_INOUT_DATE}
+                       AND M1.OUTBOUND_NO    IN (SELECT CHECK_VALUE FROM CTCHECKVALUE)
+                       AND M1.OUTBOUND_STATE IN ('40')
+                       AND $P{P_PROCESS_CD} = 'RO'
+                     GROUP BY M1.OUTBOUND_NO
+                     UNION ALL
+                    SELECT M1.INBOUND_NO    AS INOUT_NO
+                          ,COUNT(1)         AS LINE_CNT
+                      FROM LI020NM M1
+                           JOIN LI020ND M2 ON M2.CENTER_CD     = M1.CENTER_CD
+                                          AND M2.BU_CD         = M1.BU_CD
+                                          AND M2.INBOUND_DATE  = M1.INBOUND_DATE
+                                          AND M2.INBOUND_NO    = M1.INBOUND_NO
+                     WHERE M1.CENTER_CD       = $P{P_CENTER_CD}
+                       AND M1.BU_CD        = $P{P_BU_CD}
+                       AND M1.INBOUND_DATE    = $P{P_INOUT_DATE}
+                       AND M1.INBOUND_NO     IN (SELECT CHECK_VALUE FROM CTCHECKVALUE)
+                       AND M1.INBOUND_STATE  IN ('30','40', '50')
+                       AND $P{P_PROCESS_CD}      = 'LI'
+                     GROUP BY M1.INBOUND_NO
+                     UNION ALL
+                    SELECT M1.INBOUND_NO    AS INOUT_NO
+                          ,COUNT(1)         AS LINE_CNT
+                      FROM RI020NM M1
+                           JOIN RI020ND M2 ON M2.CENTER_CD     = M1.CENTER_CD
+                                          AND M2.BU_CD         = M1.BU_CD
+                                          AND M2.INBOUND_DATE  = M1.INBOUND_DATE
+                                          AND M2.INBOUND_NO    = M1.INBOUND_NO
+                     WHERE M1.CENTER_CD       = $P{P_CENTER_CD}
+                       AND M1.BU_CD           = $P{P_BU_CD}
+                       AND M1.INBOUND_DATE    = $P{P_INOUT_DATE}
+                       AND M1.INBOUND_NO     IN (SELECT CHECK_VALUE FROM CTCHECKVALUE  )
+                       AND M1.INBOUND_STATE  IN ('40', '50')
+                       AND $P{P_PROCESS_CD}     = 'RI'
+                     GROUP BY M1.INBOUND_NO
+                   ) L1
+                   JOIN CSNO C1 ON C1.NO <= L1.LINE_CNT + DECODE(MOD(L1.LINE_CNT, 10),0,0,(10 - MOD(L1.LINE_CNT, 10))
+                   )
+           ) L2
+      LEFT JOIN (
+                 SELECT ROW_NUMBER() OVER(PARTITION BY M2.CENTER_CD ,M2.BU_CD ,M2.OUTBOUND_DATE ,M2.OUTBOUND_NO  ORDER BY M2.LINE_NO)    AS LINE_NO
+                       ,B1.BU_FULL_NM                                 AS BU_FULL_NM
+                       ,D1.DELIVERY_FULL_NM                           AS DELIVERY_FULL_NM
+                       ,WF.D_TO_CHAR(M1.OUTBOUND_DATE)                AS INOUT_DATE
+                       ,M1.OUTBOUND_NO                                AS INOUT_NO
+                       ,WF.D_TO_CHAR(M2.BU_DATE)                      AS BU_DATE
+                       ,M2.BU_NO                                      AS BU_NO
+                       ,C3.CAR_NM                                     AS CAR_NO
+                       ,$P{P_PROCESS_CD}                              AS PROCESS_CD
+	           ,$P{P_PROCESS_CD}                              AS PROCESS_CD1
+                       ,M2.ITEM_CD                                    AS ITEM_CD
+                       ,T1.ITEM_NM                                    AS ITEM_NM
+                       ,M2.ITEM_LOT                                   AS ITEM_LOT
+                       ,WF.DSP_COMBO(M1.CENTER_CD ,C4.CENTER_NM)      AS CENTER_CD_F
+                       ,WF.GET_B_BOX(M2.CONFIRM_QTY ,T1.QTY_IN_BOX)   AS CONFIRM_BOX
+                       ,WF.GET_B_EA (M2.CONFIRM_QTY ,T1.QTY_IN_BOX)   AS CONFIRM_EA
+                       ,''                                            AS ITEM_STATE
+                       ,T1.QTY_IN_BOX                                 AS QTY_IN_BOX
+                       ,M2.CONFIRM_QTY                                AS CONFIRM_QTY
+                       ,M1.REMARK1                                    AS REMARK1_M
+                       ,M2.REMARK1                                    AS REMARK1_D
+                       ,M1.ENTRY_USER_ID                              AS USER_INFO
+                       ,WF.DSP_COMBO(M2.BRAND_CD ,C5.OWN_BRAND_NM)    AS BRAND_NM
+                       ,'' AS SHIPPER_NM
+                       ,'' AS TEL
+                       ,'' AS ADDR
+                   FROM LO020NM M1
+                        JOIN LO020ND    M2 ON M2.CENTER_CD     = M1.CENTER_CD
+                                          AND M2.BU_CD         = M1.BU_CD
+                                          AND M2.OUTBOUND_DATE = M1.OUTBOUND_DATE
+                                          AND M2.OUTBOUND_NO   = M1.OUTBOUND_NO
+                        JOIN CMBU       B1 ON B1.BU_CD         = M1.BU_CD
+                        JOIN CMDELIVERY D1 ON D1.CUST_CD       = M1.CUST_CD
+                                          AND D1.DELIVERY_CD   = M1.DELIVERY_CD
+                        JOIN CMITEM     T1 ON T1.BRAND_CD      = M2.BRAND_CD
+                                          AND T1.ITEM_CD       = M2.ITEM_CD
+                        JOIN CMCODE     C2 ON C2.CODE_CD       = M1.INOUT_CD
+                                          AND C2.CODE_GRP      = WF.GET_CODE_GRP('INOUT_CD')
+                        JOIN CMCAR      C3 ON C3.CAR_CD        = M2.CAR_CD
+                        JOIN CMCENTER   C4 ON C4.CENTER_CD     = M1.CENTER_CD
+                        JOIN CMOWNBRAND C5 ON C5.BU_CD         = M2.BU_CD
+                                          AND C5.OWN_BRAND_CD  = M2.BRAND_CD
+                  WHERE M1.CENTER_CD       = $P{P_CENTER_CD}
+                    AND M1.BU_CD           = $P{P_BU_CD}
+                    AND M1.OUTBOUND_DATE   = $P{P_INOUT_DATE}
+                    AND M1.OUTBOUND_NO     IN (SELECT CHECK_VALUE FROM CTCHECKVALUE)
+                    AND M1.OUTBOUND_STATE  IN ('40')
+                    AND $P{P_PROCESS_CD} = 'LO'
+                  UNION ALL
+                 SELECT ROW_NUMBER() OVER(PARTITION BY M2.CENTER_CD ,M2.BU_CD ,M2.OUTBOUND_DATE ,M2.OUTBOUND_NO  ORDER BY M2.LINE_NO)    AS LINE_NO
+                       ,B1.BU_FULL_NM                                 AS BU_FULL_NM
+                       ,''                                            AS DELIVERY_FULL_NM
+                       ,WF.D_TO_CHAR(M1.OUTBOUND_DATE)                AS INOUT_DATE
+                       ,M1.OUTBOUND_NO                                AS INOUT_NO
+                       ,WF.D_TO_CHAR(M2.BU_DATE)                      AS BU_DATE
+                       ,M2.BU_NO                                      AS BU_NO
+                       ,M1.CAR_NO                                     AS CAR_NO
+                       ,$P{P_PROCESS_CD}                              AS PROCESS_CD
+                       ,'RO'                              AS PROCESS_CD1
+                       ,M2.ITEM_CD                                    AS ITEM_CD
+                       ,T1.ITEM_NM                                    AS ITEM_NM
+                       ,M2.ITEM_LOT                                   AS ITEM_LOT
+                       ,WF.DSP_COMBO(M1.CENTER_CD ,C3.CENTER_NM)      AS CENTER_CD_F
+                       ,WF.GET_B_BOX(M2.CONFIRM_QTY ,T1.QTY_IN_BOX)   AS CONFIRM_BOX
+                       ,WF.GET_B_EA (M2.CONFIRM_QTY ,T1.QTY_IN_BOX)   AS CONFIRM_EA
+                       ,C4.CODE_NM                                    AS ITEM_STATE
+                       ,T1.QTY_IN_BOX                                 AS QTY_IN_BOX
+                       ,M2.CONFIRM_QTY                                AS CONFIRM_QTY
+                       ,M1.REMARK1                                    AS REMARK1_M
+                       ,WF.DSP_COMBO (M2.RETURN_DIV ,C5.CODE_NM)||':'||  M2.RETURN_COMMENT  AS REMARK1_D
+                       ,M1.ENTRY_USER_ID                              AS USER_INFO
+                       ,C6.OWN_BRAND_NM    AS BRAND_NM
+                       ,M3.SHIPPER_NM
+                       ,WF.GET_DECSTR(M3.SHIPPER_TEL) AS TEL
+                       ,WF.GET_DECSTR(M3.SHIPPER_ADDR_BASIC) || WF.GET_DECSTR(SHIPPER_ADDR_DETAIL) AS ADDR
+                   FROM RO020NM M1
+                        JOIN RO020ND    M2 ON M2.CENTER_CD     = M1.CENTER_CD
+                                          AND M2.BU_CD         = M1.BU_CD
+                                          AND M2.OUTBOUND_DATE = M1.OUTBOUND_DATE
+                                          AND M2.OUTBOUND_NO   = M1.OUTBOUND_NO
+                        JOIN RO020PM    M3 ON M3.CENTER_CD     = M1.CENTER_CD
+                                          AND M3.BU_CD         = M1.BU_CD
+                                          AND M3.OUTBOUND_DATE = M1.OUTBOUND_DATE
+                                          AND M3.OUTBOUND_NO   = M1.OUTBOUND_NO
+                        JOIN CMBU    B1 ON B1.BU_CD            = M1.BU_CD
+
+                        JOIN CMITEM     T1 ON T1.BRAND_CD      = M2.BRAND_CD
+                                          AND T1.ITEM_CD       = M2.ITEM_CD
+                        JOIN CMCODE     C2 ON C2.CODE_CD       = M1.INOUT_CD
+                                          AND C2.CODE_GRP      = WF.GET_CODE_GRP('INOUT_CD')
+                        JOIN CMCENTER   C3 ON C3.CENTER_CD     = M1.CENTER_CD
+                        JOIN CMCODE     C4 ON C4.CODE_CD       = M2.ITEM_STATE
+                                          AND C4.CODE_GRP      = WF.GET_CODE_GRP('ITEM_STATE')
+                   LEFT JOIN CMCODE  C5    ON C5.CODE_CD       = M2.RETURN_DIV
+                                          AND C5.CODE_GRP      = WF.GET_CODE_GRP('RETURN_DIV' ,'RO')
+                        JOIN CMOWNBRAND C6 ON C6.BU_CD         = M2.BU_CD
+                                          AND C6.OWN_BRAND_CD  = M2.BRAND_CD
+                  WHERE M1.CENTER_CD       = $P{P_CENTER_CD}
+                    AND M1.BU_CD           = $P{P_BU_CD}
+                    AND M1.OUTBOUND_DATE   = $P{P_INOUT_DATE}
+                    AND M1.OUTBOUND_NO     IN (SELECT CHECK_VALUE FROM CTCHECKVALUE)
+                    AND M1.OUTBOUND_STATE  IN ('40')
+                    AND $P{P_PROCESS_CD} = 'RO'
+                  UNION ALL
+                 SELECT ROW_NUMBER() OVER(PARTITION BY M2.CENTER_CD ,M2.BU_CD ,M2.INBOUND_DATE ,M2.INBOUND_NO  ORDER BY M2.LINE_NO)    AS LINE_NO
+                       ,B1.BU_FULL_NM                                 AS BU_FULL_NM
+                       ,D1.VENDOR_FULL_NM                             AS DELIVERY_FULL_NM
+                       ,WF.D_TO_CHAR(M1.INBOUND_DATE)                 AS INOUT_DATE
+                       ,M1.INBOUND_NO                                 AS INOUT_NO
+                       ,WF.D_TO_CHAR(M2.BU_DATE)                      AS BU_DATE
+                       ,M2.BU_NO                                      AS BU_NO
+                       ,M1.CAR_NO                                     AS CAR_NO
+                       ,$P{P_PROCESS_CD}                              AS PROCESS_CD
+                       ,'LI'                                          AS PROCESS_CD1
+                       ,M2.ITEM_CD                                    AS ITEM_CD
+                       ,T1.ITEM_NM                                    AS ITEM_NM
+                       ,M2.ITEM_LOT                                   AS ITEM_LOT
+                       ,WF.DSP_COMBO(M1.CENTER_CD ,C3.CENTER_NM)      AS CENTER_CD_F
+                       ,WF.GET_B_BOX(M2.CONFIRM_QTY ,T1.QTY_IN_BOX)   AS CONFIRM_BOX
+                       ,WF.GET_B_EA (M2.CONFIRM_QTY ,T1.QTY_IN_BOX)   AS CONFIRM_EA
+                       ,C4.CODE_NM                                    AS ITEM_STATE
+                       ,T1.QTY_IN_BOX                                 AS QTY_IN_BOX
+                       ,M2.CONFIRM_QTY                                AS CONFIRM_QTY
+                       ,M1.REMARK1                                    AS REMARK1_M
+                       ,M2.REMARK1                                    AS REMARK1_D
+                       ,M1.ENTRY_USER_ID                              AS USER_INFO
+                       ,WF.DSP_COMBO(M2.BRAND_CD ,C5.OWN_BRAND_NM)    AS BRAND_NM
+                       ,'' AS SHIPPER_NM
+                       ,'' AS TEL
+                       ,'' AS ADDR
+                   FROM LI020NM M1
+                        JOIN LI020ND    M2 ON M2.CENTER_CD     = M1.CENTER_CD
+                                          AND M2.BU_CD         = M1.BU_CD
+                                          AND M2.INBOUND_DATE  = M1.INBOUND_DATE
+                                          AND M2.INBOUND_NO    = M1.INBOUND_NO
+                        JOIN CMBU       B1 ON B1.BU_CD         = M1.BU_CD
+                        JOIN CMVENDOR D1   ON D1.CUST_CD       = M1.CUST_CD
+                                          AND D1.VENDOR_CD     = M1.VENDOR_CD
+                        JOIN CMITEM     T1 ON T1.BRAND_CD      = M2.BRAND_CD
+                                          AND T1.ITEM_CD       = M2.ITEM_CD
+                        JOIN CMCODE     C2 ON C2.CODE_CD       = M1.INOUT_CD
+                                          AND C2.CODE_GRP      = WF.GET_CODE_GRP('INOUT_CD')
+                        JOIN CMCENTER   C3 ON C3.CENTER_CD     = M1.CENTER_CD
+                        JOIN CMCODE     C4 ON C4.CODE_CD       = M2.ITEM_STATE
+                                          AND C4.CODE_GRP      = WF.GET_CODE_GRP('ITEM_STATE')
+                        JOIN CMOWNBRAND C5 ON C5.BU_CD         = M2.BU_CD
+                                          AND C5.OWN_BRAND_CD  = M2.BRAND_CD
+                  WHERE M1.CENTER_CD       = $P{P_CENTER_CD}
+                    AND M1.BU_CD           = $P{P_BU_CD}
+                    AND M1.INBOUND_DATE    = $P{P_INOUT_DATE}
+                    AND M1.INBOUND_NO     IN (SELECT CHECK_VALUE FROM CTCHECKVALUE)
+                    AND M1.INBOUND_STATE  IN ('30', '40', '50')
+                    AND $P{P_PROCESS_CD}  = 'LI'
+                 UNION ALL
+                 SELECT ROW_NUMBER() OVER(PARTITION BY M2.CENTER_CD ,M2.BU_CD ,M2.INBOUND_DATE ,M2.INBOUND_NO  ORDER BY M2.LINE_NO)    AS LINE_NO
+                       ,B1.BU_FULL_NM                                 AS BU_FULL_NM
+                       ,D1.DELIVERY_FULL_NM                           AS DELIVERY_FULL_NM
+                       ,WF.D_TO_CHAR(M1.INBOUND_DATE, 'YYYY-MM-DD')   AS INOUT_DATE
+                       ,M1.INBOUND_NO                                 AS INOUT_NO
+                       ,WF.D_TO_CHAR(M2.BU_DATE)                      AS BU_DATE
+                       ,M2.BU_NO                                      AS BU_NO
+                       ,C3.CAR_NM                                     AS CAR_NO
+                       ,$P{P_PROCESS_CD}                              AS PROCESS_CD
+                       ,$P{P_PROCESS_CD}                              AS PROCESS_CD1
+                       ,M2.ITEM_CD                                    AS ITEM_CD
+                       ,T1.ITEM_NM                                    AS ITEM_NM
+                       ,M2.ITEM_LOT                                   AS ITEM_LOT
+                       ,WF.DSP_COMBO(M1.CENTER_CD ,C4.CENTER_NM)      AS CENTER_CD_F
+                       ,WF.GET_B_BOX(M2.CONFIRM_QTY ,T1.QTY_IN_BOX)   AS CONFIRM_BOX
+                       ,WF.GET_B_EA (M2.CONFIRM_QTY ,T1.QTY_IN_BOX)   AS CONFIRM_EA
+                       ,''                                            AS ITEM_STATE
+                       ,T1.QTY_IN_BOX                                 AS QTY_IN_BOX
+                       ,M2.CONFIRM_QTY                                AS CONFIRM_QTY
+                       ,M1.REMARK1                                    AS REMARK1_M
+                       ,M2.REMARK1                                    AS REMARK1_D
+                       ,M1.ENTRY_USER_ID                              AS USER_INFO
+                       ,WF.DSP_COMBO(M2.BRAND_CD ,C5.OWN_BRAND_NM)    AS BRAND_NM
+                       ,'' AS SHIPPER_NM
+                       ,'' AS TEL
+                       ,'' AS ADDR
+                   FROM RI020NM M1
+                        JOIN RI020ND    M2 ON M2.CENTER_CD     = M1.CENTER_CD
+                                          AND M2.BU_CD         = M1.BU_CD
+                                          AND M2.INBOUND_DATE  = M1.INBOUND_DATE
+                                          AND M2.INBOUND_NO    = M1.INBOUND_NO
+                        JOIN CMBU    B1 ON B1.BU_CD            = M1.BU_CD
+                        JOIN CMDELIVERY D1 ON D1.CUST_CD       = M1.CUST_CD
+                                          AND D1.DELIVERY_CD   = M1.DELIVERY_CD
+                        JOIN CMITEM     T1 ON T1.BRAND_CD      = M2.BRAND_CD
+                                          AND T1.ITEM_CD       = M2.ITEM_CD
+                        JOIN CMCODE     C2 ON C2.CODE_CD       = M1.INOUT_CD
+                                          AND C2.CODE_GRP      = WF.GET_CODE_GRP('INOUT_CD')
+                   LEFT JOIN CMCAR      C3 ON C3.CAR_CD        = M1.CAR_CD
+                        JOIN CMCENTER   C4 ON C4.CENTER_CD     = M1.CENTER_CD
+                        JOIN CMOWNBRAND C5 ON C5.BU_CD         = M2.BU_CD
+                                          AND C5.OWN_BRAND_CD  = M2.BRAND_CD
+                  WHERE M1.CENTER_CD       = $P{P_CENTER_CD}
+                    AND M1.BU_CD           = $P{P_BU_CD}
+                    AND M1.INBOUND_DATE    = $P{P_INOUT_DATE}
+                    AND M1.INBOUND_NO     IN (SELECT CHECK_VALUE FROM CTCHECKVALUE)
+                    AND M1.INBOUND_STATE  IN ('30', '40', '50')
+                    AND $P{P_PROCESS_CD}      = 'RI'
+              ) T1 ON T1.INOUT_NO = L2.INOUT_NO
+                  AND T1.LINE_NO     = L2.NO
+     ORDER BY L2.INOUT_NO
+             ,L2.NO]]>
+	</queryString>
+	<field name="PAGE_NO" class="java.lang.String"/>
+	<field name="INOUT_NO" class="java.lang.String"/>
+	<field name="NO" class="java.math.BigDecimal"/>
+	<field name="LINE_NO" class="java.math.BigDecimal"/>
+	<field name="BU_FULL_NM" class="java.lang.String"/>
+	<field name="DELIVERY_FULL_NM" class="java.lang.String"/>
+	<field name="INOUT_DATE" class="java.lang.String"/>
+	<field name="BU_DATE" class="java.lang.String"/>
+	<field name="BU_NO" class="java.lang.String"/>
+	<field name="CAR_NO" class="java.lang.String"/>
+	<field name="PROCESS_CD" class="java.lang.String"/>
+	<field name="PROCESS_CD1" class="java.lang.String"/>
+	<field name="ITEM_CD" class="java.lang.String"/>
+	<field name="ITEM_NM" class="java.lang.String"/>
+	<field name="ITEM_LOT" class="java.lang.String"/>
+	<field name="CENTER_CD_F" class="java.lang.String"/>
+	<field name="CONFIRM_BOX" class="java.math.BigDecimal"/>
+	<field name="CONFIRM_EA" class="java.math.BigDecimal"/>
+	<field name="ITEM_STATE" class="java.lang.String"/>
+	<field name="QTY_IN_BOX" class="java.math.BigDecimal"/>
+	<field name="CONFIRM_QTY" class="java.math.BigDecimal"/>
+	<field name="REMARK1_M" class="java.lang.String"/>
+	<field name="REMARK1_D" class="java.lang.String"/>
+	<field name="USER_INFO" class="java.lang.String"/>
+	<field name="BRAND_NM" class="java.lang.String"/>
+	<field name="SHIPPER_NM" class="java.lang.String"/>
+	<field name="TEL" class="java.lang.String"/>
+	<field name="ADDR" class="java.lang.String"/>
+	<variable name="SUM_CONFIRM_QTY" class="java.math.BigDecimal" resetType="Group" resetGroup="GRP_INOUT_NO" calculation="Sum">
+		<variableExpression><![CDATA[$F{CONFIRM_QTY}]]></variableExpression>
+	</variable>
+	<variable name="DISPLAY_PROCESS" class="java.lang.String" calculation="Highest">
+		<variableExpression><![CDATA[$F{PROCESS_CD}.equals("LI") ? "입고" : $F{PROCESS_CD}.equals("LO") ? "출  고" : $F{PROCESS_CD}.equals("RI") ? "반입" : $F{PROCESS_CD}.equals("RO") ? "반출" : "Unknown"]]></variableExpression>
+	</variable>
+	<group name="GRP_INOUT_NO" isStartNewPage="true" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{INOUT_NO}]]></groupExpression>
+	</group>
+	<group name="GRP_PAGE_NO" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{PAGE_NO}]]></groupExpression>
+	</group>
+	<pageHeader>
+		<band height="100">
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="0" y="40" width="52" height="20" backcolor="#CCCCCC" uuid="67861deb-5ac3-4dbc-b920-d934bcd99dda"/>
+				<box leftPadding="0">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROCESS_CD}.equals("LI") ? "입고일자" : $F{PROCESS_CD}.equals("LO") ? "출고일자" : $F{PROCESS_CD}.equals("RI") ? "반입일자" : $F{PROCESS_CD}.equals("RO") ? "반출일자" : "Unknown"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="125" y="0" width="310" height="40" uuid="a32527fb-2d80-4523-b56f-9180a211ffbd"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="20" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[            확 인 서]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="435" y="40" width="140" height="20" uuid="fe61f037-ef85-4428-a02b-403e256ed44a"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DELIVERY_FULL_NM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="staticText-4" mode="Opaque" x="385" y="40" width="50" height="20" backcolor="#CCCCCC" uuid="59e5cef8-d448-4c08-9c5c-787b1f59505d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROCESS_CD}.equals("LI") ? "공급처" : $F{PROCESS_CD}.equals("LO") ? "배송처" : $F{PROCESS_CD}.equals("RI") ? "배송처" : $F{PROCESS_CD}.equals("RO") ? "공급처" : "Unknown"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="0" y="5" width="64" height="15" uuid="7546492d-7bf0-4375-a272-6b7966aa6e3c"/>
+				<box bottomPadding="3">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[(회사보관용)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="0" y="60" width="52" height="20" backcolor="#CCCCCC" uuid="13239045-8fb4-461c-8366-2577d470249d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[전표일자]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="319" y="60" width="256" height="20" uuid="3ff53d0f-dd0d-4760-a9f0-9514971b6a7f"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REMARK1_M}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="125" y="60" width="50" height="20" backcolor="#CCCCCC" uuid="09cf8a63-568a-474f-9599-cfedfd62f020"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[전표번호]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="52" y="40" width="73" height="20" uuid="2129e731-6ce0-48d9-be8a-8140157ed1f8"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INOUT_DATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="52" y="60" width="73" height="20" uuid="5a87c086-d8a2-4ddb-be0d-001b0c9ef853"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BU_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="209" y="0" width="81" height="40" backcolor="#CCCCCC" uuid="cc699053-1847-488d-b580-675cbfed8b43"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="20" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROCESS_CD}.equals("LI") ? "입  고" : $F{PROCESS_CD}.equals("LO") ? "출  고" : $F{PROCESS_CD}.equals("RI") ? "반  입" : $F{PROCESS_CD}.equals("RO") ? "반  출" : "Unknown"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="276" y="40" width="109" height="20" uuid="5f1a851f-1ff6-44f7-a1de-86b01d951a78"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BRAND_NM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="276" y="60" width="43" height="20" backcolor="#CCCCCC" uuid="65073ee3-493c-4f3c-be46-554edaac5900"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[비  고]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="233" y="40" width="43" height="20" backcolor="#CCCCCC" uuid="5cbdc3fc-076c-49a8-b126-05d6da59984a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[위탁사]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="175" y="60" width="101" height="20" uuid="3554d899-8e0a-4983-b69b-b78b3bbf39c7"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BU_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="175" y="40" width="58" height="20" uuid="df728a98-7acd-4240-8e70-6aa895a73897"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INOUT_NO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="125" y="40" width="50" height="20" backcolor="#CCCCCC" uuid="8c4e7b46-e2f3-4027-9692-e2b8dd85bc9b"/>
+				<box leftPadding="0">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROCESS_CD}.equals("LI") ? "입고번호" : $F{PROCESS_CD}.equals("LO") ? "출고번호" : $F{PROCESS_CD}.equals("RI") ? "반입번호" : $F{PROCESS_CD}.equals("RO") ? "반출번호" : "Unknown"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="0" y="20" width="52" height="20" backcolor="#CCCCCC" uuid="8afdd9e4-2fff-4ee5-9732-42d6238a419a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[센터명]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="52" y="20" width="123" height="20" uuid="0523854d-7acc-4918-a031-c19efec49eb5"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CENTER_CD_F}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="0" y="80" width="52" height="20" backcolor="#CCCCCC" uuid="a9cdd894-0ada-4df6-b67b-057c886a6a9b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[배송처명]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="175" y="80" width="50" height="20" backcolor="#CCCCCC" uuid="f2003e1e-8c87-4b31-9d0a-1353a6a8d0a4"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[배송처TEL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="297" y="80" width="43" height="20" backcolor="#CCCCCC" uuid="0c75b402-4f48-4df3-ac1f-10d3fe170eaa"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[주소]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="340" y="80" width="235" height="20" uuid="8fac42ee-39d8-438e-91fa-64082ab5546c"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADDR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="225" y="80" width="72" height="20" uuid="2e9b34ba-bd70-468f-b504-34fba896a7fa"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TEL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="52" y="80" width="123" height="20" uuid="c2ba5e9f-e5f2-460b-9895-4fe3eebf4697"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHIPPER_NM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="0" y="0" width="20" height="20" backcolor="#CCCCCC" uuid="2deb07c0-258d-4857-8238-cbb9461459f0"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="207" y="0" width="45" height="20" backcolor="#CCCCCC" uuid="6d50d35e-83dd-492b-83b3-bb5cb74e6239"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[칼  라]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="64" y="0" width="143" height="20" backcolor="#CCCCCC" uuid="f4c4f098-a82f-404b-9048-5b737cd180ae"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[   품     명   /   규     격    ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="470" y="0" width="105" height="20" backcolor="#CCCCCC" uuid="02eabf7c-2de0-4974-911c-9e10cc85aa0a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[비   고]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="252" y="0" width="45" height="20" backcolor="#CCCCCC" uuid="1c68d7c1-16e7-4dd0-9f85-f7714c0711de"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[사 이 즈]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="435" y="0" width="35" height="20" backcolor="#CCCCCC" uuid="012114a8-65a8-4175-b7b2-e7961c4da380"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[수  량]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="330" y="0" width="35" height="20" backcolor="#CCCCCC" uuid="5bacfdec-81de-4424-b797-f242f7e07770"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[입  수]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="365" y="0" width="35" height="20" backcolor="#CCCCCC" uuid="1caf6daf-d46d-44ad-8269-e02cc973aad7"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[등록BOX]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="400" y="0" width="35" height="20" backcolor="#CCCCCC" uuid="7f84b724-9d98-4aa8-91f3-96396b2f2f72"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[등록EA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="20" y="0" width="44" height="20" backcolor="#CCCCCC" uuid="616389b6-5fea-4525-a8f0-f3c4c1f6ff2e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[품명코드]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="297" y="0" width="33" height="20" backcolor="#CCCCCC" uuid="84a75ab5-3da1-4b9c-a596-3e7d0d65a9c2"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[상 태]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Immediate">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="20" height="24" uuid="74788006-e595-4227-8b68-4aa92db7b95e"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LINE_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="64" y="0" width="143" height="24" uuid="937e0040-2546-4039-a571-bb9ffe08ce4c"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_NM}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="207" y="0" width="45" height="24" uuid="ad5576bf-c5ae-495d-b019-a6e46d432c49"/>
+				<box rightPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="8" isBold="false"/>
+				</textElement>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="470" y="0" width="105" height="24" uuid="514f5b44-9db7-4725-8dc3-aec5e5ffeda6"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REMARK1_D}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="252" y="0" width="45" height="24" uuid="874dc8c7-6f3a-4bfc-9302-53aae2b3c27d"/>
+				<box rightPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="8" isBold="false"/>
+				</textElement>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="435" y="0" width="35" height="24" uuid="783107a3-23ea-4b86-9fee-b771d8912497"/>
+				<box rightPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONFIRM_QTY}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="330" y="0" width="35" height="24" uuid="f23f47d2-a143-42ef-a69e-6b8c790b5c28"/>
+				<box rightPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QTY_IN_BOX}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="365" y="0" width="35" height="24" uuid="4768e1c0-e0e7-43fe-9d2b-fae39e157bcd"/>
+				<box rightPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONFIRM_BOX}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="400" y="0" width="35" height="24" uuid="52f23790-68a9-448c-b0fd-09fb0e6686ad"/>
+				<box rightPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONFIRM_EA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="20" y="0" width="44" height="24" uuid="8c32c2c1-80a1-4ffb-984d-f0a63bd1d798"/>
+				<box rightPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_CD}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="297" y="0" width="33" height="24" uuid="e5da88f9-e8bd-4af7-9c16-7fc6f35676b9"/>
+				<box rightPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_STATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-4" x="0" y="0" width="319" height="20" uuid="93f23cf8-a9b6-4e5e-b3ca-daf192720842"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[합계]]></text>
+			</staticText>
+			<textField evaluationTime="Group" evaluationGroup="GRP_INOUT_NO" pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="319" y="0" width="46" height="20" uuid="8852040e-334f-48c1-9ae6-269e4b6174dd"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUM_CONFIRM_QTY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="370" y="28" width="54" height="12" uuid="0d6328f7-e6f8-4ed6-9615-21d70163cf60"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[차량번호:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="370" y="16" width="54" height="12" uuid="ad32efd5-e4d5-4de5-b224-8969cd66bcd5"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[연 락 처:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="370" y="3" width="54" height="12" uuid="76b32d4d-9d47-4e20-aa0b-9273415578ee"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[인 계 자:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="520" y="11" width="42" height="12" uuid="4ac78c86-63d1-499a-a13f-03adbcf1bc71"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[(서명)]]></text>
+			</staticText>
+			<textField evaluationTime="Group" evaluationGroup="GRP_INOUT_NO" isBlankWhenNull="true">
+				<reportElement key="textField-18" x="547" y="30" width="28" height="12" uuid="56ccd1d9-bc06-40ba-981a-f1e4743ab183"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="GRP_PAGE_NO" isBlankWhenNull="true">
+				<reportElement key="textField-18" x="510" y="29" width="27" height="12" uuid="a5aed7d2-fb65-434e-abef-67649003d49f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-19" x="532" y="29" width="19" height="12" uuid="149cfc38-334c-4929-8610-0fec2397444c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="굴림체" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="33" y="23" width="36" height="12" uuid="53038f56-346a-4f56-acd3-8def90561b9e"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[담당자:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="125" y="23" width="42" height="12" uuid="613c7afe-b50b-45e5-bee6-2e7dfe43cf76"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[(서명)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="23" width="33" height="12" uuid="7ff4fe61-e88a-4ec4-980b-e36f27483d49"/>
+				<box rightPadding="3">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="굴림체" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DISPLAY_PROCESS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

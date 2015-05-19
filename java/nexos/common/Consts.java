@@ -144,4 +144,5 @@ public class Consts {
   public static final String PK_CRUD                   = "P_CRUD";
   public static final String PK_MALL_CD                = "P_MALL_CD";
   public static final String PK_O_MSG                  = "O_MSG";
+  public static final String PK_O_HAS_NO               = "O_HAS_NO";
 }

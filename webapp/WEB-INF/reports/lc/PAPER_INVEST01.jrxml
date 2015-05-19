@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PAPER_INVEST01" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="838" leftMargin="2" rightMargin="2" topMargin="2" bottomMargin="2" uuid="0c72bf28-5d97-4d52-a5f4-ddd677e4e0bf">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="1.3660269107301453"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -15,118 +15,273 @@
 	<parameter name="P_USER_NM" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT MAX(L1.CENTER_CD_F)      AS CENTER_CD_F
-      ,MAX(L1.BU_CD_F)          AS BU_CD_F
-      ,MAX(L1.INVEST_DATE)      AS INVEST_DATE
-      ,MAX(L1.INVEST_NO)        AS INVEST_NO
-      ,MAX(L1.MANAGER_ID)       AS MANAGER_ID
-      ,MAX(L1.MANAGER_NM)       AS MANAGER_NM
-      ,L1.LOCATION_CD
-      ,DECODE(LENGTH(L1.LOCATION_CD),9,SUBSTR(L1.LOCATION_CD,1,1),10,SUBSTR(L1.LOCATION_CD,1,2),11,SUBSTR(L1.LOCATION_CD,1,2)) AS ZONE_CD
-      ,MAX(L1.BRAND_CD)         AS BRAND_CD
-      ,MAX(L1.BRAND_NM)         AS BRAND_NM
-      ,L1.ITEM_CD
-      ,L1.ITEM_NM
-      ,L1.ITEM_SPEC
-      ,L1.ITEM_STATE_D
-      ,L1.ITEM_LOT
-      ,L1.VALID_DATE
-      ,L1.BATCH_NO
-      ,L1.QTY_IN_BOX
-      ,L1.STOCK_QTY
-      ,L1.STOCK_BOX
-      ,L1.STOCK_EA
-      ,L1.INVEST_QTY
-      ,L1.INVEST_BOX
-      ,L1.INVEST_EA
-  FROM (
-          SELECT WF.DSP_COMBO(M1.CENTER_CD ,C1.CENTER_NM)       AS CENTER_CD_F
-                ,WF.DSP_COMBO(M1.BU_CD     ,B1.BU_NM)           AS BU_CD_F
-                ,M1.INVEST_DATE
-                ,M1.INVEST_NO
-                ,M1.MANAGER_ID
-                ,C3.USER_NM                                     AS MANAGER_NM
-                ,M2.LOCATION_CD
-                ,M2.BRAND_CD
-                ,B2.BRAND_NM
-                ,M2.ITEM_CD                                     AS ITEM_CD
-                ,T1.ITEM_NM
-                ,T1.ITEM_SPEC
-                ,C2.CODE_NM                                     AS ITEM_STATE_D
-                ,M2.ITEM_LOT
-                ,M2.VALID_DATE
-                ,M2.BATCH_NO
-                ,T1.QTY_IN_BOX
-                ,M2.STOCK_QTY
-                ,WF.GET_B_BOX(M2.STOCK_QTY ,T1.QTY_IN_BOX)      AS STOCK_BOX
-                ,WF.GET_B_EA (M2.STOCK_QTY ,T1.QTY_IN_BOX)      AS STOCK_EA
-                ,M2.INVEST_QTY                                  AS INVEST_QTY
-                ,WF.GET_B_BOX(M2.INVEST_QTY ,T1.QTY_IN_BOX)     AS INVEST_BOX
-                ,WF.GET_B_EA (M2.INVEST_QTY ,T1.QTY_IN_BOX)     AS INVEST_EA
-                ,ROWNUM                                         AS RNUM
-            FROM LC040NM M1
-                 JOIN LC040ND M2  ON M1.CENTER_CD   = M2.CENTER_CD
-                                 AND M1.BU_CD       = M2.BU_CD
-                                 AND M1.INVEST_DATE = M2.INVEST_DATE
-                                 AND M1.INVEST_NO   = M2.INVEST_NO
-                 JOIN CMCENTER C1 ON C1.CENTER_CD   = M2.CENTER_CD
-                 JOIN CMBU     B1 ON B1.BU_CD       = M1.BU_CD
-                 JOIN CMBRAND  B2 ON B2.BRAND_CD    = M2.BRAND_CD
-                 JOIN CMITEM   T1 ON T1.BRAND_CD    = M2.BRAND_CD
-                                 AND T1.ITEM_CD     = M2.ITEM_CD
-                 JOIN CMCODE   C2 ON C2.CODE_CD     = M2.ITEM_STATE
-                                 AND C2.CODE_GRP    = WF.GET_CODE_GRP('ITEM_STATE')
-            LEFT JOIN CSUSER   C3 ON C3.USER_ID     = M1.MANAGER_ID
-           WHERE M1.CENTER_CD   = 'G1'
-             AND M1.BU_CD       = '5000'
-             AND M1.INVEST_DATE = '2014/08/15'
-             AND M1.INVEST_NO   = '0001'
-           UNION ALL
-          SELECT 'G1 - 광주 물류센터'         AS CENTER_CD_F
-                ,'5000 - 위메프'              AS BU_CD_F
-                ,TO_DATE('2014/08/14','YYYY-MM-DD')           AS INVEST_DATE
-                ,'0003'          AS INVEST_NO
-                ,NULL           AS MANAGER_ID
-                ,NULL           AS MANAGER_NM
-                ,M1.LOCATION_CD
-                ,NULL           AS BRAND_CD
-                ,NULL           AS BRAND_NM
-                ,NULL           AS ITEM_CD
-                ,NULL           AS ITEM_NM
-                ,NULL           AS ITEM_SPEC
-                ,NULL           AS ITEM_STATE_D
-                ,NULL           AS ITEM_LOT
-                ,NULL           AS VALID_DATE
-                ,NULL           AS BATCH_NO
-                ,0              AS QTY_IN_BOX
-                ,0           AS STOCK_QTY
-                ,0           AS STOCK_BOX
-                ,0           AS STOCK_EA
-                ,0           AS INVEST_QTY
-                ,0          AS INVEST_BOX
-                ,0           AS INVEST_EA
-                ,0           AS RNUM
-            FROM CMLOCATION M1
-        ) L1
-      GROUP BY L1.LOCATION_CD
-              ,L1.ITEM_CD
-      ,L1.ITEM_NM
-      ,L1.ITEM_SPEC
-      ,L1.ITEM_STATE_D
-      ,L1.ITEM_LOT
-      ,L1.VALID_DATE
-      ,L1.BATCH_NO
-      ,L1.QTY_IN_BOX
-      ,L1.STOCK_QTY
-      ,L1.STOCK_BOX
-      ,L1.STOCK_EA
-      ,L1.INVEST_QTY
-      ,L1.INVEST_BOX
-      ,L1.INVEST_EA
- ORDER BY LOCATION_CD]]>
+        ,MAX(L1.BU_CD_F)          AS BU_CD_F
+        ,MAX(TO_CHAR(L1.INVEST_DATE, 'YYYY-MM-DD'))      AS INVEST_DATE
+        ,MAX(L1.INVEST_NO)        AS INVEST_NO
+        ,MAX(L1.MANAGER_ID)       AS MANAGER_ID
+        ,MAX(L1.MANAGER_NM)       AS MANAGER_NM
+        ,L1.LOCATION_CD
+        ,DECODE(LENGTH(L1.LOCATION_CD),9,SUBSTR(L1.LOCATION_CD,1,1),10,SUBSTR(L1.LOCATION_CD,1,2),11,SUBSTR(L1.LOCATION_CD,1,2)) AS ZONE_CD
+        ,MAX(L1.BRAND_CD)         AS BRAND_CD
+        ,MAX(L1.BRAND_NM)         AS BRAND_NM
+        ,L1.ITEM_CD
+        ,L1.ITEM_NM
+        ,L1.ITEM_SPEC
+        ,L1.ITEM_STATE_D
+        ,L1.ITEM_LOT
+        ,L1.VALID_DATE
+        ,L1.BATCH_NO
+        ,L1.QTY_IN_BOX
+        ,L1.OUT_UNIT_CD
+        ,L1.STOCK_QTY
+        ,L1.STOCK_BOX
+        ,L1.STOCK_EA
+        ,L1.INVEST_QTY
+        ,L1.INVEST_BOX
+        ,L1.INVEST_EA
+        ,L1.LOC_VIEW
+,0 AS LINE_NO
+,'' AS ITEM_CD
+,'' AS BRAND_NM
+    FROM (
+            SELECT WF.DSP_COMBO(M1.CENTER_CD ,C1.CENTER_NM)       AS CENTER_CD_F
+                  ,WF.DSP_COMBO(M1.BU_CD     ,B1.BU_NM)           AS BU_CD_F
+                  ,M1.INVEST_DATE
+                  ,M1.INVEST_NO
+                  ,M1.MANAGER_ID
+                  ,C3.USER_NM                                     AS MANAGER_NM
+                  ,M2.LOCATION_CD
+                  ,M2.BRAND_CD
+                  ,B2.OWN_BRAND_NM                                AS BRAND_NM
+                  ,M2.ITEM_CD                                     AS ITEM_CD
+                  ,T1.ITEM_NM
+                  ,T1.ITEM_SPEC
+                  ,C2.CODE_NM                                     AS ITEM_STATE_D
+                  ,M2.ITEM_LOT
+                  ,M2.VALID_DATE
+                  ,M2.BATCH_NO
+                  ,T1.QTY_IN_BOX
+                  ,T1.OUT_UNIT_CD
+                  ,M2.STOCK_QTY
+                  ,WF.GET_B_BOX(M2.STOCK_QTY ,T1.QTY_IN_BOX)      AS STOCK_BOX
+                  ,WF.GET_B_EA (M2.STOCK_QTY ,T1.QTY_IN_BOX)      AS STOCK_EA
+                  ,M2.INVEST_QTY                                  AS INVEST_QTY
+                  ,WF.GET_B_BOX(M2.INVEST_QTY ,T1.QTY_IN_BOX)     AS INVEST_BOX
+                  ,WF.GET_B_EA (M2.INVEST_QTY ,T1.QTY_IN_BOX)     AS INVEST_EA
+                  ,ROWNUM                                         AS RNUM
+                  ,NULL                                           AS LOC_VIEW
+              FROM LC040NM M1
+                   JOIN LC040ND     M2 ON M1.CENTER_CD    = M2.CENTER_CD
+                                      AND M1.BU_CD        = M2.BU_CD
+                                      AND M1.INVEST_DATE  = M2.INVEST_DATE
+                                      AND M1.INVEST_NO    = M2.INVEST_NO
+                   JOIN CMCENTER    C1 ON C1.CENTER_CD    = M2.CENTER_CD
+                   JOIN CMBU        B1 ON B1.BU_CD        = M1.BU_CD
+                   JOIN CMOWNBRAND  B2 ON B2.BU_CD        = M1.BU_CD
+                                      AND B2.OWN_BRAND_CD = M2.BRAND_CD
+                   JOIN CMITEM   T1 ON T1.BRAND_CD        = M2.BRAND_CD
+                                   AND T1.ITEM_CD         = M2.ITEM_CD
+                   JOIN CMCODE   C2 ON C2.CODE_CD         = M2.ITEM_STATE
+                                   AND C2.CODE_GRP        = WF.GET_CODE_GRP('ITEM_STATE')
+              LEFT JOIN CSUSER   C3 ON C3.USER_ID         = M1.MANAGER_ID
+             WHERE M1.CENTER_CD   = 'G1'
+               AND M1.BU_CD       = '5000'
+               AND M1.INVEST_DATE = '2015/04/03'
+               AND M1.INVEST_NO   = '0005'
+             UNION ALL
+            SELECT 'G1 - 광주 물류센터'                           AS CENTER_CD_F
+                  ,'5000 - 위메프'                                AS BU_CD_F
+                  ,TO_DATE('3014/08/14','YYYY-MM-DD')             AS INVEST_DATE
+                  ,'9999'                                         AS INVEST_NO
+                  ,NULL                                           AS MANAGER_ID
+                  ,NULL                                           AS MANAGER_NM
+                  ,L2.LOCATION_CD
+                  ,L2.BRAND_CD
+                  ,L2.OWN_BRAND_NM                                AS BRAND_NM
+                  ,L2.ITEM_CD
+                  ,L2.ITEM_NM
+                  ,L2.ITEM_SPEC
+                  ,C2.CODE_NM                                     AS ITEM_STATE_D
+                  ,NULL                                           AS ITEM_LOT
+                  ,NULL                                           AS VALID_DATE
+                  ,'[혼적]'                                       AS BATCH_NO
+                  ,0                                              AS QTY_IN_BOX
+                  ,''                                              AS OUT_UNIT_CD
+                  ,L2.STOCK_QTY                                   AS STOCK_QTY
+                  ,0                                              AS STOCK_BOX
+                  ,0                                              AS STOCK_EA
+                  ,0                                              AS INVEST_QTY
+                  ,0                                              AS INVEST_BOX
+                  ,0                                              AS INVEST_EA
+                  ,0                                              AS RNUM
+                  ,NULL                                           AS LOC_VIEW
+              FROM (
+                    SELECT L1.CENTER_CD
+                          ,L1.BU_CD
+                          ,L1.LOCATION_CD
+                          ,L1.BRAND_CD
+                          ,C1.OWN_BRAND_NM
+                          ,L1.ITEM_CD
+                          ,C2.ITEM_NM
+                          ,C2.ITEM_SPEC
+                          ,L1.ITEM_STATE
+                          ,SUM(L1.STOCK_QTY)    AS STOCK_QTY
+                      FROM LS010NM L1
+                           JOIN (
+                                SELECT L2.LOCATION_CD
+                                  FROM (
+                                        SELECT ROW_NUMBER() OVER (PARTITION BY L1.LOCATION_CD ORDER BY L1.BU_CD) AS RNK
+                                              ,L1.*
+                                          FROM (
+                                                SELECT M1.CENTER_CD
+                                                      ,M1.BU_CD
+                                                      ,M1.LOCATION_CD
+                                                      ,SUM(M1.STOCK_QTY)    AS STOCK_QTY
+                                                  FROM LS010NM M1
+                                                 WHERE CENTER_CD = 'G1'
+                                                 GROUP BY M1.CENTER_CD
+                                                         ,M1.BU_CD
+                                                         ,M1.LOCATION_CD
+                                                 ORDER BY M1.CENTER_CD
+                                                         ,M1.BU_CD
+                                                         ,M1.LOCATION_CD
+                                                 ) L1
+                                        ) L2
+                                 WHERE L2.RNK > 1
+                                 ORDER BY L2.LOCATION_CD
+                                 ) L2 ON L2.LOCATION_CD = L1.LOCATION_CD
+                           JOIN CMOWNBRAND C1 ON C1.BU_CD        = L1.BU_CD
+                                             AND C1.OWN_BRAND_CD = L1.BRAND_CD
+                           JOIN CMITEM     C2 ON C2.BRAND_CD     = L1.BRAND_CD
+                                             AND C2.ITEM_CD      = L1.ITEM_CD
+                     GROUP BY L1.CENTER_CD
+                             ,L1.BU_CD
+                             ,L1.LOCATION_CD
+                             ,L1.BRAND_CD
+                             ,C1.OWN_BRAND_NM
+                             ,L1.ITEM_CD
+                             ,C2.ITEM_NM
+                             ,C2.ITEM_SPEC
+                             ,L1.ITEM_STATE
+                     ORDER BY L1.CENTER_CD
+                             ,L1.LOCATION_CD
+                             ,L1.BRAND_CD
+                             ,L1.ITEM_CD
+                             ,L1.ITEM_STATE
+                     ) L2
+                     JOIN CMCENTER    C1 ON C1.CENTER_CD    = L2.CENTER_CD
+                     JOIN CMBU        B1 ON B1.BU_CD        = L2.BU_CD
+                     JOIN CMCODE      C2 ON C2.CODE_CD      = L2.ITEM_STATE
+                                        AND C2.CODE_GRP     = WF.GET_CODE_GRP('ITEM_STATE')
+             UNION ALL
+            SELECT 'G1 - 광주 물류센터'                         AS CENTER_CD_F
+                  ,'5000 - 위메프'                              AS BU_CD_F
+                  ,TO_DATE('3014/08/14','YYYY-MM-DD')           AS INVEST_DATE
+                  ,'9999'                                       AS INVEST_NO
+                  ,NULL                                         AS MANAGER_ID
+                  ,NULL                                         AS MANAGER_NM
+                  ,M1.LOCATION_CD
+                  ,NULL                                         AS BRAND_CD
+                  ,NULL                                         AS BRAND_NM
+                  ,NULL                                         AS ITEM_CD
+                  ,NULL                                         AS ITEM_NM
+                  ,NULL                                         AS ITEM_SPEC
+                  ,NULL                                         AS ITEM_STATE_D
+                  ,NULL                                         AS ITEM_LOT
+                  ,NULL                                         AS VALID_DATE
+                  ,NULL                                         AS BATCH_NO
+                  ,0                                            AS QTY_IN_BOX
+                  ,''                                            AS OUT_UNIT_CD
+                  ,0                                            AS STOCK_QTY
+                  ,0                                            AS STOCK_BOX
+                  ,0                                            AS STOCK_EA
+                  ,0                                            AS INVEST_QTY
+                  ,0                                            AS INVEST_BOX
+                  ,0                                            AS INVEST_EA
+                  ,0                                            AS RNUM
+                  ,NULL                                         AS LOC_VIEW
+              FROM CMLOCATION M1
+             UNION ALL
+            SELECT 'G1 - 광주 물류센터'                         AS CENTER_CD_F
+                  ,'5000 - 위메프'                              AS BU_CD_F
+                  ,TO_DATE('3014/08/14','YYYY-MM-DD')           AS INVEST_DATE
+                  ,'9999'                                       AS INVEST_NO
+                  ,NULL                                         AS MANAGER_ID
+                  ,NULL                                         AS MANAGER_NM
+                  ,L3.LOCATION_CD
+                  ,NULL                                         AS BRAND_CD
+                  ,NULL                                         AS BRAND_NM
+                  ,NULL                                         AS ITEM_CD
+                  ,NULL                                         AS ITEM_NM
+                  ,NULL                                         AS ITEM_SPEC
+                  ,NULL                                         AS ITEM_STATE_D
+                  ,NULL                                         AS ITEM_LOT
+                  ,NULL                                         AS VALID_DATE
+                  ,NULL                                         AS BATCH_NO
+                  ,0                                            AS QTY_IN_BOX
+                  ,''                                            AS OUT_UNIT_CD
+                  ,0                                            AS STOCK_QTY
+                  ,0                                            AS STOCK_BOX
+                  ,0                                            AS STOCK_EA
+                  ,0                                            AS INVEST_QTY
+                  ,0                                            AS INVEST_BOX
+                  ,0                                            AS INVEST_EA
+                  ,0                                            AS RNUM
+                  ,L3.LOC_VIEW
+              FROM (
+                    SELECT L2.LOCATION_CD
+                          ,DECODE(L2.LOCATION_CD,L2.STOCK_LOC,'3PL',NULL)                       AS LOC_VIEW
+                      FROM (
+                            SELECT L1.ZONE_CD||L1.BANK_CD||'-'||L1.BAY_CD||'-'||L1.LEV_CD       AS LOCATION_CD
+                                  ,NVL(L2.LOCATION_CD,'00')                                     AS STOCK_LOC
+                              FROM CMLOCATION L1
+                                   LEFT JOIN (
+                                              SELECT M1.CENTER_CD
+                                                    ,M1.BU_CD
+                                                    ,M1.LOCATION_CD
+                                                    ,SUM(M1.STOCK_QTY)                                         AS STOCK_QTY
+                                                FROM LS010NM M1
+                                               WHERE CENTER_CD = 'G1'
+                                                 AND BU_CD    <> '5000'
+                                               GROUP BY M1.CENTER_CD
+                                                       ,M1.BU_CD
+                                                       ,M1.LOCATION_CD
+                                               ORDER BY M1.CENTER_CD
+                                                       ,M1.BU_CD
+                                                       ,M1.LOCATION_CD
+                                             ) L2 ON L2.CENTER_CD   = L1.CENTER_CD
+                                                 AND L2.LOCATION_CD = (L1.ZONE_CD||L1.BANK_CD||'-'||L1.BAY_CD||'-'||L1.LEV_CD)
+                                                 AND L2.LOCATION_CD = L2.LOCATION_CD
+                              ORDER BY L1.ZONE_CD
+                                      ,L1.BANK_CD
+                                      ,L1.BAY_CD
+                                      ,L1.LEV_CD
+                            ) L2
+                     ORDER BY L2.LOCATION_CD
+                   ) L3
+          ) L1
+   GROUP BY L1.LOCATION_CD
+           ,L1.ITEM_CD
+           ,L1.ITEM_NM
+           ,L1.ITEM_SPEC
+           ,L1.ITEM_STATE_D
+           ,L1.ITEM_LOT
+           ,L1.VALID_DATE
+           ,L1.BATCH_NO
+           ,L1.QTY_IN_BOX
+           ,L1.OUT_UNIT_CD
+           ,L1.STOCK_QTY
+           ,L1.STOCK_BOX
+           ,L1.STOCK_EA
+           ,L1.INVEST_QTY
+           ,L1.INVEST_BOX
+           ,L1.INVEST_EA
+           ,L1.LOC_VIEW
+   ORDER BY LOCATION_CD]]>
 	</queryString>
 	<field name="CENTER_CD_F" class="java.lang.String"/>
 	<field name="BU_CD_F" class="java.lang.String"/>
-	<field name="INVEST_DATE" class="java.sql.Timestamp"/>
+	<field name="INVEST_DATE" class="java.lang.String"/>
 	<field name="INVEST_NO" class="java.lang.String"/>
 	<field name="MANAGER_ID" class="java.lang.String"/>
 	<field name="MANAGER_NM" class="java.lang.String"/>
@@ -142,12 +297,15 @@
 	<field name="VALID_DATE" class="java.sql.Timestamp"/>
 	<field name="BATCH_NO" class="java.lang.String"/>
 	<field name="QTY_IN_BOX" class="java.math.BigDecimal"/>
+	<field name="OUT_UNIT_CD" class="java.lang.String"/>
 	<field name="STOCK_QTY" class="java.math.BigDecimal"/>
 	<field name="STOCK_BOX" class="java.math.BigDecimal"/>
 	<field name="STOCK_EA" class="java.math.BigDecimal"/>
 	<field name="INVEST_QTY" class="java.math.BigDecimal"/>
 	<field name="INVEST_BOX" class="java.math.BigDecimal"/>
 	<field name="INVEST_EA" class="java.math.BigDecimal"/>
+	<field name="LOC_VIEW" class="java.lang.String"/>
+	<field name="LINE_NO" class="java.math.BigDecimal"/>
 	<variable name="GROUP_SUM_STOCK_QTY" class="java.math.BigDecimal" resetType="Group" resetGroup="GRP_INVEST_NO" calculation="Sum">
 		<variableExpression><![CDATA[$F{STOCK_QTY}]]></variableExpression>
 	</variable>
@@ -177,7 +335,7 @@
 				<text><![CDATA[실사번호 :]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-1" x="706" y="7" width="79" height="23" uuid="d9f462bb-e504-4104-8ec3-9a9f9d24c0bb"/>
+				<reportElement key="textField-1" x="622" y="7" width="64" height="23" uuid="d9f462bb-e504-4104-8ec3-9a9f9d24c0bb"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="굴림체" size="14" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -216,7 +374,7 @@
 				<textFieldExpression><![CDATA[$F{INVEST_NO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-6" x="619" y="12" width="80" height="14" uuid="088b8f12-8789-4e3e-ae1d-b1486224cac0"/>
+				<reportElement key="staticText-6" x="542" y="12" width="80" height="14" uuid="088b8f12-8789-4e3e-ae1d-b1486224cac0"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="12" isBold="true" isItalic="false" isUnderline="false" pdfEncoding="Identity-H"/>
 					<paragraph lineSpacing="Single"/>
@@ -251,11 +409,19 @@
 				<reportElement key="line-1" x="0" y="35" width="838" height="1" uuid="9d9ab9c6-6419-433d-a779-0e65a7464935"/>
 			</line>
 			<staticText>
-				<reportElement key="textField-28" x="415" y="4" width="144" height="22" uuid="3a32bdaa-44ec-43ad-8cf7-89a0c8fee7ba"/>
+				<reportElement key="textField-28" x="389" y="4" width="144" height="22" uuid="3a32bdaa-44ec-43ad-8cf7-89a0c8fee7ba"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="18" isBold="true" isUnderline="true" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[재고실사표]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-6" x="686" y="12" width="80" height="14" uuid="b14c3523-f7df-4d3f-8f67-f3cbc0434dca"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="12" isBold="true" isItalic="false" isUnderline="false" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[실사담당자 :]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
@@ -265,33 +431,33 @@
 				<reportElement key="line-1" x="0" y="27" width="838" height="1" uuid="9ae1a99f-f0a7-4367-85ec-7508c3a01f94"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-4" x="388" y="5" width="37" height="15" uuid="99cf2acc-d2da-49b0-b74c-4f6b405bd36f"/>
+				<reportElement key="staticText-4" x="565" y="2" width="37" height="21" uuid="99cf2acc-d2da-49b0-b74c-4f6b405bd36f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="11" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[입수]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-4" x="430" y="5" width="51" height="16" uuid="6e15d8af-605c-49fb-8ea9-3e747169ed77"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+				<reportElement key="staticText-4" x="658" y="5" width="42" height="16" uuid="6e15d8af-605c-49fb-8ea9-3e747169ed77"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="11" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[재고수량]]></text>
+				<text><![CDATA[실사1]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-4" x="2" y="1" width="80" height="25" uuid="f7a0adbb-3baf-48fb-abdd-0869a34622ca"/>
+				<reportElement key="staticText-4" x="51" y="1" width="70" height="25" uuid="f7a0adbb-3baf-48fb-abdd-0869a34622ca"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="13" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[로케이션]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-4" x="133" y="2" width="201" height="21" uuid="0c8a3722-d59b-43d0-841f-0371358888ec"/>
+				<reportElement key="staticText-4" x="195" y="2" width="200" height="21" uuid="0c8a3722-d59b-43d0-841f-0371358888ec"/>
 				<box leftPadding="2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="13" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[상품명]]></text>
+				<text><![CDATA[WMS 상품명]]></text>
 			</staticText>
 			<line direction="BottomUp">
 				<reportElement x="837" y="0" width="1" height="27" uuid="9944d2b8-846d-4ade-8dd7-e5c7d7b17e4e"/>
@@ -300,24 +466,92 @@
 				<reportElement x="0" y="0" width="1" height="28" uuid="7b6b9bf8-f66d-4464-88fc-0e007e0c0d8b"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-4" x="638" y="5" width="55" height="16" uuid="29e9231d-c6bd-48b2-86e9-b1256f097dac"/>
+				<reportElement key="staticText-4" x="793" y="5" width="42" height="16" uuid="29e9231d-c6bd-48b2-86e9-b1256f097dac"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="12" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[비고]]></text>
+				<text><![CDATA[합계]]></text>
 			</staticText>
 			<line direction="BottomUp">
-				<reportElement x="483" y="0" width="1" height="27" uuid="6b00349e-89df-46dd-809b-c15423b38a37"/>
+				<reportElement x="508" y="0" width="1" height="27" uuid="94fcc566-70f7-4ab8-8d5c-9af926a284ad"/>
 			</line>
 			<line direction="BottomUp">
-				<reportElement x="427" y="0" width="1" height="27" uuid="1717c4f0-bad2-4c46-b1b9-e7fdfbf07184"/>
+				<reportElement x="194" y="0" width="1" height="27" uuid="1490b186-e261-4b42-b6fe-d889d39607fe"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-4" x="397" y="3" width="110" height="21" uuid="d9b0b9fa-719e-4495-b1c9-6c8e34ca947a"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="13" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[실물 상품명]]></text>
+			</staticText>
+			<line direction="BottomUp">
+				<reportElement x="701" y="0" width="1" height="27" uuid="66839716-a96f-49c5-9325-a520eb1119e8"/>
 			</line>
 			<line direction="BottomUp">
-				<reportElement x="385" y="0" width="1" height="27" uuid="94fcc566-70f7-4ab8-8d5c-9af926a284ad"/>
+				<reportElement x="656" y="0" width="1" height="26" uuid="b77e05c7-a903-4427-8e27-f42fa73d4cb9"/>
 			</line>
 			<line direction="BottomUp">
-				<reportElement x="83" y="0" width="1" height="27" uuid="1490b186-e261-4b42-b6fe-d889d39607fe"/>
+				<reportElement x="562" y="1" width="1" height="27" uuid="d4e7418e-8ca5-49d2-bdac-1a3e9ca4be4a"/>
 			</line>
+			<staticText>
+				<reportElement key="staticText-4" x="509" y="2" width="51" height="21" uuid="bc5df777-949a-4c96-93fd-4a6dec6de696"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[위탁사명]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="606" y="2" width="48" height="21" uuid="638184e7-2f75-4231-99e4-1bcee119fe09"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[출고단위]]></text>
+			</staticText>
+			<line direction="BottomUp">
+				<reportElement x="603" y="0" width="1" height="27" uuid="40e74060-d406-4f5e-ba00-5abdc8681934"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="395" y="-1" width="1" height="29" uuid="fbeaa090-af66-4d6a-b8c3-09d2340bc72d"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="746" y="0" width="1" height="27" uuid="213696e8-78a1-4c94-8d5a-0ba47b54978e"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="791" y="0" width="1" height="27" uuid="4853393b-de6f-4cad-8c08-ad0bdc279998"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-4" x="703" y="5" width="42" height="16" uuid="a36a993b-96ee-456a-8df8-7eea75f5bcdb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[실사2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="748" y="5" width="42" height="16" uuid="5f509d51-b004-44fc-9001-14d6c16586ca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[실사3]]></text>
+			</staticText>
+			<line direction="BottomUp">
+				<reportElement x="49" y="0" width="1" height="27" uuid="3a6c8833-e43f-49f1-a4d6-3c29ab33de76"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-4" x="2" y="0" width="46" height="25" uuid="955f945f-5e25-46ea-829f-a6b6172e1168"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="13" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[SEQ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="123" y="1" width="70" height="25" uuid="56d06906-2de6-4f2f-84cb-76c3f3204312"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="13" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[상품코드]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -326,21 +560,21 @@
 				<reportElement x="837" y="-1" width="1" height="28" uuid="29a06af0-0a8b-41af-b5dd-83d0a9feb7c6"/>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement key="staticText-4" mode="Transparent" x="2" y="1" width="80" height="26" uuid="4f1e5db0-1117-4687-bbc1-114c8333d196"/>
+				<reportElement key="staticText-4" mode="Transparent" x="51" y="1" width="70" height="26" uuid="4f1e5db0-1117-4687-bbc1-114c8333d196"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="13" isBold="true" isStrikeThrough="false" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{LOCATION_CD}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement key="staticText-4" mode="Transparent" x="85" y="1" width="300" height="26" backcolor="#FFFFFF" uuid="8468f0e1-baef-4168-bedf-f1d8534a1578"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="staticText-4" mode="Transparent" x="195" y="1" width="200" height="26" backcolor="#FFFFFF" uuid="8468f0e1-baef-4168-bedf-f1d8534a1578"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="11" isBold="false" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ITEM_NM}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0;" isBlankWhenNull="true">
-				<reportElement key="staticText-4" x="388" y="8" width="37" height="18" uuid="68828e23-3d46-4515-8993-e55c408cd9a6"/>
+				<reportElement key="staticText-4" x="565" y="6" width="37" height="18" uuid="68828e23-3d46-4515-8993-e55c408cd9a6"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="11" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -350,23 +584,66 @@
 				<reportElement x="0" y="0" width="1" height="27" uuid="3abe3a4a-aa09-4420-b57a-79137d823f80"/>
 			</line>
 			<line direction="BottomUp">
-				<reportElement x="665" y="-1" width="1" height="28" uuid="3a958a05-1c51-44d5-9fc5-9f79d831b37a"/>
+				<reportElement x="656" y="-1" width="1" height="28" uuid="3a958a05-1c51-44d5-9fc5-9f79d831b37a"/>
 			</line>
 			<line direction="BottomUp">
-				<reportElement x="483" y="-1" width="1" height="28" uuid="ae56a0b3-cf8c-4846-a6da-58481e599947"/>
+				<reportElement x="603" y="-1" width="1" height="28" uuid="ae56a0b3-cf8c-4846-a6da-58481e599947"/>
 			</line>
 			<line direction="BottomUp">
-				<reportElement x="427" y="-1" width="1" height="28" uuid="15df0a7b-6741-4771-a9b8-f71914e4c41b"/>
+				<reportElement x="562" y="-1" width="1" height="28" uuid="15df0a7b-6741-4771-a9b8-f71914e4c41b"/>
 			</line>
 			<line direction="BottomUp">
-				<reportElement x="385" y="-1" width="1" height="28" uuid="60573e5f-1043-41a0-8c3f-5ea54f4445b0"/>
+				<reportElement x="508" y="-1" width="1" height="28" uuid="60573e5f-1043-41a0-8c3f-5ea54f4445b0"/>
 			</line>
 			<line direction="BottomUp">
-				<reportElement x="83" y="-1" width="1" height="28" uuid="2ffbce61-a5da-4cff-873f-075abc6b6116"/>
+				<reportElement x="194" y="-1" width="1" height="28" uuid="2ffbce61-a5da-4cff-873f-075abc6b6116"/>
 			</line>
 			<line>
 				<reportElement key="line-1" x="0" y="27" width="838" height="1" uuid="0793bef0-1355-4112-8297-63d45956a0e2"/>
 			</line>
+			<line direction="BottomUp">
+				<reportElement x="701" y="0" width="1" height="27" uuid="2baec8a5-b63f-452d-aa27-428bbcddf34b"/>
+			</line>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="508" y="2" width="53" height="25" uuid="8a5d811f-7c8e-4431-9b6c-12e41c9db3e2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BRAND_NM}]]></textFieldExpression>
+			</textField>
+			<line direction="BottomUp">
+				<reportElement x="395" y="0" width="1" height="27" uuid="de35b50c-df66-446e-be43-dba4197a0f79"/>
+			</line>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="605" y="1" width="49" height="25" uuid="24ebdf34-7c58-43f6-98a9-56eb398fa40b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="11" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OUT_UNIT_CD}]]></textFieldExpression>
+			</textField>
+			<line direction="BottomUp">
+				<reportElement x="746" y="0" width="1" height="27" uuid="ffdc53bb-5dde-42f1-8009-71c809b14c95"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="791" y="0" width="1" height="27" uuid="9f7b2d33-7aff-4a2d-91b3-42eb8df112c1"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="49" y="0" width="1" height="28" uuid="77dcf8d2-371b-465a-8987-dd86e17a84f2"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement key="staticText-4" mode="Transparent" x="2" y="1" width="46" height="26" uuid="90338584-43ad-4df9-8abf-a319bccac5d0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="13" isBold="true" isStrikeThrough="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LINE_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="staticText-4" mode="Transparent" x="123" y="1" width="70" height="26" uuid="f37d6523-6112-4f11-814c-cef6707c4e18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="13" isBold="true" isStrikeThrough="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_CD}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
@@ -432,6 +709,14 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement key="staticText-3" x="672" y="1" width="93" height="12" uuid="a67eb908-bf99-47d4-937c-117e53eea914"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="10" isBold="true" isItalic="false" isUnderline="false" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[페이지 실사합계 :]]></text>
+			</staticText>
 		</band>
 	</pageFooter>
 	<summary>
