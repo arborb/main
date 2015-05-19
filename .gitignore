@@ -1,0 +1,9 @@
+# folder ignore
+/webapp/META-INF/
+/webapp/WEB-INF/
+
+# mac file ignore
+*.DS_Store
+
+# java libraray
+*.jar
