@@ -553,10 +553,10 @@
 				<textFieldExpression><![CDATA[$F{TEL_NO}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="436" y="159" width="140" height="60" uuid="73cc6b79-9788-4122-93ee-52734fa2db6a">
+				<reportElement x="423" y="159" width="148" height="60" uuid="73cc6b79-9788-4122-93ee-52734fa2db6a">
 					<printWhenExpression><![CDATA[$F{DELIVERY_TYPE}.toString().equals("2")]]></printWhenExpression>
 				</reportElement>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128C" drawText="false" checksumRequired="false" barWidth="3" barHeight="180">
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128C" drawText="false" checksumRequired="false" barWidth="3" barHeight="160">
 					<jr:codeExpression><![CDATA[$F{WB_NO}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
@@ -925,10 +925,10 @@
 				<textFieldExpression><![CDATA[$F{GTX_TML_CD}]]></textFieldExpression>
 			</textField>
 			<componentElement>
-				<reportElement x="410" y="158" width="156" height="60" uuid="67a4085c-899d-405e-8c20-1e477ff4763a">
+				<reportElement x="400" y="158" width="161" height="60" uuid="67a4085c-899d-405e-8c20-1e477ff4763a">
 					<printWhenExpression><![CDATA[$F{DELIVERY_TYPE}.toString().equals("1")]]></printWhenExpression>
 				</reportElement>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128A" drawText="false" checksumRequired="false" barWidth="4" barHeight="290">
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128A" drawText="false" checksumRequired="false" barWidth="4" barHeight="270">
 					<jr:codeExpression><![CDATA[$F{WB_NO}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
