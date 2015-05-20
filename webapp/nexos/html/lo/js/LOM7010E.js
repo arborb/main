@@ -975,7 +975,7 @@ function onBtnBoxComplete(e) {
   }
 
   _Save(0, "2");
-
+  $NC.showMessage('박스 완료했습니다.');
 }
 
 /**
@@ -1462,7 +1462,6 @@ function onSave(ajaxData) {
   _Cancel();
   
   setFocusScan();
-  $NC.showMessage('박스 완료했습니다.');
 }
 
 /**
