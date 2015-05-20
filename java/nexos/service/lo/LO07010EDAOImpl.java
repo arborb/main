@@ -134,7 +134,7 @@ public class LO07010EDAOImpl implements LO07010EDAO {
 
     return nexosDAO.callSP(LO_FW_SCAN_CONFIRM_ORDER_ID, params);
   }
-
+  
   @SuppressWarnings("rawtypes")
   @Override
   public Map callBWScanConfirm(Map<String, Object> params) throws Exception {
