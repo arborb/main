@@ -200,7 +200,7 @@ function _OnInputKeyUp(e, view) {
       if (boxType == $NC.G_CONSTS.SCAN_BOX) {
         onScanItem(scanVal);
       } else {
-        alert('스캔코드 형식이 잘못되었습니다.');
+        alert('스캔 바코드 형식이 잘못되었습니다.');
       }
       
     }
@@ -210,7 +210,7 @@ function _OnInputKeyUp(e, view) {
       var labels = $NC.G_VAR.labelList;
       for (var i in labels) {
         if (labels[i] == scanVal) {
-          alert('이미 스캔한 라벨입니다.');
+          alert('이미 스캔한 피킹라벨입니다.');
           setFocusScan();
           return false;
         }
@@ -966,12 +966,12 @@ function onGetLabelInfo(ajaxData) {
           G_GRDMASTER.data.addItem(resultArray[i]);
           $NC.G_VAR.labelList.push($('#edtLabelScan').val());
         } else {
-          alert('다른 주문의 상품을 스캔했습니다. 다른 용기에 작업하세요.');
+          alert('다른 주문자의 피킹라벨을 스캔했습니다. 다른 용기에 작업하세요.');
           setFocusScan();
           return false;
         }
       } else {
-	      alert('이미 스캔한 상품입니다.');
+	      alert('이미 스캔한 피킹라벨입니다.');
       }
     }
   }
@@ -995,7 +995,7 @@ function onGetLabelInfo(ajaxData) {
     return false;
   }
   if (rowData.CONFIRM_YN === 'Y') {
-    alert('피킹검수가 완료되었습니다.');
+    alert('용기 담기가 완료되었습니다.');
   }
   
   setProgressBar(G_GRDMASTER.data.getLength(), rowData.PICK_CNT);
@@ -1138,7 +1138,7 @@ function onGetItemInfo(ajaxData) {
         G_GRDMASTER.data.addItem(resultArray[i]);
         $NC.G_VAR.labelList.push($('#edtLabelScan').val());
       } else {
-        alert('다른 주문의 상품을 스캔했습니다. 다른 용기에 작업하세요.');
+        alert('다른 주문자의 피킹라벨을 스캔했습니다. 다른 용기에 작업하세요.');
         setFocusScan();
         return false;
       }

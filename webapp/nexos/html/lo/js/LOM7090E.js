@@ -518,7 +518,7 @@ function _Print(printIndex, printName) {
     };
     saveDs.push(saveData);
     if (rowData.PRINT_YN === 'Y') {
-      alert('이미 출력되었습니다.\n재출력화면에서 출력하세요.');
+      alert('이미 출력 되었습니다.\n피킹라벨재출력 화면에서 출력하세요.');
       return false;
     }
   }
@@ -2474,7 +2474,7 @@ function onProcessNxtA() {
 
   var rowCount = G_GRDT1DETAIL.data.getLength();
   if (rowCount === 0) {
-    alert("조회 후 처리하십시오.");
+    alert("조회 먼저 후 처리하십시오.");
     return;
   }
 
@@ -2543,7 +2543,7 @@ function onProcessNxtB() {
 
   var rowCount = G_GRDT2DETAIL.data.getLength();
   if (rowCount === 0) {
-    alert("조회 후 처리하십시오.");
+    alert("조회 먼저 후 처리하십시오.");
     return;
   }
 
@@ -2613,7 +2613,7 @@ function onProcessPreB() {
 
   var rowCount = G_GRDT2DETAIL.data.getLength();
   if (rowCount === 0) {
-    alert("조회 후 처리하십시오.");
+    alert("조회 먼저 후 처리하십시오.");
     return;
   }
 
@@ -2683,7 +2683,7 @@ function onProcessPreC() {
 
   var rowCount = G_GRDT3DETAIL.data.getLength();
   if (rowCount === 0) {
-    alert("조회 후 처리하십시오.");
+    alert("조회 먼저 후 처리하십시오.");
     return;
   }
   
@@ -2751,13 +2751,13 @@ function onSaveErrorT3Cancel(ajaxData) {
 function setT1OrderDiv() {
   var rowCount = G_GRDT1DETAIL.data.getLength();
   if (rowCount === 0) {
-    alert("조회 후 처리하십시오.");
+    alert("조회 먼저 후 처리하십시오.");
     return;
   }
   
   var deliveryType = $NC.getValue("#cboQT1Delivery_TypeB");
   if (deliveryType === '%') {
-    alert("배송유형을 변경해주세요.");
+    alert("변경할 배송유형을 선택 해주세요.");
     return;
   }
 
@@ -2819,13 +2819,13 @@ function onSaveErrorT1OrderDiv(ajaxData) {
 function setT2OrderDiv() {
   var rowCount = G_GRDT2DETAIL.data.getLength();
   if (rowCount === 0) {
-    alert("조회 후 처리하십시오.");
+    alert("조회 먼저 후 처리하십시오.");
     return;
   }
   
   var deliveryType = $NC.getValue("#cboQT2Delivery_TypeB");
   if (deliveryType === '%') {
-    alert("배송유형을 변경해주세요.");
+    alert("변경할 배송유형을 선택 해주세요.");
     return;
   }
 
@@ -2891,7 +2891,7 @@ function setT3OrderDiv() {
   
   var deliveryType = $NC.getValue("#cboQT3Delivery_TypeB");
   if (deliveryType === '%') {
-    alert("배송유형을 변경해주세요.");
+    alert("변경할 배송유형을 선택해주세요.");
     return;
   }
 
@@ -3117,7 +3117,7 @@ function grdT1DetailOnHeaderClick(e, args) {
 function setOrder_Adjustment() {
   var rowCount = G_GRDT1DETAIL.data.getLength();
   if (rowCount === 0) {
-    alert("조회 후 처리하십시오.");
+    alert("조회 먼저 후 처리하십시오.");
     return;
   }
 
