@@ -17,8 +17,7 @@
 -->
 <sqlMap namespace="LOM7090E">
 
-
-  <!-- [S] - RS_T1_MASTER -->
+ <!-- [S] - RS_T1_MASTER -->
   <parameterMap id="paramRS_T1_MASTER" class="java.util.Map">
     <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
     <parameter property="P_CENTER_CD"               mode="IN" />
@@ -172,6 +171,7 @@
     { ? = call LOM7090E.RS_T3_SUB(?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T3_SUB -->
+
 
 
   <!-- [S] - GET_ORDER_TYPE -->

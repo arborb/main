@@ -364,7 +364,11 @@ function _OnGridCheckBoxFormatterClick(e, view, args) {
   } else if ($("#divTabView").tabs("option", "active") === 1) {
     grdDetail = window["G_GRDT2DETAIL"];
   } else if ($("#divTabView").tabs("option", "active") === 2) {
-    grdDetail = window["G_GRDT3DETAIL"];
+    if (args.grid == "grdT3Master") {
+      grdDetail = window["G_GRDT3MASTER"];
+    }else if(args.grid == "grdT3Detail"){
+      grdDetail = window["G_GRDT3DETAIL"];  
+    }
   }
 
   if (grdDetail.view.getEditorLock().isActive()) {
@@ -523,7 +527,7 @@ function _Print(printIndex, printName) {
   for (var row = 0; row < rowCount_M; row++) {
     var rowData = G_GRDT3MASTER.data.getItem(row);
     if (rowData.CHECK_YN === "Y"){
-      checkedValueDS1.push(rowData.OUTBOUND_BATCH || ";" || rowData.ORDER_DIV);  
+      checkedValueDS1.push(rowData.OUTBOUND_BATCH + ";" + rowData.ORDER_TYPE);  
     }
   }
   var rowDataM = G_GRDT3DETAIL.data.getItem(G_GRDT3MASTER.lastRow);
@@ -1463,11 +1467,27 @@ function grdT3MasterInitialize() {
   G_GRDT3MASTER.view.onSelectedRowsChanged.subscribe(grdT3MasterOnAfterScroll);
   //G_GRDT3MASTER.view.onBeforeEditCell.subscribe(grdT3MasterOnBeforeEditCell);
   //G_GRDT3MASTER.view.onCellChange.subscribe(grdT3MasterOnCellChange);
+  G_GRDT3MASTER.view.onHeaderClick.subscribe(grdT3MasterOnHeaderClick);
+  $NC.setGridColumnHeaderCheckBox(G_GRDT3MASTER, "CHECK_YN");  
 }
 
 function grdT3MasterOnGetColumns() {
 
   var columns = [ ];
+  $NC.setGridColumn(columns, {
+    id: "CHECK_YN",
+    field: "CHECK_YN",
+    minWidth: 30,
+    width: 30,
+    sortable: false,
+    cssClass: "align-center",
+    formatter: Slick.Formatters.CheckBox,
+    editor: Slick.Editors.CheckBox,
+    editorOptions: {
+      valueChecked: "Y",
+      valueUnChecked: "N"
+    }
+  });  
   $NC.setGridColumn(columns, {
     id: "ORDER_TYPE_NM",
     field: "ORDER_TYPE_NM",
@@ -2309,6 +2329,7 @@ function onGetT2Sub(ajaxData) {
  */
 function onGetT3Master(ajaxData) {
   $NC.setInitGridData(G_GRDT3MASTER, ajaxData);
+  $NC.setGridColumnHeaderCheckBox(G_GRDT3MASTER, "CHECK_YN");
   //console.log('T3 Master: ', G_GRDT3MASTER.data.getItems());
 
   var total = 0;
@@ -2924,6 +2945,72 @@ function onSaveErrorT3OrderDiv(ajaxData) {
   $NC.onError(ajaxData);
 }
 
+
+function grdT3MasterOnHeaderClick(e, args) {
+  
+  G_GRDT3MASTER.view.getCanvasNode().focus();
+  
+  if (args.column.id == "CHECK_YN") {
+    
+    if ($(e.target).is(":checkbox")) {
+      
+      if (G_GRDT3MASTER.data.getLength() == 0) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
+      
+      var checkVal = $(e.target).is(":checked") ? "Y" : "N";
+      var rowCount = G_GRDT3MASTER.data.getLength();
+      var rowData;
+      G_GRDT3MASTER.data.beginUpdate();
+      for ( var row = 0; row < rowCount; row++) {
+        rowData = G_GRDT3MASTER.data.getItem(row);
+        if (rowData.CHECK_YN !== checkVal) {
+          rowData.CHECK_YN = checkVal;
+          G_GRDT3MASTER.data.updateItem(rowData.id, rowData);
+        }
+      }
+      G_GRDT3MASTER.data.endUpdate(); 
+      
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }
+  }
+}
+
+function grdT2MasterOnHeaderClick(e, args) {
+  
+  G_GRDT2MASTER.view.getCanvasNode().focus();
+  
+  if (args.column.id == "CHECK_YN") {
+    
+    if ($(e.target).is(":checkbox")) {
+      
+      if (G_GRDT2MASTER.data.getLength() == 0) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
+      
+      var checkVal = $(e.target).is(":checked") ? "Y" : "N";
+      var rowCount = G_GRDT2MASTER.data.getLength();
+      var rowData;
+      G_GRDT2MASTER.data.beginUpdate();
+      for ( var row = 0; row < rowCount; row++) {
+        rowData = G_GRDT2MASTER.data.getItem(row);
+        if (rowData.CHECK_YN !== checkVal) {
+          rowData.CHECK_YN = checkVal;
+          G_GRDT2MASTER.data.updateItem(rowData.id, rowData);
+        }
+      }
+      G_GRDT2MASTER.data.endUpdate();
+      
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }
+  }
+}
 
 function grdT3DetailOnHeaderClick(e, args) {
 
