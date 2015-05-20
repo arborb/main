@@ -439,6 +439,8 @@ function onScan(scanVal, flag) {
           setFocusScan();
         }
       });
+    } else {
+      scanBox();
     }
     function scanBox() {
       // 초기화
@@ -455,7 +457,6 @@ function onScan(scanVal, flag) {
         }, onGetMaster, onError, null, 'LOM7010E_BOX_SCAN');
       setFocusScan();
     }
-    scanBox();
     return false;
   }
   
