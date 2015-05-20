@@ -26,7 +26,14 @@ function _Initialize() {
     INSPECT_CHK: false,
     BOX_TYPE: null,
     lastProductCode: null,
-    PICK_SEQ: null
+    LAST_SCAN_TOTAL: null,
+    LAST_SCAN_PICKING: null,
+    LAST_SCAN_BOX: null,
+    LAST_SCAN_PRODUCT: null,
+    LAST_SCAN_QUANTITY: null,
+    PICK_SEQ: null,
+    isLabelScan: null,
+    scan: null
   });
 
   $NC.G_CONSTS.SCAN_TOTAL    = 0;  //0. 토탈피킹
@@ -275,6 +282,7 @@ function onScan(scanVal, flag) {
   if (!scanVal) {
     scanVal = $NC.G_VAR.lastProductCode;
   }
+  $NC.G_VAR.scan = scanVal;
   var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
   if ($NC.isNull(CENTER_CD)) {
     showMessage({
@@ -309,7 +317,7 @@ function onScan(scanVal, flag) {
       ,SCAN_BU_CD = SCAN_DATA[1]
       ,SCAN_OUTBOUND_DATE = $NC.getDate(SCAN_DATA[2])
       ,SCAN_PICK_SEQ = SCAN_DATA[3];
-      
+    $NC.G_VAR.LAST_SCAN_TOTAL = scanVal;
     if (G_GRDMASTER.data.getLength() > 0) {
       showMessage({
         message: "검수중인 상품이 있습니다. 계속 진행하시겠습니까?",
@@ -354,12 +362,14 @@ function onScan(scanVal, flag) {
   }
   // 1. 피킹라벨
   if (flag == $NC.G_CONSTS.SCAN_PICKING) {
+    $NC.G_VAR.isLabelScan = $NC.G_CONSTS.SCAN_PICKING;
+    $NC.G_VAR.LAST_SCAN_PICKING = scanVal;
     var SCAN_DATA = scanVal.substr(2).split($NC.G_VAR.BARCD_DATA_DIV)
       ,SCAN_CENTER_CD = SCAN_DATA[0]
       ,SCAN_BU_CD = SCAN_DATA[1]
       ,SCAN_OUTBOUND_DATE = $NC.getDate(SCAN_DATA[2])
       ,SCAN_PICK_SEQ = SCAN_DATA[3];
-      
+    
     if (G_GRDMASTER.data.getLength() > 0) {
       showMessage({
         message: "검수중인 상품이 있습니다. 계속 진행하시겠습니까?",
@@ -417,6 +427,8 @@ function onScan(scanVal, flag) {
   
   // 2. 용기번호
   if (flag == $NC.G_CONSTS.SCAN_BOX) {
+    $NC.G_VAR.isLabelScan = $NC.G_CONSTS.SCAN_BOX;
+    $NC.G_VAR.LAST_SCAN_BOX = scanVal;
     if (G_GRDMASTER.data.getLength() > 0) {
       showMessage({
         message: "검수중인 상품이 있습니다. 계속 진행하시겠습니까?",
@@ -438,9 +450,9 @@ function onScan(scanVal, flag) {
             P_CENTER_CD: CENTER_CD,
             P_BU_CD: BU_CD,
             P_OUTBOUND_DATE: OUTBOUND_DATE,
-            P_PICK_BOX_NO: scanVal
+            P_PICK_BOX_NO: $NC.G_VAR.scan
           })
-        }, onGetMaster, onError);
+        }, onGetMaster, onError, null, 'LOM7010E_BOX_SCAN');
       setFocusScan();
     }
     scanBox();
@@ -449,14 +461,11 @@ function onScan(scanVal, flag) {
   
   // 3. 상품코드
   if (flag == $NC.G_CONSTS.SCAN_PRODUCT) {
+    $NC.G_VAR.LAST_SCAN_PRODUCT = scanVal;
     // 스캔 가능여부 체크
     if (!onValidateScan(false)) {
       return false;
     }
-    // 그리드 데이터에서 해당 행 선택
-    /*if (!료(scanVal)) {
-      return false;
-    }*/
     var OUTBOUND_NO = $NC.getValue("#edtQOutbound_No");
     if ($NC.isNull(OUTBOUND_NO)) {
       showMessage("출고번호를 확인할 수 없습니다.\n\n전표를 다시 스캔하십시오.");
@@ -469,14 +478,15 @@ function onScan(scanVal, flag) {
         P_BU_CD: BU_CD,
         P_OUTBOUND_DATE: OUTBOUND_DATE,
         P_OUTBOUND_NO: OUTBOUND_NO,
-        P_ITEM_BAR_CD: scanVal
+        P_ITEM_BAR_CD: $NC.G_VAR.scan
       })
-    }, onGetItemInfo, onError);
+    }, onGetItemInfo, onError, null, 'LOM7010E_PRODUCT');
     return false;
   }
 
   // 4. 수량입력
   if (flag == $NC.G_CONSTS.SCAN_QUANTITY) {
+    $NC.G_VAR.LAST_SCAN_QUANTITY = scanVal;
     // 스캔 가능여부 체크
     if (!onValidateScan(true)) {
       return false;
@@ -493,14 +503,14 @@ function onScan(scanVal, flag) {
     var ORG_INSPECT_QTY = INSPECT_QTY;
     var ITEM_QTY = 0;
 
-    var scanLen = scanVal.length;
+    var scanLen = $NC.G_VAR.scan.length;
     // / Key 입력은 수량 전체 검수
     if (scanLen == 0) {
       ITEM_QTY = ENTRY_QTY - CONFIRM_QTY - INSPECT_QTY;
     } else {
       // 숫자 + / Key 입력은 검수수량을 입력 값으로 변경
       INSPECT_QTY = 0;
-      ITEM_QTY = Number(scanVal);
+      ITEM_QTY = Number($NC.G_VAR.scan);
     }
 
     if (isNaN(ITEM_QTY)) {
@@ -695,19 +705,31 @@ function _Inquiry() {
     return;
   }
 
-  var PICK_SEQ = $NC.G_VAR.PICK_SEQ;
-
-  // 파라메터 세팅
-  G_GRDMASTER.queryParams = $NC.getParams({
-    P_CENTER_CD: CENTER_CD,
-    P_BU_CD: BU_CD,
-    P_OUTBOUND_DATE: OUTBOUND_DATE,
-    P_PICK_SEQ: PICK_SEQ
-  });
-
-  G_GRDMASTER.queryId = "LOM7010E.RS_MASTER";
+  // OPG1 : master //1
+  // 용기번호 : master1 //2
+  if ($NC.G_VAR.isLabelScan == $NC.G_CONSTS.SCAN_PICKING) { //1
+    var PICK_SEQ = $NC.G_VAR.PICK_SEQ;
+    G_GRDMASTER.queryId = "LOM7010E.RS_MASTER";
+    G_GRDMASTER.queryParams = $NC.getParams({
+      P_CENTER_CD: CENTER_CD,
+      P_BU_CD: BU_CD,
+      P_OUTBOUND_DATE: OUTBOUND_DATE,
+      P_PICK_SEQ: PICK_SEQ
+    });
+    mockId = 'LOM7010E_RS_MASTER'
+  } else if ($NC.G_VAR.isLabelScan == $NC.G_CONSTS.SCAN_BOX) {  //2
+    G_GRDMASTER.queryId = "LOM7010E.RS_MASTER1";
+    G_GRDMASTER.queryParams = $NC.getParams({
+      P_CENTER_CD: CENTER_CD,
+      P_BU_CD: BU_CD,
+      P_OUTBOUND_DATE: OUTBOUND_DATE,
+      P_PICK_BOX_NO: $NC.G_VAR.LAST_SCAN_BOX
+    });
+    mockId = 'LOM7010E_RS_MASTER1'
+  }
+  
   $NC.serviceCall("/LOM7010E/getDataSet.do", 
-    $NC.getGridParams(G_GRDMASTER), onGetMaster, onError, null, 'LOM7010E_RS_MASTER');
+    $NC.getGridParams(G_GRDMASTER), onGetMaster, onError, null, mockId);
 }
 
 /**
@@ -753,7 +775,7 @@ function _Save(ITEM_QTY, procType) {
   var rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
 
   if (procType === "1") {
-    // 카운트시 한건씩 저장
+    // 상품코드 검수후 저장
     $NC.serviceCall("/LOM7010E/callScanBoxSave.do", {
       P_QUERY_PARAMS: $NC.getParams({
         P_CENTER_CD: rowData.CENTER_CD,
@@ -769,7 +791,7 @@ function _Save(ITEM_QTY, procType) {
       })
     }, onSave, onError, null, 'LOM7010E_SAVE1');
   } else if (procType === "2") {
-    // 카운트시 한건씩 저장
+    // 박스완료후 저장
     $NC.serviceCall("/LOM7010E/callScanBoxComplete.do", {
       P_QUERY_PARAMS: $NC.getParams({
         P_CENTER_CD: rowData.CENTER_CD,
