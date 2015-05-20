@@ -1438,13 +1438,16 @@
     <parameter property="P_CENTER_CD"               mode="IN" />
     <parameter property="P_BU_CD"                   mode="IN" />
     <parameter property="P_OUTBOUND_DATE"           mode="IN" />
-    <parameter property="P_PICK_BOX_NO"             mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
     <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
   </parameterMap>
     <procedure id="LO_BW_SCAN_PICK_PROC" parameterMap="paramLO_BW_SCAN_PICK_PROC" resultClass="java.util.HashMap">
-      { call LO_BW_SCAN_PICK_PROC(?, ?, ?, ?, ?) }
+      { call LO_BW_SCAN_PICK_PROC(?, ?, ?, ?, ?, ?) }
     </procedure>
   <!-- [E] - LO_BW_SCAN_PICK_PROC -->
+
+
 
   <!-- [S] - LO_PICK_SCAN_BOX_ADD -->
   <parameterMap id="paramLO_PICK_SCAN_BOX_ADD" class="java.util.Map">
@@ -1453,13 +1456,15 @@
     <parameter property="P_OUTBOUND_DATE"           mode="IN" />
     <parameter property="P_OUTBOUND_NO"             mode="IN" />
     <parameter property="P_PICK_BOX_NO"             mode="IN" />
+    <parameter property="P_PICK_SEQ"                mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
     <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
   </parameterMap>
     <procedure id="LO_PICK_SCAN_BOX_ADD" parameterMap="paramLO_PICK_SCAN_BOX_ADD" resultClass="java.util.HashMap">
-      { call LO_PICK_SCAN_BOX_ADD(?, ?, ?, ?, ?, ?, ?) }
+      { call LO_PICK_SCAN_BOX_ADD(?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
   <!-- [E] - LO_PICK_SCAN_BOX_ADD -->
+
 
   <!-- [S] - LO_PICK_SCAN_BOX_DEL -->
   <parameterMap id="paramLO_PICK_SCAN_BOX_DEL" class="java.util.Map">
