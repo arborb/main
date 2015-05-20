@@ -1279,6 +1279,7 @@ function onBtnInit(e) {
     return;
   }
   setFocusScan();
+  $NC.showMessage('초기화 되었습니다.');
 }
 
 function onGetMaster(ajaxData) {

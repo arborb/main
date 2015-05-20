@@ -16,14 +16,6 @@ function _Initialize() {
   grdMasterT1Initialize();
   grdDetailT1Initialize();
 
-  /*
-  grdMasterT2Initialize();
-  grdDetailT2Initialize();
-
-  grdMasterT3Initialize();
-  grdDetailT3Initialize();
-  */
-
   // 조회조건 - 배송유형 세팅
   $NC.setInitCombo("/WC/getDataSet.do", {
     P_QUERY_ID: "WC.POP_CMCODE",
@@ -49,10 +41,7 @@ function _Initialize() {
   $("#btnDeliveryChange").click(onBtnDeliveryChange);
 
   $("#btnPrintInvoice").click(onBtnPrintInvoice); // 택배송장출력 버튼 클릭
-  // $("#btnPrintReceipt").click(onBtnPrintReceipt); // 거래명세서출력 버튼 클릭
-  // $("#btnPrintCard_Msg").click(onBtnPrintCard_Msg); // 카드메세지출력 버튼 클릭
 
-  // $NC.setEnable("#btnPrintCard_Msg", $NC.G_VAR.userData.P_CARD_MSG_YN);
   $NC.setEnable("#btnBoxDelete", $NC.G_VAR.userData.P_INSPECT_YN);
   $NC.setEnable("#btnBoxMerge", $NC.G_VAR.userData.P_INSPECT_YN);
   $NC.setEnable("#btnSaveT2", $NC.G_VAR.userData.P_INSPECT_YN);
@@ -129,13 +118,15 @@ function _Inquiry() {
   // 파라메터 세팅
   G_GRDMASTERT1.queryParams = queryParams;
   // 데이터 조회
-  $NC.serviceCall("/LOM7010E/getDataSet.do", $NC.getGridParams(G_GRDMASTERT1), onGetMasterT1);
+  $NC.serviceCall("/LOM7010E/getDataSet.do", 
+    $NC.getGridParams(G_GRDMASTERT1), onGetMasterT1, null, null, 'LOM7011P_RS_MASTER');
 
   $NC.setInitGridVar(G_GRDDETAILT1);
   // 파라메터 세팅
   G_GRDDETAILT1.queryParams = queryParams;
   // 데이터 조회
-  $NC.serviceCall("/LOM7010E/getDataSet.do", $NC.getGridParams(G_GRDDETAILT1), onGetDetailT1);
+  $NC.serviceCall("/LOM7010E/getDataSet.do", 
+    $NC.getGridParams(G_GRDDETAILT1), onGetDetailT1, null, null, 'LOM7011P_RS_MASTER1');
 
 }
 
@@ -1368,7 +1359,7 @@ function onBtnBoxDelete() {
   $NC.serviceCall("/LOM7010E/callScanBoxDelete.do", {
     P_DS_MASTER: $NC.toJson(masterDS),
     P_USER_ID: $NC.G_USERINFO.USER_ID
-  }, onSave);
+  }, onSave, null, null, 'LOM7011P_DELETE');
 
 }
 
