@@ -1,27 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+>
+
   <display-name>Nexos Application</display-name>
+
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
+
+  <!-- Web App Root Listener Settings -->
+  <!--
+    Context xml 파일에서 Web root의 절대 경로를 알 필요가 있어서 지정 함.
+  -->
   <listener>
     <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
   </listener>
+
+  <!-- Web root의 System Property 키 값을 설정
+    param-name은 webAppRootKey로 고정, param-value에 Property 키 값을 지정
+    미지정시 기본 키는 webapp.root로 지정 됨.
+  -->
   <context-param>
     <param-name>webAppRootKey</param-name>
     <param-value>wms.webapp.root</param-value>
   </context-param>
+
+  <!-- Log4j Settings -->
   <listener>
     <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
   </listener>
+
+  <!-- WebAppRootListener를 등록했으므로 log4j에서 Web root System Property를 세팅하지 않도록 지정 -->
   <context-param>
     <param-name>log4jExposeWebAppRoot</param-name>
     <param-value>false</param-value>
   </context-param>
+
   <context-param>
     <param-name>log4jConfigLocation</param-name>
     <param-value>/WEB-INF/classes/nexos/config/log4j.xml</param-value>
   </context-param>
+
   <context-param>
     <description>Interval between config file refresh checks, in milliseconds. If not specified,
         no refresh checks will happen, which avoids starting Log4J's watchdog thread.
@@ -31,26 +52,42 @@
     <param-name>log4jRefreshInterval</param-name>
     <param-value>6000</param-value>
   </context-param>
+
+  <!-- Root Context Settings - (root)WebApplicationContext -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
         classpath:/nexos/config/context-*.xml
     </param-value>
   </context-param>
+
+  <!-- Spring Security Settings -->
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
   </filter>
+
   <filter-mapping>
     <filter-name>springSecurityFilterChain</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+  <!--
+    <listener>
+    <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+  -->
+
+  <!-- Session Timeout Settings - 분 단위 -->
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>
+
+  <!-- Encoding Settings -->
   <filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -59,10 +96,13 @@
       <param-value>utf-8</param-value>
     </init-param>
   </filter>
+
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+  <!-- Spring MVC Dispatcher Servlet Settings - (neXosMVCServlet)WebApplicationContext -->
   <servlet>
     <servlet-name>neXosMVCServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -72,26 +112,36 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
+
   <servlet-mapping>
     <servlet-name>neXosMVCServlet</servlet-name>
     <url-pattern>*.do</url-pattern>
   </servlet-mapping>
+
+  <!-- Interface WebService Servlet Settings - (neXosAXISServlet)WebApplicationContext -->
+  <!--
+    <servlet>
+    <servlet-name>neXosAXISServlet</servlet-name>
+    <servlet-class>org.apache.axis.transport.http.AxisServlet</servlet-class>
+    <load-on-startup>5</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+    <servlet-name>neXosAXISServlet</servlet-name>
+    <url-pattern>/WS/*</url-pattern>
+    </servlet-mapping>
+  -->
+
+  <!-- Interface WebService Servlet Settings - (neXosCXFServlet)WebApplicationContext -->
   <servlet>
     <servlet-name>neXosCXFServlet</servlet-name>
     <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+
   <servlet-mapping>
     <servlet-name>neXosCXFServlet</servlet-name>
     <url-pattern>/WS/*</url-pattern>
   </servlet-mapping>
-  <display-name>000_NEXOS_HTML5</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
+
 </web-app>
