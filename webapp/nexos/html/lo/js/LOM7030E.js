@@ -171,7 +171,7 @@ function _OnResize(parent) {
   var clientWidth = parent.width() - $NC.G_LAYOUT.border1;
   var clientHeight = parent.height() - $NC.G_OFFSET.nonClientHeight;
 
-  var masterViewWidth = Math.max($NC.getTruncVal(clientWidth * 0.35), 500);
+  var masterViewWidth = Math.max($NC.getTruncVal(clientWidth * 0.35), 800);
   var detailViewWidth = clientWidth - masterViewWidth - $NC.G_LAYOUT.margin1 - $NC.G_LAYOUT.border1;
 
   $NC.resizeContainer("#divCenterView", clientWidth, clientHeight);
