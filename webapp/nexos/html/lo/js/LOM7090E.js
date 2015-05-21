@@ -39,6 +39,9 @@ function _Initialize() {
     }
   });
 
+  // 추가 조회조건 사용
+  $NC.setInitAdditionalCondition();
+
   // 탭 초기화
   $NC.setInitTab("#divTabView", {
     tabIndex: 0,
@@ -170,12 +173,101 @@ function _Initialize() {
       P_SUB_CD2: ""
     })
   }, {
-    selector: "#cboQInout_Cd",
+    selector: ["#cboQInout_Cd", "#cboQDelivery_Type"],
     codeField: "CODE_CD",
     nameField: "CODE_NM",
     fullNameField: "CODE_CD_F",
     addAll: true
   });
+
+  // 조회조건 - 몰구분 세팅
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMMALL",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_MALL_CD: "%"
+    })
+  }, {
+    selector: "#cboQMall_Cd",
+    codeField: "MALL_CD",
+    nameField: "MALL_NM",
+    fullNameField: "MALL_CD_F",
+    addAll: true
+  });
+
+  // 조회조건 - 운송구분 세팅
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "IN_TRANS_DIV",
+      P_CODE_CD: "%",
+      P_SUB_CD1: "",
+      P_SUB_CD2: ""
+    })
+  }, {
+    selector: "#cboQShip_Type",
+    codeField: "CODE_CD",
+    nameField: "CODE_NM",
+    fullNameField: "CODE_CD_F",
+    addAll: true
+  });
+
+  // 조회조건 - 매입형태 세팅
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "BUY_TYPE",
+      P_CODE_CD: "%",
+      P_SUB_CD1: "",
+      P_SUB_CD2: ""
+    })
+  }, {
+    selector: "#cboQInorder_Type",
+    codeField: "CODE_CD",
+    nameField: "CODE_NM",
+    fullNameField: "CODE_CD_F",
+    addAll: true
+  });
+
+  // 조회조건 - 배송지역구분 세팅
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "DELIVERY_ROUTE",
+      P_CODE_CD: "%",
+      P_SUB_CD1: "",
+      P_SUB_CD2: ""
+    })
+  }, {
+    selector: "#cboQDelivery_Type2",
+    codeField: "CODE_CD",
+    nameField: "CODE_NM",
+    fullNameField: "CODE_CD_F",
+    addAll: true
+  });
+
+  // 조회조건 - 운송비구분 세팅
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "TRANS_FEE_DIV",
+      P_CODE_CD: "%",
+      P_SUB_CD1: "",
+      P_SUB_CD2: ""
+    })
+  }, {
+    selector: "#cboQShip_Price_Type",
+    codeField: "CODE_CD",
+    nameField: "CODE_NM",
+    fullNameField: "CODE_CD_F",
+    addAll: true
+  });
+
+  // 조회조건 - 출고차수 세팅
+  // 출고지시 화면의 출고차수 새로고침
+  $("#btnQOutbound_Batch").click(function() {
+    setOutboundBatchCombo("#cboQOutbound_Batch", false);
+  });
+  setOutboundBatchCombo("#cboQOutbound_Batch", false);
 
   // 조회조건 - T1 상품주문구분
   $NC.setInitCombo("/LOM7090E/getDataSet.do", {
@@ -253,6 +345,7 @@ function _Initialize() {
       $NC.setEnable('#dtpQOutbound_Date2');
     }
   });
+  _OnConditionChange();
 }
 
 /**
@@ -396,6 +489,18 @@ function _OnGridCheckBoxFormatterClick(e, view, args) {
  * Condition Change Event - Input, Select Change 시 호출 됨
  */
 function _OnConditionChange(e, view, val) {
+  $("#divOrderDate").show(); // 출고예정일자 표시
+  $("#tdQDsp_Time_Type").show(); // 예정시간 표시
+  $("#divOutboundBatch").hide(); // 출고차수 비표시
+  
+  $("#tdQDsp_Brand_Cd").show(); // 판매사(일괄출고) 비표시
+  $("#tdQDsp_Order_TypeC").hide(); // 주문구분(지시) 비표시
+  $("#tdQDsp_Item_Cnt_Div").parent().hide(); // 합품여부
+  $("#tdQMall_Cd").show().parent().show(); // 몰구분 비표시
+  $("#tdQInorder_Type").show().parent().show(); // 매입형태 비표시
+  $("#tdQShip_Type").show().parent().show(); // 운송구분 비표시
+  $("#tdQShip_Price_Type").show().parent().show(); // 운송비구분 비표시
+
   //검색항목 값 변경시 화면 클리어
   if ($("#divTabView").tabs("option", "active") === 0) {
     $("#T1Option").show();
@@ -404,6 +509,11 @@ function _OnConditionChange(e, view, val) {
     $("#divT2ProcessingInfo").hide();
     $("#T3Option").hide();
     $("#divT3ProcessingInfo").hide();
+
+    $('#tdDirectHidden').show();
+    $('#lblQOrder_Date').text('예정일자');
+    $('#tdOutboundHidden').show();
+    $('#tdQDsp_Outbound_Batch').hide();
     return false;
   }
   if ($("#divTabView").tabs("option", "active") === 1) {
@@ -413,6 +523,11 @@ function _OnConditionChange(e, view, val) {
     $("#divT2ProcessingInfo").show();
     $("#T3Option").hide();
     $("#divT3ProcessingInfo").hide();
+
+    $('#tdDirectHidden').show();
+    $('#lblQOrder_Date').text('출고일자');
+    $('#tdOutboundHidden').hide();
+    $('#tdQDsp_Outbound_Batch').hide();
     return false;
   }
   $("#T1Option").hide();
@@ -421,6 +536,11 @@ function _OnConditionChange(e, view, val) {
   $("#divT2ProcessingInfo").hide();
   $("#T3Option").show();
   $("#divT3ProcessingInfo").show();
+
+  $('#tdDirectHidden').show();
+  $('#lblQOrder_Date').text('출고일자');
+  $('#tdOutboundHidden').hide();
+  $('#tdQDsp_Outbound_Batch').show();
 }
 
 /**
@@ -435,6 +555,7 @@ function _Inquiry() {
   } else if (id === 2) {
     getDataT3Master();
   }
+  _OnConditionChange();
 }
 
 /**
@@ -1805,29 +1926,81 @@ function grdT3SubOnAfterScroll(e, args) {
 /**
  * 검색조건 데이터 검증
  */
-var CENTER_CD
-  ,BU_CD
-  ,ORDER_DATE1
-  ,ORDER_DATE2
-  ,OUTBOUND_DATE1
-  ,OUTBOUND_DATE2
-  ,OUTBOUND_DATE3
-  ,OUTBOUND_DATE4
-  ,INOUT_CD
-  ,BRAND_CD
-  ,USER_ID
-  ,DEAL_ID
-  ,ORDER_TYPE_T1
-  ,ORDER_TYPE_T2
-  ,ORDER_TYPE_T3;
+/*
+<예정>
+물류센터  사업구분  예정일자2   출고일자1   
+center  bu  tdDirectHidden  tdOutboundHidden
+
+<등록>
+물류센터  사업구분  예정일자2(출고)
+center  bu  tdDirectHidden
+
+<지시>
+물류센터  사업구분  예정일자2(출고)  출고차수
+center  bu  tdDirectHidden   tdQDsp_Outbound_Batch
+*/
+var CENTER_CD       // 물류센터
+  ,BU_CD            // 사업구분
+  ,ORDER_DATE1      // 예정(출고)일자 시작
+  ,ORDER_DATE2      // 예정(출고)일자 종료
+  ,OUTBOUND_DATE    // 출고일자 // 예정에만.
+  ,OUTBOUND_BATCH   // 출고차수 // 지시에서만.
+
+  ,DEAL_ID          // 딜ID
+  ,OWN_BRAND_CD     // 위탁사
+  ,BRAND_CD         // 판매사
+  ,BU_TIME          // 주문시간
+  ,BU_TIME1         // 주문시간 시작
+  ,BU_TIME2         // 주문시간 종료
+
+  ,BU_NO            // 주문번호
+  ,DELIVERY_TYPE    // 배송유형
+  ,MALL_CD          // 몰구분
+  ,INOUT_CD         // 입출고구분
+
+  ,SHIPPER_NM       // 수령자명
+  ,ORDERER_NM       // 주문자명
+  ,ITEM_CD          // 상품코드
+  ,ITEM_NM          // 상품명
+  ,SHIP_TYPE        // 운송구분
+  ,INORDER_TYPE     // 매입형태
+  ,DELIVERY_TYPE2   // 배송지역구분
+  ,SHIP_PRICE_TYPE; // 운송비구분
+
 function searchValidataion(flag) {
-  CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  CENTER_CD        = $NC.getValue("#cboQCenter_Cd");
+  BU_CD            = $NC.getValue("#edtQBu_Cd");
+  ORDER_DATE1      = $NC.getValue("#dtpQOrder_Date1");
+  ORDER_DATE2      = $NC.getValue("#dtpQOrder_Date2");
+  OUTBOUND_DATE    = $NC.getValue("#dtpQOutbound_Date");
+  OUTBOUND_BATCH   = $NC.getValue("#btnQOutbound_Batch");
+
+  DEAL_ID          = $NC.getValue('#edtQDeal_Id');
+  OWN_BRAND_CD     = $NC.getValue('#edtQOwn_Brand_Cd');
+  BRAND_CD         = $NC.getValue('#edtQBrand_Cd');
+  BU_TIME1         = $NC.getValue('#edtQBu_Time1');
+  BU_TIME2         = $NC.getValue('#edtQBu_Time2');
+  BU_TIME          = BU_TIME1 + '' + BU_TIME2;
+
+  BU_NO            = $NC.getValue('#edtQBu_No');
+  DELIVERY_TYPE    = $NC.getValue('#cboQDelivery_Type');
+  MALL_CD          = $NC.getValue('#cboQMall_Cd');
+  INOUT_CD         = $NC.getValue('#cboQInout_Cd');
+
+  SHIPPER_NM       = $NC.getValue('#edtQShipper_Nm');
+  ORDERER_NM       = $NC.getValue('#edtQOrderer_Nm');
+  ITEM_CD          = $NC.getValue('#edtQItem_Cd');
+  ITEM_NM          = $NC.getValue('#edtQItem_Nm');
+  SHIP_TYPE        = $NC.getValue('#cboQShip_Type');
+  INORDER_TYPE     = $NC.getValue('#cboQInorder_Type');
+  DELIVERY_TYPE2   = $NC.getValue('#cboQDelivery_Type2');
+  SHIP_PRICE_TYPE  = $NC.getValue('#cboQShip_Price_Type');
+
   if ($NC.isNull(CENTER_CD)) {
     alert("물류센터를 선택하십시오.");
     $NC.setFocus("#cboQCenter_Cd");
     return false;
   }
-  BU_CD = $NC.getValue("#edtQBu_Cd");
   if ($NC.isNull(BU_CD)) {
     alert("사업구분 코드를 입력하십시오.");
     $NC.setFocus("#edtQBu_Cd");
@@ -1835,37 +2008,29 @@ function searchValidataion(flag) {
   }
   
   if (flag == 'T1') {
-    ORDER_DATE1 = $NC.getValue("#dtpQOrder_Date1");
     if ($NC.isNull(ORDER_DATE1)) {
       alert("검색 시작일자를 입력하십시오.");
       $NC.setFocus("#dtpQORDER_DATE1");
       return false;
     }
-
-    ORDER_DATE2 = $NC.getValue("#dtpQOrder_Date2");
     if ($NC.isNull(ORDER_DATE2)) {
       alert("검색 종료일자를 입력하십시오.");
       $NC.setFocus("#dtpQORDER_DATE2");
       return false;
     }
-
     if (ORDER_DATE1 > ORDER_DATE2) {
       alert("출고예정일자 범위 입력오류입니다.");
       $NC.setFocus("#dtpQORDER_DATE1");
       return false;
     }
-    ORDER_TYPE_T1 = $NC.getValue("#cboQT1Order_Div");
   }
 
   if (flag == 'T2') {
-    OUTBOUND_DATE1 = $NC.getValue("#dtpQOutbound_Date1");
     if ($NC.isNull(OUTBOUND_DATE1)) {
       alert("검색 시작일자를 입력하십시오.");
       $NC.setFocus("#dtpQOutbound_Date1");
       return false;
     }
-
-    OUTBOUND_DATE2 = $NC.getValue("#dtpQOutbound_Date2");
     if ($NC.isNull(OUTBOUND_DATE2)) {
       alert("검색 종료일자를 입력하십시오.");
       $NC.setFocus("#dtpQOutbound_Date2");
@@ -1877,34 +2042,24 @@ function searchValidataion(flag) {
       $NC.setFocus("#dtpQOutbound_Date1");
       return false;
     }
-    ORDER_TYPE_T2 = $NC.getValue("#cboQT2Order_Div");
   }
   if (flag == 'T3') {
-    OUTBOUND_DATE3 = $NC.getValue("#dtpQOutbound_Date3");
     if ($NC.isNull(OUTBOUND_DATE3)) {
       alert("검색 시작일자를 입력하십시오.");
       $NC.setFocus("#dtpQOutbound_Date3");
       return false;
     }
-
-    OUTBOUND_DATE4 = $NC.getValue("#dtpQOutbound_Date4");
     if ($NC.isNull(OUTBOUND_DATE4)) {
       alert("검색 종료일자를 입력하십시오.");
       $NC.setFocus("#dtpQOutbound_Date4");
       return false;
     }
-
     if (OUTBOUND_DATE3 > OUTBOUND_DATE4) {
       alert("출고예정일자 범위 입력오류입니다.");
       $NC.setFocus("#dtpQOutbound_Date3");
       return false;
     }
-    ORDER_TYPE_T3 = $NC.getValue("#cboQT3Order_Div");
   }
-  INOUT_CD = $NC.getValue("#cboQInout_Cd");
-  BRAND_CD = $NC.getValue("#edtQOwn_Brand_Cd", true);
-  USER_ID = $NC.G_USERINFO.USER_ID;
-  DEAL_ID = $NC.getValue("#edtQDeal_Cd", true);
   return true;
 }
 
@@ -1930,15 +2085,32 @@ function getDataT1Master() {
   
   // 파라메터 세팅
   G_GRDT1MASTER.queryParams = $NC.getParams({
-    P_CENTER_CD: CENTER_CD,
-    P_BU_CD: BU_CD,
-    P_ORDER_DATE1: ORDER_DATE1,
-    P_ORDER_DATE2: ORDER_DATE2,
-    P_INOUT_CD: INOUT_CD,
-    P_OWN_BRAND_CD: BRAND_CD,
-    P_USER_ID: USER_ID,
-    P_DEAL_ID: DEAL_ID,
-    P_ORDER_TYPE: ORDER_TYPE_T1
+     P_CENTER_CD        : CENTER_CD         // 물류센터
+    ,P_BU_CD            : BU_CD             // 사업구분
+    ,P_ORDER_DATE1      : ORDER_DATE1       // 예정(출고)일자 시작
+    ,P_ORDER_DATE2      : ORDER_DATE2       // 예정(출고)일자 종료
+    //,P_OUTBOUND_DATE    : OUTBOUND_DATE     // 출고일자
+    //,P_OUTBOUND_BATCH   : OUTBOUND_BATCH    // 출고차수
+
+    ,P_DEAL_ID          : DEAL_ID           // 딜ID
+    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
+    ,P_BRAND_CD         : BRAND_CD          // 판매사
+    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+
+    ,P_BU_NO            : BU_NO             // 주문번호
+    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+    ,P_MALL_CD          : MALL_CD           // 몰구분
+    ,P_INOUT_CD         : INOUT_CD          // 입출고구분
+
+    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_ITEM_CD          : ITEM_CD           // 상품코드
+    ,P_ITEM_NM          : ITEM_NM           // 상품명
+    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+    ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
+    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    ,P_USER_ID          : $NC.G_USERINFO.USER_ID
   });
   // T1 MASTER 데이터 조회
   $NC.serviceCall("/LOM7090E/getDataSet.do", $NC.getGridParams(G_GRDT1MASTER), onGetT1Master, null, null, '7090E_RS_T1_MASTER');
@@ -1963,8 +2135,6 @@ function getDataT1Detail(rowData) {
     ORDER_DATE2 = $NC.getValue('#dtpQOrder_Date2');
   }
   
-  //{"P_CENTER_CD": "G1","P_BU_CD": "5000","P_ORDER_DATE": "2015-03-14","P_INOUT_CD": "","P_OWN_BRAND_CD": "%",
-  //"P_USER_ID": "WMS7","P_DEAL_ID": "%","P_ORDER_TYPE": "12" }
   G_GRDT1DETAIL.queryParams = $NC.getParams({
     P_CENTER_CD: CENTER_CD,
     P_BU_CD: BU_CD,
@@ -1991,7 +2161,6 @@ function getDataT1Sub(rowData) {
   // T1 DETAIL 조회시 전역 변수 값 초기화
   $NC.setInitGridVar(G_GRDT1SUB);
 
-  //{"P_CENTER_CD": "G1","P_BU_CD": "5000","P_ORDER_DATE": "2015-03-14","P_ORDER_NO": "001108" }
   G_GRDT1SUB.queryParams = $NC.getParams({
     P_CENTER_CD: CENTER_CD,
     P_BU_CD: BU_CD,
@@ -2017,8 +2186,6 @@ function getDataT2Master() {
   $NC.setInitGridVar(G_GRDT2SUB);
   
   // 파라메터 세팅
-  // {     "P_CENTER_CD": "G1",     "P_BU_CD": "5000",     "P_OUTBOUND_DATE": "2015-03-17",     "P_INOUT_CD": "%",     
-  // "P_OWN_BRAND_CD": "%",     "P_USER_ID": "WMS7",     "P_DEAL_ID": "%",     "P_ORDER_TYPE": "12" }
   if ($('#chkQOutbound_Div').is(':checked')) {
     OUTBOUND_DATE1 = "";
     OUTBOUND_DATE2 = "";
@@ -2028,15 +2195,32 @@ function getDataT2Master() {
   }
 
   G_GRDT2MASTER.queryParams = $NC.getParams({
-    P_CENTER_CD: CENTER_CD,
-    P_BU_CD: BU_CD,
-    P_OUTBOUND_DATE1: OUTBOUND_DATE1,
-    P_OUTBOUND_DATE2: OUTBOUND_DATE2,
-    P_INOUT_CD: INOUT_CD,
-    P_OWN_BRAND_CD: BRAND_CD,
-    P_USER_ID: USER_ID,
-    P_DEAL_ID: DEAL_ID,
-    P_ORDER_TYPE: ORDER_TYPE_T2
+     P_CENTER_CD        : CENTER_CD         // 물류센터
+    ,P_BU_CD            : BU_CD             // 사업구분
+    ,P_ORDER_DATE1      : ORDER_DATE1       // 예정(출고)일자 시작
+    ,P_ORDER_DATE2      : ORDER_DATE2       // 예정(출고)일자 종료
+    //,P_OUTBOUND_DATE    : OUTBOUND_DATE     // 출고일자
+    //,P_OUTBOUND_BATCH   : OUTBOUND_BATCH    // 출고차수
+
+    ,P_DEAL_ID          : DEAL_ID           // 딜ID
+    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
+    ,P_BRAND_CD         : BRAND_CD          // 판매사
+    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+
+    ,P_BU_NO            : BU_NO             // 주문번호
+    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+    ,P_MALL_CD          : MALL_CD           // 몰구분
+    ,P_INOUT_CD         : INOUT_CD          // 입출고구분
+
+    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_ITEM_CD          : ITEM_CD           // 상품코드
+    ,P_ITEM_NM          : ITEM_NM           // 상품명
+    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+    ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
+    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    ,P_USER_ID          : $NC.G_USERINFO.USER_ID
   });
   // T2 MASTER 데이터 조회
   $NC.serviceCall("/LOM7090E/getDataSet.do", $NC.getGridParams(G_GRDT2MASTER), onGetT2Master, null, null, '7090E_RS_T2_MASTER');
@@ -2063,8 +2247,6 @@ function getDataT2Detail(rowData) {
     OUTBOUND_DATE2 = rowData['OUTBOUND_DATE'];
   }
   
-  //{"P_CENTER_CD": "G1","P_BU_CD": "5000","P_OUTBOUND_DATE": "2015-03-17","P_INOUT_CD": "%",
-  // "P_OWN_BRAND_CD": "%","P_USER_ID": "WMS7","P_DEAL_ID": "%","P_ORDER_TYPE": "12" }
   G_GRDT2DETAIL.queryParams = $NC.getParams({
     P_CENTER_CD: CENTER_CD,
     P_BU_CD: BU_CD,
@@ -2118,18 +2300,33 @@ function getDataT3Master() {
   $NC.setInitGridVar(G_GRDT3SUB);
   
   // 파라메터 세팅
-  //{"P_CENTER_CD": "G1","P_BU_CD": "5000","P_OUTBOUND_DATE1": "2015-01-14","P_OUTBOUND_DATE2": "2015-04-02",
-  // "P_INOUT_CD": "","P_OWN_BRAND_CD": "%","P_USER_ID": "WMS7","P_DEAL_ID": "%","P_ORDER_TYPE": "11" }
   G_GRDT3MASTER.queryParams = $NC.getParams({
-    P_CENTER_CD: CENTER_CD,
-    P_BU_CD: BU_CD,
-    P_OUTBOUND_DATE1: OUTBOUND_DATE3,
-    P_OUTBOUND_DATE2: OUTBOUND_DATE4,
-    P_INOUT_CD: INOUT_CD,
-    P_OWN_BRAND_CD: BRAND_CD,
-    P_USER_ID: USER_ID,
-    P_DEAL_ID: DEAL_ID,
-    P_ORDER_TYPE: ORDER_TYPE_T3
+     P_CENTER_CD        : CENTER_CD         // 물류센터
+    ,P_BU_CD            : BU_CD             // 사업구분
+    ,P_ORDER_DATE1      : ORDER_DATE1       // 예정(출고)일자 시작
+    ,P_ORDER_DATE2      : ORDER_DATE2       // 예정(출고)일자 종료
+    //,P_OUTBOUND_DATE    : OUTBOUND_DATE     // 출고일자
+    ,P_OUTBOUND_BATCH   : OUTBOUND_BATCH    // 출고차수
+
+    ,P_DEAL_ID          : DEAL_ID           // 딜ID
+    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
+    ,P_BRAND_CD         : BRAND_CD          // 판매사
+    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+
+    ,P_BU_NO            : BU_NO             // 주문번호
+    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+    ,P_MALL_CD          : MALL_CD           // 몰구분
+    ,P_INOUT_CD         : INOUT_CD          // 입출고구분
+
+    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_ITEM_CD          : ITEM_CD           // 상품코드
+    ,P_ITEM_NM          : ITEM_NM           // 상품명
+    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+    ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
+    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    ,P_USER_ID          : $NC.G_USERINFO.USER_ID
   });
   // T1 MASTER 데이터 조회
   $NC.serviceCall("/LOM7090E/getDataSet.do", $NC.getGridParams(G_GRDT3MASTER), onGetT3Master, null, null, '7090E_RS_T3_MASTER');
@@ -3159,4 +3356,44 @@ function onSaveOrderAdjust(ajaxData) {
 
 function onSaveErrorOrderAdjust(ajaxData) {
   $NC.onError(ajaxData);
+}
+
+/**
+ * 출고일자 값 변경시 출고차수 콤보 재설정
+ */
+function setOutboundBatchCombo(comboId, isAddAll, setPos) {
+
+  var position;
+  if ($NC.isNull(setPos)) {
+    position = "first";
+  } else {
+    position = setPos;
+  }
+  // 조회조건 - 출고차수 세팅
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_OUTBOUND_BATCH",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CENTER_CD: $NC.getValue("#cboQCenter_Cd"),
+      P_BU_CD: $NC.getValue("#edtQBu_Cd"),
+      P_OUTBOUND_DATE: $NC.getValue("#dtpQOutbound_Date"),
+      P_OUTBOUND_DIV: "2" // --출고작업구분(1:기본출고, 2:온라인출고)
+    })
+  }, {
+    selector: comboId,
+    codeField: "OUTBOUND_BATCH",
+    nameField: "OUTBOUND_BATCH",
+    fullNameField: "OUTBOUND_BATCH_F",
+    addAll: !$NC.isNull(isAddAll) && isAddAll,
+    addCustom: !$NC.isNull(isAddAll) && !isAddAll ? {
+      codeFieldVal: "000",
+      nameFieldVal: "신규"
+    } : null,
+    selectOption: position == "first" ? "F" : (position == "last" ? "L" : null),
+    selectVal: (position == "first" || position == "last") ? null : position,
+    onComplete: function() {
+      if (comboId == "#cboOutbound_Batch") { // 출고 지시(입력용)일 경우
+        $NC.setEnable("#edtOutbound_Batch_NmC", $NC.getValue(comboId) == "000");
+      }
+    }
+  });
 }
