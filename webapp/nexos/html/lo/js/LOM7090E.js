@@ -265,9 +265,9 @@ function _Initialize() {
   // 조회조건 - 출고차수 세팅
   // 출고지시 화면의 출고차수 새로고침
   $("#btnQOutbound_Batch").click(function() {
-    setOutboundBatchCombo("#cboQOutbound_Batch", false);
+    setOutboundBatchCombo("#cboQOutbound_Batch", true);
   });
-  setOutboundBatchCombo("#cboQOutbound_Batch", false);
+  setOutboundBatchCombo("#cboQOutbound_Batch", true);
 
   // 조회조건 - T1 상품주문구분
   $NC.setInitCombo("/LOM7090E/getDataSet.do", {
@@ -2101,25 +2101,22 @@ function getDataT1Master() {
     ,P_ORDER_DATE2      : ORDER_DATE2       // 예정(출고)일자 종료
     //,P_OUTBOUND_DATE    : OUTBOUND_DATE     // 출고일자
     //,P_OUTBOUND_BATCH   : OUTBOUND_BATCH    // 출고차수
-
-    ,P_DEAL_ID          : DEAL_ID           // 딜ID
-    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
-    ,P_BRAND_CD         : BRAND_CD          // 판매사
-    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
-
-    ,P_BU_NO            : BU_NO             // 주문번호
-    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
-    ,P_MALL_CD          : MALL_CD           // 몰구분
     ,P_INOUT_CD         : INOUT_CD          // 입출고구분
-
-    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
-    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_BU_NO            : BU_NO             // 주문번호
+    ,P_BRAND_CD         : BRAND_CD          // 판매사
     ,P_ITEM_CD          : ITEM_CD           // 상품코드
     ,P_ITEM_NM          : ITEM_NM           // 상품명
-    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+    ,P_MALL_CD          : MALL_CD           // 몰구분
     ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
-    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
     ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    ,P_DEAL_ID          : DEAL_ID           // 딜ID
+    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
     ,P_USER_ID          : $NC.G_USERINFO.USER_ID
   });
   // T1 MASTER 데이터 조회
@@ -2146,15 +2143,30 @@ function getDataT1Detail(rowData) {
   }
   
   G_GRDT1DETAIL.queryParams = $NC.getParams({
-    P_CENTER_CD: CENTER_CD,
-    P_BU_CD: BU_CD,
-    P_ORDER_DATE1: ORDER_DATE1,
-    P_ORDER_DATE2: ORDER_DATE2,
-    P_INOUT_CD: INOUT_CD,
-    P_OWN_BRAND_CD: BRAND_CD,
-    P_USER_ID: USER_ID,
-    P_DEAL_ID: DEAL_ID,
-    P_ORDER_TYPE: rowData['ORDER_TYPE']
+    P_CENTER_CD         : CENTER_CD         // 물류센터
+    ,P_BU_CD            : BU_CD             // 사업구분
+    ,P_ORDER_DATE1      : ORDER_DATE1       // 예정(출고)일자 시작
+    ,P_ORDER_DATE2      : ORDER_DATE2       // 예정(출고)일자 종료
+    //,P_OUTBOUND_DATE    : OUTBOUND_DATE     // 출고일자
+    //,P_OUTBOUND_BATCH   : OUTBOUND_BATCH    // 출고차수
+    ,P_INOUT_CD         : INOUT_CD          // 입출고구분
+    ,P_BU_NO            : BU_NO             // 주문번호
+    ,P_BRAND_CD         : BRAND_CD          // 판매사
+    ,P_ITEM_CD          : ITEM_CD           // 상품코드
+    ,P_ITEM_NM          : ITEM_NM           // 상품명
+    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+    ,P_MALL_CD          : MALL_CD           // 몰구분
+    ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
+    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+    ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    ,P_DEAL_ID          : DEAL_ID           // 딜ID
+    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
+    ,P_USER_ID          : $NC.G_USERINFO.USER_ID
+    ,P_ORDER_TYPE       : rowData['ORDER_TYPE']
   });
 
   // 데이터 조회
@@ -2211,25 +2223,22 @@ function getDataT2Master() {
     ,P_ORDER_DATE2      : ORDER_DATE2       // 예정(출고)일자 종료
     //,P_OUTBOUND_DATE    : OUTBOUND_DATE     // 출고일자
     //,P_OUTBOUND_BATCH   : OUTBOUND_BATCH    // 출고차수
-
-    ,P_DEAL_ID          : DEAL_ID           // 딜ID
-    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
-    ,P_BRAND_CD         : BRAND_CD          // 판매사
-    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
-
-    ,P_BU_NO            : BU_NO             // 주문번호
-    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
-    ,P_MALL_CD          : MALL_CD           // 몰구분
     ,P_INOUT_CD         : INOUT_CD          // 입출고구분
-
-    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
-    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_BU_NO            : BU_NO             // 주문번호
+    ,P_BRAND_CD         : BRAND_CD          // 판매사
     ,P_ITEM_CD          : ITEM_CD           // 상품코드
     ,P_ITEM_NM          : ITEM_NM           // 상품명
-    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+    ,P_MALL_CD          : MALL_CD           // 몰구분
     ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
-    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
     ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    ,P_DEAL_ID          : DEAL_ID           // 딜ID
+    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
     ,P_USER_ID          : $NC.G_USERINFO.USER_ID
   });
   // T2 MASTER 데이터 조회
@@ -2258,15 +2267,30 @@ function getDataT2Detail(rowData) {
   }
   
   G_GRDT2DETAIL.queryParams = $NC.getParams({
-    P_CENTER_CD: CENTER_CD,
-    P_BU_CD: BU_CD,
-    P_OUTBOUND_DATE1: OUTBOUND_DATE1,
-    P_OUTBOUND_DATE2: OUTBOUND_DATE2,
-    P_INOUT_CD: INOUT_CD,
-    P_OWN_BRAND_CD: BRAND_CD,
-    P_USER_ID: USER_ID,
-    P_DEAL_ID: DEAL_ID,
-    P_ORDER_TYPE: rowData['ORDER_TYPE']
+    P_CENTER_CD         : CENTER_CD         // 물류센터
+    ,P_BU_CD            : BU_CD             // 사업구분
+    ,P_ORDER_DATE1      : ORDER_DATE1       // 예정(출고)일자 시작
+    ,P_ORDER_DATE2      : ORDER_DATE2       // 예정(출고)일자 종료
+    //,P_OUTBOUND_DATE    : OUTBOUND_DATE     // 출고일자
+    //,P_OUTBOUND_BATCH   : OUTBOUND_BATCH    // 출고차수
+    ,P_INOUT_CD         : INOUT_CD          // 입출고구분
+    ,P_BU_NO            : BU_NO             // 주문번호
+    ,P_BRAND_CD         : BRAND_CD          // 판매사
+    ,P_ITEM_CD          : ITEM_CD           // 상품코드
+    ,P_ITEM_NM          : ITEM_NM           // 상품명
+    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+    ,P_MALL_CD          : MALL_CD           // 몰구분
+    ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
+    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+    ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    ,P_DEAL_ID          : DEAL_ID           // 딜ID
+    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
+    ,P_USER_ID          : $NC.G_USERINFO.USER_ID
+    ,P_ORDER_TYPE       : rowData['ORDER_TYPE']
   });
 
   // 데이터 조회
@@ -2356,15 +2380,31 @@ function getDataT3Detail(rowData) {
   //{"P_CENTER_CD": "G1","P_BU_CD": "5000","P_OUTBOUND_DATE": "2015-01-14","P_INOUT_CD": "","P_OWN_BRAND_CD": "%",
   // "P_USER_ID": "WMS7","P_DEAL_ID": "%","P_ORDER_TYPE": "11" }
   G_GRDT3DETAIL.queryParams = $NC.getParams({
-    P_CENTER_CD: CENTER_CD,
-    P_BU_CD: BU_CD,
-    P_OUTBOUND_DATE: rowData['OUTBOUND_DATE'],
-    P_OUTBOUND_BATCH: rowData['OUTBOUND_BATCH'],
-    P_INOUT_CD: INOUT_CD,
-    P_OWN_BRAND_CD: BRAND_CD,
-    P_USER_ID: USER_ID,
-    P_DEAL_ID: DEAL_ID,
-    P_ORDER_TYPE: rowData['ORDER_TYPE']
+    P_CENTER_CD        : CENTER_CD         // 물류센터
+    ,P_BU_CD            : BU_CD             // 사업구분
+    ,P_OUTBOUND_DATE    : rowData['OUTBOUND_DATE']     // 출고일자
+    ,P_OUTBOUND_BATCH   : rowData['OUTBOUND_BATCH']    // 출고차수
+
+    ,P_DEAL_ID          : DEAL_ID           // 딜ID
+    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
+    ,P_BRAND_CD         : BRAND_CD          // 판매사
+    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+
+    ,P_BU_NO            : BU_NO             // 주문번호
+    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+    ,P_MALL_CD          : MALL_CD           // 몰구분
+    ,P_INOUT_CD         : INOUT_CD          // 입출고구분
+
+    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_ITEM_CD          : ITEM_CD           // 상품코드
+    ,P_ITEM_NM          : ITEM_NM           // 상품명
+    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+    ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
+    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    ,P_USER_ID          : $NC.G_USERINFO.USER_ID    
+    ,P_ORDER_TYPE       : rowData['ORDER_TYPE']
   });
 
   // 데이터 조회
@@ -3394,10 +3434,6 @@ function setOutboundBatchCombo(comboId, isAddAll, setPos) {
     nameField: "OUTBOUND_BATCH",
     fullNameField: "OUTBOUND_BATCH_F",
     addAll: !$NC.isNull(isAddAll) && isAddAll,
-    addCustom: !$NC.isNull(isAddAll) && !isAddAll ? {
-      codeFieldVal: "000",
-      nameFieldVal: "신규"
-    } : null,
     selectOption: position == "first" ? "F" : (position == "last" ? "L" : null),
     selectVal: (position == "first" || position == "last") ? null : position,
     onComplete: function() {
