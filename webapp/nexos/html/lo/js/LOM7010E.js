@@ -277,13 +277,21 @@ function scanValueType(scanVal) {
   return $NC.G_CONSTS.SCAN_ERROR; // 5
 }
 
+var CENTER_CD
+  ,BU_CD
+  ,OUTBOUND_DATE
+  ,OUTBOUND_NO
+  ,PICK_SEQ
 
 function onScan(scanVal, flag) {
   if (!scanVal) {
     scanVal = $NC.G_VAR.lastProductCode;
   }
   $NC.G_VAR.scan = scanVal;
-  var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  BU_CD = $NC.getValue("#edtQBu_Cd");
+  OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
+
   if ($NC.isNull(CENTER_CD)) {
     showMessage({
       message: "물류센터를 선택하십시오.",
@@ -292,7 +300,6 @@ function onScan(scanVal, flag) {
     return;
   }
 
-  var BU_CD = $NC.getValue("#edtQBu_Cd");
   if ($NC.isNull(BU_CD)) {
     showMessage({
       message: "사업구분 코드를 입력하십시오.",
@@ -301,7 +308,6 @@ function onScan(scanVal, flag) {
     return;
   }
 
-  var OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
   if ($NC.isNull(OUTBOUND_DATE)) {
     showMessage({
       message: "출고일자를 입력하십시오.",
@@ -322,7 +328,15 @@ function onScan(scanVal, flag) {
       showMessage({
         message: "검수중인 상품이 있습니다. 계속 진행하시겠습니까?",
         onYesFn: function() {
-          scanTotal();
+          $NC.serviceCall("/LOM7010E/callBWScanConfirm.do", {
+            P_QUERY_PARAMS: $NC.getParams({
+              P_CENTER_CD: CENTER_CD,
+              P_BU_CD: BU_CD,
+              P_OUTBOUND_DATE: OUTBOUND_DATE,
+              P_OUTBOUND_NO: OUTBOUND_NO,
+              P_USER_ID: $NC.G_USERINFO.USER_ID
+            })
+          }, scanTotal, onError, null, 'LOM7010E_CANCEL');
         },
         onNoFn: function() {
           setFocusScan();
@@ -374,7 +388,15 @@ function onScan(scanVal, flag) {
       showMessage({
         message: "검수중인 상품이 있습니다. 계속 진행하시겠습니까?",
         onYesFn: function() {
-          scanPicking();
+          $NC.serviceCall("/LOM7010E/callBWScanConfirm.do", {
+            P_QUERY_PARAMS: $NC.getParams({
+              P_CENTER_CD: CENTER_CD,
+              P_BU_CD: BU_CD,
+              P_OUTBOUND_DATE: OUTBOUND_DATE,
+              P_OUTBOUND_NO: OUTBOUND_NO,
+              P_USER_ID: $NC.G_USERINFO.USER_ID
+            })
+          }, scanPicking, onError, null, 'LOM7010E_CANCEL');
         },
         onNoFn: function() {
           setFocusScan();
@@ -433,7 +455,15 @@ function onScan(scanVal, flag) {
       showMessage({
         message: "검수중인 상품이 있습니다. 계속 진행하시겠습니까?",
         onYesFn: function() {
-          scanBox();
+          $NC.serviceCall("/LOM7010E/callBWScanConfirm.do", {
+            P_QUERY_PARAMS: $NC.getParams({
+              P_CENTER_CD: CENTER_CD,
+              P_BU_CD: BU_CD,
+              P_OUTBOUND_DATE: OUTBOUND_DATE,
+              P_OUTBOUND_NO: OUTBOUND_NO,
+              P_USER_ID: $NC.G_USERINFO.USER_ID
+            })
+          }, scanBox, onError, null, 'LOM7010E_CANCEL');
         },
         onNoFn: function() {
           setFocusScan();
@@ -467,7 +497,7 @@ function onScan(scanVal, flag) {
     if (!onValidateScan(false)) {
       return false;
     }
-    var OUTBOUND_NO = $NC.getValue("#edtQOutbound_No");
+    OUTBOUND_NO = $NC.getValue("#edtQOutbound_No");
     if ($NC.isNull(OUTBOUND_NO)) {
       showMessage("출고번호를 확인할 수 없습니다.\n\n전표를 다시 스캔하십시오.");
       return;
@@ -679,7 +709,9 @@ function _Inquiry() {
   // 조회시 전역 변수 값 초기화
   $NC.setInitGridVar(G_GRDMASTER);
 
-  var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  BU_CD = $NC.getValue("#edtQBu_Cd");
+  OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
   if ($NC.isNull(CENTER_CD)) {
     showMessage({
       message: "물류센터를 선택하십시오.",
@@ -688,7 +720,6 @@ function _Inquiry() {
     return;
   }
 
-  var BU_CD = $NC.getValue("#edtQBu_Cd");
   if ($NC.isNull(BU_CD)) {
     showMessage({
       message: "사업구분 코드를 입력하십시오.",
@@ -697,7 +728,6 @@ function _Inquiry() {
     return;
   }
 
-  var OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
   if ($NC.isNull(OUTBOUND_DATE)) {
     showMessage({
       message: "출고일자를 입력하십시오.",
@@ -709,7 +739,7 @@ function _Inquiry() {
   // OPG1 : master //1
   // 용기번호 : master1 //2
   if ($NC.G_VAR.isLabelScan == $NC.G_CONSTS.SCAN_PICKING) { //1
-    var PICK_SEQ = $NC.G_VAR.PICK_SEQ;
+    PICK_SEQ = $NC.G_VAR.PICK_SEQ;
     G_GRDMASTER.queryId = "LOM7010E.RS_MASTER";
     G_GRDMASTER.queryParams = $NC.getParams({
       P_CENTER_CD: CENTER_CD,
@@ -745,7 +775,8 @@ function _New() {
 
 function _Save(ITEM_QTY, procType) {
 
-  var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  BU_CD = $NC.getValue("#edtQBu_Cd");
   if ($NC.isNull(CENTER_CD)) {
     showMessage({
       message: "물류센터를 선택하십시오.",
@@ -754,7 +785,6 @@ function _Save(ITEM_QTY, procType) {
     return;
   }
 
-  var BU_CD = $NC.getValue("#edtQBu_Cd");
   if ($NC.isNull(BU_CD)) {
     showMessage({
       message: "사업구분 코드를 입력하십시오.",
@@ -991,10 +1021,10 @@ function onBtnBoxManage(e) {
   }
 
 
-  var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
-  var BU_CD = $NC.getValue("#edtQBu_Cd");
-  var OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
-  var OUTBOUND_NO = $NC.getValue("#edtQOutbound_No");
+  CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  BU_CD = $NC.getValue("#edtQBu_Cd");
+  OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
+  OUTBOUND_NO = $NC.getValue("#edtQOutbound_No");
 
   $NC.G_MAIN.showProgramSubPopup({
     PROGRAM_ID: "LOM7011P",
@@ -1053,7 +1083,10 @@ function completeScan() {
     return;
   }
 
-  var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  BU_CD = $NC.getValue("#edtQBu_Cd");
+  OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
+  OUTBOUND_NO = $NC.getValue("#edtQOutbound_No");
   if ($NC.isNull(CENTER_CD)) {
     showMessage({
       message: "물류센터를 선택하십시오.",
@@ -1062,7 +1095,6 @@ function completeScan() {
     return;
   }
 
-  var BU_CD = $NC.getValue("#edtQBu_Cd");
   if ($NC.isNull(BU_CD)) {
     showMessage({
       message: "사업구분 코드를 입력하십시오.",
@@ -1071,7 +1103,6 @@ function completeScan() {
     return;
   }
 
-  var OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
   if ($NC.isNull(OUTBOUND_DATE)) {
     showMessage({
       message: "출고일자를 입력하십시오.",
@@ -1080,7 +1111,6 @@ function completeScan() {
     return;
   }
 
-  var OUTBOUND_NO = $NC.getValue("#edtQOutbound_No");
   if ($NC.isNull(OUTBOUND_NO)) {
     showMessage("출고번호를 확인할 수 없습니다.\n\n전표를 다시 스캔하십시오.");
     return;
@@ -1186,7 +1216,10 @@ function onBtnBWScanConfirm(e) {
     return;
   }
 
-  var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  BU_CD = $NC.getValue("#edtQBu_Cd");
+  OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
+  OUTBOUND_NO = $NC.getValue("#edtQOutbound_No");
   if ($NC.isNull(CENTER_CD)) {
     showMessage({
       message: "물류센터를 선택하십시오.",
@@ -1195,7 +1228,6 @@ function onBtnBWScanConfirm(e) {
     return;
   }
 
-  var BU_CD = $NC.getValue("#edtQBu_Cd");
   if ($NC.isNull(BU_CD)) {
     showMessage({
       message: "사업구분 코드를 입력하십시오.",
@@ -1204,7 +1236,6 @@ function onBtnBWScanConfirm(e) {
     return;
   }
 
-  var OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
   if ($NC.isNull(OUTBOUND_DATE)) {
     showMessage({
       message: "출고일자를 입력하십시오.",
@@ -1213,7 +1244,6 @@ function onBtnBWScanConfirm(e) {
     return;
   }
 
-  var OUTBOUND_NO = $NC.getValue("#edtQOutbound_No");
   if ($NC.isNull(OUTBOUND_NO)) {
     showMessage("출고번호를 확인할 수 없습니다.\n\n전표를 다시 스캔하십시오.");
     return;
@@ -1222,7 +1252,6 @@ function onBtnBWScanConfirm(e) {
   showMessage({
     message: "검수취소 처리하시겠습니까?",
     onYesFn: function() {
-
       // 데이터 조회
       $NC.serviceCall("/LOM7010E/callBWScanConfirm.do", {
         P_QUERY_PARAMS: $NC.getParams({
@@ -1232,8 +1261,7 @@ function onBtnBWScanConfirm(e) {
           P_OUTBOUND_NO: OUTBOUND_NO,
           P_USER_ID: $NC.G_USERINFO.USER_ID
         })
-      }, onBWScanConfirm, onError);
-
+      }, onBWScanConfirm, onError, null, 'LOM7010E_CANCEL');
       setFocusScan();
     },
     onNoFn: function() {
@@ -1269,7 +1297,15 @@ function onBtnInit(e) {
       showMessage({
         message: "현재 검수 작업 중 입니다.\n\n초기화 하시겠습니까?",
         onYesFn: function() {
-          processFn.call(this);
+          $NC.serviceCall("/LOM7010E/callBWScanConfirm.do", {
+            P_QUERY_PARAMS: $NC.getParams({
+              P_CENTER_CD: CENTER_CD,
+              P_BU_CD: BU_CD,
+              P_OUTBOUND_DATE: OUTBOUND_DATE,
+              P_OUTBOUND_NO: OUTBOUND_NO,
+              P_USER_ID: $NC.G_USERINFO.USER_ID
+            })
+          }, processFn, onError, null, 'LOM7010E_CANCEL');
         },
         onNoFn: function() {
           setFocusScan();
@@ -1637,8 +1673,8 @@ function setPolicyValInfo() {
   $NC.G_VAR.policyVal.LO450 = "";
   $NC.G_VAR.policyVal.LO460 = "";
 
-  var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
-  var BU_CD = $NC.getValue("#edtQBu_Cd");
+  CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  BU_CD = $NC.getValue("#edtQBu_Cd");
 
   for ( var POLICY_CD in $NC.G_VAR.policyVal) {
     // 데이터 조회

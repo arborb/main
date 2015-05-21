@@ -6382,7 +6382,7 @@
       clearTimeout(removeServiceLogTimeoutId);
       removeServiceLogTimeoutId = setTimeout(function(){
         removeAllServiceLog();
-      }, 3000)
+      }, 200)
       args.id = id
       service = JSON.stringify(args).replace(/ /g, '');
       for (var i in serviceCallLog) {
