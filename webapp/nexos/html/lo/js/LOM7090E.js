@@ -1928,16 +1928,16 @@ function grdT3SubOnAfterScroll(e, args) {
  */
 /*
 <예정>
-물류센터  사업구분  예정일자2   출고일자1   
-center  bu  tdDirectHidden  tdOutboundHidden
+물류센터  사업구분  예정일자2       출고일자1   
+center    bu        tdDirectHidden  tdOutboundHidden
 
 <등록>
 물류센터  사업구분  예정일자2(출고)
-center  bu  tdDirectHidden
+center    bu        tdDirectHidden
 
 <지시>
 물류센터  사업구분  예정일자2(출고)  출고차수
-center  bu  tdDirectHidden   tdQDsp_Outbound_Batch
+center    bu        tdDirectHidden   tdQDsp_Outbound_Batch
 */
 var CENTER_CD       // 물류센터
   ,BU_CD            // 사업구분
@@ -1973,7 +1973,7 @@ function searchValidataion(flag) {
   ORDER_DATE1      = $NC.getValue("#dtpQOrder_Date1");
   ORDER_DATE2      = $NC.getValue("#dtpQOrder_Date2");
   OUTBOUND_DATE    = $NC.getValue("#dtpQOutbound_Date");
-  OUTBOUND_BATCH   = $NC.getValue("#btnQOutbound_Batch");
+  OUTBOUND_BATCH   = $NC.getValue("#cboQOutbound_Batch");
 
   DEAL_ID          = $NC.getValue('#edtQDeal_Id');
   OWN_BRAND_CD     = $NC.getValue('#edtQOwn_Brand_Cd');
@@ -2006,57 +2006,67 @@ function searchValidataion(flag) {
     $NC.setFocus("#edtQBu_Cd");
     return false;
   }
-  
+
   if (flag == 'T1') {
     if ($NC.isNull(ORDER_DATE1)) {
-      alert("검색 시작일자를 입력하십시오.");
-      $NC.setFocus("#dtpQORDER_DATE1");
+      alert("예정 시작일자를 입력하십시오.");
+      $NC.setFocus("#dtpQOrder_Date1");
       return false;
     }
     if ($NC.isNull(ORDER_DATE2)) {
-      alert("검색 종료일자를 입력하십시오.");
-      $NC.setFocus("#dtpQORDER_DATE2");
+      alert("예정 종료일자를 입력하십시오.");
+      $NC.setFocus("#dtpQOrder_Date2");
       return false;
     }
     if (ORDER_DATE1 > ORDER_DATE2) {
-      alert("출고예정일자 범위 입력오류입니다.");
-      $NC.setFocus("#dtpQORDER_DATE1");
+      alert("예정일자 범위 입력오류입니다.");
+      $NC.setFocus("#dtpQOrder_Date1");
+      return false;
+    }
+    if ($NC.isNull(OUTBOUND_DATE)) {
+      alert("출고일자를 입력하십시오.");
+      $NC.setFocus("#dtpQOutbound_Date");
       return false;
     }
   }
 
   if (flag == 'T2') {
-    if ($NC.isNull(OUTBOUND_DATE1)) {
-      alert("검색 시작일자를 입력하십시오.");
-      $NC.setFocus("#dtpQOutbound_Date1");
+    if ($NC.isNull(ORDER_DATE1)) {
+      alert("출고 시작일자를 입력하십시오.");
+      $NC.setFocus("#dtpQOrder_Date1");
       return false;
     }
-    if ($NC.isNull(OUTBOUND_DATE2)) {
-      alert("검색 종료일자를 입력하십시오.");
-      $NC.setFocus("#dtpQOutbound_Date2");
+    if ($NC.isNull(ORDER_DATE2)) {
+      alert("출고 종료일자를 입력하십시오.");
+      $NC.setFocus("#dtpQOrder_Date2");
       return false;
     }
-
-    if (OUTBOUND_DATE1 > OUTBOUND_DATE2) {
-      alert("출고예정일자 범위 입력오류입니다.");
-      $NC.setFocus("#dtpQOutbound_Date1");
+    if (ORDER_DATE1 > ORDER_DATE2) {
+      alert("출고일자 범위 입력오류입니다.");
+      $NC.setFocus("#dtpQOrder_Date1");
       return false;
     }
   }
+
   if (flag == 'T3') {
-    if ($NC.isNull(OUTBOUND_DATE3)) {
-      alert("검색 시작일자를 입력하십시오.");
-      $NC.setFocus("#dtpQOutbound_Date3");
+    if ($NC.isNull(ORDER_DATE1)) {
+      alert("출고 시작일자를 입력하십시오.");
+      $NC.setFocus("#dtpQOrder_Date1");
       return false;
     }
-    if ($NC.isNull(OUTBOUND_DATE4)) {
-      alert("검색 종료일자를 입력하십시오.");
-      $NC.setFocus("#dtpQOutbound_Date4");
+    if ($NC.isNull(ORDER_DATE2)) {
+      alert("출고 종료일자를 입력하십시오.");
+      $NC.setFocus("#dtpQOrder_Date2");
       return false;
     }
-    if (OUTBOUND_DATE3 > OUTBOUND_DATE4) {
-      alert("출고예정일자 범위 입력오류입니다.");
-      $NC.setFocus("#dtpQOutbound_Date3");
+    if (ORDER_DATE1 > ORDER_DATE2) {
+      alert("출고일자 범위 입력오류입니다.");
+      $NC.setFocus("#dtpQOrder_Date1");
+      return false;
+    }
+    if ($NC.isNull(OUTBOUND_BATCH)) {
+      alert("출고차수를 입력하십시오.");
+      $NC.setFocus("#dtpQOutbound_Batch");
       return false;
     }
   }
