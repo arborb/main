@@ -30,6 +30,7 @@
     <parameter property="P_BU_CD"                   mode="IN" />
     <parameter property="P_OUTBOUND_DATE1"          mode="IN" />
     <parameter property="P_OUTBOUND_DATE2"          mode="IN" />
+    <parameter property="P_BU_NO"                   mode="IN" />
     <parameter property="P_ORDERER_NM"              mode="IN" />
     <parameter property="P_SHIPPER_NM"              mode="IN" />
     <parameter property="P_PICK_SEQ"                mode="IN" />
@@ -40,7 +41,7 @@
     <parameter property="P_WB_CHK_YN"               mode="IN" />
   </parameterMap>
   <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-    { ? = call LOM9150Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LOM9150Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_MASTER -->
 
