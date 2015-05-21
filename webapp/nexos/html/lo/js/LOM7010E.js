@@ -1379,7 +1379,7 @@ function onGetMaster(ajaxData) {
   setEnableButton("#btnBoxManage", true);
   setEnableButton("#btnFWScanConfirm", false);
   // setEnableButton("#btnFWScanConfirm", true);
-  setEnableButton("#btnBWScanConfirm", false);
+  setEnableButton("#btnBWScanConfirm", true);
   setEnableButton("#btnDeliveryChange", false);
   setFocusScan();
 }
