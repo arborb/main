@@ -1,3 +1,32 @@
+var CENTER_CD       // 물류센터
+  ,BU_CD            // 사업구분
+  ,ORDER_DATE1      // 예정(출고)일자 시작
+  ,ORDER_DATE2      // 예정(출고)일자 종료
+  ,OUTBOUND_DATE    // 출고일자 // 예정에만.
+  ,OUTBOUND_BATCH   // 출고차수 // 지시에서만.
+
+  ,DEAL_ID          // 딜ID
+  ,OWN_BRAND_CD     // 위탁사
+  ,BRAND_CD         // 판매사
+  ,BU_TIME          // 주문시간
+  ,BU_TIME1         // 주문시간 시작
+  ,BU_TIME2         // 주문시간 종료
+
+  ,BU_NO            // 주문번호
+  ,DELIVERY_TYPE    // 배송유형
+  ,MALL_CD          // 몰구분
+  ,INOUT_CD         // 입출고구분
+
+  ,SHIPPER_NM       // 수령자명
+  ,ORDERER_NM       // 주문자명
+  ,ITEM_CD          // 상품코드
+  ,ITEM_NM          // 상품명
+  ,SHIP_TYPE        // 운송구분
+  ,INORDER_TYPE     // 매입형태
+  ,DELIVERY_TYPE2   // 배송지역구분
+  ,SHIP_PRICE_TYPE  // 운송비구분
+  ,IS_ALL_DATE = false;     // 전체날짜로 조회
+
 /**
  * 화면 초기화 - 화면 로드시 자동 호출 됨.
  */
@@ -345,6 +374,17 @@ function _Initialize() {
       $NC.setEnable('#dtpQOutbound_Date2');
     }
   });
+  $("#chkQDate_Yn").click(function(e) {
+    if ($(this).is(':checked')) {
+      IS_ALL_DATE = true;
+      $NC.setEnable("#dtpQOrder_Date1", false);
+      $NC.setEnable("#dtpQOrder_Date2", false);
+    } else {
+      IS_ALL_DATE = false;
+      $NC.setEnable("#dtpQOrder_Date1", true);
+      $NC.setEnable("#dtpQOrder_Date2", true);
+    }
+  })
   _OnConditionChange();
 }
 
@@ -1939,39 +1979,16 @@ center    bu        tdDirectHidden
 물류센터  사업구분  예정일자2(출고)  출고차수
 center    bu        tdDirectHidden   tdQDsp_Outbound_Batch
 */
-var CENTER_CD       // 물류센터
-  ,BU_CD            // 사업구분
-  ,ORDER_DATE1      // 예정(출고)일자 시작
-  ,ORDER_DATE2      // 예정(출고)일자 종료
-  ,OUTBOUND_DATE    // 출고일자 // 예정에만.
-  ,OUTBOUND_BATCH   // 출고차수 // 지시에서만.
-
-  ,DEAL_ID          // 딜ID
-  ,OWN_BRAND_CD     // 위탁사
-  ,BRAND_CD         // 판매사
-  ,BU_TIME          // 주문시간
-  ,BU_TIME1         // 주문시간 시작
-  ,BU_TIME2         // 주문시간 종료
-
-  ,BU_NO            // 주문번호
-  ,DELIVERY_TYPE    // 배송유형
-  ,MALL_CD          // 몰구분
-  ,INOUT_CD         // 입출고구분
-
-  ,SHIPPER_NM       // 수령자명
-  ,ORDERER_NM       // 주문자명
-  ,ITEM_CD          // 상품코드
-  ,ITEM_NM          // 상품명
-  ,SHIP_TYPE        // 운송구분
-  ,INORDER_TYPE     // 매입형태
-  ,DELIVERY_TYPE2   // 배송지역구분
-  ,SHIP_PRICE_TYPE; // 운송비구분
-
 function searchValidataion(flag) {
   CENTER_CD        = $NC.getValue("#cboQCenter_Cd");
   BU_CD            = $NC.getValue("#edtQBu_Cd");
-  ORDER_DATE1      = $NC.getValue("#dtpQOrder_Date1");
-  ORDER_DATE2      = $NC.getValue("#dtpQOrder_Date2");
+  if (IS_ALL_DATE) {
+    ORDER_DATE1      = '';
+    ORDER_DATE2      = '';
+  } else {
+    ORDER_DATE1      = $NC.getValue("#dtpQOrder_Date1");
+    ORDER_DATE2      = $NC.getValue("#dtpQOrder_Date2");
+  }
   OUTBOUND_DATE    = $NC.getValue("#dtpQOutbound_Date");
   OUTBOUND_BATCH   = $NC.getValue("#cboQOutbound_Batch");
 
@@ -2007,7 +2024,7 @@ function searchValidataion(flag) {
     return false;
   }
 
-  if (flag == 'T1') {
+  if (!IS_ALL_DATE && flag == 'T1') {
     if ($NC.isNull(ORDER_DATE1)) {
       alert("예정 시작일자를 입력하십시오.");
       $NC.setFocus("#dtpQOrder_Date1");
@@ -2030,7 +2047,7 @@ function searchValidataion(flag) {
     }
   }
 
-  if (flag == 'T2') {
+  if (!IS_ALL_DATE && flag == 'T2') {
     if ($NC.isNull(ORDER_DATE1)) {
       alert("출고 시작일자를 입력하십시오.");
       $NC.setFocus("#dtpQOrder_Date1");
@@ -2085,14 +2102,6 @@ function getDataT1Master() {
   $NC.setInitGridVar(G_GRDT1DETAIL);
   $NC.setInitGridVar(G_GRDT1SUB);
 
-  if ($('#chkQOrder_Div').is(':checked')) {
-    ORDER_DATE1 = "";
-    ORDER_DATE2 = "";
-  } else {
-    ORDER_DATE1 = $NC.getValue('#dtpQOrder_Date1');
-    ORDER_DATE2 = $NC.getValue('#dtpQOrder_Date2');
-  }
-  
   // 파라메터 세팅
   G_GRDT1MASTER.queryParams = $NC.getParams({
      P_CENTER_CD        : CENTER_CD         // 물류센터
