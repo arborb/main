@@ -494,7 +494,10 @@ function onGetItemInfo(ajaxData) {
   } else {
     var resultArray = $NC.toArray(ajaxData);
     resultArray.id = 'id_' + G_GRDMASTER.data.getLength();
-    resultArray.PICK_BOX_NO2 = resultData.P_PICK_BOX_NO2;
+    resultArray.CENTER_CD = resultData.P_CENTER_CD;
+    resultArray.BU_CD = resultData.P_BU_CD;
+    resultArray.OUTBOUND_DATE = resultData.P_OUTBOUND_DATE;
+    resultArray.PICK_BOX_NO = resultData.P_PICK_BOX_NO;
     G_GRDMASTER.data.addItem(resultArray);
   }
   
