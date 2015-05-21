@@ -35,7 +35,8 @@ function _Initialize() {
   $NC.setValue("#edtQCust_Cd", $NC.G_USERINFO.CUST_CD);
   setEnableButton('#btnDeliveryChange', false);
   setEnableButton('#btnBoxCancel', false);
-
+  setEnableButton("#btnBoxComplete", false);
+  
   $NC.setInitDatePicker("#dtpQOutbound_Date");
 
   $("#btnDeliveryChange").click(onBtnDeliveryChange);   // 요익추가
