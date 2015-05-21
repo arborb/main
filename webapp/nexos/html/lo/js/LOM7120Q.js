@@ -167,12 +167,12 @@ function _Inquiry() {
     OUTBOUND_DATE = "";
   }
   
-  var PICK_BOX_NO = $NC.getValue("#edtQPICK_BOX_NO", true);
+  var PICK_BOX_NO = $NC.getValue("#edtQPICK_BOX_NO");
   if(PICK_BOX_NO==null || PICK_BOX_NO==""){
     PICK_BOX_NO = "";
   }
   
-  var PICK_SEQ = $NC.getValue("#edtQPICK_SEQ", true);
+  var PICK_SEQ = $NC.getValue("#edtQPICK_SEQ");
   if(PICK_SEQ==null || PICK_SEQ==""){
     PICK_SEQ = "";
   }
@@ -230,13 +230,14 @@ function _Print(printIndex, printName) {
 
 function grdMasterOnGetColumns() {
 
+
+  var columns = [ ];
   $NC.setGridColumn(columns, {
-    id: "PICK_BOX_NO2",
-    field: "PICK_BOX_NO2",
+    id: "PICK_BOX_NO",
+    field: "PICK_BOX_NO",
     name: "용기번호",
     minWidth: 90
   });
-  var columns = [ ];
   $NC.setGridColumn(columns, {
     id: "PICK_SEQ",
     field: "PICK_SEQ",
