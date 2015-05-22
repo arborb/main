@@ -3337,7 +3337,6 @@ function grdT2DetailOnHeaderClick(e, args) {
 function grdT1DetailOnHeaderClick(e, args) {
 
   G_GRDT1DETAIL.view.getCanvasNode().focus();
-
   if (args.column.id == "CHECK_YN") {
 
     if ($(e.target).is(":checkbox")) {

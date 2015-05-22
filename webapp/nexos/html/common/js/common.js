@@ -6458,6 +6458,9 @@ $(document).ready(function() {
       }, 300);
     }
   }
+  $(window).on('scroll', function(){
+    window.scrollTo(0,0);
+  })
 });
 
 /**
