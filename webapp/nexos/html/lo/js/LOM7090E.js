@@ -356,24 +356,6 @@ function _Initialize() {
   $("#btnT3Proc_InvnoLine").click(setT3OrderDiv); // 주문유형 리마킹 SP 버튼 클릭(개별등록탭)
   
   $("#btnT1Order_Adjust").click(setOrder_Adjustment); // 출고할당량 부족재고 조정
-  $('#chkQOrder_Div').on('change', function(e){
-    if ($(this).is(':checked')) {
-      $NC.setEnable('#dtpQOrder_Date1', false);
-      $NC.setEnable('#dtpQOrder_Date2', false);
-    } else {
-      $NC.setEnable('#dtpQOrder_Date1');
-      $NC.setEnable('#dtpQOrder_Date2');
-    }
-  });
-  $('#chkQOutbound_Div').on('change', function(e){
-    if ($(this).is(':checked')) {
-      $NC.setEnable('#dtpQOutbound_Date1', false);
-      $NC.setEnable('#dtpQOutbound_Date2', false);
-    } else {
-      $NC.setEnable('#dtpQOutbound_Date1');
-      $NC.setEnable('#dtpQOutbound_Date2');
-    }
-  });
   $("#chkQDate_Yn").click(function(e) {
     if ($(this).is(':checked')) {
       IS_ALL_DATE = true;
@@ -1982,13 +1964,16 @@ center    bu        tdDirectHidden   tdQDsp_Outbound_Batch
 function searchValidataion(flag) {
   CENTER_CD        = $NC.getValue("#cboQCenter_Cd");
   BU_CD            = $NC.getValue("#edtQBu_Cd");
-  if (IS_ALL_DATE) {
-    ORDER_DATE1      = '';
-    ORDER_DATE2      = '';
-  } else {
-    ORDER_DATE1      = $NC.getValue("#dtpQOrder_Date1");
-    ORDER_DATE2      = $NC.getValue("#dtpQOrder_Date2");
-  }
+//  if (IS_ALL_DATE) {
+//    ORDER_DATE1      = '';
+//    ORDER_DATE2      = '';
+//  } else {
+//    ORDER_DATE1      = $NC.getValue("#dtpQOrder_Date1");
+//    ORDER_DATE2      = $NC.getValue("#dtpQOrder_Date2");
+//  }
+  
+  ORDER_DATE1      = $NC.getValue("#dtpQOrder_Date1");
+  ORDER_DATE2      = $NC.getValue("#dtpQOrder_Date2"); 
   OUTBOUND_DATE    = $NC.getValue("#dtpQOutbound_Date");
   OUTBOUND_BATCH   = $NC.getValue("#cboQOutbound_Batch");
 
@@ -2143,7 +2128,7 @@ function getDataT1Detail(rowData) {
   // T1 DETAIL 조회시 전역 변수 값 초기화
   $NC.setInitGridVar(G_GRDT1DETAIL);
 
-  if ($('#chkQOrder_Div').is(':checked')) {
+  if ($('#chkQDate_Yn').is(':checked')) {
     ORDER_DATE1 = "";
     ORDER_DATE2 = "";
   } else {
@@ -2217,7 +2202,7 @@ function getDataT2Master() {
   $NC.setInitGridVar(G_GRDT2SUB);
   
   // 파라메터 세팅
-  if ($('#chkQOutbound_Div').is(':checked')) {
+  if ($('#chkQDate_Yn').is(':checked')) {
     OUTBOUND_DATE1 = "";
     OUTBOUND_DATE2 = "";
   } else {
@@ -2264,15 +2249,15 @@ function getDataT2Detail(rowData) {
   // T1 DETAIL 조회시 전역 변수 값 초기화
   $NC.setInitGridVar(G_GRDT2DETAIL);
   
-  if(rowData['ORDER_TYPE']==="%" && $('#chkQOutbound_Div').is(':checked') ) {
-    OUTBOUND_DATE1 = "";
-    OUTBOUND_DATE2 = "";
+  if(rowData['ORDER_TYPE']==="%" && $('#chkQDate_Yn').is(':checked') ) {
+    ORDER_DATE1 = "";
+    ORDER_DATE2 = "";
   } else if (rowData['ORDER_TYPE']==="%"){
-    OUTBOUND_DATE1 = $NC.getValue('#dtpQOutbound_Date1');
-    OUTBOUND_DATE2 = $NC.getValue('#dtpQOutbound_Date2');
+    ORDER_DATE1 = $NC.getValue('#dtpQOrder_Date1');
+    ORDER_DATE2 = $NC.getValue('#dtpQOrder_Date2');
   } else {
-    OUTBOUND_DATE1 = rowData['OUTBOUND_DATE'];
-    OUTBOUND_DATE2 = rowData['OUTBOUND_DATE'];
+    ORDER_DATE1 = rowData['OUTBOUND_DATE'];
+    ORDER_DATE2 = rowData['OUTBOUND_DATE'];
   }
   
   G_GRDT2DETAIL.queryParams = $NC.getParams({
