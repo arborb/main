@@ -803,9 +803,11 @@
      */
     $NC.serviceCall = function(requestUrl, requestData, onSuccessHandler, onErrorHandler, messageOptions, mockId) {
       var args = arguments;
+      // ajax 이중 호출을 방지한다. if문 삭제시 작동하지 않음
       if (!addServiceLog('serviceCall', args, 'SERVICE CALL(비동기통신)')) {
         return false;
       };
+      // 화면에서 개발시 가상으로 ajax를 호출하는 모듈 if문 삭제시 작동하지 않음
       if (localStorage.getItem('_MOCK') == 'true' && mockId) {
         var isCon = serviceMock(requestUrl, requestData, onSuccessHandler, onErrorHandler, messageOptions, mockId);
         if (!isCon) {
@@ -888,9 +890,11 @@
      */
     $NC.serviceCallAndWait = function(requestUrl, requestData, onSuccessHandler, onErrorHandler, messageOptions, mockId) {
       var args = arguments;
+      // ajax 이중 호출을 방지한다. if문 삭제시 작동하지 않음
       if (!addServiceLog('serviceCallAndWait', args, 'SERVICE CALL(동기통신)')) {
         return false;
       };
+      // 화면에서 개발시 가상으로 ajax를 호출하는 모듈 if문 삭제시 작동하지 않음
       if (localStorage.getItem('_MOCK') == 'true' && mockId) {
         var isCon = serviceMock(requestUrl, requestData, onSuccessHandler, onErrorHandler, messageOptions, mockId);
         if (!isCon) {
