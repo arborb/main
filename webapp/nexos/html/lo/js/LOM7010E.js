@@ -578,7 +578,7 @@ function onScan(scanVal, flag) {
   }
   // 5. 오류
   if (flag == $NC.G_CONSTS.SCAN_ERROR) {
-    alert('오류가 발생했습니다.')
+    alert('정상적인 SCAN 값이 아닙니다.\n라벨번호, 용기번호, 상품바코드를 스캔하세요.');
     return false;
   }
 
