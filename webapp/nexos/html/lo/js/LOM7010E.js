@@ -265,8 +265,10 @@ function scanValueType(scanVal) {
   if (scanVal.substr(0, 2) === 'OP') {
     return $NC.G_CONSTS.SCAN_PICKING; // 1
   }
-  if (isNaN(Number(scanVal)) && scanVal.length === 6) {
-    return $NC.G_CONSTS.SCAN_BOX; // 2
+  if (isNaN(Number(scanVal)) && scanVal.length === 6 ||
+      isNaN(Number(scanVal)) && scanVal.length === 7
+    ) {
+      return $NC.G_CONSTS.SCAN_BOX; // 2
   }
   if (scanVal.length >= 7) {
     return $NC.G_CONSTS.SCAN_PRODUCT; // 3
