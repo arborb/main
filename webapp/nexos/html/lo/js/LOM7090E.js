@@ -366,8 +366,11 @@ function _Initialize() {
       $NC.setEnable("#dtpQOrder_Date1", true);
       $NC.setEnable("#dtpQOrder_Date2", true);
     }
-  })
+  });
   _OnConditionChange();
+  
+  //추후 사용 할 가능성이 있어 숨겨놓음.
+  $('#btnT1Order_Adjust').hide();
 }
 
 /**
@@ -556,7 +559,7 @@ function _OnConditionChange(e, view, val) {
   $("#divT1ProcessingInfo").hide();
   $("#T2Option").hide();
   $("#divT2ProcessingInfo").hide();
-  $("#T3Option").show();
+  $("#T3Option").show(); 
   $("#divT3ProcessingInfo").show();
 
   $('#tdDirectHidden').show();
