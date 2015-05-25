@@ -342,7 +342,7 @@ function _Initialize() {
   $NC.setInitDatePicker("#dtpQOutbound_Date1");
   $NC.setInitDatePicker("#dtpQOutbound_Date2");
   $NC.setValue("#dtpQOutbound_Date1", $NC.addDay($NC.getValue("#dtpQOutbound_Date2"), -2));
-
+  $("#btnMasterOrder").click(setT2MasterOrder); // 출고등록 멀티셀렉트
   // 출고일자 - T3
   $NC.setInitDatePicker("#dtpQOutbound_Date3");
   $NC.setInitDatePicker("#dtpQOutbound_Date4");
@@ -480,7 +480,11 @@ function _OnGridCheckBoxFormatterClick(e, view, args) {
   if ($("#divTabView").tabs("option", "active") === 0) {
     grdDetail = window["G_GRDT1DETAIL"];
   } else if ($("#divTabView").tabs("option", "active") === 1) {
-    grdDetail = window["G_GRDT2DETAIL"];
+    if (args.grid == "grdT2Master") {
+      grdDetail = window["G_GRDT2MASTER"];
+    }else if(args.grid == "grdT2Detail"){
+      grdDetail = window["G_GRDT2DETAIL"];  
+    }
   } else if ($("#divTabView").tabs("option", "active") === 2) {
     if (args.grid == "grdT3Master") {
       grdDetail = window["G_GRDT3MASTER"];
@@ -1303,6 +1307,20 @@ function grdT2MasterInitialize() {
 function grdT2MasterOnGetColumns() {
 
   var columns = [ ];
+  $NC.setGridColumn(columns, {
+    id: "CHECK_YN",
+    field: "CHECK_YN",
+    minWidth: 30,
+    maxWidth: 30,
+    resizable: false,
+    sortable: false,
+    cssClass: "align-center",
+    formatter: Slick.Formatters.CheckBox,
+    editorOptions: {
+      valueChecked: "Y",
+      valueUnChecked: "N"
+    }
+  }, false);
   $NC.setGridColumn(columns, {
     id: "ORDER_TYPE_NM",
     field: "ORDER_TYPE_NM",
@@ -2192,7 +2210,7 @@ function getDataT1Sub(rowData) {
 }
 
 /**
- * T2Master
+ * T2Master 데이터 요청
  */
 function getDataT2Master() {
   if(!searchValidataion('T2')) {
@@ -2243,7 +2261,7 @@ function getDataT2Master() {
 }
 
 /**
- * T2 Detail
+ * T2 Detail 데이터 조회
  */
 function getDataT2Detail(rowData) {
   if(!searchValidataion('T2')) {
@@ -2291,7 +2309,8 @@ function getDataT2Detail(rowData) {
   });
 
   // 데이터 조회
-  $NC.serviceCall("/LOM7090E/getDataSet.do", $NC.getGridParams(G_GRDT2DETAIL), onGetT2Detail, null, null, '7090E_RS_T2_DETAIL');
+  $NC.serviceCall("/LOM7090E/getDataSet.do", $NC.getGridParams(G_GRDT2DETAIL), onGetT2Detail, 
+    null, null, '7090E_RS_T2_DETAIL');
 }
 
 /**
@@ -2505,7 +2524,7 @@ function onGetT1Sub(ajaxData) {
 }
 
 /**
- * T2 Master 
+ * T2 Master 응답
  */
 function onGetT2Master(ajaxData) {
   $NC.setInitGridData(G_GRDT2MASTER, ajaxData);
@@ -2539,7 +2558,7 @@ function onGetT2Master(ajaxData) {
 }
 
 /**
- * T2 Detail
+ * T2 Detail 응답
  */
 function onGetT2Detail(ajaxData) {
   $NC.setInitGridData(G_GRDT2DETAIL, ajaxData);
@@ -2552,6 +2571,31 @@ function onGetT2Detail(ajaxData) {
     onGetT2Sub({
       data: null
     });
+  }
+}
+
+function setT2MasterOrder() {
+  var masterData = G_GRDT2MASTER.data.getItems()
+    selectedData = []
+  for (var i in masterData) {
+    if (masterData[i].CHECK_YN === 'Y') {
+      selectedData.push({
+          P_CENTER_CD: CENTER_CD,
+          P_BU_CD: BU_CD,
+          P_OUTBOUND_DATE: masterData[i].OUTBOUND_DATE,
+          P_ORDER_TYPE: masterData[i].ORDER_TYPE
+      })
+    }
+  }
+  if (selectedData.length > 0) {
+    $NC.serviceCall("/LOM7010E/callFWScanConfirm.do", {
+      P_DIRECTION: 'FW',
+      P_PROCESS_CD: 'C',
+      P_PROCESS_STATE_BW: '30',
+      P_PROCESS_STATE_FW: '20',
+      P_USER_ID: $NC.G_USERINFO.USER_ID,
+      P_DS_MASTER: selectedData
+    }, onGetT2Detail, null, null);
   }
 }
 

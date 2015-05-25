@@ -91,6 +91,36 @@ describe('LOM7110E.js 피킹검수(신규)', function(){
 		var isLabel = isLabelNoInGrid(newSeq, oldRow)
 		expect(isLabel).toBe(true)
 	})
+
+	describe('스캔한다.', function(){
+		var  e = $.Event("keyup", { keyCode: 13 })
+		beforeEach(function(){
+			$NC.G_MAIN.showMessage = function(option){
+				if (option.onYesFn) {
+					option.onYesFn();
+				}
+			}
+		})
+		it('용기번호 스캔', function(){
+			var view = $('#edtBoxScan');
+			$('#edtBoxScan').val('YB00002');
+			var result = _OnInputKeyUp(e, view)
+			expect( $NC.getValue("#edtBox_No") ).toBe('YB0002');
+		})
+		it('라벨번호 스캔', function(){
+			var view = $('#edtLabelScan');
+			$('#edtLabelScan').val('OPG1-5000-20150513-10006');
+			var result = _OnInputKeyUp(e, view)
+			expect( $NC.getValue("#cboQCenter_Cd") ).toBe('G1');
+			expect( $NC.getValue("#edtQBu_Cd") ).toBe('5000');
+		})
+		xit('라벨번호 동일한 값이 있으면 오류메세지', function(){
+			var view = $('#edtLabelScan');
+			$('#edtLabelScan').val('OPG1-5000-20150513-10006');
+			var result = _OnInputKeyUp(e, view)
+			//expect( $NC.getValue("#edtBox_No") ).toBe('YB0002');
+		})
+	})
 })
 
 
