@@ -347,7 +347,7 @@ function grdMasterOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "HAS_BOXING_YN",
     field: "HAS_BOXING_YN",
-    name: "합포장여부",
+    name: "합포장대상여부",
     minWidth: 80,
     cssClass: "align-center",
     formatter: Slick.Formatters.CheckBox
@@ -394,7 +394,7 @@ function grdMasterOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "HAS_PROC_YN",
     field: "HAS_PROC_YN",
-    name: "합포장여부",
+    name: "합포장완료여부",
     minWidth: 80,
     cssClass: "align-center",
     formatter: Slick.Formatters.CheckBox
