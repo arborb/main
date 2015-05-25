@@ -48,6 +48,8 @@
 ,'Y' AS LAST_YN
 ,0   AS SUM_ENTRY_QTY
 ,'' AS CAUTION
+,'' AS PRINT_DATETIME
+,'' AS ISPRINT
     FROM (
           SELECT M1.CENTER_CD
                 ,M1.BU_CD
@@ -265,11 +267,13 @@
 	<field name="LAST_YN" class="java.lang.String"/>
 	<field name="SUM_ENTRY_QTY" class="java.math.BigDecimal"/>
 	<field name="CAUTION" class="java.lang.String"/>
+	<field name="PRINT_DATETIME" class="java.lang.String"/>
+	<field name="ISPRINT" class="java.lang.String"/>
 	<group name="GRP_PICK_SEQ" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{PAPER_NO}]]></groupExpression>
 	</group>
 	<pageHeader>
-		<band height="50">
+		<band height="49">
 			<staticText>
 				<reportElement positionType="FixRelativeToBottom" x="7" y="49" width="216" height="0" uuid="c34c56bb-b8a6-4386-ab12-cbc27e7a7648"/>
 				<box>
@@ -465,25 +469,21 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement mode="Transparent" x="67" y="0" width="28" height="8" forecolor="#000000" backcolor="#FFFFFF" uuid="b8992b9a-8e47-42d6-9824-1a13633effd6">
-					<printWhenExpression><![CDATA[$F{LAST_YN}.equals( "Y" )]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+			<textField>
+				<reportElement mode="Transparent" x="3" y="0" width="70" height="8" forecolor="#000000" backcolor="#FFFFFF" uuid="d7a6d459-bb0a-48f5-a701-0b31c272f1bc"/>
+				<textElement verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<text><![CDATA[총 수량 : ]]></text>
-			</staticText>
-			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="95" y="0" width="16" height="8" forecolor="#000000" backcolor="#FFFFFF" uuid="cd482c35-57dc-4f9f-b72a-26a08372e5fa">
-					<printWhenExpression><![CDATA[$F{LAST_YN}.equals( "Y" )]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+				<textFieldExpression><![CDATA[$F{PRINT_DATETIME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="73" y="0" width="18" height="8" forecolor="#000000" backcolor="#FFFFFF" uuid="973f20c1-1c9a-4372-9db1-f43dc7a3dcc8"/>
+				<textElement verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{SUM_ENTRY_QTY}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ISPRINT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
