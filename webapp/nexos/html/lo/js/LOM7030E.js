@@ -24,8 +24,22 @@ function _Initialize() {
     SUM_CANCEL_QTY: 0,
     CANCEL_YN: "N",
     INSPECT_YN: "N",
+    lastProductCode: null,
+    LAST_SCAN_TOTAL: null,
+    LAST_SCAN_PICKING: null,
+    LAST_SCAN_BOX: null,
+    LAST_SCAN_PRODUCT: null,
+    LAST_SCAN_QUANTITY: null,
+    PICK_SEQ: null,
     SCANCOMPLETE: true, // 자동으로 박스완료처리
   });
+
+  $NC.G_CONSTS.SCAN_TOTAL    = 0;  //0. 토탈피킹
+  $NC.G_CONSTS.SCAN_PICKING  = 1;  //1. 피킹라벨
+  $NC.G_CONSTS.SCAN_BOX      = 2;  //2. 용기번호
+  $NC.G_CONSTS.SCAN_PRODUCT  = 3;  //3. 상품코드
+  $NC.G_CONSTS.SCAN_QUANTITY = 4;  //4. 수량입력
+  $NC.G_CONSTS.SCAN_ERROR    = 5;  //5. 오류
 
   // 추가 조회조건 사용
   // $NC.setInitAdditionalCondition();
@@ -220,151 +234,77 @@ function _OnResize(parent) {
  * @param view
  */
 function _OnInputKeyDown(e, view) {
-
-  /*
-  var id = view.prop("id").substr(3).toUpperCase();
-
-  switch (id) {
-  case "SCAN":
-    // TAB Key 무시
-    if (e.keyCode == 9) {
-      e.stopImmediatePropagation();
-      return;
-    }
-
-    var scanVal = "";
-    var scanLen = 0;
-
-    // 오른쪽 키패드 + Key
-    // if (e.keyCode == 107) {
-    if (e.keyCode == 192) {
-
-      scanVal = $NC.getValue(view);
-
-      // 입력 값 길이
-      scanLen = scanVal.length;
-
-      // 현재 입력된 값이 숫자인지 체크
-      if (isNaN(Number(scanVal) || scanLen.length == 0)) {
-        e.stopImmediatePropagation();
-        showMessage("검수수량을 정확히 입력하십시오.");
-        return;
-      }
-
-//      onScanFnNumAdd(scanVal);
-//      onChkFWScanConfirm();
-      e.stopImmediatePropagation();
-      return;
-    }
-
-    // 오른쪽 키패드 - Key
-    if (e.keyCode == 109) {
-
-      scanVal = $NC.getValue(view);
-
-      // 현재 입력된 값이 숫자인지 체크
-      if (isNaN(Number(scanVal)) || scanLen.length == 0) {
-        e.stopImmediatePropagation();
-        showMessage("검수수량을 정확히 입력하십시오.");
-        return;
-      }
-
-      onScanFnNumSubtract(scanVal);
-      e.stopImmediatePropagation();
-      return;
-    }
-        // 오른쪽 키패드 / 키
-        if (e.keyCode == 111) {
-
-          scanVal = $NC.getValue(view);
-
-          // 현재 입력된 값이 숫자인지 체크
-          if (isNaN(Number(scanVal))) {
-            e.stopImmediatePropagation();
-            showMessage("검수수량을 정확히 입력하십시오.");
-            return;
-          }
-
-          onScanFnNumDivide(scanVal);
-          onChkFWScanConfirm();
-          e.stopImmediatePropagation();
-          return;
-        }
-    break;
-  }
-*/
 }
 /**
  * Key Up Event
  * 
  * @param e
  * @param view
+ * 0. 토탈피킹   : $NC.G_CONSTS.SCAN_TOTAL
+ * 1. 피킹라벨   : $NC.G_CONSTS.SCAN_PICKING
+ * 2. 용기번호   : $NC.G_CONSTS.SCAN_BOX
+ * 3. 상품코드   : $NC.G_CONSTS.SCAN_PRODUCT
+ * 4. 수량입력   : $NC.G_CONSTS.SCAN_QUANTITY
+ * 5. 오류      : $NC.G_CONSTS.SCAN_ERROR
  */
 function _OnInputKeyUp(e, view) {
+  if (e.keyCode == 13) {
+    var id = view.prop("id").substr(3).toUpperCase();
+    if (id === 'SCAN') {
+      var scanVal = $NC.getValue(view).toUpperCase()
+        ,scanType = scanValueType(scanVal)
 
-  var id = view.prop("id").substr(3).toUpperCase();
-
-  switch (id) {
-  case "SCAN":
-
-    var scanVal = "";
-    var scanLen = 0;
-
-    // Enter Key
-    if (e.keyCode == 13) {
-
-      scanVal = $NC.getValue(view);
-      // 입력 값 길이
-      scanLen = scanVal.length;
-
-      if (scanLen == 0) {
+      if (scanType == $NC.G_CONSTS.SCAN_TOTAL) {
+        //onScanOrder(scanVal, scanType);
+        e.stopImmediatePropagation();
+        return false;
+      }
+      if (scanType == $NC.G_CONSTS.SCAN_PICKING) {
+        onScanOrder(scanVal, scanType);
+        e.stopImmediatePropagation();
+        return false;
+      }
+      if (scanType == $NC.G_CONSTS.SCAN_QUANTITY) {
+        onChkFWScanConfirm();
         e.stopImmediatePropagation();
         return;
       }
-
-      // 대문자로 변환 ????????????????
-      scanVal = scanVal.toUpperCase();
-
-      // 전표번호 바코드 스캔
-      if (scanVal.substr(0, 2) == "TP" && scanVal.match(/-/g).length == 4) {
-
-        onScanOrder(scanVal);
+      if (scanType == $NC.G_CONSTS.SCAN_PRODUCT) {
+        onScanItem(scanVal);
         e.stopImmediatePropagation();
         return;
       }
-
-      if (G_GRDMASTER.data.getLength() > 0 && $NC.G_VAR.COMPARE_SCAN !== scanVal) {
-        // 수량넣고 엔터 쳤을 경우
-
-        if (scanVal.length < 7) {
-
-          /*
-          scanVal = $NC.getValue(view);
-
-          // 현재 입력된 값이 숫자인지 체크
-          if (isNaN(Number(scanVal))) {
-            e.stopImmediatePropagation();
-            showMessage("검수수량을 정확히 입력하십시오.");
-            return;
-          }
-          */
-          setFocusScan();
-//          onScanFnNumDivide(scanVal);
-//          onChkFWScanConfirm();
-          e.stopImmediatePropagation();
-          return;
-        } 
-      }
-
-      // 상품 바코드 스캔
-      onScanItem(scanVal);
-//        onChkFWScanConfirm();
-      e.stopImmediatePropagation();
-      return;
     }
-
-    break;
   }
+}
+
+/**
+ * 스캔라벨 타입을 리턴한다.
+ */
+function scanValueType(scanVal) {
+  var scanArr = scanVal.split('-')
+  if (scanVal.substr(0, 2) === 'TP' && scanArr.length == 5) {
+    $NC.G_VAR.LAST_SCAN_TOTAL = scanVal;
+    $NC.G_VAR.PICK_SEQ = scanArr[scanArr.length-1];
+    return $NC.G_CONSTS.SCAN_TOTAL; // 0
+  }
+  if (scanVal.substr(0, 2) === 'OP' && scanArr.length == 4) {
+    $NC.G_VAR.LAST_SCAN_PICKING = scanVal;
+    $NC.G_VAR.PICK_SEQ = scanArr[scanArr.length-1];
+    return $NC.G_CONSTS.SCAN_PICKING; // 1
+  }
+  if (isNaN(Number(scanVal)) && scanVal.length === 6 ||
+      isNaN(Number(scanVal)) && scanVal.length === 7
+    ) {
+      return $NC.G_CONSTS.SCAN_BOX; // 2
+  }
+  if (scanVal.length >= 7) {
+    return $NC.G_CONSTS.SCAN_PRODUCT; // 3
+  }
+  if (Number(scanVal) && scanVal.length < 7) {
+    return $NC.G_CONSTS.SCAN_QUANTITY; // 3
+  }
+  return $NC.G_CONSTS.SCAN_ERROR; // 5
 }
 
 /**
@@ -519,14 +459,13 @@ function _Inquiry() {
 
   // 파라메터 세팅
   G_GRDMASTER.queryParams = $NC.getParams({
-    P_CENTER_CD: CENTER_CD,
-    P_BU_CD: BU_CD,
-    P_OUTBOUND_DATE: OUTBOUND_DATE,
-    P_OUTBOUND_BATCH: OUTBOUND_BATCH,
-    P_ITEM_BAR_CD: ITEM_BAR_CD
+     P_CENTER_CD: CENTER_CD
+    ,P_BU_CD: BU_CD
+    ,P_OUTBOUND_DATE: OUTBOUND_DATE
+    ,P_PICK_SEQ: $NC.G_VAR.PICK_SEQ
   });
 
-  G_GRDMASTER.queryId = "LOM7030E.RS_MASTER";
+  G_GRDMASTER.queryId = "LOM7030E.RS_MASTER1";
   // 데이터 조회
   $NC.serviceCall("/LOM7030E/getDataSet.do", 
       $NC.getGridParams(G_GRDMASTER), onGetMaster, onError, null, '7030E_GET_ITEM_INFO');
@@ -1729,7 +1668,7 @@ function onGetPolicyVal(ajaxData) {
 }
 
 
-function onScanOrder(scanVal) {
+function onScanOrder(scanVal, flag) {
 
   var processFn = function() {
 
@@ -1745,18 +1684,6 @@ function onScanOrder(scanVal) {
     var SCAN_OUTBOUND_BATCH = SCAN_DATA[3];
     var SCAN_ITEM_CD = SCAN_DATA[4];
     $NC.G_VAR.COMPARE_SCAN = SCAN_DATA[4];
-
-    /*
-    if (SCAN_CENTER_CD != $NC.getValue("#cboQCenter_Cd")) {
-      showMessage("작업중인 물류센터의 전표가 아닙니다.\n\n확인 후 작업하십시오.");
-      return;
-    }
-    */
-
-//    if (SCAN_BU_CD != $NC.getValue("#edtQBu_Cd")) {
-//      showMessage("작업중인 사업구분의 전표가 아닙니다.\n\n확인 후 작업하십시오.");
-//      return;
-//    }
 
     $NC.setValue("#cboQCenter_Cd", SCAN_CENTER_CD);
     $NC.setValue("#edtQBu_Cd", SCAN_BU_CD);
