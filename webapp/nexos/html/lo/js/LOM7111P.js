@@ -488,7 +488,7 @@ function onGetItemInfo(ajaxData) {
     showMessage(resultData.O_MSG);
     return false;
   }
-
+  showMessage('용기가 추가되었습니다.');
   if (G_GRDMASTER.data.getLength() === 0) {
     $NC.setInitGridData(G_GRDMASTER, ajaxData);
   } else {
