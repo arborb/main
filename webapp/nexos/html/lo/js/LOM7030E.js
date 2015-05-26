@@ -1054,15 +1054,7 @@ function onBtnInit(e) {
     if ($NC.G_VAR.INSPECT_YN == "Y") {
       processFn.call(this);
     } else {
-      showMessage({
-        message: "현재 검수 작업 중 입니다.\n\n초기화 하시겠습니까?",
-        onYesFn: function() {
-          processFn.call(this);
-        },
-        onNoFn: function() {
-          setFocusScan();
-        }
-      });
+      showMessage("현재 검수 작업 중 입니다.");
     }
     return;
   }
@@ -1152,6 +1144,7 @@ function onGetMaster(ajaxData) {
     // $NC.setEnable("#edtScan", false);
     $NC.setValue("#edtBox_No", "검수완료");
     $("#edtBox_No").addClass("inspected");
+    $NC.G_VAR.INSPECT_YN = "Y";
     return;
   } else {
     $NC.setValue("#edtBox_No", rowData.BOX_NO);
@@ -1696,15 +1689,7 @@ function onScanOrder(scanVal, flag) {
 
   if (G_GRDMASTER.data.getLength() > 0) {
     if ($NC.G_VAR.INSPECT_YN == "N") {
-      showMessage({
-        message: "현재 검수 작업 중 입니다.\n\n데이터를 다시 가져오시겠습니까?",
-        onYesFn: function() {
-          processFn.call(this);
-        },
-        onNoFn: function() {
-          setFocusScan();
-        }
-      });
+      showMessage("현재 검수 작업 중 입니다.");
     } else {
       processFn.call(this);
     }
