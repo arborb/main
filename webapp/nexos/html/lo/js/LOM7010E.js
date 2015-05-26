@@ -439,7 +439,7 @@ function onScan(scanVal, flag) {
         P_PICK_SEQ: $NC.G_VAR.PICK_SEQ
       });
 
-      G_GRDMASTER.queryId = "LOM7010E.RS_MASTER1";
+      G_GRDMASTER.queryId = "LOM7010E.RS_MASTER";
       $NC.serviceCall("/LOM7010E/getDataSet.do", 
         $NC.getGridParams(G_GRDMASTER), onGetMaster, onError, null, 'LOM7010E_RS_MASTER');
 
