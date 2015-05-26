@@ -552,6 +552,10 @@ public class LOM7090EService {
 	    callParams.put("P_PROCESS_CD", process_Cd);
 	    callParams.put("P_DIRECTION", direction);
 	    callParams.put(Consts.PK_USER_ID, user_Id);
+	    
+      checkParams.put("P_CENTER_CD", callParams.get("P_CENTER_CD"));
+      checkParams.put("P_BU_CD", callParams.get("P_BU_CD"));
+      checkParams.put("P_OUTBOUND_DATE",callParams.get("P_OUTBOUND_DATE"));
 
 	    TransactionStatus ts = transactionManager.getTransaction(td);
 	    try{
@@ -604,9 +608,9 @@ public class LOM7090EService {
 	    try {
 	      HashMap<String, Object> spParams = new HashMap<String, Object>();
 
-	      spParams.put("P_CENTER_CD", callParams.get("P_CENTER_CD"));
-	      spParams.put("P_BU_CD", callParams.get("P_BU_CD"));
-	      spParams.put("P_OUTBOUND_DATE", callParams.get("P_OUTBOUND_DATE"));
+	      spParams.put("P_CENTER_CD", checkParams.get("P_CENTER_CD"));
+	      spParams.put("P_BU_CD", checkParams.get("P_BU_CD"));
+	      spParams.put("P_OUTBOUND_DATE", checkParams.get("P_OUTBOUND_DATE"));
 	      spParams.put("P_OUTBOUND_BATCH", outbound_batch);
 	      spParams.put("P_USER_ID", user_Id);
 

@@ -1300,8 +1300,8 @@ function grdT2MasterInitialize() {
   });
 
   G_GRDT2MASTER.view.onSelectedRowsChanged.subscribe(grdT2MasterOnAfterScroll);
-  //G_GRDT2MASTER.view.onBeforeEditCell.subscribe(grdT2MasterOnBeforeEditCell);
-  //G_GRDT2MASTER.view.onCellChange.subscribe(grdT2MasterOnCellChange);
+  G_GRDT2MASTER.view.onHeaderClick.subscribe(grdT2MasterOnHeaderClick);
+  $NC.setGridColumnHeaderCheckBox(G_GRDT2MASTER, "CHECK_YN");  
 }
 
 function grdT2MasterOnGetColumns() {
@@ -2618,7 +2618,7 @@ function setT2MasterOrder() {
     P_PROCESS_STATE_BW: '30',
     P_PROCESS_STATE_FW: '20',
     P_USER_ID: $NC.G_USERINFO.USER_ID
-  }, onGetT2Detail, null, null);
+  }, onSaveT2Confirm, onSaveErrorT2Confirm, 2);
 }
 
 /**
