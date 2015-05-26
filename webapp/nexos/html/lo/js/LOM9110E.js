@@ -70,7 +70,28 @@ function _Initialize() {
     fullNameField: "CODE_CD_F",
     addAll: true
   });
+  
+  // 조회조건 - 입출고구분 세팅
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "FLOOR_DIV",
+      P_CODE_CD: "",
+      P_SUB_CD1: "",
+      P_SUB_CD2: ""
+    })
+  }, {
+    selector: "#cboQFloor_Div",
+    codeField: "CODE_CD",
+    nameField: "CODE_NM",
+    fullNameField: "CODE_CD_F",
+      onComplete: function() {
+        $NC.setValue("#cboQFloor_Div");
+      }
+  });
 }
+
+
 
 function _OnLoaded() {
   $NC.setInitSplitter("#divT1DetailView", "v", 800);
@@ -279,6 +300,15 @@ function _Inquiry() {
     return;
   }
 
+  var FLOOR_DIV = $NC.getValue("#cboQFloor_Div");
+  if ($NC.isNull(FLOOR_DIV)) {
+    alert("합포장존구분을 선택하십시요.");
+    $NC.setFocus("#cboQFloor_Div");
+    return;
+  }
+
+  
+  
   var END_YN_DIV = $NC.getValue("#cboQEnd_Yn");
   var OUTBOUND_NO = $NC.getValue("#edtOutbound_No");
 
@@ -318,7 +348,8 @@ function _Inquiry() {
       P_SHIPPER_NM: SHIPPER_NM,
       P_END_YN: '%',
       P_LOCATION_CD: HASLOCATION_CD,
-      P_OUTBOUND_NO: OUTBOUND_NO
+      P_OUTBOUND_NO: OUTBOUND_NO,
+      P_FLOOR_DIV: FLOOR_DIV
     });
 
     // 데이터 조회
@@ -337,7 +368,8 @@ function _Inquiry() {
       P_ORDERER_NM: ORDERER_NM,
       P_SHIPPER_NM: SHIPPER_NM,
       P_END_YN: END_YN_DIV,
-      P_LOCATION_CD: HASLOCATION_CD
+      P_LOCATION_CD: HASLOCATION_CD,
+      P_FLOOR_DIV: FLOOR_DIV
     });
 
     // 데이터 조회
@@ -355,7 +387,8 @@ function _Inquiry() {
       P_ORDERER_NM: ORDERER_NM,
       P_SHIPPER_NM: SHIPPER_NM,
       P_END_YN: END_YN_DIV,
-      P_LOCATION_CD: HASLOCATION_CD
+      P_LOCATION_CD: HASLOCATION_CD,
+      P_FLOOR_DIV: FLOOR_DIV
     });
 
     // 데이터 조회
@@ -490,6 +523,12 @@ function grdT1MasterOnGetColumns() {
     id: "SHIPPER_NM",
     field: "SHIPPER_NM",
     name: "수령자명",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "FLOOR_DIV_F",
+    field: "FLOOR_DIV_F",
+    name: "LOC구분",
     minWidth: 80
   });
   $NC.setGridColumn(columns, {
@@ -815,14 +854,6 @@ function grdT2MasterOnGetColumns() {
     minWidth: 70,
     cssClass: "align-center"
   });
-
-  $NC.setGridColumn(columns, {
-    id: "LINE_NO",
-    field: "LINE_NO",
-    name: "합포장순번",
-    minWidth: 70,
-    cssClass: "align-center"
-  });
   $NC.setGridColumn(columns, {
     id: "OUTBOUND_DATE",
     field: "OUTBOUND_DATE",
@@ -862,7 +893,12 @@ function grdT2MasterOnGetColumns() {
     name: "수령자명",
     minWidth: 80
   });
-
+  $NC.setGridColumn(columns, {
+    id: "FLOOR_DIV_F",
+    field: "FLOOR_DIV_F",
+    name: "LOC구분",
+    minWidth: 80
+  });
   return $NC.setGridColumnDefaultFormatter(columns);
 }
 
@@ -1078,6 +1114,12 @@ function grdT3MasterOnGetColumns() {
     id: "SHIPPER_NM",
     field: "SHIPPER_NM",
     name: "수령자명",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "FLOOR_DIV_F",
+    field: "FLOOR_DIV_F",
+    name: "LOC구분",
     minWidth: 80
   });
   return $NC.setGridColumnDefaultFormatter(columns);

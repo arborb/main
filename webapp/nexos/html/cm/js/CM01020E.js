@@ -154,6 +154,7 @@ function _New() {
     ZONE_CD: null,
     ZONE_NM: null,
     ZONE_DIV: "1",
+    FLOOR_DIV: "01",
     ZONE_ORDER: 0,
     MANAGER_ID: null,
     REMARK1: null,
@@ -162,6 +163,12 @@ function _New() {
     ZONE_DIV_F: $NC.getGridComboName(G_GRDMASTER, {
       colFullNameField: "ZONE_DIV_F",
       searchVal: "1",
+      dataCodeField: "CODE_CD",
+      dataFullNameField: "CODE_CD_F"
+    }),    
+    FLOOR_DIV_F: $NC.getGridComboName(G_GRDMASTER, {
+      colFullNameField: "FLOOR_DIV_F",
+      searchVal: "01",
       dataCodeField: "CODE_CD",
       dataFullNameField: "CODE_CD_F"
     }),
@@ -217,6 +224,7 @@ function _Save() {
         P_ZONE_CD: rowData.ZONE_CD,
         P_ZONE_NM: rowData.ZONE_NM,
         P_ZONE_DIV: rowData.ZONE_DIV,
+        P_FLOOR_DIV: rowData.FLOOR_DIV,
         P_ZONE_ORDER: rowData.ZONE_ORDER,
         P_MANAGER_ID: rowData.MANAGER_ID,
         P_REMARK1: rowData.REMARK1,
@@ -330,6 +338,28 @@ function grdMasterOnGetColumns() {
       isKeyField: true
     })
   });
+  $NC.setGridColumn(columns, {
+    id: "FLOOR_DIV_F",
+    field: "FLOOR_DIV_F",
+    name: "합포장존구분",
+    minWidth: 120,
+    editor: Slick.Editors.ComboBox,
+    editorOptions: $NC.getGridComboEditorOptions("/WC/getDataSet.do", {
+      P_QUERY_ID: "WC.POP_CMCODE",
+      P_QUERY_PARAMS: $NC.getParams({
+        P_CODE_GRP: "FLOOR_DIV",
+        P_CODE_CD: "%",
+        P_SUB_CD1: "",
+        P_SUB_CD2: ""
+      })
+    }, {
+      codeField: "FLOOR_DIV",
+      dataCodeField: "CODE_CD",
+      dataFullNameField: "CODE_CD_F",
+      isKeyField: true
+    })
+  });
+  
   $NC.setGridColumn(columns, {
     id: "ZONE_ORDER",
     field: "ZONE_ORDER",

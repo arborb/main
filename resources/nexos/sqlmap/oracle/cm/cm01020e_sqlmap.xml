@@ -50,6 +50,7 @@
                  <isNotEmpty prepend = "," property= "P_ZONE_ORDER"       >ZONE_ORDER        </isNotEmpty>
                  <isNotEmpty prepend = "," property= "P_MANAGER_ID"       >MANAGER_ID        </isNotEmpty>
                  <isNotEmpty prepend = "," property= "P_REMARK1"          >REMARK1           </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_FLOOR_DIV"        >FLOOR_DIV         </isNotEmpty>
                  ,REG_USER_ID
                  ,REG_DATETIME
                  )
@@ -61,6 +62,7 @@
                  <isNotEmpty prepend = "," property= "P_ZONE_ORDER"       >#P_ZONE_ORDER#      </isNotEmpty>
                  <isNotEmpty prepend = "," property= "P_MANAGER_ID"       >#P_MANAGER_ID#      </isNotEmpty>
                  <isNotEmpty prepend = "," property= "P_REMARK1"          >#P_REMARK1#         </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_FLOOR_DIV"        >#P_FLOOR_DIV#       </isNotEmpty>
                  ,#P_REG_USER_ID#
                  ,SYSDATE
                  )
@@ -76,6 +78,7 @@
             <isNotNull prepend = "," property= "P_ZONE_ORDER"       >ZONE_ORDER        = #P_ZONE_ORDER#      </isNotNull>
             <isNotNull prepend = "," property= "P_MANAGER_ID"       >MANAGER_ID        = #P_MANAGER_ID#      </isNotNull>
             <isNotNull prepend = "," property= "P_REMARK1"          >REMARK1           = #P_REMARK1#         </isNotNull>
+            <isNotNull prepend = "," property= "P_FLOOR_DIV"        >FLOOR_DIV         = #P_FLOOR_DIV#       </isNotNull>
             ,REG_USER_ID       = #P_REG_USER_ID#
             ,REG_DATETIME      = SYSDATE
        WHERE CENTER_CD         = #P_CENTER_CD#

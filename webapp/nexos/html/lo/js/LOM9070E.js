@@ -324,6 +324,7 @@ function _Inquiry(Inquiry_Div) {
     P_SCAN_INFO: $NC.getValue("#edtScan"),
     P_USER_ID: $NC.G_USERINFO.USER_ID,
     P_INQUIRY_DIV: INQUIRY_DIV,
+    
   });
 
   // 데이터 조회
@@ -690,7 +691,10 @@ function onExecSP1(ajaxData) {
     return;
 
   } else if (cl2 == 4) {
-    alert(resultData.RESULT_DATA);
+
+    $("#edtMessage").css("font-size", "17px").size();
+    $NC.setValue("#edtMessage", resultData.RESULT_DATA );
+   // alert(resultData.RESULT_DATA);
     onChangingCondition();
     setFocusScan();
     return;
@@ -709,7 +713,9 @@ function onExecSP1(ajaxData) {
     _Inquiry($NC.G_VAR.INQUIRY_DIV);
 
   } else {
-    alert(resultData.RESULT_DATA);
+    $("#edtMessage").css("font-size", "17px").text();
+    $NC.setValue("#edtMessage", resultData.RESULT_DATA );
+    //alert(resultData.RESULT_DATA);
     setFocusScan();
     return;
   }
@@ -742,8 +748,12 @@ function onExecSP2(ajaxData) {
     setFocusScan();
     return;
 
+    
   } else if (cl2 == 4) {
-    alert(resultData.RESULT_DATA);
+
+    $("#edtMessage").css("font-size", "17px").size();
+    $NC.setValue("#edtMessage", resultData.RESULT_DATA );
+   // alert(resultData.RESULT_DATA);
     onChangingCondition();
     setFocusScan();
     return;
@@ -751,6 +761,7 @@ function onExecSP2(ajaxData) {
   } else if (cl2 == 1) {
     $NC.setValue("#edtMessage", '대상');
     $("#edtMessage").css("color", "black").text();
+    
     if (!$NC.isNull(cl2)) {
       if (cl2 !== "1" && cl2 !== "2" && cl2 !== "3") {
         onChangingCondition();
@@ -762,7 +773,10 @@ function onExecSP2(ajaxData) {
     _Inquiry($NC.G_VAR.INQUIRY_DIV);
 
   } else {
-    alert(resultData.RESULT_DATA);
+
+    $("#edtMessage").css("font-size", "17px").text();
+    $NC.setValue("#edtMessage", resultData.RESULT_DATA );
+    //alert(resultData.RESULT_DATA);
     setFocusScan();
     return;
   }
@@ -848,14 +862,15 @@ function doPrint1() {
     $NC.G_MAIN.silentPrint({
 
       printParams: [{
-        reportDoc: "lo/LABEL_LOM12",
-        queryId: "WR.LABEL_LOM12",
+        reportDoc: "lo/LABEL_LOM12_1",
+        queryId: "WR.RS_LABEL_LOM12_1",
         queryParams: {
           P_CENTER_CD: rowData.CENTER_CD,
           P_BU_CD: rowData.BU_CD,
           P_HAS_DATE: rowData.HAS_DATE,
           P_HAS_NO: rowData.HAS_NO,
-          P_LINE_NO: rowData.LINE_NO
+          P_LINE_NO: rowData.LINE_NO,
+          P_PICK_SEQ: rowData.PICK_SEQ
         },
         iFrameNo: 1,
         silentPrinterName: $NC.G_USERINFO.PRINT_CARD,
@@ -866,8 +881,32 @@ function doPrint1() {
       }
     });
 
-  } else {
-    setFocusScan();
+  } else if ($NC.G_VAR.INQUIRY_DIV == '2') {
+
+
+    $NC.G_MAIN.silentPrint({
+
+      printParams: [{
+        reportDoc: "lo/LABEL_LOM12",
+        queryId: "WR.RS_LABEL_LOM12",
+        queryParams: {
+          P_CENTER_CD: rowData.CENTER_CD,
+          P_BU_CD: rowData.BU_CD,
+          P_HAS_DATE: rowData.HAS_DATE,
+          P_HAS_NO: rowData.HAS_NO,
+          P_LINE_NO: rowData.LINE_NO,
+          P_PICK_BOX_NO: rowData.PICK_BOX_NO
+        },
+        iFrameNo: 1,
+        silentPrinterName: $NC.G_USERINFO.PRINT_CARD,
+        internalQueryYn: "Y"
+      }],
+      onAfterPrint: function() {
+        setFocusScan();
+      }
+    });
+   } else {
+     setFocusScan();
   }
 
   // $NC.G_MAIN.silentPrint(printOptions);
