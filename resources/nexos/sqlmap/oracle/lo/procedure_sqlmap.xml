@@ -1475,13 +1475,14 @@
     <parameter property="P_LINE_NO"                 mode="IN" />
     <parameter property="P_DIRECTIONS_INFO"         mode="IN" />
     <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_FLOOR_DIV"               mode="IN" />
     <parameter property="P_PICK_BOX_NO"             mode="IN" />
     <parameter property="P_CONFIRM_QTY"             mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
     <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
   </parameterMap>
     <procedure id="LO_FW_SCAN_PICK_PROC" parameterMap="paramLO_FW_SCAN_PICK_PROC" resultClass="java.util.HashMap">
-      { call LO_FW_SCAN_PICK_PROC(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+      { call LO_FW_SCAN_PICK_PROC(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
   <!-- [E] - LO_FW_SCAN_PICK_PROC -->
 
