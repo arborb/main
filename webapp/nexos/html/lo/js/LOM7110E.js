@@ -613,6 +613,9 @@ function grdMasterInitialize() {
         if (rowData.INSPECT_YN === "Y") {
           return "specialrow3";
         }
+        if (rowData.ENTRY_QTY == rowData.CONFIRM_QTY) {
+          return "specialrow3";
+        }
         if (rowData.CANCEL_QTY > 0) {
           return "specialrow4";
         }
@@ -869,7 +872,7 @@ function onScanItem(scanVal) {
   if (onScanItemCounting(scanVal)) {
     return false;
   }
-
+  inspectElement();
   var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
   if ($NC.isNull(CENTER_CD)) {
     showMessage({
@@ -939,6 +942,7 @@ function onGetLabelInfo(ajaxData) {
   var rowData
     ,masterData = G_GRDMASTER.data.getItems();
 
+  inspectElement();
   var errorCheckArray = $NC.toArray(ajaxData);
   if(errorCheckArray.length > 0){
     if(errorCheckArray[0].ERR_MSG !== "OK") {
@@ -1169,7 +1173,7 @@ function onGetItemInfoForLabel(ajaxData) {
     showMessage(resultData[0].ERR_MSG);
     return false;
   }
-
+  inspectElement();
   var searchIndex = $NC.getGridSearchRows(G_GRDMASTER, {
     searchKey: 'ITEM_BAR_CD',
     searchVal: resultData[0].ITEM_CD
@@ -1476,6 +1480,7 @@ function onBoxComplete() {
       ,P_LOCATION_CD: rowDatas[i].LOCATION_CD
       ,P_PICK_BOX_NO: rowDatas[i].PICK_BOX_NO
       ,P_CONFIRM_QTY: rowDatas[i].CONFIRM_QTY
+      ,P_FLOOR_DIV: rowDatas[i].FLOOR_DIV
       ,P_USER_ID: $NC.G_USERINFO.USER_ID
     }
     if (rowDatas[i].CONFIRM_QTY > 0) {
@@ -1501,8 +1506,21 @@ function onComplete(ajaxData) {
     return false;
   }
   $NC.setValue('#edtBox_No', boxNo+'(매칭완료)');
-  showMessage('용기 피킹작업이 완료되었습니다.');
+  inspectElement(true);
+  //showMessage('용기 피킹작업이 완료되었습니다.');
   setFocusScan();
+}
+
+function inspectElement(bool) {
+  if (bool) {
+    $('#edtBox_No').addClass('inspected');
+    $('#edtLabel_No').addClass('inspected');
+    $('#edtLabel_No').addClass('inspected');
+    return false;
+  }
+  $('#edtBox_No').removeClass('inspected');
+  $('#edtLabel_No').removeClass('inspected');
+  $('#edtLabel_No').removeClass('inspected');
 }
 
 /**
