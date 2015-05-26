@@ -1536,5 +1536,20 @@
     </procedure>
   <!-- [E] - LO_PICK_SCAN_BOX_DEL -->
 
+  <!-- [S] - LO_PROCESSING_ORDER_TYPE -->
+  <parameterMap id="paramLO_PROCESSING_ORDER_TYPE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_ORDER_TYPE"              mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="P_DIRECTION"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_PROCESSING_ORDER_TYPE" parameterMap="paramLO_PROCESSING_ORDER_TYPE" resultClass="java.util.HashMap">
+      { call LO_PROCESSING_ORDER_TYPE(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_PROCESSING_ORDER_TYPE -->
      
 </sqlMap>

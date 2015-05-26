@@ -2575,28 +2575,50 @@ function onGetT2Detail(ajaxData) {
 }
 
 function setT2MasterOrder() {
-  var masterData = G_GRDT2MASTER.data.getItems()
-    selectedData = []
+  var rowCount = G_GRDT2MASTER.data.getLength();
+  if (rowCount === 0) {
+    alert("조회 먼저 후 처리하십시오.");
+    return;
+  }
+
+  var result = confirm("출고지시 처리하시겠습니까?");
+  if (!result) {
+    return;
+  }
+  
+  var masterData = G_GRDT2MASTER.data.getItems();
+  var chkCnt = 0;
+  var processDS = [ ];
   for (var i in masterData) {
     if (masterData[i].CHECK_YN === 'Y') {
-      selectedData.push({
+      chkCnt++;
+      var processData = {
           P_CENTER_CD: CENTER_CD,
           P_BU_CD: BU_CD,
           P_OUTBOUND_DATE: masterData[i].OUTBOUND_DATE,
           P_ORDER_TYPE: masterData[i].ORDER_TYPE
-      })
+        };
+        processDS.push(processData);      
     }
   }
-  if (selectedData.length > 0) {
-    $NC.serviceCall("/LOM7010E/callFWScanConfirm.do", {
-      P_DIRECTION: 'FW',
-      P_PROCESS_CD: 'C',
-      P_PROCESS_STATE_BW: '30',
-      P_PROCESS_STATE_FW: '20',
-      P_USER_ID: $NC.G_USERINFO.USER_ID,
-      P_DS_MASTER: selectedData
-    }, onGetT2Detail, null, null);
+
+  if (chkCnt == 0) {
+    alert("출고지시 처리할 데이터를 선택하십시오.");
+    return;
   }
+  if (processDS.length == 0) {
+    alert("선택한 데이터 중 출고지시 처리 가능한 데이터가 없습니다.");
+    return;
+  }
+  
+  $NC.serviceCall("/LOM7090E/callOrderType.do", {
+    P_DS_MASTER: $NC.getParams(processDS),
+    P_PROCESS_CD: 'C',
+    P_DIRECTION: 'FW',
+    P_PROCESS_STATE_BW: '30',
+    P_PROCESS_STATE_FW: '20',
+    P_USER_ID: $NC.G_USERINFO.USER_ID
+  }, onGetT2Detail, null, null);
 }
 
 /**

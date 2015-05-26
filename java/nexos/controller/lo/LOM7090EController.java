@@ -186,6 +186,51 @@ public class LOM7090EController extends CommonController {
 
 		return result;
 	}
+	
+	/**
+	 * 출고등록/출고지시- Confirm/Cancel 처리
+	 * 
+	 * @param request
+	 *            HttpServletRequest
+	 * @param subDS
+	 *            DataSet
+	 * @param user_Id
+	 *            사용자ID
+	 * @return
+	 */
+	@RequestMapping(value = "/callOrderType.do", method = RequestMethod.POST)
+	public ResponseEntity<String> callLOProcessing_OrderType(HttpServletRequest request,
+	    @RequestParam(Consts.PK_DS_MASTER) String masterDS,
+	    @RequestParam("P_PROCESS_CD") String process_Cd,
+	    @RequestParam("P_DIRECTION") String direction,
+	    @RequestParam("P_PROCESS_STATE_BW") String process_State_BW,
+	    @RequestParam("P_PROCESS_STATE_FW") String process_State_FW,
+	    @RequestParam(Consts.PK_USER_ID) String user_Id) {
+	  
+	  ResponseEntity<String> result = null;
+	  
+	  // DataSet Map에 추가
+	  Map<String, Object> params = getDataSet(masterDS, Consts.PK_DS_MASTER);
+	  String oMsg = getResultMessage(params);
+	  if (!Consts.OK.equals(oMsg)) {
+	    result = getResponseEntityError(request, oMsg);
+	    return result;
+	  }
+	  params.put("P_PROCESS_CD", process_Cd);
+	  params.put("P_DIRECTION", direction);
+	  params.put("P_PROCESS_STATE_BW", process_State_BW); // 취소가능 진행상태
+	  params.put("P_PROCESS_STATE_FW", process_State_FW); // 처리가능 진행상태
+	  params.put(Consts.PK_USER_ID, user_Id);
+	  
+	  try {
+      result = getResponseEntity(request,
+          service.callLOProcessingOrderType(params));
+	  } catch (Exception e) {
+	    result = getResponseEntityError(request, e);
+	  }
+	  
+	  return result;
+	}
 
 	/**
 	 * SP 호출 - 조회

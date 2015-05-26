@@ -494,6 +494,144 @@ public class LOM7090EService {
 
 		return result;
 	}
+	
+	/**
+	 * LO_PROCESSING 호출
+	 * 
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public String callLOProcessingOrderType(Map<String, Object> params) throws Exception {
+
+	  final String PROCEDURE_ID = "LO_PROCESSING_ORDER_TYPE";
+	  // 합포장 적용 SP 추가
+	  final String FW_DIRECTIONS_PROC = "LO_FW_DIRECTIONS_PICK_PROC";
+
+	  List<Map<String, Object>> saveDS = (List<Map<String, Object>>) params.get(Consts.PK_DS_MASTER);
+	  String process_Cd        = (String) params.get("P_PROCESS_CD");
+	  String direction         = (String) params.get("P_DIRECTION");
+	  String process_State_BW  = (String) params.get("P_PROCESS_STATE_BW");
+	  String process_State_FW  = (String) params.get("P_PROCESS_STATE_FW");
+
+	  String user_Id = (String) params.get(Consts.PK_USER_ID);
+	  String outbound_batch    = null; // 출고차수
+	  String outbound_batch_nm = null; // 출고차수명
+
+	  // 처리할 수 있는 진행상태
+	  String CHECK_STATE = "";
+	  String CHECK_PROCESS_CD = Consts.PROCESS_ENTRY;
+	  // 처리
+	  if (Consts.DIRECTION_FW.equals(direction)) {
+	    CHECK_STATE = process_State_FW;
+	    if (Consts.PROCESS_ENTRY.equals(process_Cd) || Consts.PROCESS_ENTRY_T1.equals(process_Cd)) {
+	      CHECK_STATE = Consts.STATE_ORDER;
+	      CHECK_PROCESS_CD = Consts.PROCESS_ORDER;
+	    }
+	  } else {
+	    // 취소
+	    CHECK_STATE = process_State_BW;
+	  }
+
+	  HashMap<String, Object> checkParams = new HashMap<String, Object>();
+	  checkParams.put("P_LINE_NO", ""); // 전표단위
+	  checkParams.put("P_PROCESS_CD", CHECK_PROCESS_CD);
+	  checkParams.put("P_STATE_DIV", "1"); // 상태구분([1]MIN, [2]MAX)
+	  
+	  // LO_PROCESSING 호출
+	  // 전표 단위 Transaction
+	  final int dsCnt = saveDS.size();
+	  StringBuffer sbResult = new StringBuffer();
+	  TransactionDefinition td = new DefaultTransactionDefinition();
+	  String oMsg = "";
+	  for (int i = 0; i < dsCnt; i++) {
+
+	    // SP 호출 파라메터
+	    Map<String, Object> callParams = saveDS.get(i);
+	    callParams.put("P_PROCESS_CD", process_Cd);
+	    callParams.put("P_DIRECTION", direction);
+	    callParams.put(Consts.PK_USER_ID, user_Id);
+
+	    TransactionStatus ts = transactionManager.getTransaction(td);
+	    try{
+	      //출고지시일 경우 확정처리시 Outbound_Batch 갱신후 처리
+	      if (Consts.PROCESS_DIRECTIONS.equals(process_Cd) && Consts.DIRECTION_FW.equals(direction)) {
+	        // 출고지시 정보에서 1건 이상 선택 했을 경우, 선택한 행을 모두 같은 OUTBOUND_BATH로
+	        // 설정 해야 함
+	        if (outbound_batch == null) {
+	          //callParams.put("P_OUTBOUND_BATCH", params.get("P_OUTBOUND_BATCH"));
+	          callParams.put("P_OUTBOUND_BATCH", "000");
+	          callParams.put("P_OUTBOUND_BATCH_NM", "");
+	        } else {
+	          callParams.put("P_OUTBOUND_BATCH", outbound_batch);
+	          callParams.put("P_OUTBOUND_BATCH_NM", outbound_batch_nm);
+	        }
+	        outbound_batch = dao.saveDirections(callParams);
+	      }
+	      HashMap<String, Object> mapResult = callSP(PROCEDURE_ID,
+	          callParams);
+	      oMsg = (String) mapResult.get(Consts.PK_O_MSG);     
+
+	      // 오류면 Rollback 
+	      if (!Consts.OK.equals(oMsg)) {
+	        transactionManager.rollback(ts);
+	        sbResult.append(oMsg);
+	        sbResult.append(Consts.CRLF);
+	        continue;
+	      }
+
+	      // 출고진행상태별 출고주문상태 송신 및 출고가용재고 송신 호출
+	      oMsg = edCommonService.realtimeSendProcessing();
+	      // 오류면 Rollback
+	      if (!Consts.OK.equals(oMsg)) {
+	        transactionManager.rollback(ts);
+	        sbResult.append(oMsg);
+	        sbResult.append(Consts.CRLF);
+	        continue;
+	      }
+
+	      transactionManager.commit(ts);
+	    }catch(Exception e){
+	      // SP 내에서 오류가 아니면 Exit
+	      transactionManager.rollback(ts);
+	      throw new RuntimeException(e.getMessage());
+	    }
+	  }
+
+	  if (dsCnt > 0 && Consts.PROCESS_DIRECTIONS.equals(process_Cd) && Consts.DIRECTION_FW.equals(direction)) {
+	    TransactionStatus ts = transactionManager.getTransaction(td);
+	    try {
+	      HashMap<String, Object> spParams = new HashMap<String, Object>();
+
+	      spParams.put("P_CENTER_CD", callParams.get("P_CENTER_CD"));
+	      spParams.put("P_BU_CD", callParams.get("P_BU_CD"));
+	      spParams.put("P_OUTBOUND_DATE", callParams.get("P_OUTBOUND_DATE"));
+	      spParams.put("P_OUTBOUND_BATCH", outbound_batch);
+	      spParams.put("P_USER_ID", user_Id);
+
+	      HashMap<String, Object> mapResult = callSP(FW_DIRECTIONS_PROC, spParams);
+	      String oMsg1 = (String) mapResult.get(Consts.PK_O_MSG);
+
+	      // 오류면 Rollback
+	      if (!Consts.OK.equals(oMsg1)) {
+	        transactionManager.rollback(ts);
+	        sbResult.append(oMsg1);
+	        sbResult.append(Consts.CRLF);
+	      } else {
+	        transactionManager.commit(ts);
+	      }
+	    } catch (Exception e) {
+	      // SP 내에서 오류가 아니면 Exit
+	      transactionManager.rollback(ts);
+	      throw new RuntimeException(e.getMessage());
+	    }
+	  }
+	  if (sbResult.length() == 0) {
+	    sbResult.append(Consts.OK);
+	  }
+	  return sbResult.toString();
+	}
 
 	/**
 	 * 출고스캔검수-박스 통합(팝업화면에서)
