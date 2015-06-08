@@ -187,7 +187,9 @@
 		<band height="50">
 			<printWhenExpression><![CDATA[$F{FIRST_YN}.equals( "Y" )]]></printWhenExpression>
 			<componentElement>
-				<reportElement x="27" y="12" width="185" height="24" uuid="c9ba7194-5631-47fa-9eca-acd7d8f3f28a"/>
+				<reportElement x="27" y="12" width="185" height="24" uuid="c9ba7194-5631-47fa-9eca-acd7d8f3f28a">
+					<printWhenExpression><![CDATA[$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="0" barHeight="0">
 					<jr:codeExpression><![CDATA[$F{PAPER_NO}]]></jr:codeExpression>
 				</jr:barbecue>
@@ -201,7 +203,9 @@
 				<textFieldExpression><![CDATA[$F{HAS_END_YN}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="27" y="34" width="185" height="9" forecolor="#000000" backcolor="#FFFFFF" uuid="940be61f-fb9a-423c-91de-ac4c5dd00ac5"/>
+				<reportElement mode="Transparent" x="27" y="34" width="185" height="9" forecolor="#000000" backcolor="#FFFFFF" uuid="940be61f-fb9a-423c-91de-ac4c5dd00ac5">
+					<printWhenExpression><![CDATA[$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="나눔고딕 ExtraBold" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -209,7 +213,9 @@
 				<textFieldExpression><![CDATA[$F{PAPER_NO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Transparent" x="24" y="1" width="50" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="1000f96b-58a2-4b36-a15f-40dd1fea037b"/>
+				<reportElement mode="Transparent" x="24" y="1" width="50" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="1000f96b-58a2-4b36-a15f-40dd1fea037b">
+					<printWhenExpression><![CDATA[$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -217,7 +223,9 @@
 				<text><![CDATA[합포장일자]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="74" y="1" width="50" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="e44b1e23-3412-4ad9-94e2-f07bcd5d580c"/>
+				<reportElement mode="Transparent" x="74" y="1" width="50" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="e44b1e23-3412-4ad9-94e2-f07bcd5d580c">
+					<printWhenExpression><![CDATA[$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -225,7 +233,9 @@
 				<textFieldExpression><![CDATA[$F{HAS_DATE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Transparent" x="124" y="1" width="50" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="0740642e-10ca-4b72-bd76-74bff7f31a1e"/>
+				<reportElement mode="Transparent" x="124" y="1" width="50" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="0740642e-10ca-4b72-bd76-74bff7f31a1e">
+					<printWhenExpression><![CDATA[$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -233,7 +243,9 @@
 				<text><![CDATA[합포장번호]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="174" y="1" width="50" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="28e3b349-75ef-4910-a9b9-d9a35f611b9a"/>
+				<reportElement mode="Transparent" x="174" y="1" width="50" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="28e3b349-75ef-4910-a9b9-d9a35f611b9a">
+					<printWhenExpression><![CDATA[$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -241,7 +253,9 @@
 				<textFieldExpression><![CDATA[$F{HAS_NO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Transparent" x="27" y="42" width="36" height="7" forecolor="#000000" backcolor="#FFFFFF" uuid="18b7c6a1-fa0a-4af4-a213-44f93d5cad24"/>
+				<reportElement mode="Transparent" x="27" y="42" width="36" height="7" forecolor="#000000" backcolor="#FFFFFF" uuid="18b7c6a1-fa0a-4af4-a213-44f93d5cad24">
+					<printWhenExpression><![CDATA[$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -249,7 +263,9 @@
 				<text><![CDATA[LOC구분]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="63" y="42" width="36" height="7" forecolor="#000000" backcolor="#FFFFFF" uuid="06269751-5712-43e6-b5bf-086ca79ec586"/>
+				<reportElement mode="Transparent" x="63" y="42" width="36" height="7" forecolor="#000000" backcolor="#FFFFFF" uuid="06269751-5712-43e6-b5bf-086ca79ec586">
+					<printWhenExpression><![CDATA[$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -257,7 +273,9 @@
 				<textFieldExpression><![CDATA[$F{FLOOR_DIV_F}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Transparent" x="99" y="42" width="36" height="7" forecolor="#000000" backcolor="#FFFFFF" uuid="e5f0d0ef-2c88-41d5-ba3b-b4ae2cf066ae"/>
+				<reportElement mode="Transparent" x="99" y="42" width="36" height="7" forecolor="#000000" backcolor="#FFFFFF" uuid="e5f0d0ef-2c88-41d5-ba3b-b4ae2cf066ae">
+					<printWhenExpression><![CDATA[$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -265,7 +283,9 @@
 				<text><![CDATA[LOC번호]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="135" y="42" width="36" height="7" forecolor="#000000" backcolor="#FFFFFF" uuid="7b577d1a-fa60-47da-b6bf-abc3f43b754f"/>
+				<reportElement mode="Transparent" x="135" y="42" width="36" height="7" forecolor="#000000" backcolor="#FFFFFF" uuid="7b577d1a-fa60-47da-b6bf-abc3f43b754f">
+					<printWhenExpression><![CDATA[$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -303,6 +323,86 @@
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="173" y="2" width="50" height="23" forecolor="#000000" backcolor="#FFFFFF" uuid="540dcec4-911e-4927-bbac-6defa2ed80c8">
+					<printWhenExpression><![CDATA[!$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HAS_NO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="73" y="2" width="50" height="23" forecolor="#000000" backcolor="#FFFFFF" uuid="9e887c15-c3b0-45d8-a30e-bd13a09012f9">
+					<printWhenExpression><![CDATA[!$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HAS_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="23" y="2" width="50" height="23" forecolor="#000000" backcolor="#FFFFFF" uuid="5ceef6d5-383c-4e56-95da-46faa3f14f5d">
+					<printWhenExpression><![CDATA[!$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[합포장일자]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="123" y="2" width="50" height="23" forecolor="#000000" backcolor="#FFFFFF" uuid="4460a670-7bce-41d8-93ba-436ed79b9e49">
+					<printWhenExpression><![CDATA[!$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[합포장번호]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="124" y="25" width="49" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="05fa911d-d2ff-480a-a1bd-f2abff355529">
+					<printWhenExpression><![CDATA[!$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[LOC번호]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="174" y="25" width="47" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="8f06174c-737b-4c72-834d-0b3c7d83040b">
+					<printWhenExpression><![CDATA[!$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCATION_CD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="23" y="25" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="28b2a812-1a1d-4b9f-abcd-7b8f683d0adc">
+					<printWhenExpression><![CDATA[!$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[LOC구분]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="73" y="25" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="cf0c3a96-7aa7-407f-9594-519628a18a89">
+					<printWhenExpression><![CDATA[!$F{END_YN}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FLOOR_DIV_F}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<detail>

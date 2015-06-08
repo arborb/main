@@ -326,23 +326,17 @@
 			</textField>
 			<componentElement>
 				<reportElement positionType="FixRelativeToBottom" x="389" y="1" width="178" height="50" printWhenGroupChanges="GRP_OUTBOUND_BATCH" uuid="e59872f0-cdae-43e7-b561-3e1ec02364e4"/>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="0" barHeight="70">
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="0" barHeight="50">
 					<jr:codeExpression><![CDATA[$F{PAPER_NO}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="392" y="62" width="175" height="12" uuid="2d2bc917-01f6-421d-86ea-2339188a209b"/>
+				<reportElement x="392" y="51" width="175" height="12" uuid="2d2bc917-01f6-421d-86ea-2339188a209b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="굴림체" isBold="false" pdfFontName="malgun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PAPER_NO}]]></textFieldExpression>
 			</textField>
-			<componentElement>
-				<reportElement positionType="FixRelativeToBottom" x="389" y="13" width="178" height="50" printWhenGroupChanges="GRP_OUTBOUND_BATCH" uuid="c3065337-340e-4b2c-91cd-6a845200a1e3"/>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="0" barHeight="70">
-					<jr:codeExpression><![CDATA[$F{PAPER_NO}]]></jr:codeExpression>
-				</jr:barbecue>
-			</componentElement>
 			<staticText>
 				<reportElement key="staticText-4" x="19" y="-6" width="95" height="29" uuid="904295ce-fa63-4242-a13e-3850002736c0"/>
 				<box leftPadding="0"/>

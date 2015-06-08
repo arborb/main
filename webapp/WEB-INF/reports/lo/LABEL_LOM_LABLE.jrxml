@@ -51,7 +51,7 @@
 ,'' AS PRINT_DATETIME
 ,'' AS ISPRINT
 ,'' AS FLOOR_DIV
-,'' AS DELIVEYR_TYPE1
+,'' AS DELIVERY_TYPE1
 ,'' AS FIRST_YN
     FROM (
           SELECT M1.CENTER_CD
@@ -273,7 +273,7 @@
 	<field name="PRINT_DATETIME" class="java.lang.String"/>
 	<field name="ISPRINT" class="java.lang.String"/>
 	<field name="FLOOR_DIV" class="java.lang.String"/>
-	<field name="DELIVEYR_TYPE1" class="java.lang.String"/>
+	<field name="DELIVERY_TYPE1" class="java.lang.String"/>
 	<field name="FIRST_YN" class="java.lang.String"/>
 	<group name="GRP_PICK_SEQ" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{PAPER_NO}]]></groupExpression>
@@ -458,8 +458,14 @@
 					<font fontName="나눔고딕 ExtraBold" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{DELIVEYR_TYPE1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DELIVERY_TYPE1}]]></textFieldExpression>
 			</textField>
+			<componentElement>
+				<reportElement x="5" y="16" width="62" height="15" uuid="91bd3e49-7660-426f-a3f8-05432cc50e67"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barHeight="50">
+					<jr:codeExpression><![CDATA[$F{ITEM_CD}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
 		</band>
 	</detail>
 	<pageFooter>
@@ -542,29 +548,21 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MAX_GROUP_NO}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" isBlankWhenNull="false">
-				<reportElement key="textField-19" x="196" y="4" width="16" height="8" uuid="dc178d39-1bf1-413d-bfff-d477b3d51a70"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="굴림체" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement mode="Transparent" x="165" y="12" width="18" height="8" forecolor="#000000" backcolor="#FFFFFF" uuid="f7d4f200-bb67-4d79-81ae-5ce9a856895d"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
 					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<text><![CDATA[총]]></text>
+				<text><![CDATA[전체]]></text>
 			</staticText>
-			<staticText>
-				<reportElement mode="Transparent" x="165" y="4" width="18" height="8" forecolor="#000000" backcolor="#FFFFFF" uuid="4ae10efd-e238-4d28-a078-aec3b1a8fd28"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
-					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
-					<paragraph lineSpacing="Single"/>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-19" x="196" y="4" width="16" height="8" uuid="332130bf-c1bd-4e7e-a8f6-0a1bd3a8528b"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="굴림체" size="6" isBold="true"/>
 				</textElement>
-				<text><![CDATA[현재]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["/"]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 </jasperReport>
