@@ -251,7 +251,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="18" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfFontName="malgun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[토탈피킹지시서(낱개기준)]]></text>
+				<text><![CDATA[토탈피킹지시서]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-7" x="392" y="83" width="66" height="14" isRemoveLineWhenBlank="true" uuid="c653e904-a208-4cc7-a288-82c1869799f3"/>
@@ -293,7 +293,7 @@
 				<text><![CDATA[출고차수 :]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-2" x="458" y="83" width="109" height="12" uuid="4d71693a-a7cc-4342-afc8-1e2b1f3ef6fd"/>
+				<reportElement key="textField-2" x="458" y="83" width="109" height="14" uuid="4d71693a-a7cc-4342-afc8-1e2b1f3ef6fd"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -343,6 +343,22 @@
 					<jr:codeExpression><![CDATA[$F{PAPER_NO}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
+			<staticText>
+				<reportElement key="staticText-4" x="19" y="-6" width="95" height="29" uuid="904295ce-fa63-4242-a13e-3850002736c0"/>
+				<box leftPadding="0"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="14" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<text><![CDATA[지시서번호]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="staticText-4" x="8" y="16" width="95" height="35" uuid="a9c299c1-08b0-429b-922d-6023a6623910"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="24" isBold="false" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRINT_SEQ2}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -419,14 +435,6 @@
 					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[상품바코드]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-4" x="513" y="1" width="51" height="12" uuid="904295ce-fa63-4242-a13e-3850002736c0"/>
-				<box leftPadding="0"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
-					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[지시서번호]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-4" x="316" y="1" width="80" height="12" uuid="a03be0dc-12e0-44c4-b550-03064f62f9e4"/>
@@ -523,14 +531,6 @@
 					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ITEM_BAR_CD}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement key="staticText-4" x="513" y="2" width="51" height="12" uuid="a9c299c1-08b0-429b-922d-6023a6623910"/>
-				<box leftPadding="0"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
-					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PRINT_SEQ2}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement key="staticText-4" x="316" y="2" width="80" height="12" uuid="7cf28ae3-1706-4b4b-a78c-c8d923369fb3"/>

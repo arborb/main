@@ -62,6 +62,10 @@
           <span class="ui-span-normal">▶</span>
           <input class="ui-dtp-key" type="text" id="dtpQOutbound_Date2" style="width: 80px;" />
         </td>
+        <td>
+          <div id="lblQPick_Box_No" class="ui-lbl-condition">용기번호</div>
+          <input class="ui-edt-normal" type="text" id="edtQPick_Box_No" style="width: 144px;" />
+        </td>
       </tr>
       <tr>
         <td>
@@ -80,31 +84,39 @@
           <div id="lblQPick_Seq" class="ui-lbl-condition">라벨번호</div>
           <input class="ui-edt-normal" type="text" id="edtQPick_Seq" style="width: 144px;" />
         </td>
-        <td>
-          <div id="lblQPick_Box_No" class="ui-lbl-condition">용기번호</div>
-          <input class="ui-edt-normal" type="text" id="edtQPick_Box_No" style="width: 144px;" />
-        </td>
       </tr>
       <tr style="border-width: 1px; border-style: solid; vertical-align: middle;">
         <td>
           <div id="lblQPick_Box_Yn" class="ui-lbl-condition">용기매칭</div>
-          <input class="ui-chk-normal" type="checkbox" name="chkQPick_Box_Yn" id="chkQPick_Box_Yn" >
-          완료
+          <select id="chkQPick_Box_Yn" class="ui-cbo-normal" style="width: 150px;">
+            <option value="%" selected>% - 전체</option>
+            <option value="Y">Y - 완료</option>
+            <option value="N">N - 미완료</option>   
+          </select>
         </td>
         <td>
           <div id="lblQHas_Proc_Yn" class="ui-lbl-condition">합포장</div>
-          <input class="ui-chk-normal" type="checkbox" name="chkQHas_Proc_Yn" id="chkQHas_Proc_Yn" >
-          완료
+          <select id="chkQHas_Proc_Yn" class="ui-cbo-normal" style="width: 150px;">
+            <option value="%" selected>% - 전체</option>
+            <option value="Y">Y - 완료</option>
+            <option value="N">N - 미완료</option>          
+          </select>
         </td>
         <td>
-          <div id="lblQInspect" class="ui-lbl-condition">포장검수</div>
-          <input class="ui-chk-normal" type="checkbox" name="chkQInspect_Yn" id="chkQInspect_Yn" >
-          완료
+          <div id="lblQInspect_Yn" class="ui-lbl-condition">포장검수</div>
+          <select id="chkQInspect_Yn" class="ui-cbo-normal" style="width: 150px;">
+            <option value="%" selected>% - 전체</option>
+            <option value="Y">Y - 완료</option>
+            <option value="N">N - 미완료</option>           
+          </select>
         </td>
         <td>
           <div id="lblQWb_Chk_Yn" class="ui-lbl-condition">상차검수</div>
-          <input class="ui-chk-normal" type="checkbox" name="chkQWb_Chk_Yn" id="chkQWb_Chk_Yn" />
-          완료
+          <select id="chkQWb_Chk_Yn" class="ui-cbo-normal" style="width: 150px;">
+            <option value="%" selected>% - 전체</option>
+            <option value="Y">Y - 완료</option>
+            <option value="N">N - 미완료</option>           
+          </select>
         </td>
       </tr>
     </table>

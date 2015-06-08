@@ -144,7 +144,7 @@ describe('LOM7090E.js 출고작업', function(){
    			expect($NC.G_VAR.buttons._cancel).toBe('0');
    			expect($NC.G_VAR.buttons._delete).toBe('0');
    			expect($NC.G_VAR.buttons._excel).toBe('1');
-   			expect($NC.G_VAR.buttons._print).toBe('1');
+   			expect($NC.G_VAR.buttons._print).toBe('0');
 		})
 		it('T3Master callback 호출함', function(){
 			spyOn($NC, 'serviceCall').and.callFake(function(url, data, success, error, option){

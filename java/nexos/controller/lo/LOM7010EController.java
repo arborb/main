@@ -50,7 +50,7 @@ public class LOM7010EController extends CommonController {
    */
   @RequestMapping(value = "/getDataSet.do", method = RequestMethod.POST)
   public ResponseEntity<String> getDataSet(HttpServletRequest request,
-      @RequestParam(Consts.PK_QUERY_ID) String queryId, @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+    @RequestParam(Consts.PK_QUERY_ID) String queryId, @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
 
@@ -80,7 +80,7 @@ public class LOM7010EController extends CommonController {
    */
   @RequestMapping(value = "/callSP.do", method = RequestMethod.POST)
   public ResponseEntity<String> callSP(HttpServletRequest request, @RequestParam(Consts.PK_QUERY_ID) String queryId,
-      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
 
@@ -102,6 +102,50 @@ public class LOM7010EController extends CommonController {
   }
 
   /**
+   * 저장(상품별) 처리
+   * 
+   * @param request HttpServletRequest
+   * @param masterDS DataSet
+   * @param user_Id 사용자ID
+   * @return
+   */
+  @RequestMapping(value = "/save.do", method = RequestMethod.POST)
+  public ResponseEntity<String> save(HttpServletRequest request, @RequestParam(Consts.PK_DS_MASTER) String masterDS,
+    @RequestParam(Consts.PK_DS_DETAIL) String detailDS, @RequestParam("P_COMPLETE_YN") String completeYn, 
+    @RequestParam("P_CARRIER_CD") String carrierCd) {
+
+    ResponseEntity<String> result = null;
+
+    Map<String, Object> params;
+    // 출고스캔검수 DataSet Map에 추가
+    params = getDataSet(detailDS, Consts.PK_DS_DETAIL);
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    // 마스터 DataSet Map에 추가
+    Map<String, Object> masterParams = getParameter(masterDS);
+    oMsg = getResultMessage(masterParams);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+    params.put(Consts.PK_DS_MASTER, masterParams);
+    params.put("P_COMPLETE_YN", completeYn);
+    params.put("P_CARRIER_CD", carrierCd);
+
+    try {
+      result = getResponseEntity(request, service.save(params));
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+  }
+
+  /**
    * 출고스캔검수-박스 삭제(팝업화면에서)
    * 
    * @param request HttpServletRequest
@@ -111,7 +155,7 @@ public class LOM7010EController extends CommonController {
    */
   @RequestMapping(value = "/callScanBoxDelete.do", method = RequestMethod.POST)
   public ResponseEntity<String> callScanBoxDelete(HttpServletRequest request,
-      @RequestParam(Consts.PK_DS_MASTER) String masterDS, @RequestParam(Consts.PK_USER_ID) String user_Id) {
+    @RequestParam(Consts.PK_DS_MASTER) String masterDS, @RequestParam(Consts.PK_USER_ID) String user_Id) {
 
     ResponseEntity<String> result = null;
 
@@ -144,7 +188,7 @@ public class LOM7010EController extends CommonController {
    */
   @RequestMapping(value = "/callScanBoxMerge.do", method = RequestMethod.POST)
   public ResponseEntity<String> callScanBoxMerge(HttpServletRequest request,
-      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
 
@@ -165,66 +209,6 @@ public class LOM7010EController extends CommonController {
   }
 
   /**
-   * 출고스캔검수-박스완료
-   * 
-   * @param request HttpServletRequest
-   * @param subDS DataSet
-   * @param user_Id 사용자ID
-   * @return
-   */
-  @RequestMapping(value = "/callScanBoxComplete.do", method = RequestMethod.POST)
-  public ResponseEntity<String> callScanBoxComplete(HttpServletRequest request,
-      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
-
-    ResponseEntity<String> result = null;
-
-    Map<String, Object> params = getParameter(queryParams);
-    String oMsg = getResultMessage(params);
-    if (!Consts.OK.equals(oMsg)) {
-      result = getResponseEntityError(request, oMsg);
-      return result;
-    }
-
-    try {
-      result = getResponseEntity(request, service.callScanBoxComplete(params));
-    } catch (Exception e) {
-      result = getResponseEntityError(request, e);
-    }
-
-    return result;
-  }
-
-  /**
-   * 출고스캔검수-상품 수량이 변경될 때 마다 호출
-   * 
-   * @param request HttpServletRequest
-   * @param subDS DataSet
-   * @param user_Id 사용자ID
-   * @return
-   */
-  @RequestMapping(value = "/callScanBoxSave.do", method = RequestMethod.POST)
-  public ResponseEntity<String> callScanBoxSave(HttpServletRequest request,
-      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
-
-    ResponseEntity<String> result = null;
-
-    Map<String, Object> params = getParameter(queryParams);
-    String oMsg = getResultMessage(params);
-    if (!Consts.OK.equals(oMsg)) {
-      result = getResponseEntityError(request, oMsg);
-      return result;
-    }
-
-    try {
-      result = getResponseEntity(request, service.callScanBoxSave(params));
-    } catch (Exception e) {
-      result = getResponseEntityError(request, e);
-    }
-
-    return result;
-  }
-
-  /**
    * 출고스캔검수-검수완료
    * 
    * @param request HttpServletRequest
@@ -235,7 +219,7 @@ public class LOM7010EController extends CommonController {
   @SuppressWarnings("rawtypes")
   @RequestMapping(value = "/callFWScanConfirm.do", method = RequestMethod.POST)
   public ResponseEntity<String> callFWScanConfirm(HttpServletRequest request,
-      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
 
@@ -267,7 +251,7 @@ public class LOM7010EController extends CommonController {
   @SuppressWarnings("rawtypes")
   @RequestMapping(value = "/callBWScanConfirm.do", method = RequestMethod.POST)
   public ResponseEntity<String> callBWScanConfirm(HttpServletRequest request,
-      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
 
@@ -289,3 +273,4 @@ public class LOM7010EController extends CommonController {
   }
 
 }
+

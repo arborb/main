@@ -40,9 +40,9 @@
 
   <!-- Spring Expression Language (SpEL) 사용 -->
   <util:properties id="globalProps" location="classpath:/nexos/config/globals.properties">
-    <prop key="db.jdbcUrl">jdbc:oracle:thin:@121.135.236.70:1521:WMS11G</prop>
-    <prop key="db.user">WMS_USER</prop>
-    <prop key="db.password">WMS_PWD</prop>
+    <prop key="db.jdbcUrl">${encrypt.db.jdbcUrl}</prop>
+    <prop key="db.user">${encrypt.db.user}</prop>
+    <prop key="db.password">${encrypt.db.password}</prop>
     <prop key="webapp.root">${wms.webapp.root}</prop>
   </util:properties>
 

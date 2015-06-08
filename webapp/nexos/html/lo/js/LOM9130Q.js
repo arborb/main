@@ -65,6 +65,25 @@ function _Initialize() {
     nameField: "CODE_NM",
     addAll: true
   });
+  
+  //층구분
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "LOCA08",
+      P_CODE_CD: "",
+      P_SUB_CD1: "",
+      P_SUB_CD2: ""
+    })
+  }, {
+    selector: "#cboQFloor_Div1",
+    codeField: "CODE_CD",
+    nameField: "CODE_NM",
+    fullNameField: "CODE_CD_F",
+    addAll: true,
+      onComplete:null
+  });
+
 }
 
 /**
@@ -183,11 +202,15 @@ function _Inquiry() {
   }
 
   var OUTBOUND_BATCH = $NC.getValue("#cboQOutbound_Batch");
-  var ORDER_TYPE = $NC.getValue("#cboQOrder_Div");
-  var INOUT_CD = $NC.getValue("#cboQInout_Cd");
-  var BRAND_CD = $NC.getValue("#edtQOwn_Brand_Cd", true);
-  var USER_ID = $NC.G_USERINFO.USER_ID;
-  var DEAL_ID = $NC.getValue("#edtQDeal_Cd", true);
+  var ORDER_TYPE     = $NC.getValue("#cboQOrder_Div");
+  var INOUT_CD       = $NC.getValue("#cboQInout_Cd");
+  var BRAND_CD       = $NC.getValue("#edtQOwn_Brand_Cd", true);
+  var USER_ID        = $NC.G_USERINFO.USER_ID;
+  var DEAL_ID        = $NC.getValue("#edtQDeal_Cd", true);
+  //var PRINT_SEQ1     = $NC.getValue("#edtQPrint_Seq1", true);
+  var PICK_SEQ       = $NC.getValue("#edtQPick_Seq", true);
+  var FLOOR_DIV1     = $NC.getValue("#cboQFloor_Div1", true);
+  var FLOOR_DIV2     = $NC.getValue("#cboQFloor_Div2", true);
 
   // 조회시 전역 변수 값 초기화
   $NC.setInitGridVar(G_GRDMASTER);
@@ -201,7 +224,11 @@ function _Inquiry() {
     P_OWN_BRAND_CD: BRAND_CD,
     P_USER_ID: USER_ID,
     P_DEAL_ID: DEAL_ID,
-    P_ORDER_TYPE: ORDER_TYPE
+    P_ORDER_TYPE: ORDER_TYPE,
+    P_PRINT_SEQ1 : "",
+    P_PICK_SEQ : PICK_SEQ,
+    P_FLOOR_DIV1 : FLOOR_DIV1,
+    P_FLOOR_DIV2 : FLOOR_DIV2
   });
 
   // 데이터 조회
@@ -264,6 +291,8 @@ function _Print(printIndex, printName) {
   }
 
   internalQueryYn = "N";
+  
+  var PRINT_DIV = "1";
 
   var checkedValueDS = [ ];
   var saveDs = [ ];
@@ -273,7 +302,12 @@ function _Print(printIndex, printName) {
     var rowData = G_GRDMASTER.data.getItem(row);
     if (rowData.CHECK_YN === "Y") {
       checkCnt++;
-      checkedValueDS.push(rowData.OUTBOUND_NO);
+      
+      if (rowData.PRINT_DIV === "2"){
+        PRINT_DIV = "2";
+      }
+      
+      checkedValueDS.push(rowData.OUTBOUND_NO + ";" + rowData.PICK_SEQ);
       var saveData = {
         P_CENTER_CD: rowData.CENTER_CD,
         P_BU_CD: rowData.BU_CD,
@@ -308,9 +342,33 @@ function _Print(printIndex, printName) {
       P_BU_CD: BU_CD,
       P_OUTBOUND_DATE: OUTBOUND_DATE
     },
-    checkedValue: checkedValueDS.toString()
+    checkedValue: checkedValueDS.toString(),
+    printFn: exeSilentPrint
   };
   $NC.G_MAIN.showPrintPreview(printOptions);
+  
+  // 미리보기 후 출력하기 PRINT_DIV == '2'일 경우에만 실행
+  function exeSilentPrint() {
+    if (PRINT_DIV == "1") {
+      return false;
+    }
+    
+    $NC.G_MAIN.silentPrint({
+      printParams: [{
+        reportDoc: "lo/PAPER_LOM02_3",
+        queryId: "WR.RS_PAPER_LOM02_5",
+        queryParams: queryParams,
+        checkedValue: checkedValueLabel.toString(),
+        iFrameNo: 1,
+        silentPrinterName: $NC.G_USERINFO.PRINT_CARD,
+        internalQueryYn: "N"
+      }],
+      onAfterPrint: function() {
+        //_Inquiry();
+      }
+    });
+    
+  }
 }
 
 function grdMasterOnGetColumns() {
@@ -337,10 +395,17 @@ function grdMasterOnGetColumns() {
     minWidth: 90
   });
   $NC.setGridColumn(columns, {
+    id: "PICK_SEQ",
+    field: "PICK_SEQ",
+    name: "라벨번호",
+    minWidth: 190
+  });
+  $NC.setGridColumn(columns, {
     id: "PRINT_YN",
     field: "PRINT_YN",
     name: "출력여부",
-    minWidth: 90
+    minWidth: 90,
+    cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
     id: "INOUT_NM",
@@ -352,7 +417,7 @@ function grdMasterOnGetColumns() {
     id: "ORDERER_NM",
     field: "ORDERER_NM",
     name: "주문자명",
-    minWidth: 180
+    minWidth: 90
   });
   $NC.setGridColumn(columns, {
     id: "SHIPPER_NM",
@@ -370,7 +435,7 @@ function grdMasterOnGetColumns() {
     id: "DIRECTIONS_DATETIME2",
     field: "DIRECTIONS_DATETIME",
     name: "지시시간",
-    minWidth: 90
+    minWidth: 140
   });
   $NC.setGridColumn(columns, {
     id: "TOT_ENTRY_QTY",
@@ -401,7 +466,7 @@ function grdMasterOnGetColumns() {
     id: "OUTBOUND_BATCH_F",
     field: "OUTBOUND_BATCH_F",
     name: "출고차수",
-    minWidth: 80
+    minWidth: 120
   });
 
   return $NC.setGridColumnDefaultFormatter(columns);

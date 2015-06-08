@@ -5,7 +5,10 @@ function _Initialize() {
 
   // 단위화면에서 사용될 일반 전역 변수 정의
   // $NC.setGlobalVar({ });
-
+  var ua = navigator.userAgent;
+  if (ua.indexOf('Trident') != -1) {
+    $('.print').css('position', 'static');
+  }
 }
 
 /**

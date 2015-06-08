@@ -248,7 +248,8 @@ function grdMasterOnGetColumns() {
     id: "WORK_SEQ",
     field: "WORK_SEQ",
     name: "작업순번",
-    minWidth: 90
+    minWidth: 90,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "WORK_DIV",
@@ -266,7 +267,8 @@ function grdMasterOnGetColumns() {
     id: "LINE_NO",
     field: "LINE_NO",
     name: "순번",
-    minWidth: 90
+    minWidth: 90,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_CD",
@@ -278,7 +280,7 @@ function grdMasterOnGetColumns() {
     id: "ITEM_NM",
     field: "ITEM_NM",
     name: "상품명",
-    minWidth: 90
+    minWidth: 180
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_LOT",
@@ -290,7 +292,8 @@ function grdMasterOnGetColumns() {
     id: "CONFIRM_QTY",
     field: "CONFIRM_QTY",
     name: "작업수량",
-    minWidth: 90
+    minWidth: 90,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "CANCEL_USER_ID",
@@ -314,7 +317,7 @@ function grdMasterOnGetColumns() {
     id: "PICK_DATETIME",
     field: "PICK_DATETIME",
     name: "작업일시",
-    minWidth: 90
+    minWidth: 140
   });
 
   

@@ -41,7 +41,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author ASETEC
  * @version 1.0
  * 
- *          <pre style="font-family: NanumGothicCoding, GulimChe">
+ * <pre style="font-family: NanumGothicCoding, GulimChe">
  * ---------------------------------------------------------------------------------------------------------------------
  *  Version    Date          Author           Description
  * ---------  ------------  ---------------  ---------------------------------------------------------------------------
@@ -49,204 +49,162 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * ---------------------------------------------------------------------------------------------------------------------
  * </pre>
  */
-public class SecurityUserAuthenticationFilter extends GenericFilterBean /*
-																		 * implements
-																		 * ApplicationListener
-																		 * <
-																		 * SessionDestroyedEvent
-																		 * >
-																		 */{
+public class SecurityUserAuthenticationFilter extends GenericFilterBean /*implements
+  ApplicationListener<SessionDestroyedEvent>*/ {
 
-	private final Logger logger = LoggerFactory
-			.getLogger(SecurityUserAuthenticationFilter.class);
+  private final Logger     logger           = LoggerFactory.getLogger(SecurityUserAuthenticationFilter.class);
 
-	private final SessionRegistry sessionRegistry;
-	private final String expiredUrl;
-	private LogoutHandler[] handlers = new LogoutHandler[] { new SecurityContextLogoutHandler() };
-	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+  private SessionRegistry  sessionRegistry;
+  private String           expiredUrl;
+  private LogoutHandler[ ] handlers         = new LogoutHandler[ ] {new SecurityContextLogoutHandler()};
+  private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-	public SecurityUserAuthenticationFilter(SessionRegistry sessionRegistry) {
+  public SecurityUserAuthenticationFilter(SessionRegistry sessionRegistry) {
 
-		this(sessionRegistry, null);
-	}
+    this(sessionRegistry, null);
+  }
 
-	public SecurityUserAuthenticationFilter(SessionRegistry sessionRegistry,
-			String expiredUrl) {
+  public SecurityUserAuthenticationFilter(SessionRegistry sessionRegistry, String expiredUrl) {
 
-		this.sessionRegistry = sessionRegistry;
-		this.expiredUrl = expiredUrl;
-	}
+    this.sessionRegistry = sessionRegistry;
+    this.expiredUrl = expiredUrl;
+  }
 
-	@Override
-	public void afterPropertiesSet() {
+  @Override
+  public void afterPropertiesSet() {
 
-		Assert.notNull(sessionRegistry, "SessionRegistry required");
-		Assert.isTrue(
-				expiredUrl == null || UrlUtils.isValidRedirectUrl(expiredUrl),
-				expiredUrl + " isn't a valid redirect URL");
-	}
+    Assert.notNull(sessionRegistry, "SessionRegistry required");
+    Assert.isTrue(expiredUrl == null || UrlUtils.isValidRedirectUrl(expiredUrl), expiredUrl
+      + " isn't a valid redirect URL");
+  }
 
-	protected String determineExpiredUrl(HttpServletRequest request,
-			SessionInformation info) {
+  public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 
-		return expiredUrl;
-	}
+    HttpServletRequest request = (HttpServletRequest)req;
+    HttpServletResponse response = (HttpServletResponse)res;
 
-	@Override
-	public void doFilter(ServletRequest req, ServletResponse res,
-			FilterChain chain) throws IOException, ServletException {
+    String url = request.getServletPath().toLowerCase();
+    // logger.info("SecurityUserAuthenticationFilter[doFilter] >> " + url);
 
-		HttpServletRequest request = (HttpServletRequest) req;
-		HttpServletResponse response = (HttpServletResponse) res;
+    // 체크 대상이 아니면
+    if (!isIncludeUrl(url) || isExcludeUrl(url)) {
+      chain.doFilter(request, response);
+      return;
+    }
 
-		String url = request.getServletPath().toLowerCase();
-		// logger.info("SecurityUserAuthenticationFilter[doFilter] >> " + url);
+    HttpSession session = request.getSession(false);
+    if (session != null) {
+      SessionInformation info = sessionRegistry.getSessionInformation(session.getId());
 
-		// 체크 대상이 아니면
-		if (!isIncludeUrl(url) || isExcludeUrl(url)) {
-			chain.doFilter(request, response);
-			return;
-		}
+      if (info != null) {
+        if (info.isExpired()) {
+          // Expired - abort processing
+          doLogout(request, response);
 
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			SessionInformation info = sessionRegistry
-					.getSessionInformation(session.getId());
+          String targetUrl = determineExpiredUrl(request, info);
 
-			if (info != null) {
-				if (info.isExpired()) {
-					// Expired - abort processing
-					doLogout(request, response);
+          if (targetUrl != null) {
+            redirectStrategy.sendRedirect(request, response, targetUrl);
 
-					String targetUrl = determineExpiredUrl(request, info);
+            return;
+          } else {
 
-					if (targetUrl != null) {
-						redirectStrategy.sendRedirect(request, response,
-								targetUrl);
+            doWriteError(response, Consts.DV_RESULT_CD_ACCESSDENIED);
+            return;
+          }
+        } else {
+          // Non-expired - update last request date/time
+          sessionRegistry.refreshLastRequest(info.getSessionId());
+        }
+      }
+    } else {
+      doWriteError(response, Consts.DV_RESULT_CD_ACCESSDENIED);
+      return;
+    }
 
-						return;
-					} else {
+    chain.doFilter(request, response);
+  }
 
-						doWriteError(response, Consts.DV_RESULT_CD_ACCESSDENIED);
-						return;
-					}
-				} else {
-					// Non-expired - update last request date/time
-					sessionRegistry.refreshLastRequest(info.getSessionId());
-				}
-			}
-		} else {
-			// doWriteError(response, Consts.DV_RESULT_CD_ACCESSDENIED);
-			doWriteNull(response, Consts.DV_RESULT_CD_ACCESSDENIED);
-			return;
-		}
+  private boolean isIncludeUrl(String url) {
 
-		chain.doFilter(request, response);
-	}
+    return url.endsWith(".do");
+  }
 
-	private void doLogout(HttpServletRequest request,
-			HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
+  private boolean isExcludeUrl(String url) {
 
-		for (LogoutHandler handler : handlers) {
-			handler.logout(request, response, auth);
-		}
-	}
+    return url.contains("login") || url.contains("logout");
+  }
 
-	private void doWriteError(HttpServletResponse response, int errorCode)
-			throws IOException {
+  private void doWriteError(HttpServletResponse response, int errorCode) throws IOException {
 
-		String result = null;
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+    String result = null;
+    Map<String, Object> resultMap = new HashMap<String, Object>();
 
-		if (errorCode == Consts.DV_RESULT_CD_INVALIDSESSION) {
-			resultMap.put(Consts.DK_RESULT_CD,
-					Consts.DV_RESULT_CD_INVALIDSESSION);
-			resultMap.put(Consts.DK_RESULT_TYPE, Consts.DV_RESULT_TYPE_STR);
-			resultMap
-					.put(Consts.DK_RESULT_DATA,
-							"중복 로그인으로 세션 정보가 변경되어 해당 페이지에서는 더이상 작업할 수 없습니다.\n\n현재 페이지를 닫습니다.[F]");
-		} else if (errorCode == Consts.DV_RESULT_CD_ACCESSDENIED) {
-			resultMap
-					.put(Consts.DK_RESULT_CD, Consts.DV_RESULT_CD_ACCESSDENIED);
-			resultMap.put(Consts.DK_RESULT_TYPE, Consts.DV_RESULT_TYPE_STR);
-			resultMap.put(Consts.DK_RESULT_DATA, "세션이 종료되었습니다. 다시 로그인 하십시오.");
-		} else {
-			resultMap.put(Consts.DK_RESULT_CD, Consts.DV_RESULT_CD_ERROR);
-			resultMap.put(Consts.DK_RESULT_TYPE, Consts.DV_RESULT_TYPE_STR);
-			resultMap.put(Consts.DK_RESULT_DATA, "정의되지 않은 오류입니다. 다시 처리 하십시오.");
-		}
+    if (errorCode == Consts.DV_RESULT_CD_INVALIDSESSION) {
+      resultMap.put(Consts.DK_RESULT_CD, Consts.DV_RESULT_CD_INVALIDSESSION);
+      resultMap.put(Consts.DK_RESULT_TYPE, Consts.DV_RESULT_TYPE_STR);
+      resultMap.put(Consts.DK_RESULT_DATA, "중복 로그인으로 세션 정보가 변경되어 해당 페이지에서는 더이상 작업할 수 없습니다.\n\n현재 페이지를 닫습니다.[F]");
+    } else if (errorCode == Consts.DV_RESULT_CD_ACCESSDENIED) {
+      resultMap.put(Consts.DK_RESULT_CD, Consts.DV_RESULT_CD_ACCESSDENIED);
+      resultMap.put(Consts.DK_RESULT_TYPE, Consts.DV_RESULT_TYPE_STR);
+      resultMap.put(Consts.DK_RESULT_DATA, "세션이 만료되었습니다. 다시 로그인 하십시오.");
+    } else {
+      resultMap.put(Consts.DK_RESULT_CD, Consts.DV_RESULT_CD_ERROR);
+      resultMap.put(Consts.DK_RESULT_TYPE, Consts.DV_RESULT_TYPE_STR);
+      resultMap.put(Consts.DK_RESULT_DATA, "정의되지 않은 오류입니다. 다시 처리 하십시오.");
+    }
 
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			result = mapper.writeValueAsString(resultMap);
-		} catch (Exception e) {
-			result = "{\"RESULT_CD\":1,\"RESULT_DATA\":\"정의되지 않은 오류입니다. 다시 처리 하십시오.\",\"RESULT_TYPE\":\"S\"}";
-		}
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      result = mapper.writeValueAsString(resultMap);
+    } catch (Exception e) {
+      result = "{\"RESULT_CD\":1,\"RESULT_DATA\":\"정의되지 않은 오류입니다. 다시 처리 하십시오.\",\"RESULT_TYPE\":\"S\"}";
+    }
 
-		// response.setStatus(errorCode);
-		// response.setStatus("1>>>>> : [ " +
-		// HttpStatus.SC_INTERNAL_SERVER_ERROR + "] ");
-		// response.setStatus("1>>>>> : [ " + errorCode + "] ");
+    response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+    response.setContentType(MediaType.TEXT_HTML_VALUE);
+    response.setCharacterEncoding(Consts.CHARSET);
 
-		// System.out.println("\n 1>>>>> : [ "
-		// + HttpStatus.SC_INTERNAL_SERVER_ERROR + "] ");
-		// System.out.println("\n 2>>>>> : [ " + errorCode + "] ");
+    response.getWriter().print(result);
+    response.flushBuffer();
+  }
 
-		response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
-		response.setContentType(MediaType.TEXT_HTML_VALUE);
-		response.setCharacterEncoding(Consts.CHARSET);
+  protected String determineExpiredUrl(HttpServletRequest request, SessionInformation info) {
 
-		response.getWriter().print(result);
-		response.flushBuffer();
-	}
+    return expiredUrl;
+  }
 
-	private void doWriteNull(HttpServletResponse response, int errorCode)
-			throws IOException {
-		String result = "{\"RESULT_CD\":1,\"RESULT_DATA\":\"\",\"RESULT_TYPE\":\"S\"}";
-		response.setStatus(HttpStatus.SC_OK);
-		response.setContentType(MediaType.TEXT_HTML_VALUE);
-		response.setCharacterEncoding(Consts.CHARSET);
+  private void doLogout(HttpServletRequest request, HttpServletResponse response) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		response.getWriter().print(result);
-		response.flushBuffer();
-	}
+    for (LogoutHandler handler : handlers) {
+      handler.logout(request, response, auth);
+    }
+  }
 
-	private boolean isExcludeUrl(String url) {
+  public void setLogoutHandlers(LogoutHandler[ ] handlers) {
 
-		return url.contains("login") || url.contains("logout");
-	}
+    Assert.notNull(handlers);
+    this.handlers = handlers;
+  }
 
-	private boolean isIncludeUrl(String url) {
+  public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
 
-		return url.endsWith(".do");
-	}
+    this.redirectStrategy = redirectStrategy;
+  }
 
-	public void setLogoutHandlers(LogoutHandler[] handlers) {
-
-		Assert.notNull(handlers);
-		this.handlers = handlers;
-	}
-
-	public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
-
-		this.redirectStrategy = redirectStrategy;
-	}
-
-	// @Override
-	// public void onApplicationEvent(SessionDestroyedEvent event) {
-	//
-	// List<SecurityContext> contexts = event.getSecurityContexts();
-	// if (!contexts.isEmpty()) {
-	// for (SecurityContext ctx : contexts) {
-	// SecurityUserAuthenticationToken securityUserToken =
-	// (SecurityUserAuthenticationToken)ctx.getAuthentication()
-	// .getPrincipal();
-	// logger.info("SecurityUserAuthenticationFilter[onSessionDestroyedEvent] USER, SESSION : "
-	// + securityUserToken.getUsername() + ", " + event.getId());
-	// }
-	// }
-	// }
+//  @Override
+//  public void onApplicationEvent(SessionDestroyedEvent event) {
+//
+//    List<SecurityContext> contexts = event.getSecurityContexts();
+//    if (!contexts.isEmpty()) {
+//      for (SecurityContext ctx : contexts) {
+//        SecurityUserAuthenticationToken securityUserToken = (SecurityUserAuthenticationToken)ctx.getAuthentication()
+//          .getPrincipal();
+//        logger.info("SecurityUserAuthenticationFilter[onSessionDestroyedEvent] USER, SESSION : "
+//          + securityUserToken.getUsername() + ", " + event.getId());
+//      }
+//    }
+//  }
 
 }

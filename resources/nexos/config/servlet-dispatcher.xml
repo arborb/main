@@ -41,11 +41,11 @@
   </bean>
 
   <!-- Configure the multipart resolver -->
-  <!--bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"-->
+  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     <!-- 최대 100MB -->
-    <!--property name="maxUploadSize" value="102400000" /-->
-    <!--property name="uploadTempDir" ref="uploadDirResource" /-->
-  <!--/bean-->
+    <property name="maxUploadSize" value="102400000" />
+    <property name="uploadTempDir" ref="uploadDirResource" />
+  </bean>
 
   <bean id="uploadDirResource" class="org.springframework.core.io.FileSystemResource" depends-on="globalProps">
     <constructor-arg type="java.lang.String">

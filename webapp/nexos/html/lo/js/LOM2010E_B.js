@@ -624,7 +624,7 @@ function grdMasterBOnDblClick(e, args) {
   }
 
   if (masterRowData) {
-
+/*
     if (masterRowData.HOLD_YN === "Y") {
       alert("보류상태인 전표는 팝업화면에서 작업하실 수 없습니다.");
       return;
@@ -634,7 +634,7 @@ function grdMasterBOnDblClick(e, args) {
       alert("인터페이스로 수신된 예정전표는 수정하실 수 없습니다.");
       return;
     }
-
+*/
     var PROCESS_CD, OUTBOUND_DATE, OUTBOUND_NO;
     // 예정일 경우
     if (masterRowData.OUTBOUND_STATE === $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CONFIRM) {

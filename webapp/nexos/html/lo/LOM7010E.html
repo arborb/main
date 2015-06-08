@@ -33,7 +33,6 @@
 <script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
 <script src="../common/js/slickgrid/slick.editors.js"></script>
 <!-- Common JS -->
-<script src="../common/js/service-response-mock.js"></script>
 <script src="../common/js/common.js"></script>
 <!--  Popup JS -->
 <script src="../popup/js/popup.js"></script>
@@ -64,10 +63,6 @@
           <input class="ui-btn-popup" type="button" id="btnQCarrier_Cd" />
           <input class="ui-edt-display" type="text" id="edtQCarrier_Nm" style="width: 120px;" disabled="disabled" />
         </td>
-        <!--td>
-          <div id="lblQPick_Seq" class="ui-lbl-normal large">피킹SEQ</div>
-          <input class="ui-edt-display normal" type="text" id="edtQPick_Seq"/>
-        </td-->
       </tr>
     </table>
     <!-- 추가 조건 -->
@@ -95,16 +90,16 @@
               <input type="hidden" id="edtQOutbound_No" />
               <input type="hidden" id="edtQPacking_Batch" />
             </td>
+            <!-- 
             <td>
-              <!--div id="lblQDelivery_Type" class="ui-lbl-key">배송유형</div>
-              <select id="cboQDelivery_Type" class="ui-cbo-key" style="width: 150px;"></select-->
+              <div id="lblBox_Type" class="ui-lbl-key">박스유형</div>
+              <select id="cboBox_Type" class="ui-cbo-key" style="width: 150px;" disabled="disabled" ></select>
             </td>
-<!-- 
+            -->
             <td>
               <div id="lblQDelivery_Type" class="ui-lbl-key">배송유형</div>
               <select id="cboQDelivery_Type" class="ui-cbo-key" style="width: 150px;"></select>
             </td>
- -->     
             <td style="width: 100%; text-align: right; padding-right: 20px;">
               <div style="display: inline-block; line-height: 20px;">
                 <div id="btnInit" class="ui-btn-wrapper" style="width: 85px; font-size: 18px;position: absolute;right: 1px;padding: 3px;top: 3px;color: #fff;background: #72AAD3;border: 1px solid #306D9A;">초 기 화</div>
@@ -159,18 +154,41 @@
           <tr>
             <td>
               <div id="lblOutbound_No" class="ui-lbl-normal large">출고번호</div>
-              <input type="hidden" id="edtPacking_Batch"  />
             </td>
             <td>
               <input class="ui-edt-display normal" type="text" id="edtOutbound_No" disabled="disabled" />
             </td>
             <td>
-              <div id="lblOutbound_Type" class="ui-lbl-normal large">주문유형</div>
+              <div id="lblPacking_Batch" class="ui-lbl-normal large">합포장차수</div>
             </td>
             <td>
-              <input class="ui-edt-display normal" type="text" id="edtOutbound_Type" disabled="disabled" />
+              <input class="ui-edt-display normal" type="text" id="edtPacking_Batch" disabled="disabled" />
             </td>
           </tr>
+          <!--
+          <tr>
+            <td>
+              <div id="lblCard_From" class="ui-lbl-normal large">전표ID</div>
+            </td>
+            <td>
+              <input class="ui-edt-display normal" type="text" id="edtCard_From" disabled="disabled" />
+            </td>
+            <td>
+              <div id="lblCard_To" class="ui-lbl-normal large">카드받는사람</div>
+            </td>
+            <td style="padding-right: 2px;">
+              <input class="ui-edt-display normal" type="text" id="edtCard_To" disabled="disabled" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="lblCard_Msg" class="ui-lbl-normal large">카드메시지</div>
+            </td>
+            <td colspan="3" style="padding-right: 2px;">
+              <input class="ui-edt-display normal" type="text" id="edtCard_Msg" disabled="disabled" />
+            </td>
+          </tr>
+            -->
           <tr>
             <td>
               <div id="lblDelivery_Type" class="ui-lbl-normal large">배송유형</div>
@@ -203,7 +221,7 @@
           </tr>
         </table>
       </div>
-      <div class="ui-gbox-title large">송장발행수</div>
+      <div class="ui-gbox-title large">박스번호</div>
       <div class="ui-gbox-content">
         <input class="ui-edt-display boxno" type="text" id="edtBox_No" disabled="disabled" />
       </div>
@@ -282,11 +300,13 @@
       </div>
     </div>
     <div style="display: inline-block; width: 34%; line-height: 28px;">
+      <div id="btnDeliveryChange" class="ui-btn-wrapper" style="width: 110px;">배송유형변경</div>
+      <div id="btnBoxSave" class="ui-btn-wrapper" style="width: 110px;">박스저장</div>
       <div id="btnBoxComplete" class="ui-btn-wrapper" style="width: 110px;">박스완료</div>
       <div id="btnBoxManage" class="ui-btn-wrapper" style="width: 110px;">박스관리</div>
     </div>
     <div style="display: inline-block; width: 20%; text-align: right; line-height: 28px;">
-      <!--div id="btnFWScanConfirm" class="ui-btn-wrapper" style="width: 45%;">검수완료</div-->
+      <div id="btnFWScanConfirm" class="ui-btn-wrapper" style="width: 45%;">검수완료</div>
       <div id="btnBWScanConfirm" class="ui-btn-wrapper" style="width: 45%;">검수취소</div>
     </div>
   </div>

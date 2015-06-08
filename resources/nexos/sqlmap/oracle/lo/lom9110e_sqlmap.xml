@@ -36,13 +36,50 @@
     <parameter property="P_END_YN"                  mode="IN" />
     <parameter property="P_LOCATION_CD"             mode="IN" />
     <parameter property="P_OUTBOUND_NO"             mode="IN" />
-    <parameter property="P_FLOOR_DIV"               mode="IN" />
-    
+    <parameter property="P_LOC_DIV"                 mode="IN" />
   </parameterMap>
   <procedure id="RS_T1_MASTER" parameterMap="paramRS_T1_MASTER" resultClass="java.util.HashMap">
     { ? = call LOM9110E.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T1_MASTER -->
+
+
+  <!-- [S] - RS_T2_MASTER -->
+  <parameterMap id="paramRS_T2_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_BU_NO"                   mode="IN" />
+    <parameter property="P_ORDERER_NM"              mode="IN" />
+    <parameter property="P_SHIPPER_NM"              mode="IN" />
+    <parameter property="P_END_YN"                  mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_LOC_DIV"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
+    { ? = call LOM9110E.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T2_MASTER -->
+
+
+  <!-- [S] - RS_T3_MASTER -->
+  <parameterMap id="paramRS_T3_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_BU_NO"                   mode="IN" />
+    <parameter property="P_ORDERER_NM"              mode="IN" />
+    <parameter property="P_SHIPPER_NM"              mode="IN" />
+    <parameter property="P_END_YN"                  mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_LOC_DIV"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_T3_MASTER" parameterMap="paramRS_T3_MASTER" resultClass="java.util.HashMap">
+    { ? = call LOM9110E.RS_T3_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_T3_MASTER -->
 
 
   <!-- [S] - RS_DETAIL1 -->
@@ -58,25 +95,7 @@
   </procedure>
   <!-- [E] - RS_DETAIL1 -->
 
-  <!-- [S] - RS_T2_MASTER -->
-  <parameterMap id="paramRS_T2_MASTER" class="java.util.Map">
-    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
-    <parameter property="P_CENTER_CD"               mode="IN" />
-    <parameter property="P_BU_CD"                   mode="IN" />
-    <parameter property="P_HAS_DATE"                mode="IN" />
-    <parameter property="P_BU_NO"                   mode="IN" />
-    <parameter property="P_ORDERER_NM"              mode="IN" />
-    <parameter property="P_SHIPPER_NM"              mode="IN" />
-    <parameter property="P_END_YN"                  mode="IN" />
-    <parameter property="P_LOCATION_CD"             mode="IN" />
-    <parameter property="P_FLOOR_DIV"             mode="IN" />
-    
-  </parameterMap>
-  <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
-    { ? = call LOM9110E.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
-  </procedure>
-  <!-- [E] - RS_T2_MASTER -->
-  
+
   <!-- [S] - RS_DETAIL2 -->
   <parameterMap id="paramRS_DETAIL2" class="java.util.Map">
     <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
@@ -91,18 +110,7 @@
   </procedure>
   <!-- [E] - RS_DETAIL2 -->
 
-  <!-- [S] - RS_SUB -->
-    <parameterMap id="paramRS_SUB" class="java.util.Map">
-    <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
-    <parameter property="P_CENTER_CD"               mode="IN" />
 
-    </parameterMap>
-    <procedure id="RS_SUB" parameterMap="paramRS_SUB" resultClass="java.util.HashMap">
-      { ? = call LOM9110E.RS_SUB(?) }
-    </procedure>
-    <!-- [E] - RS_SUB -->
-    
-    
   <!-- [S] - RS_DETAIL3 -->
   <parameterMap id="paramRS_DETAIL3" class="java.util.Map">
     <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
@@ -117,27 +125,21 @@
     { ? = call LOM9110E.RS_DETAIL3(?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_DETAIL3 -->
-  
-  <!-- [S] - RS_T3_MASTER -->
-  <parameterMap id="paramRS_T3_MASTER" class="java.util.Map">
+
+
+  <!-- [S] - RS_SUB -->
+  <parameterMap id="paramRS_SUB" class="java.util.Map">
     <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
     <parameter property="P_CENTER_CD"               mode="IN" />
-    <parameter property="P_BU_CD"                   mode="IN" />
-    <parameter property="P_HAS_DATE"                mode="IN" />
-    <parameter property="P_BU_NO"                   mode="IN" />
-    <parameter property="P_ORDERER_NM"              mode="IN" />
-    <parameter property="P_SHIPPER_NM"              mode="IN" />
-    <parameter property="P_END_YN"                  mode="IN" />
-    <parameter property="P_LOCATION_CD"             mode="IN" />
-    <parameter property="P_FLOOR_DIV"               mode="IN" />
-    
+    <parameter property="P_LOC_DIV"                 mode="IN" />
   </parameterMap>
-  <procedure id="RS_T3_MASTER" parameterMap="paramRS_T3_MASTER" resultClass="java.util.HashMap">
-    { ? = call LOM9110E.RS_T3_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  <procedure id="RS_SUB" parameterMap="paramRS_SUB" resultClass="java.util.HashMap">
+    { ? = call LOM9110E.RS_SUB(?, ?) }
   </procedure>
-  <!-- [E] - RS_T3_MASTER -->  
-  
-        <!-- [S] - RS_SUB1 -->
+  <!-- [E] - RS_SUB -->
+
+
+  <!-- [S] - RS_SUB1 -->
   <parameterMap id="paramRS_SUB1" class="java.util.Map">
     <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
     <parameter property="P_CENTER_CD"               mode="IN" />
@@ -145,10 +147,15 @@
     <parameter property="P_OUTBOUND_DATE"           mode="IN" />
     <parameter property="P_OUTBOUND_NO"             mode="IN" />
     <parameter property="P_ZONE_CD"                 mode="IN" />
+    <parameter property="P_PICK_SEQ"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
   </parameterMap>
   <procedure id="RS_SUB1" parameterMap="paramRS_SUB1" resultClass="java.util.HashMap">
-    { ? = call LOM9110E.RS_SUB1(?, ?, ?, ?, ?) }
+    { ? = call LOM9110E.RS_SUB1(?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_SUB1 -->
+
+
+
 
 </sqlMap>

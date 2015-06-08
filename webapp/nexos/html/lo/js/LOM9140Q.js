@@ -234,13 +234,14 @@ function grdT1MasterOnGetColumns() {
     id: "CALL_SEQ",
     field: "CALL_SEQ",
     name: "요청순번",
-    minWidth: 90
+    minWidth: 90,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "SCAN_INFO",
     field: "SCAN_INFO",
     name: "스캔전문",
-    minWidth: 140
+    minWidth: 150
   });
   $NC.setGridColumn(columns, {
     id: "OUTBOUND_DATE",
@@ -338,13 +339,14 @@ function grdT2MasterOnGetColumns() {
     id: "CALL_SEQ",
     field: "CALL_SEQ",
     name: "요청순번",
-    minWidth: 90
+    minWidth: 90,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "SCAN_INFO",
     field: "SCAN_INFO",
     name: "스캔전문",
-    minWidth: 140
+    minWidth: 150
   });
   $NC.setGridColumn(columns, {
     id: "OUTBOUND_DATE",
@@ -442,13 +444,14 @@ function grdT3MasterOnGetColumns() {
     id: "CALL_SEQ",
     field: "CALL_SEQ",
     name: "요청순번",
-    minWidth: 90
+    minWidth: 90,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "SCAN_INFO",
     field: "SCAN_INFO",
     name: "스캔전문",
-    minWidth: 140
+    minWidth: 150
   });
   $NC.setGridColumn(columns, {
     id: "OUTBOUND_DATE",

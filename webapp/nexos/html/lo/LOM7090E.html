@@ -68,10 +68,10 @@
             <input class="ui-chk-normal" type="checkbox" name="chkQDate_Yn" id="chkQDate_Yn"/> 전체 날짜
           </div>
         </td>
-        <td id="tdOutboundHidden">
-          <div id="lblOutbound_Date" id="lblOutbound_Date" class="ui-lbl-condition">출고일자</div>
-          <input class="ui-dtp-key" type="text" id="dtpQOutbound_Date" style="width: 80px;" />
-        </td>
+<!--         <td id="tdOutboundHidden"> -->
+<!--           <div id="lblOutbound_Date" id="lblOutbound_Date" class="ui-lbl-condition">출고일자</div> -->
+<!--           <input class="ui-dtp-key" type="text" id="dtpQOutbound_Date" style="width: 80px;" /> -->
+<!--         </td> -->
         <td id="tdQDsp_Outbound_Batch">
           <div id="lblQOutbound_Batch" class="ui-lbl-condition">출고차수</div>
           <select id="cboQOutbound_Batch" class="ui-cbo-normal" style="width: 150px;"></select>
@@ -185,6 +185,12 @@
           <select id="cboQShip_Price_Type" class="ui-cbo-normal" style="width: 219px;"></select>
         </td>
       </tr>
+      <tr>
+        <td id="tdQHold_Yn" style="display: none;">
+          <div id="lblQHold_Yn" class="ui-lbl-condition">보류여부</div>
+          <select id="cboQHold_Yn" class="ui-cbo-normal" style="width: 219px;"></select>
+        </td>
+      </tr>
     </table>
   </div>
 
@@ -194,21 +200,22 @@
       <li id="divTab1"><a href="#divT1DetailView">예정</a></li>
       <li id="divTab2"><a href="#divT2DetailView">등록</a></li>
       <li id="divTab3"><a href="#divT3DetailView">지시</a></li>
+      <li id="divTab4"><a href="#divT4DetailView">확정</a></li>
     </ul>
     
     <!-- Tab1 -->
     <div id="divT1ProcessingInfo" style="padding: 5px; border-width: 0 0 1px 0; border-style: solid;">
-      <div class="ui-gbox-normal" style="width: 348px; padding: 3px 0 3px 3px;">
-        <div id="" class="ui-lbl-normal">배송유형</div>
-        <select id="cboQT1Delivery_TypeB" class="ui-cbo-key" style="width: 150px;"></select>
-        <input type="button" id="btnT1Proc_InvnoLine" value="배송유형재적용" class="ui-btn-cmd" style="width: 90px;" />
-      </div>
+      <div id="lblOutbound_Date" id="lblOutbound_Date" class="ui-lbl-condition">출고일자</div>
+      <input class="ui-dtp-key" type="text" id="dtpQOutbound_Date" style="width: 80px;" />
     </div>
     <div id="divT1DetailView" style="padding: 0; border-width: 1px; border-style: solid;">
       <div>
         <table class="ui-tbl-grid">
           <tr>
             <td id="divTitle_grdT1Master" class="ui-grd-title">출고예정</td>
+            <td>
+              <input type="button" id="btnProcessNxtAM" class="ui-grd-btnnext" style="width: 30px; height: 20px;" />
+            </td>
             <td id="divRowCount_grdT1Master" class="ui-grd-rowcount">0/0 Rows</td>
           </tr>
         </table>
@@ -219,6 +226,13 @@
           <table class="ui-tbl-grid">
             <tr>
               <td id="divTitle_grdT1Detail" class="ui-grd-title">출고예정 정보</td>
+              <td>
+                <div>
+                  <div id="" class="ui-lbl-normal" style="color:#fff">배송유형</div>
+                  <select id="cboQT1Delivery_TypeB" class="ui-cbo-key" style="width: 150px;"></select>
+                  <input type="button" id="btnT1Proc_InvnoLine" value="배송유형재적용" class="ui-btn-cmd" style="width: 90px;" />
+                </div>
+              </td>
               <td>
                 <input type="button" id="btnT1Order_Adjust" value="출고할당량적용" class="ui-btn-cmd" style="width: 90px;"/>
               </td>
@@ -243,21 +257,18 @@
     </div> 
 
     <!-- Tab2 -->
-    <div id="divT2ProcessingInfo" style="padding: 5px; border-width: 0 0 1px 0; border-style: solid;">
-      <div class="ui-gbox-normal" style="width: 348px; padding: 3px 0 3px 3px;">
-        <div id="" class="ui-lbl-normal">배송유형</div>
-        <select id="cboQT2Delivery_TypeB" class="ui-cbo-key" style="width: 150px;"></select>
-        <input type="button" id="btnT2Proc_InvnoLine" value="배송유형재적용" class="ui-btn-cmd" style="width: 90px;" />
-      </div>
-    </div>
     <div id="divT2DetailView" style="padding: 0; border-width: 1px; border-style: solid;">
       <div>
         <table class="ui-tbl-grid">
           <tr>
             <td id="divTitle_grdT2Master" class="ui-grd-title">출고등록</td>
             <td>
-              <input type="button" id="btnMasterOrder" class="ui-grd-btnnext" style="width: 30px; height: 20px;" />
+              <input type="button" id="btnProcessPreBM" class="ui-grd-btnprior" style="width: 30px; height: 20px;" />
+              <input type="button" id="btnProcessNxtBM" class="ui-grd-btnnext" style="width: 30px; height: 20px;" />
             </td>
+            <!--td>
+              <input type="button" id="btnMasterOrder" class="ui-grd-btnnext" style="width: 30px; height: 20px;" />
+            </td-->
             <td id="divRowCount_grdT2Master" class="ui-grd-rowcount">0/0 Rows</td>
           </tr>
         </table>
@@ -268,6 +279,13 @@
           <table class="ui-tbl-grid">
             <tr>
               <td id="divTitle_grdT2Detail" class="ui-grd-title">출고등록 정보</td>
+              <td>
+                <div>
+                  <div id="" class="ui-lbl-normal" style="color:#fff">배송유형</div>
+                  <select id="cboQT2Delivery_TypeB" class="ui-cbo-key" style="width: 150px;"></select>
+                  <input type="button" id="btnT2Proc_InvnoLine" value="배송유형재적용" class="ui-btn-cmd" style="width: 90px;" />
+                </div>
+              </td>
               <td>
                 <input type="button" id="btnProcessPreB" class="ui-grd-btnprior" style="width: 30px; height: 20px;" />
                 <input type="button" id="btnProcessNxtB" class="ui-grd-btnnext" style="width: 30px; height: 20px;" />
@@ -290,18 +308,16 @@
     </div> 
 
     <!-- Tab3 -->
-    <div id="divT3ProcessingInfo" style="padding: 5px; border-width: 0 0 1px 0; border-style: solid;">
-     <div class="ui-gbox-normal" style="width: 348px; padding: 3px 0 3px 3px;">
-        <div id="" class="ui-lbl-normal">배송유형</div>
-        <select id="cboQT3Delivery_TypeB" class="ui-cbo-key" style="width: 150px;"></select>
-        <input type="button" id="btnT3Proc_InvnoLine" value="배송유형재적용" class="ui-btn-cmd" style="width: 90px;" />
-      </div>
-    </div>
     <div id="divT3DetailView" style="padding: 0; border-width: 1px; border-style: solid;">
       <div>
         <table class="ui-tbl-grid">
           <tr>
             <td id="divTitle_grdT3Master" class="ui-grd-title">출고지시</td>
+            <td>
+              <input type="button" id="btnPrintPaper" value="지시서출력" class="ui-btn-cmd" style="width: 90px" />
+              <input type="button" id="btnPrintLabel" value="라벨출력" class="ui-btn-cmd" style="width: 90px" />
+              <input type="button" id="btnProcessPreCM" class="ui-grd-btnprior" style="width: 30px; height: 20px;" />
+            </td>
             <td id="divRowCount_grdT3Master" class="ui-grd-rowcount">0/0 Rows</td>
           </tr>
         </table>
@@ -312,6 +328,13 @@
           <table class="ui-tbl-grid">
             <tr>
               <td id="divTitle_grdT3Detail" class="ui-grd-title">출고지시 정보</td>
+              <td>
+                <div>
+                  <div id="" class="ui-lbl-normal" style="color:#fff">배송유형</div>
+                  <select id="cboQT3Delivery_TypeB" class="ui-cbo-key" style="width: 150px;"></select>
+                  <input type="button" id="btnT3Proc_InvnoLine" value="배송유형재적용" class="ui-btn-cmd" style="width: 90px;" />
+                </div>
+              </td>
               <td>
                 <input type="button" id="btnProcessPreC" class="ui-grd-btnprior" style="width: 30px; height: 20px;" />
               </td>
@@ -330,7 +353,41 @@
           <div id="grdT3Sub"></div>
         </div>
       </div>  
-    </div> 
+    </div>
+
+    <!-- Tab4 -->
+    <div id="divT4DetailView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <div>
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT4Master" class="ui-grd-title">출고확정</td>
+            <td id="divRowCount_grdT4Master" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT4Master"></div>
+      </div>
+      <div id="divT4SplitArea" style="padding: 0; border-width: 0px; border-style: solid;">
+        <div>
+          <table class="ui-tbl-grid">
+            <tr>
+              <td id="divTitle_grdT4Detail" class="ui-grd-title">출고확정 정보</td>
+              <td id="divRowCount_grdT4Detail" class="ui-grd-rowcount">0/0 Rows</td>
+            </tr>
+          </table>
+          <div id="grdT4Detail"></div>
+        </div>
+        <div>
+          <table class="ui-tbl-grid">
+            <tr>
+              <td id="divTitle_grdT4Sub" class="ui-grd-title">출고확정 상세정보</td>
+              <td id="divRowCount_grdT4Sub" class="ui-grd-rowcount">0/0 Rows</td>
+            </tr>
+          </table>
+          <div id="grdT4Sub"></div>
+        </div>
+      </div>  
+    </div>
+
   </div>
 </body>
 </html>

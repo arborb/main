@@ -466,7 +466,7 @@ function onScanItem(scanVal) {
       P_OUTBOUND_DATE: OUTBOUND_DATE,
       P_OUTBOUND_NO: OUTBOUND_NO,
       P_PICK_BOX_NO: scanVal,
-      P_PICK_SEQ: "",
+      P_PICK_SEQ: PICK_SEQ,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     })
   }, onGetItemInfo, onError);

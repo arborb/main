@@ -72,11 +72,12 @@ describe('LOM7110E.js 피킹검수(신규)', function(){
 		expect( setFocusScan() ).toBe();
 	})
 	it('스캔포인트 포커스', function(){
-		var rowData = {CANCEL_YN: "Y"};
+		var rowData = {OUTBOUND_DATE: "2015-06-21"}
+		rowData.CANCEL_YN = "Y";
 		setItemInfoValue(rowData);
 		expect( $('#btnBoxCancel').hasClass('disabled') ).toBe(false);
 
-		var rowData = {CANCEL_YN: "N"};
+		rowData.CANCEL_YN = "N";
 		setItemInfoValue(rowData);
 		expect( $('#btnBoxCancel').hasClass('disabled') ).toBe(true);
 	})

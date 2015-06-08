@@ -3,7 +3,7 @@
  */
 function _Initialize() {
 
-  
+
   // 단위화면에서 사용될 일반 전역 변수 정의
   $NC.setGlobalVar({
     // 현재 액티브된 뷰 정보
@@ -1598,7 +1598,7 @@ function _Print(printIndex, printName) {
 
   // 출력 데이터 Array 담기
   // 지시서, 거래명세서
-  if (printIndex == 0 || printIndex == 1 || printIndex == 2 || printIndex == 3 || printIndex == 4 || printIndex == 8 || printIndex == 9 || printIndex == 10) {
+  if (printIndex == 0 || printIndex == 1 || printIndex == 2 || printIndex == 3 || printIndex == 4 || printIndex == 8 || printIndex == 9 || printIndex == 10 || printIndex == 11) {
     var rowCount = G_GRDMASTERC.data.getLength();
     var saveDS = [ ];
     for (var row = 0; row < rowCount; row++) {
@@ -1653,10 +1653,12 @@ function _Print(printIndex, printName) {
       P_OUTBOUND_DATE: OUTBOUND_DATE
     };
     break;
-  // 토탈피킹지시서
+  // 토탈피킹지시서(낱개기준)
   case 1:
-    reportDoc = "lo/PAPER_LOM02";
-    queryId = "WR.RS_PAPER_LOM02";
+//    reportDoc = "lo/PAPER_LOM02";
+//    queryId = "WR.RS_PAPER_LOM02";
+    reportDoc = "lo/PAPER_LOM02_3";
+    queryId = "WR.RS_PAPER_LOM02_3";
     queryParams = {
       P_CENTER_CD: CENTER_CD,
       P_BU_CD: BU_CD,
@@ -1743,7 +1745,7 @@ function _Print(printIndex, printName) {
   // 합포장피킹지시서
   case 9:
     reportDoc = "lo/PAPER_LOM01_1";
-    if(BU_CD == "5000"){
+    if(BU_CD == "5000" || BU_CD == "5200"){
       queryId = "WR.RS_PAPER_LOM04";
     } else {
       queryId = "WR.RS_PAPER_LOM05";
@@ -1754,9 +1756,20 @@ function _Print(printIndex, printName) {
       P_OUTBOUND_DATE: OUTBOUND_DATE
     };
     break;
+   // 오더피킹지시서[롯데]
   case 10:
     reportDoc = "lo/PAPER_LOM01_2";
-    if(BU_CD == "5000"){
+    queryId = "WR.RS_PAPER_LOM08";
+    queryParams = {
+        P_CENTER_CD: CENTER_CD,
+        P_BU_CD: BU_CD,
+        P_OUTBOUND_DATE: OUTBOUND_DATE
+    };
+    break;
+    //존별피킹지시서[HAS]
+  case 11:
+    reportDoc = "lo/PAPER_LOM01_3";
+    if(BU_CD == "5000" || BU_CD == "5200"){
       queryId = "WR.RS_PAPER_LOM06";
     } else {
       queryId = "WR.RS_PAPER_LOM07";
@@ -1767,9 +1780,22 @@ function _Print(printIndex, printName) {
       P_OUTBOUND_DATE: OUTBOUND_DATE
     };
     break;
+ // 토탈피킹지시서(입수기준)
+    case 12:
+    reportDoc = "lo/PAPER_LOM02";
+    queryId = "WR.RS_PAPER_LOM02";
+//    reportDoc = "lo/PAPER_LOM02_3";
+//    queryId = "WR.RS_PAPER_LOM02_3";
+    queryParams = {
+      P_CENTER_CD: CENTER_CD,
+      P_BU_CD: BU_CD,
+      P_OUTBOUND_DATE: OUTBOUND_DATE,
+      P_OUTBOUND_BATCH: OUTBOUND_BATCH
+    };
+    break;
   }
 
-  if (printIndex == 0 || printIndex == 8 || printIndex == 9 || printIndex == 10) {
+  if (printIndex == 0 || printIndex == 8 || printIndex == 9 || printIndex == 10 || printIndex == 11) {
     // 선택 건수 체크
     if (checkCnt === 0) {
       alert("[" + printName + "]출력할 데이터를 선택하십시오.");
@@ -1801,6 +1827,7 @@ function cksave(saveDS) {
   if (saveDS.length > 0) {
     $NC.serviceCallAndWait("/LOM2010E/Cksave.do", {
       P_DS_DETAIL: $NC.toJson(saveDS),
+      P_PROCESS_CD: $NC.G_VAR.activeView.PROCESS_CD,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     }, onSavePrintYn);
   }
@@ -1912,7 +1939,6 @@ function setTopButtons() {
     if (G_GRDMASTERB.data.getLength() > 0) {
       $NC.G_VAR.buttons._print = "1";
       if ($("#btnProcessC").prop("disabled")) {
-
         $NC.G_VAR.printOptions.push({
           PRINT_INDEX: 0,
           PRINT_COMMENT: "오더피킹지시서"
@@ -1961,39 +1987,55 @@ function setTopButtons() {
               PRINT_COMMENT: "오더피킹지시서"
             });
       */
-
-      $NC.G_VAR.printOptions.push({
-        PRINT_INDEX: 10,
-        PRINT_COMMENT: "존별오더피킹지시서"
-      });
-      $NC.G_VAR.printOptions.push({
-        PRINT_INDEX: 9,
-        PRINT_COMMENT: "오더피킹지시서"
-      });
-      $NC.G_VAR.printOptions.push({
-        PRINT_INDEX: 1,
-        PRINT_COMMENT: "토탈피킹지시서(대물)"
-      });
-      $NC.G_VAR.printOptions.push({
-        PRINT_INDEX: 2,
-        PRINT_COMMENT: "토탈피킹지시서(권장)"
-      });
-      $NC.G_VAR.printOptions.push({
-        PRINT_INDEX: 3,
-        PRINT_COMMENT: "토탈피킹지시서(고정)"
-      });
-      $NC.G_VAR.printOptions.push({
-        PRINT_INDEX: 4,
-        PRINT_COMMENT: "분배작업지시서"
-      });
-      $NC.G_VAR.printOptions.push({
-        PRINT_INDEX: 7,
-        PRINT_COMMENT: "Picking List"
-      });
-      $NC.G_VAR.printOptions.push({
-        PRINT_INDEX: 8,
-        PRINT_COMMENT: "오더라벨"
-      });
+      var BU_CD = $NC.getValue("#edtQBu_Cd");
+      if(BU_CD !== "5200"){
+        $NC.G_VAR.printOptions.push({
+          PRINT_INDEX: 9,
+          PRINT_COMMENT: "오더피킹지시서"
+        });
+        $NC.G_VAR.printOptions.push({
+          PRINT_INDEX: 12,
+          PRINT_COMMENT: "토탈피킹지시서(입수기준)"
+        });
+        $NC.G_VAR.printOptions.push({
+          PRINT_INDEX: 1,
+          PRINT_COMMENT: "토탈피킹지시서(낱개기준)"
+        });
+        /*
+        $NC.G_VAR.printOptions.push({
+          PRINT_INDEX: 2,
+          PRINT_COMMENT: "토탈피킹지시서(권장)"
+        });
+        $NC.G_VAR.printOptions.push({
+          PRINT_INDEX: 3,
+          PRINT_COMMENT: "토탈피킹지시서(고정)"
+        });
+        */
+        $NC.G_VAR.printOptions.push({
+          PRINT_INDEX: 4,
+          PRINT_COMMENT: "분배작업지시서"
+        });
+        /*
+        $NC.G_VAR.printOptions.push({
+          PRINT_INDEX: 7,
+          PRINT_COMMENT: "Picking List"
+        });
+        $NC.G_VAR.printOptions.push({
+          PRINT_INDEX: 8,
+          PRINT_COMMENT: "오더라벨"
+        });
+         */
+        
+        $NC.G_VAR.printOptions.push({
+          PRINT_INDEX: 11,
+          PRINT_COMMENT: "존별오더피킹지시서"
+        });
+      } else {
+        $NC.G_VAR.printOptions.push({
+          PRINT_INDEX: 10,
+          PRINT_COMMENT: "위메프주문확인서"
+        });
+      }
       if ($("#btnProcessD").prop("disabled")) {
         // $NC.G_VAR.printOptions.push({
         // PRINT_INDEX: 5,
@@ -2020,10 +2062,6 @@ function setTopButtons() {
       */
       $NC.G_VAR.printOptions.push({
         PRINT_INDEX: 9,
-        PRINT_COMMENT: "오더피킹지시서"
-      });
-      $NC.G_VAR.printOptions.push({
-        PRINT_INDEX: 10,
         PRINT_COMMENT: "오더피킹지시서"
       });
       // 출고확정단계에서는 출고지시단계에 출력물중 오더피킹지시서만 표시되도록 수정

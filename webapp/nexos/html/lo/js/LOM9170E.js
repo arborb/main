@@ -18,8 +18,6 @@ function _Initialize() {
     setFocusScan();
   });
 
-  // 그리드 초기화
-  grdMasterInitialize();
 
   $("#divMasterView").mousedown(function(e) {
     e.stopImmediatePropagation();
@@ -123,25 +121,38 @@ function _OnConditionChange(e, view, val) {
 /**
  * 조회조건이 변경될 때 호출
  */
-function onChangingCondition() {
-
-  // 초기화
-  $NC.clearGridData(G_GRDMASTER);
-
-}
 
 /**
  * Inquiry Button Event - 메인 상단 조회 버튼 클릭시 호출 됨
  */
+
+function onGetReport(ajaxData) {
+
+  var resultData = $NC.toArray(ajaxData);
+  if (!$NC.isNull(resultData) && resultData.length) {
+    
+    var rowData;
+    
+    rowData = resultData[0];
+    $NC.setValue("#edtOrder_Info", rowData.ORDER_INFO);
+    $NC.setValue("#edtPoc_Result", rowData.POC_RESULT);
+    $NC.setValue("#edtShowMessage", rowData.SHOW_MESSAGE);
+  } 
+ 
+  if(!resultData.length){
+    $NC.setValue("#edtOrder_Info", "존재하지 않는 송장번호 입니다.");
+  }
+}
+
 function _Inquiry() {
 
-  // 파라메터 세팅
-  G_GRDMASTER.queryParams = $NC.getParams({
-    P_SCAN_INFO: $NC.getValue("#edtScan"),
-  });
-
   // 데이터 조회
-  $NC.serviceCall("/LOM9170E/getDataSet.do", $NC.getGridParams(G_GRDMASTER), onGetMaster);
+  $NC.serviceCall("/LOM9080Q/getDataSet.do", {
+    P_QUERY_ID: "LOM9170E.RS_MASTER",
+    P_QUERY_PARAMS: $NC.getParams({
+    P_SCAN_INFO: $NC.getValue("#edtScan")
+    })
+  }, onGetReport);
 }
 
 /**
@@ -179,77 +190,8 @@ function _Print(printIndex, printName) {
 
 }
 
-function grdMasterOnGetColumns() {
 
-  var columns = [ ];
-  $NC.setGridColumn(columns, {
-    id: "PICK_BOX_NO",
-    field: "PICK_BOX_NO",
-    name: "용기번호",
-    minWidth: 80,
-    cssClass: "align-center"
-  });
-  $NC.setGridColumn(columns, {
-    id: "PICK_SEQ",
-    field: "PICK_SEQ",
-    name: "매칭 라벨번호",
-    minWidth: 40,
-    cssClass: "align-center"
-  });
-  $NC.setGridColumn(columns, {
-    id: "ORDER_INFO",
-    field: "ORDER_INFO",
-    name: "주문정보",
-    minWidth: 140
-  });
-  $NC.setGridColumn(columns, {
-    id: "POC_REAULT",
-    field: "POC_REAULT",
-    name: "판단결과",
-    minWidth: 80
-  });
-  $NC.setGridColumn(columns, {
-    id: "SHOW_MESSAGE",
-    field: "SHOW_MESSAGE",
-    name: "후속 조치",
-    minWidth: 80
-  });
 
-  return $NC.setGridColumnDefaultFormatter(columns);
-}
-
-function grdMasterInitialize() {
-
-  var options = {
-    frozenColumn: 0
-  };
-
-  // Grid Object, DataView 생성 및 초기화
-  $NC.setInitGridObject("#grdMaster", {
-    columns: grdMasterOnGetColumns(),
-    queryId: "LOM9170E.RS_MASTER",
-    gridOptions: options
-  });
-
-  G_GRDMASTER.view.onSelectedRowsChanged.subscribe(grdMasterOnAfterScroll);
-}
-
-function grdMasterOnAfterScroll(e, args) {
-
-  var row = args.rows[0];
-
-  if (G_GRDMASTER.lastRow != null) {
-    if (row == G_GRDMASTER.lastRow) {
-      e.stopImmediatePropagation();
-      return;
-    }
-  }
-
-  setItemInfoValue(G_GRDMASTER.data.getItem(row));
-
-  // 상단 현재로우/총건수 업데이트
-  $NC.setGridDisplayRows("#grdMaster", row + 1);
-}
 
 function setItemInfoValue(rowData) {
 
@@ -307,5 +249,7 @@ function onGetMaster(ajaxData) {
 function setFocusScan() {
 
   $NC.setFocus("#edtScan");
-  $NC.setValue("#edtScan");
+  $NC.setValue("#edtOrder_Info");
+  $NC.setValue("#edtPoc_Result");
+  $NC.setValue("#edtShowMessage");
 }

@@ -341,7 +341,7 @@ function grdMasterOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "FLOOR_DIV_F",
     field: "FLOOR_DIV_F",
-    name: "합포장존구분",
+    name: "층구분",
     minWidth: 120,
     editor: Slick.Editors.ComboBox,
     editorOptions: $NC.getGridComboEditorOptions("/WC/getDataSet.do", {

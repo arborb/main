@@ -29,25 +29,42 @@
     <parameter property="P_CENTER_CD"         mode="IN" />
     <parameter property="P_BU_CD"             mode="IN" />
     <parameter property="P_OUTBOUND_DATE"     mode="IN" />
-    <parameter property="P_PICK_SEQ"          mode="IN" />
+    <parameter property="P_OUTBOUND_NO"       mode="IN" />
+    <parameter property="P_ZONE_CD"           mode="IN" />
   </parameterMap>
   <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-    { ? = call LOM7010E.RS_MASTER(?, ?, ?, ?) }
+    { ? = call LOM7010E.RS_MASTER(?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_MASTER -->
+  
+  
+  <!-- [S] - RS_MASTER_LT -->
+  <parameterMap id="paramRS_MASTER_LT" class="java.util.Map">
+    <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"         mode="IN" />
+    <parameter property="P_BU_CD"             mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"     mode="IN" />
+    <parameter property="P_OUTBOUND_NO"       mode="IN" />
+  </parameterMap>
+  <procedure id="RS_MASTER_LT" parameterMap="paramRS_MASTER_LT" resultClass="java.util.HashMap">
+    { ? = call LOM7010E.RS_MASTER_LT(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_MASTER_LT -->
+
 
   <!-- [S] - RS_MASTER1 -->
   <parameterMap id="paramRS_MASTER1" class="java.util.Map">
-    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
-    <parameter property="P_CENTER_CD"               mode="IN" />
-    <parameter property="P_BU_CD"                   mode="IN" />
-    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
-    <parameter property="P_PICK_BOX_NO"             mode="IN" />
+    <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"         mode="IN" />
+    <parameter property="P_BU_CD"             mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"     mode="IN" />
+    <parameter property="P_WB_NO"             mode="IN" />
   </parameterMap>
   <procedure id="RS_MASTER1" parameterMap="paramRS_MASTER1" resultClass="java.util.HashMap">
     { ? = call LOM7010E.RS_MASTER1(?, ?, ?, ?) }
   </procedure>
-  <!-- [E] - RS_MASTER1 -->
+  <!-- [E] - RS_MASTER -->
+
 
   <!-- [S] - GET_ITEM_INFO -->
   <parameterMap id="paramGET_ITEM_INFO" class="java.util.Map">
@@ -66,20 +83,33 @@
   <!-- [E] - GET_ITEM_INFO -->
 
 
-  <!-- [S] - GET_INQUERY_YN -->
-  <parameterMap id="paramGET_INQUERY_YN" class="java.util.Map">
-    <parameter property="P_CENTER_CD"         mode="IN" />
-    <parameter property="P_BU_CD"             mode="IN" />
-    <parameter property="P_OUTBOUND_DATE"     mode="IN" />
-    <parameter property="P_OUTBOUND_BATCH"    mode="IN" />
-    <parameter property="P_ITEM_BAR_CD"       mode="IN" />
-    <parameter property="O_INQUERY_YN"        mode="OUT"  javaType="java.lang.String"  jdbcType="VARCHAR" />
-    <parameter property="O_MSG"               mode="OUT"  javaType="java.lang.String"  jdbcType="VARCHAR" />
+  <!-- [S] - GET_WB_NO_YN -->
+  <parameterMap id="paramGET_WB_NO_YN" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_WB_NO"                   mode="IN" />
+    <parameter property="O_WB_NO_YN"                mode="OUT"  javaType="java.lang.String"  jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT"  javaType="java.lang.String"  jdbcType="VARCHAR" />
   </parameterMap>
-  <procedure id="GET_INQUERY_YN" parameterMap="paramGET_INQUERY_YN" resultClass="java.util.HashMap">
-    { call LOM7010E.GET_INQUERY_YN(?, ?, ?, ?, ?, ?, ?) }
+  <procedure id="GET_WB_NO_YN" parameterMap="paramGET_WB_NO_YN" resultClass="java.util.HashMap">
+    { call LOM7010E.GET_WB_NO_YN(?, ?, ?, ?, ?, ?) }
   </procedure>
-  <!-- [E] - GET_INQUERY_YN -->
+  <!-- [E] - GET_WB_NO_YN -->
+  
+  
+  <!-- [S] - SET_ERLOSTATUS_INFO -->
+  <parameterMap id="paramSET_ERLOSTATUS_INFO" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT"  javaType="java.lang.String"  jdbcType="VARCHAR" />
+  </parameterMap>
+  <procedure id="SET_ERLOSTATUS_INFO" parameterMap="paramSET_ERLOSTATUS_INFO" resultClass="java.util.HashMap">
+    { call LOM7010E.SET_ERLOSTATUS_INFO(?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - SET_ERLOSTATUS_INFO -->
 
 
   <!-- [S] - RS_T1_MASTER -->
@@ -165,6 +195,19 @@
   </procedure>
   <!-- [E] - RS_T3_DETAIL -->
 
+  <!-- [S] - RS_SUB -->
+  <parameterMap id="paramRS_SUB" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_WB_NO"                   mode="IN" />
+    <parameter property="P_USER_ID"                   mode="IN" />
+  </parameterMap>
+  <procedure id="RS_SUB" parameterMap="paramRS_SUB" resultClass="java.util.HashMap">
+    { ? = call LOM7010E.RS_SUB(?, ?, ?, ?) }
+  </procedure>
+  
+  <!-- [E] - RS_SUB -->
 
   <!--
     //==================================================================================================================

@@ -21,9 +21,9 @@
     <property name="user" value="#{globalProps['db.user']}" />                        <!-- User Name -->
     <property name="password" value="#{globalProps['db.password']}" />                <!-- Password -->
     <property name="initialPoolSize" value="1" />                                     <!-- 최초 Pool Size -->
-    <property name="maxPoolSize" value="3" />                                         <!-- 최대 Pool Size -->
+    <property name="maxPoolSize" value="1" />                                         <!-- 최대 Pool Size -->
     <property name="minPoolSize" value="1" />                                         <!-- 최소 유지 Pool Size -->
-    <property name="acquireIncrement" value="1" />                                    <!-- Pool에 Connection 없을때 생성할 Connection 갯수 -->
+    <property name="acquireIncrement" value="5" />                                    <!-- Pool에 Connection 없을때 생성할 Connection 갯수 -->
     <property name="acquireRetryAttempts" value="30" />                               <!-- 재생성 시도 시간 -->
     <property name="maxIdleTime" value="3600" />                                      <!-- 지정시간 이후 Pool에서 Connection 제거 -->
     <property name="maxIdleTimeExcessConnections" value="300" />                      <!-- [s] -->

@@ -35,9 +35,13 @@
     <parameter property="P_USER_ID"                 mode="IN" />
     <parameter property="P_DEAL_ID"                 mode="IN" />
     <parameter property="P_ORDER_TYPE"              mode="IN" />
+    <parameter property="P_PRINT_SEQ1"              mode="IN" />
+    <parameter property="P_PICK_SEQ"                mode="IN" />
+    <parameter property="P_FLOOR_DIV1"              mode="IN" />
+    <parameter property="P_FLOOR_DIV2"              mode="IN" />
   </parameterMap>
   <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-    { ? = call LOM9130Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LOM9130Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_MASTER -->
 

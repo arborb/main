@@ -153,66 +153,6 @@ public class LOM7010EService {
   }
 
   /**
-   * 출고스캔검수-출고스캔검수-박스완료
-   * 
-   * @param request HttpServletRequest
-   * @param subDS DataSet
-   * @param user_Id 사용자ID
-   * @return
-   */
-  @SuppressWarnings("rawtypes")
-  public Map callScanBoxComplete(Map<String, Object> params) throws Exception {
-
-    Map result;
-
-    TransactionStatus ts = transactionManager.getTransaction(new DefaultTransactionDefinition());
-    try {
-      result = dao.callScanBoxComplete(params);
-      String oMsg = (String)result.get(Consts.PK_O_MSG);
-      // 오류면 Rollback
-      if (!Consts.OK.equals(oMsg)) {
-        throw new RuntimeException(oMsg);
-      }
-      transactionManager.commit(ts);
-    } catch (Exception e) {
-      transactionManager.rollback(ts);
-      throw new RuntimeException(e.getMessage());
-    }
-
-    return result;
-  }
-
-  /**
-   * 출고스캔검수-상품 수량이 변경될 때 마다 호출
-   * 
-   * @param request HttpServletRequest
-   * @param subDS DataSet
-   * @param user_Id 사용자ID
-   * @return
-   */
-  @SuppressWarnings("rawtypes")
-  public Map callScanBoxSave(Map<String, Object> params) throws Exception {
-
-    Map result;
-
-    TransactionStatus ts = transactionManager.getTransaction(new DefaultTransactionDefinition());
-    try {
-      result = dao.callScanBoxSave(params);
-      String oMsg = (String)result.get(Consts.PK_O_MSG);
-      // 오류면 Rollback
-      if (!Consts.OK.equals(oMsg)) {
-        throw new RuntimeException(oMsg);
-      }
-      transactionManager.commit(ts);
-    } catch (Exception e) {
-      transactionManager.rollback(ts);
-      throw new RuntimeException(e.getMessage());
-    }
-
-    return result;
-  }
-
-  /**
    * SP 호출 후 OUTPUT 값을 Map 형태로 Return
    * 
    * @param queryId
@@ -230,6 +170,26 @@ public class LOM7010EService {
   public JsonDataSet getDataSet(String queryId, Map<String, Object> params) {
 
     return common.getJsonDataSet(queryId, params);
+  }
+
+  /**
+   * 출고스캔검수(상품별) 화면 저장 처리
+   * 
+   * @param params 신규, 수정된 데이터
+   */
+  public String save(Map<String, Object> params) throws Exception {
+
+    String result = Consts.ERROR;
+    TransactionStatus ts = transactionManager.getTransaction(new DefaultTransactionDefinition());
+    try {
+      dao.save(params);
+      transactionManager.commit(ts);
+      result = Consts.OK;
+    } catch (Exception e) {
+      transactionManager.rollback(ts);
+      throw new RuntimeException(e.getMessage());
+    }
+    return result;
   }
 
 }

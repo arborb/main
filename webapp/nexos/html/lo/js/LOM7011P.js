@@ -16,21 +16,14 @@ function _Initialize() {
   grdMasterT1Initialize();
   grdDetailT1Initialize();
 
-  // 조회조건 - 배송유형 세팅
-  $NC.setInitCombo("/WC/getDataSet.do", {
-    P_QUERY_ID: "WC.POP_CMCODE",
-    P_QUERY_PARAMS: $NC.getParams({
-      P_CODE_GRP: "DELIVERY_TYPE",
-      P_CODE_CD: "%",
-      P_SUB_CD1: "",
-      P_SUB_CD2: ""
-    })
-  }, {
-    selector: "#cboQDelivery_Type",
-    codeField: "CODE_CD",
-    nameField: "CODE_NM",
-    fullNameField: "CODE_CD_F",
-  });
+  /*
+  grdMasterT2Initialize();
+  grdDetailT2Initialize();
+
+  grdMasterT3Initialize();
+  grdDetailT3Initialize();
+  */
+  
 
   // 버튼 클릭 이벤트 연결
   $("#btnCancel").click(onCancel); // 닫기 버튼
@@ -38,10 +31,12 @@ function _Initialize() {
   $("#btnBoxMerge").click(onBtnBoxMerge); // 박스병합 버튼 클릭
   $("#btnSaveT2").click(_Save);
   $("#btnSaveT3").click(_Save);
-  $("#btnDeliveryChange").click(onBtnDeliveryChange);
 
   $("#btnPrintInvoice").click(onBtnPrintInvoice); // 택배송장출력 버튼 클릭
+//  $("#btnPrintReceipt").click(onBtnPrintReceipt); // 거래명세서출력 버튼 클릭
+//  $("#btnPrintCard_Msg").click(onBtnPrintCard_Msg); // 카드메세지출력 버튼 클릭
 
+//  $NC.setEnable("#btnPrintCard_Msg", $NC.G_VAR.userData.P_CARD_MSG_YN);
   $NC.setEnable("#btnBoxDelete", $NC.G_VAR.userData.P_INSPECT_YN);
   $NC.setEnable("#btnBoxMerge", $NC.G_VAR.userData.P_INSPECT_YN);
   $NC.setEnable("#btnSaveT2", $NC.G_VAR.userData.P_INSPECT_YN);
@@ -75,9 +70,9 @@ function _SetResizeOffset() {
 function _OnResize(parent) {
 
   var clientWidth = parent.width() - $NC.G_LAYOUT.border1 * 2; /* 탭일 경우는 좌우 */
-  var clientHeight = parent.height() - $NC.G_OFFSET.nonClientHeight - $NC.G_LAYOUT.border1 - 36;
+  var clientHeight = parent.height() - $NC.G_OFFSET.nonClientHeight - $NC.G_LAYOUT.border1;
 
-  $NC.resizeContainer("#divMasterView", clientWidth, clientHeight + 36);
+  $NC.resizeContainer("#divMasterView", clientWidth, clientHeight);
 
   clientHeight -= $NC.G_OFFSET.tabHeader + $NC.G_LAYOUT.border1;
 
@@ -93,7 +88,33 @@ function _OnResize(parent) {
     $NC.resizeGrid("#grdMasterT1", $NC.G_OFFSET.leftViewWidth, clientHeight - $NC.G_LAYOUT.header);
     $NC.resizeGrid("#grdDetailT1", clientWidth, clientHeight - $NC.G_LAYOUT.header);
     return;
+
   }
+
+  /*
+  if (tabIndex === 1) {
+
+    $NC.G_OFFSET.leftViewWidth = 510;
+    clientWidth -= $NC.G_OFFSET.leftViewWidth + $NC.G_LAYOUT.nonClientWidth;
+
+    $NC.resizeContainer("#divLeftViewT2", $NC.G_OFFSET.leftViewWidth, clientHeight);
+    $NC.resizeContainer("#divRightViewT2", clientWidth, clientHeight);
+    // Grid 사이즈 조정
+    $NC.resizeGrid("#grdMasterT2", $NC.G_OFFSET.leftViewWidth, clientHeight - $NC.G_LAYOUT.header);
+    $NC.resizeGrid("#grdDetailT2", clientWidth, clientHeight - $NC.G_LAYOUT.header);
+    return;
+  }
+
+  $NC.G_OFFSET.leftViewWidth = 200;
+  clientWidth -= $NC.G_OFFSET.leftViewWidth + $NC.G_LAYOUT.nonClientWidth;
+
+  $NC.resizeContainer("#divLeftViewT3", $NC.G_OFFSET.leftViewWidth, clientHeight);
+  $NC.resizeContainer("#divRightViewT3", clientWidth, clientHeight);
+  // Grid 사이즈 조정
+  $NC.resizeGrid("#grdMasterT3", $NC.G_OFFSET.leftViewWidth, clientHeight - $NC.G_LAYOUT.header);
+  $NC.resizeGrid("#grdDetailT3", clientWidth, clientHeight - $NC.G_LAYOUT.header);
+  */
+
 }
 
 /**
@@ -104,7 +125,8 @@ function _Inquiry() {
   var CENTER_CD = $NC.G_VAR.userData.P_CENTER_CD;
   var BU_CD = $NC.G_VAR.userData.P_BU_CD;
   var OUTBOUND_DATE = $NC.G_VAR.userData.P_OUTBOUND_DATE;
-  var OUTBOUND_NO = $NC.G_VAR.userData.P_OUTBOUND_NO;
+//  var OUTBOUND_NO = $NC.G_VAR.userData.P_OUTBOUND_NO;
+  var OUTBOUND_NO = $NC.G_VAR.userData.P_PACKING_BATCH;
 
   var queryParams = $NC.getParams({
     P_CENTER_CD: CENTER_CD,
@@ -118,16 +140,39 @@ function _Inquiry() {
   // 파라메터 세팅
   G_GRDMASTERT1.queryParams = queryParams;
   // 데이터 조회
-  $NC.serviceCall("/LOM7010E/getDataSet.do", 
-    $NC.getGridParams(G_GRDMASTERT1), onGetMasterT1, null, null, 'LOM7011P_RS_MASTER');
+  $NC.serviceCall("/LOM7010E/getDataSet.do", $NC.getGridParams(G_GRDMASTERT1), onGetMasterT1);
 
   $NC.setInitGridVar(G_GRDDETAILT1);
   // 파라메터 세팅
   G_GRDDETAILT1.queryParams = queryParams;
   // 데이터 조회
-  $NC.serviceCall("/LOM7010E/getDataSet.do", 
-    $NC.getGridParams(G_GRDDETAILT1), onGetDetailT1, null, null, 'LOM7011P_RS_MASTER1');
+  $NC.serviceCall("/LOM7010E/getDataSet.do", $NC.getGridParams(G_GRDDETAILT1), onGetDetailT1);
 
+  /*
+  $NC.setInitGridVar(G_GRDMASTERT2);
+  // 파라메터 세팅
+  G_GRDMASTERT2.queryParams = queryParams;
+  // 데이터 조회
+  $NC.serviceCall("/LOM7010E/getDataSet.do", $NC.getGridParams(G_GRDMASTERT2), onGetMasterT2);
+
+  $NC.setInitGridVar(G_GRDDETAILT2);
+  // 파라메터 세팅
+  G_GRDDETAILT2.queryParams = queryParams;
+  // 데이터 조회
+  $NC.serviceCall("/LOM7010E/getDataSet.do", $NC.getGridParams(G_GRDDETAILT2), onGetDetailT2);
+
+  $NC.setInitGridVar(G_GRDMASTERT3);
+  // 파라메터 세팅
+  G_GRDMASTERT3.queryParams = queryParams;
+  // 데이터 조회
+  $NC.serviceCall("/LOM7010E/getDataSet.do", $NC.getGridParams(G_GRDMASTERT3), onGetMasterT3);
+
+  $NC.setInitGridVar(G_GRDDETAILT3);
+  // 파라메터 세팅
+  G_GRDDETAILT3.queryParams = queryParams;
+  // 데이터 조회
+  $NC.serviceCall("/LOM7010E/getDataSet.do", $NC.getGridParams(G_GRDDETAILT3), onGetDetailT3);
+  */
 }
 
 /**
@@ -298,174 +343,6 @@ function tabOnActivate(event, ui) {
   } else {
     $("#divButtons").hide();
   }
-}
-
-/**
- * 배송유형변경
- */
-function onBtnDeliveryChange(e) {
-
-  if ($(e.target).hasClass("disabled")) {
-    return;
-  }
-
-  if (G_GRDMASTERT1.data.getLength() == 0) {
-    setFocusScan();
-    return;
-  }
-
-  var rowData = G_GRDMASTERT1.data.getItem(G_GRDMASTERT1.lastRow);
-
-  var DIRECTION_INVNO = $NC.getValue("#cboQDelivery_Type");
-
-  if (rowData.DELIVERY_TYPE == DIRECTION_INVNO) {
-    alert("동일한 배송유형으로 변경 처리하실 수 없습니다");
-    setFocusScan();
-    return;
-  }
-
-  showMessage({
-    message: "배송유형변경 처리하시겠습니까?",
-    onYesFn: function() {
-
-      // 데이터 조회
-      $NC.serviceCall("/LOM7010E/callSP.do", {
-        P_QUERY_ID: "LO_FW_DIRECTIONS_INVNO_PROC2",
-        P_QUERY_PARAMS: $NC.getParams({
-          P_CENTER_CD: rowData.CENTER_CD,
-          P_BU_CD: rowData.BU_CD,
-          P_OUTBOUND_DATE: rowData.OUTBOUND_DATE,
-          P_OUTBOUND_NO: rowData.OUTBOUND_NO,
-          P_WB_NO: rowData.WB_NO,
-          P_DIRECTION_INVNO: DIRECTION_INVNO,
-          P_USER_ID: $NC.G_USERINFO.USER_ID
-        })
-      }, onDeliveryChangeSucess, onError);
-
-      setFocusScan();
-    },
-    onNoFn: function() {
-      setFocusScan();
-    }
-  });
-}
-
-function onDeliveryChangeSucess(ajaxData) {
-
-  var resultData = $NC.toArray(ajaxData);
-  if (!$NC.isNull(resultData)) {
-    if (resultData.O_MSG !== "OK") {
-      showMessage(resultData.O_MSG);
-      return;
-    }
-  }
-
-  _Inquiry();
-}
-
-function showMessage(options, hideFocus) {
-
-  if ($NC.isNull(options)) {
-    return;
-  }
-
-  if ($NC.isNull(hideFocus)) {
-    hideFocus = false;
-  }
-
-  if (typeof options == "string") {
-    $NC.G_MAIN.showMessage({
-      message: options,
-      buttons: {
-        "확인": function() {
-          $NC.G_MAIN.setFocusActiveWindow();
-          setFocusScan();
-        }
-      },
-      hideFocus: hideFocus
-    });
-    return;
-  }
-
-  if ($NC.isNull(options.buttons) && !$NC.isNull(options.focusSelector)) {
-    $NC.G_MAIN.showMessage({
-      message: options,
-      buttons: {
-        "확인": function() {
-          $NC.G_MAIN.setFocusActiveWindow();
-          $NC.setFocus(options.focusSelector);
-        }
-      },
-      hideFocus: hideFocus
-    });
-    return;
-  }
-
-  var buttons = {};
-  if (options.onYesFn) {
-    buttons["예"] = function() {
-      $NC.G_MAIN.setFocusActiveWindow();
-      options.onYesFn.call(this);
-    };
-  }
-  if (options.onNoFn) {
-    buttons["아니오"] = function() {
-      $NC.G_MAIN.setFocusActiveWindow();
-      options.onNoFn.call(this);
-    };
-  }
-
-  $NC.G_MAIN.showMessage({
-    message: options.message,
-    buttons: buttons,
-    hideFocus: hideFocus
-  });
-}
-
-function onError(ajaxData) {
-
-  var errorData = $NC.getErrorMessage(ajaxData);
-  switch (errorData.RESULT_CD) {
-  case $NC.G_CONSTS.RESULT_CD_ERROR:
-    $NC.G_MAIN.showMessage({
-      message: errorData.RESULT_MSG,
-      buttons: {
-        "확인": function() {
-          $NC.G_MAIN.setFocusActiveWindow();
-          setFocusScan();
-        }
-      },
-      hideFocus: true
-    });
-    break;
-  case $NC.G_CONSTS.RESULT_CD_ACCESSDENIED:
-    alert(errorData.RESULT_MSG);
-    $NC.G_MAIN.showLoginPopup(1);
-    break;
-  case $NC.G_CONSTS.RESULT_CD_ERROR_HTML:
-    $NC.G_MAIN.showMessage({
-      title: "오류",
-      message: errorData.RESULT_MSG,
-      width: 700,
-      height: 450,
-      buttons: {
-        "확인": function() {
-          $NC.G_MAIN.setFocusActiveWindow();
-          setFocusScan();
-        }
-      },
-      hideFocus: true
-    });
-    break;
-  default:
-    $NC.G_MAIN.setFocusActiveWindow();
-    setFocusScan();
-  }
-  _Inquiry();
-}
-
-function setFocusScan() {
-
 }
 
 function onGetMasterT1(ajaxData) {
@@ -1359,7 +1236,7 @@ function onBtnBoxDelete() {
   $NC.serviceCall("/LOM7010E/callScanBoxDelete.do", {
     P_DS_MASTER: $NC.toJson(masterDS),
     P_USER_ID: $NC.G_USERINFO.USER_ID
-  }, onSave, null, null, 'LOM7011P_DELETE');
+  }, onSave);
 
 }
 
@@ -1449,10 +1326,10 @@ function onBtnPrintInvoice() {
 
   if (CARRIER_CD == '0020') {
     reportDoc = "lo/LABEL_LOM08";
-    queryId = "WR.RS_LABEL_LOM03";
+    queryId = "WR.RS_LABEL_LOM03";    
   } else {
     reportDoc = "lo/LABEL_LOM08";
-    queryId = "WR.RS_LABEL_LOM02";
+    queryId = "WR.RS_LABEL_LOM02"; 
   }
   var queryParams = {
     P_CENTER_CD: CENTER_CD,

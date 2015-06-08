@@ -76,6 +76,33 @@ public class LOM2010EController extends CommonController {
   }
 
   /**
+   * SP 처리 - 출고 지시확정 처리 체크처리
+   * 
+   * @param params 조회조건
+   */
+  @RequestMapping(value = "/callWbProc.do", method = RequestMethod.POST)
+  public ResponseEntity<String> callLoCancel(HttpServletRequest request,
+    @RequestParam(Consts.PK_QUERY_ID) String queryId, @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+
+    ResponseEntity<String> result = null;
+
+    Map<String, Object> params = getParameter(queryParams);
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    try {
+      result = getResponseEntity(request, service.callWbProc(queryId, params));
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+  }
+
+  /**
    * 출고등록/출고지시- Confirm/Cancel 처리
    *
    * @param request HttpServletRequest
@@ -270,6 +297,72 @@ public class LOM2010EController extends CommonController {
   }
 
   /**
+   * 지시취소 체크 Update
+   * 
+   * @param request HttpServletRequest
+   * @param queryId 쿼리ID
+   * @param queryParams 쿼리 호출 파라메터
+   * @return
+   */
+    
+  @SuppressWarnings("rawtypes")
+  @RequestMapping(value = "/callUpdate.do", method = RequestMethod.POST)
+  public ResponseEntity<String> callUserDelete(HttpServletRequest request,
+    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+
+    ResponseEntity<String> result = null;
+
+    Map<String, Object> params = getParameter(queryParams);
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    try {
+      Map mapResult = service.callUpdate(params);
+      result = getResponseEntity(request, mapResult);
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+  }
+
+  /**
+   * 확정취소 체크 Update
+   * 
+   * @param request HttpServletRequest
+   * @param queryId 쿼리ID
+   * @param queryParams 쿼리 호출 파라메터
+   * @return
+   */
+    
+  @SuppressWarnings("rawtypes")
+  @RequestMapping(value = "/callUpdateD.do", method = RequestMethod.POST)
+  public ResponseEntity<String> callUserDeleteD(HttpServletRequest request,
+    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+
+    ResponseEntity<String> result = null;
+
+    Map<String, Object> params = getParameter(queryParams);
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    try {
+      Map mapResult = service.callUpdateD(params);
+      result = getResponseEntity(request, mapResult);
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+  }
+
+  /**
    * 프린터 출력여부
    *
    * @param request HttpServletRequest
@@ -279,7 +372,7 @@ public class LOM2010EController extends CommonController {
    */
   @RequestMapping(value = "/Cksave.do", method = RequestMethod.POST)
   public ResponseEntity<String> Cksave(HttpServletRequest request, @RequestParam(Consts.PK_DS_DETAIL) String detailDS,
-    @RequestParam(Consts.PK_USER_ID) String user_Id) {
+    @RequestParam("P_PROCESS_CD") String process_Cd,@RequestParam(Consts.PK_USER_ID) String user_Id) {
 
     ResponseEntity<String> result = null;
 
@@ -293,7 +386,11 @@ public class LOM2010EController extends CommonController {
     params.put(Consts.PK_USER_ID, user_Id);
 
     try {
-      result = getResponseEntity(request, service.Cksave(params));
+      if(process_Cd.equals("B")){
+        //result = getResponseEntity(request, service.savePrintHis(params));
+      } else {
+        result = getResponseEntity(request, service.Cksave(params));                
+      }
     } catch (Exception e) {
       result = getResponseEntityError(request, e);
     }
@@ -416,7 +513,7 @@ public class LOM2010EController extends CommonController {
 
     return result;
   }
-
+  
   /**
    * 출고확정 저장 처리
    *
@@ -458,7 +555,7 @@ public class LOM2010EController extends CommonController {
 
     return result;
   }
-
+  
   /**
    * 배송완료 저장 처리
    *
@@ -491,7 +588,7 @@ public class LOM2010EController extends CommonController {
 
     return result;
   }
-
+  
   /**
    * 출고등록 (일괄) 저장 처리
    *
@@ -517,99 +614,6 @@ public class LOM2010EController extends CommonController {
 
     try {
       result = getResponseEntity(request, service.saveEntryBT(params));
-    } catch (Exception e) {
-      result = getResponseEntityError(request, e);
-    }
-
-    return result;
-  }
-  
-  /**
-   * SP 처리 - 출고 지시확정 처리 체크처리
-   * 
-   * @param params 조회조건
-   */
-  @RequestMapping(value = "/callWbProc.do", method = RequestMethod.POST)
-  public ResponseEntity<String> callLoCancel(HttpServletRequest request,
-    @RequestParam(Consts.PK_QUERY_ID) String queryId, @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
-
-    ResponseEntity<String> result = null;
-
-    Map<String, Object> params = getParameter(queryParams);
-    String oMsg = getResultMessage(params);
-    if (!Consts.OK.equals(oMsg)) {
-      result = getResponseEntityError(request, oMsg);
-      return result;
-    }
-
-    try {
-      result = getResponseEntity(request, service.callWbProc(queryId, params));
-    } catch (Exception e) {
-      result = getResponseEntityError(request, e);
-    }
-
-    return result;
-  }
-  
-  /**
-   * 지시취소 체크 Update
-   * 
-   * @param request HttpServletRequest
-   * @param queryId 쿼리ID
-   * @param queryParams 쿼리 호출 파라메터
-   * @return
-   */
-    
-  @SuppressWarnings("rawtypes")
-  @RequestMapping(value = "/callUpdate.do", method = RequestMethod.POST)
-  public ResponseEntity<String> callUserDelete(HttpServletRequest request,
-    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
-
-    ResponseEntity<String> result = null;
-
-    Map<String, Object> params = getParameter(queryParams);
-    String oMsg = getResultMessage(params);
-    if (!Consts.OK.equals(oMsg)) {
-      result = getResponseEntityError(request, oMsg);
-      return result;
-    }
-
-    try {
-      Map mapResult = service.callUpdate(params);
-      result = getResponseEntity(request, mapResult);
-    } catch (Exception e) {
-      result = getResponseEntityError(request, e);
-    }
-
-    return result;
-  }
-  
-  /**
-   * 확정취소 체크 Update
-   * 
-   * @param request HttpServletRequest
-   * @param queryId 쿼리ID
-   * @param queryParams 쿼리 호출 파라메터
-   * @return
-   */
-    
-  @SuppressWarnings("rawtypes")
-  @RequestMapping(value = "/callUpdateD.do", method = RequestMethod.POST)
-  public ResponseEntity<String> callUserDeleteD(HttpServletRequest request,
-    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
-
-    ResponseEntity<String> result = null;
-
-    Map<String, Object> params = getParameter(queryParams);
-    String oMsg = getResultMessage(params);
-    if (!Consts.OK.equals(oMsg)) {
-      result = getResponseEntityError(request, oMsg);
-      return result;
-    }
-
-    try {
-      Map mapResult = service.callUpdateD(params);
-      result = getResponseEntity(request, mapResult);
     } catch (Exception e) {
       result = getResponseEntityError(request, e);
     }

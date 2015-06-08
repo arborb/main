@@ -35,7 +35,11 @@ function _Initialize() {
   $NC.setInitDatePicker("#dtpQOutbound_Date1");
   $NC.setInitDatePicker("#dtpQOutbound_Date2");
 
+  //용기매칭
+
 }
+//합포장
+
 
 /**
  * 화면 초기화 - 화면 로드시 자동 호출 됨
@@ -161,6 +165,7 @@ function _Inquiry() {
   var HAS_PROC_YN = $NC.getValue("#chkQHas_Proc_Yn");
   var INSPECT_YN = $NC.getValue("#chkQInspect_Yn");
   var WB_CHK_YN = $NC.getValue("#chkQWb_Chk_Yn");
+  
 
   // 조회시 전역 변수 값 초기화
   $NC.setInitGridVar(G_GRDMASTER);
@@ -279,7 +284,7 @@ function grdMasterOnGetColumns() {
     id: "PRINT_DATETIME",
     field: "PRINT_DATETIME",
     name: "출력일시",
-    minWidth: 120
+    minWidth: 140
   });
   $NC.setGridColumn(columns, {
     id: "ORDERER_NM",
@@ -302,13 +307,13 @@ function grdMasterOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "BU_DATETIME",
     field: "BU_DATETIME",
-    name: "전표일시",
-    minWidth: 120
+    name: "주문일시",
+    minWidth: 140
   });
   $NC.setGridColumn(columns, {
     id: "BU_DATE",
     field: "BU_DATE",
-    name: "전표일자",
+    name: "주문일자",
     minWidth: 80
   });
   $NC.setGridColumn(columns, {
@@ -348,7 +353,7 @@ function grdMasterOnGetColumns() {
     id: "HAS_BOXING_YN",
     field: "HAS_BOXING_YN",
     name: "합포장대상여부",
-    minWidth: 80,
+    minWidth: 100,
     cssClass: "align-center",
     formatter: Slick.Formatters.CheckBox
   });
@@ -395,7 +400,7 @@ function grdMasterOnGetColumns() {
     id: "HAS_PROC_YN",
     field: "HAS_PROC_YN",
     name: "합포장완료여부",
-    minWidth: 80,
+    minWidth: 100,
     cssClass: "align-center",
     formatter: Slick.Formatters.CheckBox
   });

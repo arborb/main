@@ -25,6 +25,7 @@ var CENTER_CD       // 물류센터
   ,INORDER_TYPE     // 매입형태
   ,DELIVERY_TYPE2   // 배송지역구분
   ,SHIP_PRICE_TYPE  // 운송비구분
+  ,HOLD_YN          // 보류여부
   ,IS_ALL_DATE = false;     // 전체날짜로 조회
 
 /**
@@ -87,6 +88,10 @@ function _Initialize() {
   grdT3MasterInitialize();
   grdT3DetailInitialize();
   grdT3SubInitialize();
+  grdT4MasterInitialize();
+  grdT4DetailInitialize();
+  grdT4SubInitialize();
+
 
   // 부족재고 조정기준 정책
   $NC.serviceCall("/LOM7090E/callSP.do", {
@@ -202,7 +207,7 @@ function _Initialize() {
       P_SUB_CD2: ""
     })
   }, {
-    selector: ["#cboQInout_Cd", "#cboQDelivery_Type"],
+    selector: "#cboQInout_Cd",
     codeField: "CODE_CD",
     nameField: "CODE_NM",
     fullNameField: "CODE_CD_F",
@@ -290,6 +295,16 @@ function _Initialize() {
     fullNameField: "CODE_CD_F",
     addAll: true
   });
+  // 조회조건 - 보류여부 세팅
+  $NC.setInitCombo("/LOM7090E/getDataSet.do", {
+    P_QUERY_ID: "LOM7090E.GET_HOLD_YN",
+    P_QUERY_PARAMS: $NC.getParams({})
+  }, {
+    selector: "#cboQHold_Yn",
+    codeField: "CODE_CD",
+    nameField: "CODE_NM",
+    addAll: true
+  });
 
   // 조회조건 - 출고차수 세팅
   // 출고지시 화면의 출고차수 새로고침
@@ -303,7 +318,7 @@ function _Initialize() {
     P_QUERY_ID: "LOM7090E.GET_ORDER_TYPE",
     P_QUERY_PARAMS: $NC.getParams({})
   }, {
-    selector: ["#cboQT1Order_Div", "#cboQT2Order_Div", "#cboQT3Order_Div"],
+    selector: ["#cboQT1Order_Div", "#cboQT2Order_Div", "#cboQT3Order_Div", "#cboQT4Order_Div"],
     codeField: "CODE_CD",
     nameField: "CODE_NM",
     addAll: true,
@@ -325,10 +340,15 @@ function _Initialize() {
       P_SUB_CD2: ""
     })
   }, {
-    selector: ["#cboQT1Delivery_TypeB", "#cboQT2Delivery_TypeB", "#cboQT3Delivery_TypeB"],
+    selector: ["#cboQDelivery_Type", "#cboQT1Delivery_TypeB", "#cboQT2Delivery_TypeB", "#cboQT3Delivery_TypeB"],
     codeField: "CODE_CD",
     nameField: "CODE_NM",
-    addAll: true
+    addAll: true,
+    onComplete: function(a, b, c){
+      $('#cboQT1Delivery_TypeB option')[0].innerText = '';
+      $('#cboQT2Delivery_TypeB option')[0].innerText = '';
+      $('#cboQT3Delivery_TypeB option')[0].innerText = '';
+    }
   });
 
   // 조회조건 - T1
@@ -354,6 +374,14 @@ function _Initialize() {
   $("#btnT1Proc_InvnoLine").click(setT1OrderDiv); // 주문유형 리마킹 SP 버튼 클릭(개별등록탭)
   $("#btnT2Proc_InvnoLine").click(setT2OrderDiv); // 주문유형 리마킹 SP 버튼 클릭(개별등록탭)
   $("#btnT3Proc_InvnoLine").click(setT3OrderDiv); // 주문유형 리마킹 SP 버튼 클릭(개별등록탭)
+  $("#btnT4Proc_InvnoLine").click(setT4OrderDiv); // 주문유형 리마킹 SP 버튼 클릭(개별등록탭)
+  // 지시탭에서 라벨출력
+  $("#btnPrintLabel").click(function(){
+    _Print(0, '라벨출력');
+  });
+  $("#btnPrintPaper").click(function(){
+    _Print(1, '지시서출력');
+  });
   
   $("#btnT1Order_Adjust").click(setOrder_Adjustment); // 출고할당량 부족재고 조정
   $("#chkQDate_Yn").click(function(e) {
@@ -371,6 +399,10 @@ function _Initialize() {
   
   //추후 사용 할 가능성이 있어 숨겨놓음.
   $('#btnT1Order_Adjust').hide();
+  $NC.setValue('#chkQDate_Yn', true);
+  IS_ALL_DATE = true;
+  $NC.setEnable("#dtpQOrder_Date1", false);
+  $NC.setEnable("#dtpQOrder_Date2", false);
 }
 
 /**
@@ -379,8 +411,10 @@ function _Initialize() {
 function _OnLoaded() {
   $("#T2Option").hide();
   $("#T3Option").hide();
+  $("#T4Option").hide();
   $('#divT2ProcessingInfo').hide();
   $('#divT3ProcessingInfo').hide();
+  $('#divT4ProcessingInfo').hide();
 
   // 스플리터 초기화
   $NC.setInitSplitter("#divT1DetailView", "v", $NC.G_OFFSET.leftViewWidth);
@@ -391,7 +425,7 @@ function _OnLoaded() {
  * 화면 리사이즈 Offset 세팅
  */
 function _SetResizeOffset() {
-  $NC.G_OFFSET.leftViewWidth = 380;
+  $NC.G_OFFSET.leftViewWidth = 550;
   $NC.G_OFFSET.rightViewHeight = 250;
   $NC.G_OFFSET.nonClientHeight = $("#divConditionView").outerHeight() + $NC.G_LAYOUT.nonClientHeight;
   $NC.G_OFFSET.tabHeaderHeight = $("#divTabView").children(".ui-tabs-nav:first").outerHeight();
@@ -415,13 +449,13 @@ function _OnResize(parent) {
     
     container = $("#grdT1Master").parent();
     // Master Grid 사이즈 조정
-    $NC.resizeGrid("#grdT1Master", container.width(), container.height() - $NC.G_LAYOUT.header);
+    $NC.resizeGrid("#grdT1Master", container.width(), container.height() - $NC.G_LAYOUT.header-45);
     
     // Grid 사이즈 조정
     container = $("#grdT1Detail").parent();
     $NC.resizeGrid("#grdT1Detail", $("#grdT1Detail").parent().width(), container.height() - $NC.G_LAYOUT.header);
     container = $("#grdT1Sub").parent();
-    $NC.resizeGrid("#grdT1Sub", $("#grdT1Detail").parent().width(), container.height() - $NC.G_LAYOUT.header);
+    $NC.resizeGrid("#grdT1Sub", $("#grdT1Detail").parent().width(), container.height() - $NC.G_LAYOUT.header-45);
     return false;
   }
   if ($("#divTabView").tabs("option", "active") === 1) {
@@ -435,32 +469,55 @@ function _OnResize(parent) {
 
     container = $("#grdT2Master").parent();
     // Master Grid 사이즈 조정
-    $NC.resizeGrid("#grdT2Master", container.width(), container.height() - $NC.G_LAYOUT.header);
+    $NC.resizeGrid("#grdT2Master", container.width(), container.height() - $NC.G_LAYOUT.header-15);
     
     // Grid 사이즈 조정
     container = $("#grdT2Detail").parent();
     $NC.resizeGrid("#grdT2Detail", $("#grdT2Detail").parent().width(), container.height() - $NC.G_LAYOUT.header);
     container = $("#grdT2Sub").parent();
-    $NC.resizeGrid("#grdT2Sub", $("#grdT2Detail").parent().width(), container.height() - $NC.G_LAYOUT.header);
+    $NC.resizeGrid("#grdT2Sub", $("#grdT2Detail").parent().width(), container.height() - $NC.G_LAYOUT.header-15);
     return false;
   }
-  var hiddenOption = 15;
-  var clientHeight = parent.height() - $NC.G_OFFSET.nonClientHeight - $NC.G_LAYOUT.border1 + hiddenOption;
-  $NC.resizeContainer("#divTabView", clientWidth, clientHeight);  
-  clientHeight -= ($NC.G_OFFSET.tabHeaderHeight + $NC.G_LAYOUT.border1);
+  if ($("#divTabView").tabs("option", "active") === 2) {
+    var hiddenOption = 15;
+    var clientHeight = parent.height() - $NC.G_OFFSET.nonClientHeight - $NC.G_LAYOUT.border1 + hiddenOption;
+    $NC.resizeContainer("#divTabView", clientWidth, clientHeight);  
+    clientHeight -= ($NC.G_OFFSET.tabHeaderHeight + $NC.G_LAYOUT.border1);
 
-  var container = $("#divT3DetailView");
-  $NC.resizeContainer(container, clientWidth, clientHeight);
+    var container = $("#divT3DetailView");
+    $NC.resizeContainer(container, clientWidth, clientHeight);
 
-  container = $("#grdT3Master").parent();
-  // Master Grid 사이즈 조정
-  $NC.resizeGrid("#grdT3Master", container.width(), container.height() - $NC.G_LAYOUT.header);
-  
-  // Grid 사이즈 조정
-  container = $("#grdT3Detail").parent();
-  $NC.resizeGrid("#grdT3Detail", $("#grdT3Detail").parent().width(), container.height() - $NC.G_LAYOUT.header);
-  container = $("#grdT3Sub").parent();
-  $NC.resizeGrid("#grdT3Sub", $("#grdT3Detail").parent().width(), container.height() - $NC.G_LAYOUT.header);
+    container = $("#grdT3Master").parent();
+    // Master Grid 사이즈 조정
+    $NC.resizeGrid("#grdT3Master", container.width(), container.height() - $NC.G_LAYOUT.header-15);
+    
+    // Grid 사이즈 조정
+    container = $("#grdT3Detail").parent();
+    $NC.resizeGrid("#grdT3Detail", $("#grdT3Detail").parent().width(), container.height() - $NC.G_LAYOUT.header);
+    container = $("#grdT3Sub").parent();
+    $NC.resizeGrid("#grdT3Sub", $("#grdT3Detail").parent().width(), container.height() - $NC.G_LAYOUT.header-15);
+    return false;
+  }
+  if ($("#divTabView").tabs("option", "active") === 3) {
+    var hiddenOption = 15;
+    var clientHeight = parent.height() - $NC.G_OFFSET.nonClientHeight - $NC.G_LAYOUT.border1 + hiddenOption;
+    $NC.resizeContainer("#divTabView", clientWidth, clientHeight);  
+    clientHeight -= ($NC.G_OFFSET.tabHeaderHeight + $NC.G_LAYOUT.border1);
+
+    var container = $("#divT4DetailView");
+    $NC.resizeContainer(container, clientWidth, clientHeight);
+
+    container = $("#grdT4Master").parent();
+    // Master Grid 사이즈 조정
+    $NC.resizeGrid("#grdT4Master", container.width(), container.height() - $NC.G_LAYOUT.header-15);
+    
+    // Grid 사이즈 조정
+    container = $("#grdT4Detail").parent();
+    $NC.resizeGrid("#grdT4Detail", $("#grdT4Detail").parent().width(), container.height() - $NC.G_LAYOUT.header);
+    container = $("#grdT4Sub").parent();
+    $NC.resizeGrid("#grdT4Sub", $("#grdT4Detail").parent().width(), container.height() - $NC.G_LAYOUT.header-15);
+    return false;
+  }
 }
 
 /**
@@ -478,7 +535,11 @@ function _OnGridCheckBoxFormatterClick(e, view, args) {
   //}
   var grdDetail;
   if ($("#divTabView").tabs("option", "active") === 0) {
-    grdDetail = window["G_GRDT1DETAIL"];
+    if (args.grid == "grdT1Master") {
+      grdDetail = window["G_GRDT1MASTER"];
+    }else if(args.grid == "grdT1Detail"){
+      grdDetail = window["G_GRDT1DETAIL"];  
+    }
   } else if ($("#divTabView").tabs("option", "active") === 1) {
     if (args.grid == "grdT2Master") {
       grdDetail = window["G_GRDT2MASTER"];
@@ -490,6 +551,12 @@ function _OnGridCheckBoxFormatterClick(e, view, args) {
       grdDetail = window["G_GRDT3MASTER"];
     }else if(args.grid == "grdT3Detail"){
       grdDetail = window["G_GRDT3DETAIL"];  
+    }
+  } else if ($("#divTabView").tabs("option", "active") === 3) {
+    if (args.grid == "grdT4Master") {
+      grdDetail = window["G_GRDT4MASTER"];
+    }else if(args.grid == "grdT4Detail"){
+      grdDetail = window["G_GRDT4DETAIL"];  
     }
   }
 
@@ -529,6 +596,7 @@ function _OnConditionChange(e, view, val) {
   $("#tdQInorder_Type").show().parent().show(); // 매입형태 비표시
   $("#tdQShip_Type").show().parent().show(); // 운송구분 비표시
   $("#tdQShip_Price_Type").show().parent().show(); // 운송비구분 비표시
+  $("#tdQHold_Yn").show().parent().show(); // 보류여부 비표시
 
   //검색항목 값 변경시 화면 클리어
   if ($("#divTabView").tabs("option", "active") === 0) {
@@ -543,6 +611,7 @@ function _OnConditionChange(e, view, val) {
     $('#lblQOrder_Date').text('예정일자');
     $('#tdOutboundHidden').show();
     $('#tdQDsp_Outbound_Batch').hide();
+    $('#tdQHold_Yn').show();
     return false;
   }
   if ($("#divTabView").tabs("option", "active") === 1) {
@@ -557,19 +626,39 @@ function _OnConditionChange(e, view, val) {
     $('#lblQOrder_Date').text('출고일자');
     $('#tdOutboundHidden').hide();
     $('#tdQDsp_Outbound_Batch').hide();
+    $('#tdQHold_Yn').hide();
     return false;
   }
-  $("#T1Option").hide();
-  $("#divT1ProcessingInfo").hide();
-  $("#T2Option").hide();
-  $("#divT2ProcessingInfo").hide();
-  $("#T3Option").show(); 
-  $("#divT3ProcessingInfo").show();
+  if ($("#divTabView").tabs("option", "active") === 2) {
+    $("#T1Option").hide();
+    $("#divT1ProcessingInfo").hide();
+    $("#T2Option").hide();
+    $("#divT2ProcessingInfo").hide();
+    $("#T3Option").show(); 
+    $("#divT3ProcessingInfo").show();
 
-  $('#tdDirectHidden').show();
-  $('#lblQOrder_Date').text('출고일자');
-  $('#tdOutboundHidden').hide();
-  $('#tdQDsp_Outbound_Batch').show();
+    $('#tdDirectHidden').show();
+    $('#lblQOrder_Date').text('출고일자');
+    $('#tdOutboundHidden').hide();
+    $('#tdQDsp_Outbound_Batch').show();
+    $('#tdQHold_Yn').hide();
+    return false;
+  }
+  if ($("#divTabView").tabs("option", "active") === 3) {
+    $("#T1Option").hide();
+    $("#divT1ProcessingInfo").hide();
+    $("#T2Option").hide();
+    $("#divT2ProcessingInfo").hide();
+    $("#T4Option").show(); 
+    $("#divT4ProcessingInfo").show();
+
+    $('#tdDirectHidden').show();
+    $('#lblQOrder_Date').text('출고일자');
+    $('#tdOutboundHidden').hide();
+    $('#tdQDsp_Outbound_Batch').show();
+    $('#tdQHold_Yn').hide();
+    return false;
+  }
 }
 
 /**
@@ -583,6 +672,8 @@ function _Inquiry() {
     getDataT2Master();
   } else if (id === 2) {
     getDataT3Master();
+  } else if (id === 3) {
+    getDataT4Master();
   }
   _OnConditionChange();
 }
@@ -615,18 +706,7 @@ function _Cancel() {
 
 }
 
-/**
- * Print Button Event - 메인 상단 출력 버튼 클릭시 호출 됨
- * 
- * @param printIndex
- *          선택한 출력물 Index
- */
 function _Print(printIndex, printName) {
-  var CENTER_CD = "";
-  var BU_CD = "";
-  var OUTBOUND_DATE = "";
-  var OUTBOUND_BATCH = "";
-  var internalQueryYn = "";
 
   var reportDoc;
   var queryId;
@@ -635,94 +715,106 @@ function _Print(printIndex, printName) {
     return false;
   }
 
-  var rowData = G_GRDT3DETAIL.data.getItem(G_GRDT3DETAIL.lastRow);
-  CENTER_CD = rowData.CENTER_CD;
-  BU_CD = rowData.BU_CD;
-  OUTBOUND_DATE = rowData.OUTBOUND_DATE;
-  OUTBOUND_BATCH = rowData.OUTBOUND_BATCH;
-  //GRID_MASTER = G_GRDT3DETAIL;
-  PRINT_DIV = rowData.PRINT_DIV;
-  internalQueryYn = "N";
-
-//  if (PRINT_DIV === 1) {
-//    reportDoc = "lo/LABEL_LOM_LABLE";
-//  } else if (PRINT_DIV === 2) {
-//    reportDoc = "lo/LABEL_LOM_LABLE1";
-//  }
   reportDoc = "lo/LABEL_LOM_LABLE";
   queryId = "WR.RS_LABEL_LOM_LABEL1";
 
-  var checkedValueDS = [ ];
-  var checkedValueDS1 = [ ];
+  var checkedValueLabel = [ ];
   var saveDs = [ ];
-  var rowCount = G_GRDT3DETAIL.data.getLength();
+  var rowCount = G_GRDT3MASTER.data.getLength();
+  var checkCnt = 0;
+  
+  PRINT_DIV = "1";
+  
   for (var row = 0; row < rowCount; row++) {
-    var rowData = G_GRDT3DETAIL.data.getItem(row);
-    checkedValueDS.push(rowData.OUTBOUND_NO);
-    var saveData = {
-      P_CENTER_CD: rowData.CENTER_CD,
-      P_BU_CD: rowData.BU_CD,
-      P_OUTBOUND_DATE: rowData.OUTBOUND_DATE,
-      P_OUTBOUND_BATCH: rowData.OUTBOUND_BATCH,
-      P_OUTBOUND_NO: rowData.OUTBOUND_NO
-    };
-    saveDs.push(saveData);
-    if (rowData.PRINT_YN === 'Y') {
-      alert('이미 출력 되었습니다.\n피킹라벨재출력 화면에서 출력하세요.');
-      return false;
-    }
-  }
-  
-  var rowCount_M = G_GRDT3MASTER.data.getLength();
-  for (var row = 0; row < rowCount_M; row++) {
     var rowData = G_GRDT3MASTER.data.getItem(row);
-    if (rowData.CHECK_YN === "Y"){
-      checkedValueDS1.push(rowData.OUTBOUND_BATCH + ";" + rowData.ORDER_TYPE);  
+    if (rowData.CHECK_YN == "Y"){
+      
+      checkCnt++;
+      
+      //피킹라벨 & 토탈피킹지시서
+      checkedValueLabel.push(rowData.OUTBOUND_DATE + ";" + rowData.OUTBOUND_BATCH + ";" + rowData.ORDER_TYPE);
+      
+      //출고이력 저장
+      var saveData = {
+        P_CENTER_CD: CENTER_CD,
+        P_BU_CD: BU_CD,
+        P_OUTBOUND_DATE: rowData.OUTBOUND_DATE,
+        P_OUTBOUND_BATCH: rowData.OUTBOUND_BATCH,
+        P_ORDER_TYPE: rowData.ORDER_TYPE
+      };
+      saveDs.push(saveData); 
+      
+      if (rowData.PRINT_DIV === "2"){
+        PRINT_DIV = "2";
+      }
+
+      if (printIndex == '0' && rowData.PRINT_YN == "Y") {
+        if (!confirm('이미 출력 되었습니다.\n\n피킹라벨재출력 화면에서 출력 하시겠습니까?.\n\n[출고차수 : ' +rowData.OUTBOUND_BATCH+ ']')) {
+          return false;
+        }
+      }
     }
   }
-  var rowDataM = G_GRDT3DETAIL.data.getItem(G_GRDT3MASTER.lastRow);
   
-  cksave(saveDs);
-
-  //출고라벨 파라미터
+  if (checkCnt == 0){
+    alert("출력할 데이터를 선택하세요.");
+    return false;
+  }
+  
   var queryParams = {
-    P_CENTER_CD: CENTER_CD,
-    P_BU_CD: BU_CD,
-    P_OUTBOUND_DATE: OUTBOUND_DATE
+      P_CENTER_CD: CENTER_CD,
+      P_BU_CD: BU_CD
   };
   
-  // 미리보기
-  $NC.G_MAIN.showPrintPreview({
-    reportDoc: reportDoc,
-    queryId: queryId,
-    queryParams: queryParams,
-    checkedValue: checkedValueDS1.toString(),
-    internalQueryYn: internalQueryYn,
-    printFn: exeSilentPrint,
-    print_div: rowDataM.PRINT_DIV
-  });
+  if (printIndex == '0') {
+    //출고이력 저장.
+    cksave(saveDs);
+    
+    // 미리보기
+    $NC.G_MAIN.showPrintPreview({
+      reportDoc: reportDoc,
+      queryId: queryId,
+      queryParams: queryParams,
+      checkedValue: checkedValueLabel.toString(),
+      internalQueryYn: "N",
+      //printFn: exeSilentPrint,
+      //print_div: PRINT_DIV
+    });
+  } else if (printIndex == '1') {
+    $NC.G_MAIN.showPrintPreview({
+      reportDoc: "lo/PAPER_LOM02_3",
+      queryId: "WR.RS_PAPER_LOM02_4",
+      queryParams: queryParams,
+      checkedValue: checkedValueLabel.toString(),
+      internalQueryYn: "N",
+      //printFn: exeSilentPrint,
+      //print_div: PRINT_DIV
+    });
+  }
+  
 
-  // 미리보기 후 출력하기 rowData.PRINT_DIV == '2'일 경우에만 실행
-  function exeSilentPrint() {
-    if (rowData.PRINT_DIV == '1') {
+  // 미리보기 후 출력하기 PRINT_DIV == '2'일 경우에만 실행
+  /*function exeSilentPrint() {
+    if (PRINT_DIV == "1") {
       return false;
     }
-    queryParams.P_OUTBOUND_BATCH = OUTBOUND_BATCH;
+    
     $NC.G_MAIN.silentPrint({
       printParams: [{
         reportDoc: "lo/PAPER_LOM02_3",
-        queryId: "WR.RS_PAPER_LOM02_3",
+        queryId: "WR.RS_PAPER_LOM02_4",
         queryParams: queryParams,
+        checkedValue: checkedValueLabel.toString(),
         iFrameNo: 1,
-        checkedValue: checkedValueDS.toString(),
-        silentPrinterName: $NC.G_USERINFO.PRINT_WB_NO,
-        internalQueryYn: internalQueryYn
+        silentPrinterName: $NC.G_USERINFO.PRINT_CARD,
+        internalQueryYn: "N"
       }],
       onAfterPrint: function() {
-        _Inquiry();
+        //_Inquiry();
       }
     });
-  }
+    
+  }*/
 }
 
 /**
@@ -734,7 +826,7 @@ function cksave(saveDS) {
     $NC.serviceCallAndWait("/LOM7090E/Cksave.do", {
       P_DS_DETAIL: $NC.toJson(saveDS),
       P_USER_ID: $NC.G_USERINFO.USER_ID
-    }, onSavePrintYn, null, null, '7090E_RS_T3_CK_SAVE');
+    }, onSavePrintYn, null, null, '7090E_RS_T4_CK_SAVE');
   }
 }
 
@@ -747,7 +839,7 @@ function onSavePrintYn(ajaxData) {
       alert(resultData.RESULT_DATA);
     }
   }
-  //_Inquiry();
+  _Inquiry();
 }
 
 /**
@@ -775,6 +867,10 @@ function tabOnActivate(event, ui) {
     container = "#divT3DetailView";
     splitArea = "#divT3SplitArea";
     getDataT3Master();
+  } else if (id === "TAB4") {
+    container = "#divT4DetailView";
+    splitArea = "#divT4SplitArea";
+    getDataT4Master();
   }
 
   if ($NC.isSplitter(container)) {
@@ -797,17 +893,30 @@ function onChangingCondition() {
     $("#T1Option").show();
     $("#T2Option").hide();
     $("#T3Option").hide();
+    $("#T4Option").hide();
     return false;
   }
   if ($("#divTabView").tabs("option", "active") === 1) {
     $("#T1Option").hide();
     $("#T2Option").show();
     $("#T3Option").hide();
+    $("#T4Option").hide();
     return false;
   }
-  $("#T1Option").hide();
-  $("#T2Option").hide();
-  $("#T3Option").show();
+  if ($("#divTabView").tabs("option", "active") === 2) {
+    $("#T1Option").hide();
+    $("#T2Option").hide();
+    $("#T3Option").show();
+    $("#T4Option").hide();
+    return false;
+  }
+  if ($("#divTabView").tabs("option", "active") === 3) {
+    $("#T1Option").hide();
+    $("#T2Option").hide();
+    $("#T3Option").hide();
+    $("#T4Option").show();
+    return false;
+  }
 }
 
 /**
@@ -909,7 +1018,7 @@ function grdT1MasterOnGetColumns() {
     id: "CNT_A",
     field: "CNT_A",
     name: "총건수",
-    minWidth: 100,
+    minWidth: 80,
     cssClass: "align-right"
   });
 
@@ -974,26 +1083,32 @@ function grdT1DetailOnGetColumns() {
     id: "INOUT_NM",
     field: "INOUT_NM",
     name: "출고구분",
-    minWidth: 90
+    minWidth: 50
   });
   $NC.setGridColumn(columns, {
     id: "ORDERER_NM",
     field: "ORDERER_NM",
     name: "주문자명",
-    minWidth: 180
+    minWidth: 50
   });
   $NC.setGridColumn(columns, {
     id: "SHIPPER_NM",
     field: "SHIPPER_NM",
     name: "수령자명",
-    minWidth: 90
+    minWidth: 50
   });
   $NC.setGridColumn(columns, {
     id: "TOT_ENTRY_QTY",
     field: "TOT_ENTRY_QTY",
     name: "총수량",
     cssClass: "align-right",
-    minWidth: 90
+    minWidth: 50
+  });
+  $NC.setGridColumn(columns, {
+    id: "ORDER_DATE",
+    field: "ORDER_DATE",
+    name: "예정일자",
+    minWidth: 80
   });
   $NC.setGridColumn(columns, {
     id: "ORDER_NO",
@@ -1004,8 +1119,14 @@ function grdT1DetailOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "BU_DATE",
     field: "BU_DATE",
-    name: "주문일지",
+    name: "주문일자",
     minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "BU_DATETIME1",
+    field: "BU_DATETIME",
+    name: "주문시간",
+    minWidth: 150
   });
   $NC.setGridColumn(columns, {
     id: "BU_NO",
@@ -1013,19 +1134,35 @@ function grdT1DetailOnGetColumns() {
     name: "주문번호",
     minWidth: 80
   });
-  $NC.setGridColumn(columns, {
+  /*$NC.setGridColumn(columns, {
     id: "HOLD_YN",
     field: "HOLD_YN",
     name: "보류여부",
     minWidth: 80,
     cssClass: "align-center"
-  });
+  });*/
   $NC.setGridColumn(columns, {
+    id: "HOLD_YN",
+    field: "HOLD_YN",
+    name: "보류여부",
+    cssClass: "align-center",
+    formatter: Slick.Formatters.CheckBox,
+    minWidth: 80
+  });
+  /*$NC.setGridColumn(columns, {
     id: "ADJUST_YN",
     field: "ADJUST_YN",
     name: "재고부족여부",
     minWidth: 80,
     cssClass: "align-center"
+  });*/
+  $NC.setGridColumn(columns, {
+    id: "ADJUST_YN",
+    field: "ADJUST_YN",
+    name: "재고부족여부",
+    cssClass: "align-center",
+    formatter: Slick.Formatters.CheckBox,
+    minWidth: 80
   });
 
   return $NC.setGridColumnDefaultFormatter(columns);
@@ -1164,37 +1301,38 @@ function grdT1SubOnGetColumns() {
     id: "LINE_NO",
     field: "LINE_NO",
     name: "순번",
-    minWidth: 90
+    minWidth: 40,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "BRAND_CD",
     field: "BRAND_CD",
     name: "위탁사",
-    minWidth: 180
+    minWidth: 90
   });
   $NC.setGridColumn(columns, {
     id: "BRAND_NM",
     field: "BRAND_NM",
     name: "위탁사명",
-    minWidth: 90
+    minWidth: 180
   });
   $NC.setGridColumn(columns, {
     id: "DEAL_ID",
     field: "DEAL_ID",
     name: "딜ID",
-    minWidth: 150
+    minWidth: 90
   });
   $NC.setGridColumn(columns, {
     id: "DEAL_NM",
     field: "DEAL_NM",
     name: "딜명",
-    minWidth: 80
+    minWidth: 180
   });
   $NC.setGridColumn(columns, {
     id: "OPTION_VALUE",
     field: "OPTION_VALUE",
     name: "옵션명",
-    minWidth: 80
+    minWidth: 180
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_CD",
@@ -1206,7 +1344,7 @@ function grdT1SubOnGetColumns() {
     id: "ITEM_NM",
     field: "ITEM_NM",
     name: "상품명",
-    minWidth: 80
+    minWidth: 180
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_SPEC",
@@ -1218,49 +1356,56 @@ function grdT1SubOnGetColumns() {
     id: "ITEM_STATE",
     field: "ITEM_STATE",
     name: "상태",
-    minWidth: 80
+    minWidth: 40
   });
   $NC.setGridColumn(columns, {
     id: "QTY_IN_BOX",
     field: "QTY_IN_BOX",
     name: "입수",
-    minWidth: 80
+    minWidth: 50,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
-    id: "OPTION_CNT",
-    field: "OPTION_CNT",
+    id: "OPTION_QTY",
+    field: "OPTION_QTY",
     name: "옵션수량",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "ORDER_QTY",
     field: "ORDER_QTY",
     name: "예정수량",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
-    id: "WEIGHT_QTY",
-    field: "WEIGHT_QTY",
+    id: "ENTRY_QTY",
+    field: "ENTRY_QTY",
     name: "등록수량",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "SUPPLY_PRICE",
     field: "SUPPLY_PRICE",
     name: "공급단가",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "TOTAL_AMT",
     field: "TOTAL_AMT",
     name: "합계금액",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "BU_LINE_NO",
     field: "BU_LINE_NO",
     name: "주문순번",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
 
   return $NC.setGridColumnDefaultFormatter(columns);
@@ -1325,7 +1470,7 @@ function grdT2MasterOnGetColumns() {
     id: "ORDER_TYPE_NM",
     field: "ORDER_TYPE_NM",
     name: "주문구분",
-    minWidth: 80
+    minWidth: 150
   });
   $NC.setGridColumn(columns, {
     id: "OUTBOUND_DATE",
@@ -1337,7 +1482,7 @@ function grdT2MasterOnGetColumns() {
     id: "CNT_A",
     field: "CNT_A",
     name: "총건수",
-    minWidth: 100,
+    minWidth: 80,
     cssClass: "align-right"
   });
 
@@ -1401,25 +1546,25 @@ function grdT2DetailOnGetColumns() {
     id: "INOUT_NM",
     field: "INOUT_NM",
     name: "출고구분",
-    minWidth: 90
+    minWidth: 50
   });
   $NC.setGridColumn(columns, {
     id: "ORDERER_NM",
     field: "ORDERER_NM",
     name: "주문자명",
-    minWidth: 180
+    minWidth: 50
   });
   $NC.setGridColumn(columns, {
     id: "SHIPPER_NM",
     field: "SHIPPER_NM",
     name: "수령자명",
-    minWidth: 90
+    minWidth: 50
   });
   $NC.setGridColumn(columns, {
     id: "ENTRY_USER_ID2",
     field: "ENTRY_USER_ID",
     name: "등록자",
-    minWidth: 90
+    minWidth: 50
   });
   $NC.setGridColumn(columns, {
     id: "ENTRY_DATETIME2",
@@ -1432,7 +1577,7 @@ function grdT2DetailOnGetColumns() {
     field: "TOT_ENTRY_QTY",
     name: "총수량",
     cssClass: "align-right",
-    minWidth: 90
+    minWidth: 50
   });
   $NC.setGridColumn(columns, {
     id: "OUTBOUND_NO",
@@ -1445,6 +1590,12 @@ function grdT2DetailOnGetColumns() {
     field: "BU_DATE",
     name: "주문일지",
     minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "BU_DATETIME1",
+    field: "BU_DATETIME",
+    name: "주문시간",
+    minWidth: 150
   });
   $NC.setGridColumn(columns, {
     id: "BU_NO",
@@ -1495,37 +1646,38 @@ function grdT2SubOnGetColumns() {
     id: "LINE_NO",
     field: "LINE_NO",
     name: "순번",
-    minWidth: 90
+    minWidth: 40,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "BRAND_CD",
     field: "BRAND_CD",
     name: "위탁사",
-    minWidth: 180
+    minWidth: 90
   });
   $NC.setGridColumn(columns, {
     id: "BRAND_NM",
     field: "BRAND_NM",
     name: "위탁사명",
-    minWidth: 90
+    minWidth: 180
   });
   $NC.setGridColumn(columns, {
     id: "DEAL_ID",
     field: "DEAL_ID",
     name: "딜ID",
-    minWidth: 150
+    minWidth: 90
   });
   $NC.setGridColumn(columns, {
     id: "DEAL_NM",
     field: "DEAL_NM",
     name: "딜명",
-    minWidth: 80
+    minWidth: 180
   });
   $NC.setGridColumn(columns, {
     id: "OPTION_VALUE",
     field: "OPTION_VALUE",
     name: "옵션명",
-    minWidth: 80
+    minWidth: 180
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_CD",
@@ -1537,7 +1689,7 @@ function grdT2SubOnGetColumns() {
     id: "ITEM_NM",
     field: "ITEM_NM",
     name: "상품명",
-    minWidth: 80
+    minWidth: 180
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_SPEC",
@@ -1555,43 +1707,50 @@ function grdT2SubOnGetColumns() {
     id: "QTY_IN_BOX",
     field: "QTY_IN_BOX",
     name: "입수",
-    minWidth: 80
+    minWidth: 50,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "OPTION_QTY",
     field: "OPTION_QTY",
     name: "옵션수량",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "ORDER_QTY",
     field: "ORDER_QTY",
     name: "예정수량",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "ENTRY_QTY",
     field: "ENTRY_QTY",
     name: "등록수량",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "SUPPLY_PRICE",
     field: "SUPPLY_PRICE",
     name: "공급단가",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "TOTAL_AMT",
     field: "TOTAL_AMT",
     name: "합계금액",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "ORDER_LINE_NO",
     field: "ORDER_LINE_NO",
     name: "주문순번",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
 
   return $NC.setGridColumnDefaultFormatter(columns);
@@ -1646,7 +1805,7 @@ function grdT3MasterOnGetColumns() {
     sortable: false,
     cssClass: "align-center",
     formatter: Slick.Formatters.CheckBox,
-    editor: Slick.Editors.CheckBox,
+    //editor: Slick.Editors.CheckBox,
     editorOptions: {
       valueChecked: "Y",
       valueUnChecked: "N"
@@ -1656,7 +1815,7 @@ function grdT3MasterOnGetColumns() {
     id: "ORDER_TYPE_NM",
     field: "ORDER_TYPE_NM",
     name: "주문구분",
-    minWidth: 80
+    minWidth: 150
   });
   $NC.setGridColumn(columns, {
     id: "OUTBOUND_DATE",
@@ -1668,13 +1827,14 @@ function grdT3MasterOnGetColumns() {
     id: "OUTBOUND_BATCH",
     field: "OUTBOUND_BATCH",
     name: "출고지시차수",
-    minWidth: 100
+    minWidth: 80,
+    cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
     id: "CNT_A",
     field: "CNT_A",
     name: "총건수",
-    minWidth: 100,
+    minWidth: 80,
     cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
@@ -1687,8 +1847,11 @@ function grdT3MasterOnGetColumns() {
     id: "PRINT_YN",
     field: "PRINT_YN",
     name: "출력여부",
-    minWidth: 90
-  });  
+    cssClass: "align-center",
+    formatter: Slick.Formatters.CheckBox,
+    minWidth: 80,
+    cssClass: "align-center"
+  });
 
   return $NC.setGridColumnDefaultFormatter(columns);
 }
@@ -1740,7 +1903,7 @@ function grdT3DetailOnGetColumns() {
     sortable: false,
     cssClass: "align-center",
     formatter: Slick.Formatters.CheckBox,
-    editor: Slick.Editors.CheckBox,
+    //editor: Slick.Editors.CheckBox,
     editorOptions: {
       valueChecked: "Y",
       valueUnChecked: "N"
@@ -1750,19 +1913,19 @@ function grdT3DetailOnGetColumns() {
     id: "INOUT_NM",
     field: "INOUT_NM",
     name: "출고구분",
-    minWidth: 90
+    minWidth: 50
   });
   $NC.setGridColumn(columns, {
     id: "ORDERER_NM",
     field: "ORDERER_NM",
     name: "주문자명",
-    minWidth: 180
+    minWidth: 50
   });
   $NC.setGridColumn(columns, {
     id: "SHIPPER_NM",
     field: "SHIPPER_NM",
     name: "수령자명",
-    minWidth: 90
+    minWidth: 50
   });
   $NC.setGridColumn(columns, {
     id: "DIRECTIONS_USER_ID2",
@@ -1781,7 +1944,7 @@ function grdT3DetailOnGetColumns() {
     field: "TOT_ENTRY_QTY",
     name: "총수량",
     cssClass: "align-right",
-    minWidth: 90
+    minWidth: 50
   });
   $NC.setGridColumn(columns, {
     id: "OUTBOUND_NO",
@@ -1794,6 +1957,12 @@ function grdT3DetailOnGetColumns() {
     field: "BU_DATE",
     name: "주문일지",
     minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "BU_DATETIME1",
+    field: "BU_DATETIME",
+    name: "주문시간",
+    minWidth: 150
   });
   $NC.setGridColumn(columns, {
     id: "BU_NO",
@@ -1846,7 +2015,8 @@ function grdT3SubOnGetColumns() {
     id: "LINE_NO",
     field: "LINE_NO",
     name: "순번",
-    minWidth: 90
+    minWidth: 40,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "LOCATION_CD",
@@ -1858,31 +2028,31 @@ function grdT3SubOnGetColumns() {
     id: "BRAND_CD",
     field: "BRAND_CD",
     name: "위탁사",
-    minWidth: 180
+    minWidth: 90
   });
   $NC.setGridColumn(columns, {
     id: "BRAND_NM",
     field: "BRAND_NM",
     name: "위탁사명",
-    minWidth: 90
+    minWidth: 180
   });
   $NC.setGridColumn(columns, {
     id: "DEAL_ID",
     field: "DEAL_ID",
     name: "딜ID",
-    minWidth: 150
+    minWidth: 90
   });
   $NC.setGridColumn(columns, {
     id: "DEAL_NM",
     field: "DEAL_NM",
     name: "딜명",
-    minWidth: 80
+    minWidth: 180
   });
   $NC.setGridColumn(columns, {
     id: "DEAL_OPTION_NM",
     field: "DEAL_OPTION_NM",
     name: "옵션명",
-    minWidth: 80
+    minWidth: 180
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_CD",
@@ -1894,7 +2064,7 @@ function grdT3SubOnGetColumns() {
     id: "ITEM_NM",
     field: "ITEM_NM",
     name: "상품명",
-    minWidth: 80
+    minWidth: 180
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_SPEC",
@@ -1912,43 +2082,50 @@ function grdT3SubOnGetColumns() {
     id: "QTY_IN_BOX",
     field: "QTY_IN_BOX",
     name: "입수",
-    minWidth: 80
+    minWidth: 50,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "OPTION_QTY",
     field: "OPTION_QTY",
     name: "옵션수량",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "ORDER_QTY",
     field: "ORDER_QTY",
     name: "예정수량",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
-    id: "WEIGHT_QTY",
-    field: "WEIGHT_QTY",
+    id: "ENTRY_QTY",
+    field: "ENTRY_QTY",
     name: "등록수량",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "SUPPLY_PRICE",
     field: "SUPPLY_PRICE",
     name: "공급단가",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "TOTAL_AMT",
     field: "TOTAL_AMT",
     name: "합계금액",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
     id: "ORDER_LINE_NO",
     field: "ORDER_LINE_NO",
     name: "주문순번",
-    minWidth: 80
+    minWidth: 80,
+    cssClass: "align-right"
   });
 
   return $NC.setGridColumnDefaultFormatter(columns);
@@ -1964,6 +2141,357 @@ function grdT3SubOnAfterScroll(e, args) {
     }
   }
   $NC.setGridDisplayRows("#grdT3Sub", row + 1);
+}
+
+
+/*
+ * Tab4 Left
+ */
+function grdT4MasterInitialize() {
+
+  var options = {
+    editable: true,
+    autoEdit: true,
+    frozenColumn: 1
+  };
+
+  // Grid Object, DataView 생성 및 초기화
+  $NC.setInitGridObject("#grdT4Master", {
+    columns: grdT4MasterOnGetColumns(),
+    queryId: "LOM7090E.RS_T4_MASTER",
+    sortCol: "VENDOR_CD",
+    gridOptions: options
+  });
+
+  G_GRDT4MASTER.view.onSelectedRowsChanged.subscribe(grdT4MasterOnAfterScroll);
+  //G_GRDT4MASTER.view.onBeforeEditCell.subscribe(grdT4MasterOnBeforeEditCell);
+  //G_GRDT4MASTER.view.onCellChange.subscribe(grdT4MasterOnCellChange);
+  G_GRDT4MASTER.view.onHeaderClick.subscribe(grdT4MasterOnHeaderClick);
+  $NC.setGridColumnHeaderCheckBox(G_GRDT4MASTER, "CHECK_YN");  
+}
+
+function grdT4MasterOnGetColumns() {
+
+  var columns = [ ]; 
+  $NC.setGridColumn(columns, {
+    id: "ORDER_TYPE_NM",
+    field: "ORDER_TYPE_NM",
+    name: "주문구분",
+    minWidth: 150
+  });
+  $NC.setGridColumn(columns, {
+    id: "OUTBOUND_DATE",
+    field: "OUTBOUND_DATE",
+    name: "출고일자",
+    minWidth: 100
+  });
+  $NC.setGridColumn(columns, {
+    id: "OUTBOUND_BATCH",
+    field: "OUTBOUND_BATCH",
+    name: "출고지시차수",
+    minWidth: 60,
+    cssClass: "align-center"
+  });
+  $NC.setGridColumn(columns, {
+    id: "CNT_A",
+    field: "CNT_A",
+    name: "총건수",
+    minWidth: 80,
+    cssClass: "align-right"
+  });
+  $NC.setGridColumn(columns, {
+    id: "OUTBOUND_STATE_NM",
+    field: "OUTBOUND_STATE_NM",
+    name: "진행상태",
+    minWidth: 100
+  });
+
+  return $NC.setGridColumnDefaultFormatter(columns);
+}
+
+function grdT4MasterOnAfterScroll(e, args) {
+
+  var row = args.rows[0];
+  if (G_GRDT4MASTER.lastRow != null) {
+    if (row == G_GRDT4MASTER.lastRow) {
+      e.stopImmediatePropagation();
+      return;
+    }
+  }
+  $NC.setGridDisplayRows("#grdT4Master", row + 1);
+  var rowData = G_GRDT4MASTER.data.getItem(row);
+  getDataT4Detail(rowData);
+}
+
+/*
+ * Tab2 Right-Top
+ */
+function grdT4DetailInitialize() {
+  var options = {
+    frozenColumn: 2
+  };
+
+  // Grid Object, DataView 생성 및 초기화
+  $NC.setInitGridObject("#grdT4Detail", {
+    columns: grdT4DetailOnGetColumns(),
+    queryId: "LOM7090E.RS_T4_DETAIL",
+    sortCol: "ITEM_CD",
+    gridOptions: options
+  });
+
+  G_GRDT4DETAIL.view.onSelectedRowsChanged.subscribe(grdT4DetailOnAfterScroll);
+  
+  G_GRDT4DETAIL.view.onHeaderClick.subscribe(grdT4DetailOnHeaderClick);
+  $NC.setGridColumnHeaderCheckBox(G_GRDT4DETAIL, "CHECK_YN");
+}
+
+function grdT4DetailOnGetColumns() {
+
+  var columns = [ ];
+  $NC.setGridColumn(columns, {
+    id: "INOUT_NM",
+    field: "INOUT_NM",
+    name: "출고구분",
+    minWidth: 50
+  });
+  $NC.setGridColumn(columns, {
+    id: "ORDERER_NM",
+    field: "ORDERER_NM",
+    name: "주문자명",
+    minWidth: 50
+  });
+  $NC.setGridColumn(columns, {
+    id: "SHIPPER_NM",
+    field: "SHIPPER_NM",
+    name: "수령자명",
+    minWidth: 50
+  });
+  $NC.setGridColumn(columns, {
+    id: "CONFIRM_USER_ID",
+    field: "CONFIRM_USER_ID",
+    name: "확정작업자",
+    minWidth: 50
+  });
+  $NC.setGridColumn(columns, {
+    id: "CONFIRM_DATETIME",
+    field: "CONFIRM_DATETIME",
+    name: "확정일시",
+    minWidth: 120
+  });
+  $NC.setGridColumn(columns, {
+    id: "DELIVERY_USER_ID",
+    field: "DELIVERY_USER_ID",
+    name: "배송작업자",
+    minWidth: 50
+  });
+  $NC.setGridColumn(columns, {
+    id: "DELIVERY_DATETIME",
+    field: "DELIVERY_DATETIME",
+    name: "배송일시",
+    minWidth: 120
+  });
+  $NC.setGridColumn(columns, {
+    id: "TOT_ENTRY_QTY",
+    field: "TOT_ENTRY_QTY",
+    name: "총수량",
+    cssClass: "align-right",
+    minWidth: 50
+  });
+  $NC.setGridColumn(columns, {
+    id: "OUTBOUND_NO",
+    field: "OUTBOUND_NO",
+    name: "출고번호",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "BU_DATE",
+    field: "BU_DATE",
+    name: "주문일지",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "BU_DATETIME1",
+    field: "BU_DATETIME",
+    name: "주문시간",
+    minWidth: 150
+  });
+  $NC.setGridColumn(columns, {
+    id: "BU_NO",
+    field: "BU_NO",
+    name: "주문번호",
+    minWidth: 80
+  });
+
+  return $NC.setGridColumnDefaultFormatter(columns);
+}
+
+function grdT4DetailOnAfterScroll(e, args) {
+
+  var row = args.rows[0];
+  if (G_GRDT4DETAIL.lastRow != null) {
+    if (row == G_GRDT4DETAIL.lastRow) {
+      e.stopImmediatePropagation();
+      return;
+    }
+  }
+  $NC.setGridDisplayRows("#grdT4Detail", row + 1);
+  var rowData = G_GRDT4DETAIL.data.getItem(row);
+  getDataT4Sub(rowData);
+
+}
+
+/*
+ * Tab2 Right-Bottom
+ */
+function grdT4SubInitialize() {
+  var options = {
+    frozenColumn: 2
+  };
+
+  // Grid Object, DataView 생성 및 초기화
+  $NC.setInitGridObject("#grdT4Sub", {
+    columns: grdT4SubOnGetColumns(),
+    queryId: "LOM7090E.RS_T4_SUB",
+    sortCol: "ITEM_CD",
+    gridOptions: options
+  });
+
+  G_GRDT4SUB.view.onSelectedRowsChanged.subscribe(grdT4SubOnAfterScroll);
+}
+
+function grdT4SubOnGetColumns() {
+
+  var columns = [ ];
+  $NC.setGridColumn(columns, {
+    id: "LINE_NO",
+    field: "LINE_NO",
+    name: "순번",
+    minWidth: 40,
+    cssClass: "align-right"
+  });
+  $NC.setGridColumn(columns, {
+    id: "LOCATION_CD",
+    field: "LOCATION_CD",
+    name: "로케이션",
+    minWidth: 90
+  });
+  $NC.setGridColumn(columns, {
+    id: "BRAND_CD",
+    field: "BRAND_CD",
+    name: "위탁사",
+    minWidth: 90
+  });
+  $NC.setGridColumn(columns, {
+    id: "BRAND_NM",
+    field: "BRAND_NM",
+    name: "위탁사명",
+    minWidth: 180
+  });
+  $NC.setGridColumn(columns, {
+    id: "DEAL_ID",
+    field: "DEAL_ID",
+    name: "딜ID",
+    minWidth: 90
+  });
+  $NC.setGridColumn(columns, {
+    id: "DEAL_NM",
+    field: "DEAL_NM",
+    name: "딜명",
+    minWidth: 180
+  });
+  $NC.setGridColumn(columns, {
+    id: "DEAL_OPTION_NM",
+    field: "DEAL_OPTION_NM",
+    name: "옵션명",
+    minWidth: 180
+  });
+  $NC.setGridColumn(columns, {
+    id: "ITEM_CD",
+    field: "ITEM_CD",
+    name: "상품코드",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "ITEM_NM",
+    field: "ITEM_NM",
+    name: "상품명",
+    minWidth: 180
+  });
+  $NC.setGridColumn(columns, {
+    id: "ITEM_SPEC",
+    field: "ITEM_SPEC",
+    name: "규격",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "ITEM_STATE_F",
+    field: "ITEM_STATE_F",
+    name: "상태",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "QTY_IN_BOX",
+    field: "QTY_IN_BOX",
+    name: "입수",
+    minWidth: 50,
+    cssClass: "align-right"
+  });
+  $NC.setGridColumn(columns, {
+    id: "OPTION_QTY",
+    field: "OPTION_QTY",
+    name: "옵션수량",
+    minWidth: 80,
+    cssClass: "align-right"
+  });
+  $NC.setGridColumn(columns, {
+    id: "ORDER_QTY",
+    field: "ORDER_QTY",
+    name: "예정수량",
+    minWidth: 80,
+    cssClass: "align-right"
+  });
+  $NC.setGridColumn(columns, {
+    id: "ENTRY_QTY",
+    field: "ENTRY_QTY",
+    name: "등록수량",
+    minWidth: 80,
+    cssClass: "align-right"
+  });
+  $NC.setGridColumn(columns, {
+    id: "SUPPLY_PRICE",
+    field: "SUPPLY_PRICE",
+    name: "공급단가",
+    minWidth: 80,
+    cssClass: "align-right"
+  });
+  $NC.setGridColumn(columns, {
+    id: "TOTAL_AMT",
+    field: "TOTAL_AMT",
+    name: "합계금액",
+    minWidth: 80,
+    cssClass: "align-right"
+  });
+  $NC.setGridColumn(columns, {
+    id: "ORDER_LINE_NO",
+    field: "ORDER_LINE_NO",
+    name: "주문순번",
+    minWidth: 80,
+    cssClass: "align-right"
+  });
+
+  return $NC.setGridColumnDefaultFormatter(columns);
+}
+
+function grdT4SubOnAfterScroll(e, args) {
+
+  var row = args.rows[0];
+  if (G_GRDT4SUB.lastRow != null) {
+    if (row == G_GRDT4SUB.lastRow) {
+      e.stopImmediatePropagation();
+      return;
+    }
+  }
+  $NC.setGridDisplayRows("#grdT4Sub", row + 1);
 }
 
 /**
@@ -2018,6 +2546,7 @@ function searchValidataion(flag) {
   INORDER_TYPE     = $NC.getValue('#cboQInorder_Type');
   DELIVERY_TYPE2   = $NC.getValue('#cboQDelivery_Type2');
   SHIP_PRICE_TYPE  = $NC.getValue('#cboQShip_Price_Type');
+  HOLD_YN          = $NC.getValue('#cboQHold_Yn');
 
   if ($NC.isNull(CENTER_CD)) {
     alert("물류센터를 선택하십시오.");
@@ -2093,6 +2622,28 @@ function searchValidataion(flag) {
       return false;
     }
   }
+  if (flag == 'T4') {
+    /*if ($NC.isNull(ORDER_DATE1)) {
+      alert("출고 시작일자를 입력하십시오.");
+      $NC.setFocus("#dtpQOrder_Date1");
+      return false;
+    }
+    if ($NC.isNull(ORDER_DATE2)) {
+      alert("출고 종료일자를 입력하십시오.");
+      $NC.setFocus("#dtpQOrder_Date2");
+      return false;
+    }
+    if (ORDER_DATE1 > ORDER_DATE2) {
+      alert("출고일자 범위 입력오류입니다.");
+      $NC.setFocus("#dtpQOrder_Date1");
+      return false;
+    }
+    if ($NC.isNull(OUTBOUND_BATCH)) {
+      alert("출고차수를 입력하십시오.");
+      $NC.setFocus("#dtpQOutbound_Batch");
+      return false;
+    }*/
+  }
   return true;
 }
 
@@ -2107,6 +2658,14 @@ function getDataT1Master() {
   $NC.setInitGridVar(G_GRDT1MASTER);
   $NC.setInitGridVar(G_GRDT1DETAIL);
   $NC.setInitGridVar(G_GRDT1SUB);
+  
+  if (IS_ALL_DATE) {
+    ORDER_DATE1 = "";
+    ORDER_DATE2 = "";
+  } else {
+    ORDER_DATE1 = $NC.getValue('#dtpQOrder_Date1');
+    ORDER_DATE2 = $NC.getValue('#dtpQOrder_Date2');
+  }
 
   // 파라메터 세팅
   G_GRDT1MASTER.queryParams = $NC.getParams({
@@ -2127,6 +2686,7 @@ function getDataT1Master() {
     ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
     ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
     ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    ,P_HOLD_YN          : HOLD_YN           // 보류여부
     ,P_DEAL_ID          : DEAL_ID           // 딜ID
     ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
     ,P_BU_TIME          : BU_TIME           // 주문시간 시작
@@ -2149,7 +2709,7 @@ function getDataT1Detail(rowData) {
   // T1 DETAIL 조회시 전역 변수 값 초기화
   $NC.setInitGridVar(G_GRDT1DETAIL);
 
-  if ($('#chkQDate_Yn').is(':checked')) {
+  if (IS_ALL_DATE) {
     ORDER_DATE1 = "";
     ORDER_DATE2 = "";
   } else {
@@ -2175,6 +2735,7 @@ function getDataT1Detail(rowData) {
     ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
     ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
     ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    ,P_HOLD_YN          : HOLD_YN           // 보류여부
     ,P_DEAL_ID          : DEAL_ID           // 딜ID
     ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
     ,P_BU_TIME          : BU_TIME           // 주문시간 시작
@@ -2223,12 +2784,12 @@ function getDataT2Master() {
   $NC.setInitGridVar(G_GRDT2SUB);
   
   // 파라메터 세팅
-  if ($('#chkQDate_Yn').is(':checked')) {
-    OUTBOUND_DATE1 = "";
-    OUTBOUND_DATE2 = "";
+  if (IS_ALL_DATE) {
+    ORDER_DATE1 = "";
+    ORDER_DATE2 = "";
   } else {
-    OUTBOUND_DATE1 = $NC.getValue('#dtpQOutbound_Date1');
-    OUTBOUND_DATE2 = $NC.getValue('#dtpQOutbound_Date2');
+    ORDER_DATE1 = $NC.getValue('#dtpQOrder_Date1');
+    ORDER_DATE2 = $NC.getValue('#dtpQOrder_Date2');
   }
 
   G_GRDT2MASTER.queryParams = $NC.getParams({
@@ -2249,6 +2810,7 @@ function getDataT2Master() {
     ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
     ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
     ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    //,P_HOLD_YN          : HOLD_YN           // 보류여부
     ,P_DEAL_ID          : DEAL_ID           // 딜ID
     ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
     ,P_BU_TIME          : BU_TIME           // 주문시간 시작
@@ -2270,7 +2832,7 @@ function getDataT2Detail(rowData) {
   // T1 DETAIL 조회시 전역 변수 값 초기화
   $NC.setInitGridVar(G_GRDT2DETAIL);
   
-  if(rowData['ORDER_TYPE']==="%" && $('#chkQDate_Yn').is(':checked') ) {
+  if(rowData['ORDER_TYPE']==="%" && IS_ALL_DATE ) {
     ORDER_DATE1 = "";
     ORDER_DATE2 = "";
   } else if (rowData['ORDER_TYPE']==="%"){
@@ -2299,6 +2861,7 @@ function getDataT2Detail(rowData) {
     ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
     ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
     ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    //,P_HOLD_YN          : HOLD_YN           // 보류여부
     ,P_DEAL_ID          : DEAL_ID           // 딜ID
     ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
     ,P_BU_TIME          : BU_TIME           // 주문시간 시작
@@ -2348,6 +2911,15 @@ function getDataT3Master() {
   $NC.setInitGridVar(G_GRDT3MASTER);
   $NC.setInitGridVar(G_GRDT3DETAIL);
   $NC.setInitGridVar(G_GRDT3SUB);
+
+  // 파라메터 세팅
+  if (IS_ALL_DATE) {
+    ORDER_DATE1 = "";
+    ORDER_DATE2 = "";
+  } else {
+    ORDER_DATE1 = $NC.getValue('#dtpQOrder_Date1');
+    ORDER_DATE2 = $NC.getValue('#dtpQOrder_Date2');
+  }
   
   // 파라메터 세팅
   G_GRDT3MASTER.queryParams = $NC.getParams({
@@ -2376,6 +2948,7 @@ function getDataT3Master() {
     ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
     ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
     ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    //,P_HOLD_YN          : HOLD_YN           // 보류여부
     ,P_USER_ID          : $NC.G_USERINFO.USER_ID
   });
   // T1 MASTER 데이터 조회
@@ -2419,6 +2992,7 @@ function getDataT3Detail(rowData) {
     ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
     ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
     ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    //,P_HOLD_YN          : HOLD_YN           // 보류여부
     ,P_USER_ID          : $NC.G_USERINFO.USER_ID    
     ,P_ORDER_TYPE       : rowData['ORDER_TYPE']
   });
@@ -2447,6 +3021,132 @@ function getDataT3Sub(rowData) {
 
   // 데이터 조회
   $NC.serviceCall("/LOM7090E/getDataSet.do", $NC.getGridParams(G_GRDT3SUB), onGetT3Sub, null, null, '7090E_RS_T3_SUB');
+}
+
+
+/**
+ * T4 Master
+ */
+function getDataT4Master() {
+  if(!searchValidataion('T3')) {
+    return false;
+  }
+  //var ORDER_TYPE = '11'//$NC.getValue("#cboQOrder_Type");
+
+  // T4 Master 조회시 전역 변수 값 초기화
+  $NC.setInitGridVar(G_GRDT4MASTER);
+  $NC.setInitGridVar(G_GRDT4DETAIL);
+  $NC.setInitGridVar(G_GRDT4SUB);
+
+  // 파라메터 세팅
+  if (IS_ALL_DATE) {
+    ORDER_DATE1 = "";
+    ORDER_DATE2 = "";
+  } else {
+    ORDER_DATE1 = $NC.getValue('#dtpQOrder_Date1');
+    ORDER_DATE2 = $NC.getValue('#dtpQOrder_Date2');
+  }
+  
+  // 파라메터 세팅
+  G_GRDT4MASTER.queryParams = $NC.getParams({
+     P_CENTER_CD        : CENTER_CD         // 물류센터
+    ,P_BU_CD            : BU_CD             // 사업구분
+    ,P_ORDER_DATE1      : ORDER_DATE1       // 예정(출고)일자 시작
+    ,P_ORDER_DATE2      : ORDER_DATE2       // 예정(출고)일자 종료
+    //,P_OUTBOUND_DATE    : OUTBOUND_DATE     // 출고일자
+    ,P_OUTBOUND_BATCH   : OUTBOUND_BATCH    // 출고차수
+
+    ,P_DEAL_ID          : DEAL_ID           // 딜ID
+    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
+    ,P_BRAND_CD         : BRAND_CD          // 판매사
+    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+
+    ,P_BU_NO            : BU_NO             // 주문번호
+    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+    ,P_MALL_CD          : MALL_CD           // 몰구분
+    ,P_INOUT_CD         : INOUT_CD          // 입출고구분
+
+    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_ITEM_CD          : ITEM_CD           // 상품코드
+    ,P_ITEM_NM          : ITEM_NM           // 상품명
+    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+    ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
+    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    //,P_HOLD_YN          : HOLD_YN           // 보류여부
+    ,P_USER_ID          : $NC.G_USERINFO.USER_ID
+  });
+  // T1 MASTER 데이터 조회
+  $NC.serviceCall("/LOM7090E/getDataSet.do", $NC.getGridParams(G_GRDT4MASTER), onGetT4Master, null, null, '7090E_RS_T4_MASTER');
+}
+
+/**
+ * T4 Detail
+ */
+function getDataT4Detail(rowData) {
+  if(!searchValidataion('T4')) {
+    return false;
+  }
+  //var ORDER_TYPE = '11'//$NC.getValue("#cboQOrder_Type");
+  // T1 DETAIL 조회시 전역 변수 값 초기화
+  $NC.setInitGridVar(G_GRDT4DETAIL);
+
+  //{"P_CENTER_CD": "G1","P_BU_CD": "5000","P_OUTBOUND_DATE": "2015-01-14","P_INOUT_CD": "","P_OWN_BRAND_CD": "%",
+  // "P_USER_ID": "WMS7","P_DEAL_ID": "%","P_ORDER_TYPE": "11" }
+  G_GRDT4DETAIL.queryParams = $NC.getParams({
+    P_CENTER_CD        : CENTER_CD         // 물류센터
+    ,P_BU_CD            : BU_CD             // 사업구분
+    ,P_OUTBOUND_DATE    : rowData['OUTBOUND_DATE']     // 출고일자
+    ,P_OUTBOUND_BATCH   : rowData['OUTBOUND_BATCH']    // 출고차수
+
+    ,P_DEAL_ID          : DEAL_ID           // 딜ID
+    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
+    ,P_BRAND_CD         : BRAND_CD          // 판매사
+    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+
+    ,P_BU_NO            : BU_NO             // 주문번호
+    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+    ,P_MALL_CD          : MALL_CD           // 몰구분
+    ,P_INOUT_CD         : INOUT_CD          // 입출고구분
+
+    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_ITEM_CD          : ITEM_CD           // 상품코드
+    ,P_ITEM_NM          : ITEM_NM           // 상품명
+    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+    ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
+    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    //,P_HOLD_YN          : HOLD_YN           // 보류여부
+    ,P_USER_ID          : $NC.G_USERINFO.USER_ID    
+    ,P_ORDER_TYPE       : rowData['ORDER_TYPE']
+  });
+
+  // 데이터 조회
+  $NC.serviceCall("/LOM7090E/getDataSet.do", $NC.getGridParams(G_GRDT4DETAIL), onGetT4Detail, null, null, '7090E_RS_T4_DETAIL');
+}
+
+/**
+ * T1Sub
+ */
+function getDataT4Sub(rowData) {
+  if(!searchValidataion('T4')) {
+    return false;
+  }
+  // T1 DETAIL 조회시 전역 변수 값 초기화
+  $NC.setInitGridVar(G_GRDT4SUB);
+
+  //{"P_CENTER_CD": "G1","P_BU_CD": "5000","P_OUTBOUND_DATE": "2015-01-14","P_OUTBOUND_NO": "000001" }
+  G_GRDT4SUB.queryParams = $NC.getParams({
+    P_CENTER_CD: CENTER_CD,
+    P_BU_CD: BU_CD,
+    P_OUTBOUND_DATE: rowData['OUTBOUND_DATE'],
+    P_OUTBOUND_NO: rowData['OUTBOUND_NO']
+  });
+
+  // 데이터 조회
+  $NC.serviceCall("/LOM7090E/getDataSet.do", $NC.getGridParams(G_GRDT4SUB), onGetT4Sub, null, null, '7090E_RS_T4_SUB');
 }
 
 /**
@@ -2615,6 +3315,7 @@ function setT2MasterOrder() {
     P_DS_MASTER: $NC.getParams(processDS),
     P_PROCESS_CD: 'C',
     P_DIRECTION: 'FW',
+    P_OUTBOUND_BATCH: '000',
     P_PROCESS_STATE_BW: '30',
     P_PROCESS_STATE_FW: '20',
     P_USER_ID: $NC.G_USERINFO.USER_ID
@@ -2664,7 +3365,7 @@ function onGetT3Master(ajaxData) {
   $NC.G_VAR.buttons._cancel = "0";
   $NC.G_VAR.buttons._delete = "0";
   $NC.G_VAR.buttons._excel = "1";
-  $NC.G_VAR.buttons._print = "1";
+  $NC.G_VAR.buttons._print = "0";
 
   $NC.G_VAR.printOptions = [ ];
   $NC.G_VAR.printOptions.push(
@@ -2716,6 +3417,90 @@ function onGetT3Sub(ajaxData) {
 }
 
 
+
+
+/**
+ * T4 Master 
+ */
+function onGetT4Master(ajaxData) {
+  $NC.setInitGridData(G_GRDT4MASTER, ajaxData);
+  $NC.setGridColumnHeaderCheckBox(G_GRDT4MASTER, "CHECK_YN");
+  //console.log('T4 Master: ', G_GRDT4MASTER.data.getItems());
+
+  var total = 0;
+  if (G_GRDT4MASTER.data.getLength() > 0) {
+    $NC.setGridSelectRow(G_GRDT4MASTER, 0);
+    // 그리드의 확정수량의 합계 계산
+    var items = G_GRDT4MASTER.data.getItems();
+    for ( var i = 0; i < items.length; i++) {
+      total = total + Number(items[i].CONFIRM_QTY);
+    }
+  } else {
+    $NC.setGridDisplayRows("#grdT4Master", 0, 0);
+    onGetT4Detail({
+      data: null
+    });
+  }
+
+  // 버튼 활성화 처리
+  $NC.G_VAR.buttons._inquiry = "1";
+  $NC.G_VAR.buttons._new = "0";
+  $NC.G_VAR.buttons._save = "0";
+  $NC.G_VAR.buttons._cancel = "0";
+  $NC.G_VAR.buttons._delete = "0";
+  $NC.G_VAR.buttons._excel = "1";
+  $NC.G_VAR.buttons._print = "0";
+
+  $NC.G_VAR.printOptions = [ ];
+  $NC.G_VAR.printOptions.push(
+    {
+      PRINT_INDEX: 0,
+      PRINT_COMMENT: "라벨출력"
+    }
+//   ,{
+//      PRINT_INDEX: 1,
+//      PRINT_COMMENT: "존별오더피킹지시서"
+//    }
+  );
+  $NC.setInitTopButtons($NC.G_VAR.buttons);
+}
+
+/**
+ * T4 Detail
+ */
+function onGetT4Detail(ajaxData) {
+  $NC.setInitGridData(G_GRDT4DETAIL, ajaxData);
+  $NC.setGridColumnHeaderCheckBox(G_GRDT4DETAIL, "CHECK_YN");
+  //console.log('T4 Detail: ', G_GRDT4DETAIL.data.getItems());
+  var total = 0;
+  if (G_GRDT4DETAIL.data.getLength() > 0) {
+    $NC.setGridSelectRow(G_GRDT4DETAIL, 0);
+    // 그리드의 확정수량의 합계 계산
+    var items = G_GRDT4DETAIL.data.getItems();
+    for ( var i = 0; i < items.length; i++) {
+      total = total + Number(items[i].CONFIRM_QTY);
+    }
+  } else {
+    $NC.setGridDisplayRows("#grdT4Detail", 0, 0);
+    onGetT4Sub({
+      data: null
+    });
+  }
+}
+
+/**
+ * T4 Sub
+ */
+function onGetT4Sub(ajaxData) {
+  $NC.setInitGridData(G_GRDT4SUB, ajaxData);
+  if (G_GRDT4SUB.data.getLength() > 0) {
+    $NC.setGridSelectRow(G_GRDT4SUB, 0);
+  } else {
+    $NC.setGridDisplayRows("#grdT4Sub", 0, 0);
+  }
+}
+
+
 /**
  * 프로그램 사용 권한 설정
  */
@@ -2723,18 +3508,26 @@ function setUserProgramPermission() {
   var permission = $NC.getProgramPermission();
   // 등록
   if (permission.canConfirm) {
-    $("#btnProcessNxtA").click(onProcessNxtA);
-    $("#btnProcessNxtB").click(onProcessNxtB);
+    $("#btnProcessNxtAM").click(onProcessNxtAM);  // 예정-마스터 처리
+    $("#btnProcessNxtA").click(onProcessNxtA);    // 예정-디테일 처리
+    $("#btnProcessNxtBM").click(onProcessNxtBM);  // 등록-마스터 처리
+    $("#btnProcessNxtB").click(onProcessNxtB);    // 등록-디테일 처리
   }
+  $NC.setEnable("#btnProcessNxtAM", permission.canConfirm);
   $NC.setEnable("#btnProcessNxtA", permission.canConfirm);
+  $NC.setEnable("#btnProcessNxtBM", permission.canConfirm);
   $NC.setEnable("#btnProcessNxtB", permission.canConfirm);
 
   // 취소
   if (permission.canConfirmCancel) {
-    $("#btnProcessPreB").click(onProcessPreB);
-    $("#btnProcessPreC").click(onProcessPreC);
+    $("#btnProcessPreBM").click(onProcessPreBM);  // 등록-마스터 취소
+    $("#btnProcessPreB").click(onProcessPreB);    // 등록-디테일 취소
+    $("#btnProcessPreCM").click(onProcessPreCM);  // 지시-마스터 취소
+    $("#btnProcessPreC").click(onProcessPreC);    // 지시-디테일 취소
   }
+  $NC.setEnable("#btnProcessPreBM", permission.canConfirmCancel);
   $NC.setEnable("#btnProcessPreB", permission.canConfirmCancel);
+  $NC.setEnable("#btnProcessPreCM", permission.canConfirmCancel);
   $NC.setEnable("#btnProcessPreC", permission.canConfirmCancel);
 }
 
@@ -2778,7 +3571,78 @@ function onGetProcessState(ajaxData) {
 }
 
 /**
- * T1 확정
+ * T1 예정 - 마스터확정
+ */
+function onProcessNxtAM() {
+
+  var rowCount = G_GRDT1MASTER.data.getLength();
+  if (rowCount === 0) {
+    alert("조회 먼저 후 처리하십시오.");
+    return;
+  }
+
+  var result = confirm("출고등록 처리하시겠습니까?");
+  if (!result) {
+    return;
+  }
+  $NC.G_VAR.activeView.container = "#divT1DetailView";
+  $NC.G_VAR.activeView.PROCESS_CD = "B";
+
+  var processDS = [ ];
+  var chkCnt = 0;
+  var outboundDate = $NC.getValue("#dtpQOutbound_Date");
+
+  var rowData = G_GRDT1MASTER.data.getItem(G_GRDT1MASTER.lastRow);
+  chkCnt++;
+  var processData = {
+    P_CENTER_CD : $NC.getValue('#cboQCenter_Cd'),
+    P_BU_CD : $NC.getValue('#edtQBu_Cd'),
+    P_OUTBOUND_DATE1 : $('#chkQDate_Yn').is(':checked') ? '' : $NC.getValue('#dtpQOrder_Date1'),
+    P_OUTBOUND_DATE2 : $('#chkQDate_Yn').is(':checked') ? '' : $NC.getValue('#dtpQOrder_Date2'),
+    P_OUTBOUND_BATCH : "000",
+    P_ORDER_TYPE : rowData.ORDER_TYPE,
+    P_ENTRY_DATE : outboundDate
+  };
+  processDS.push(processData);
+
+  if (chkCnt == 0) {
+    alert("출고등록 처리할 데이터를 선택하십시오.");
+    return;
+  }
+  if (processDS.length == 0) {
+    alert("선택한 데이터 중 출고등록 처리 가능한 데이터가 없습니다.");
+    return;
+  }
+
+  $NC.serviceCall("/LOM7090E/callOrderType.do", {
+    P_DS_MASTER: $NC.getParams(processDS),
+    P_DIRECTION : 'FW',
+    P_PROCESS_CD : 'B1',
+    P_PROCESS_STATE_BW : $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CANCEL,
+    P_PROCESS_STATE_FW : $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CONFIRM,
+    P_USER_ID : $NC.G_USERINFO.USER_ID
+    ,P_INOUT_CD         : INOUT_CD          // 입출고구분
+    ,P_BU_NO            : BU_NO             // 주문번호
+    ,P_BRAND_CD         : BRAND_CD          // 판매사
+    ,P_ITEM_CD          : ITEM_CD           // 상품코드
+    ,P_ITEM_NM          : ITEM_NM           // 상품명
+    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+    ,P_MALL_CD          : MALL_CD           // 몰구분
+    ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
+    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+    ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    ,P_HOLD_YN          : HOLD_YN           // 보류여부
+    ,P_DEAL_ID          : DEAL_ID           // 딜ID
+    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
+  }, onSaveT1Confirm, onSaveErrorT1Confirm, 2);
+}
+
+/**
+ * T1 예정 - 디테일확정
  */
 function onProcessNxtA() {
 
@@ -2847,7 +3711,158 @@ function onSaveErrorT1Confirm(ajaxData) {
 }
 
 /**
- * T2 확정
+ * T2 등록-마스터 확정
+ */
+function onProcessNxtBM() {
+
+  var rowCount = G_GRDT2MASTER.data.getLength();
+  if (rowCount === 0) {
+    alert("조회 먼저 후 처리하십시오.");
+    return;
+  }
+
+  var result = confirm("출고지시 처리하시겠습니까?");
+  if (!result) {
+    return;
+  }
+  $NC.G_VAR.activeView.container = "#divT2DetailView";
+  $NC.G_VAR.activeView.PROCESS_CD = "C";
+
+  var processDS = [ ];
+  var chkCnt = 0;
+  var chkProcessState = $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CONFIRM;
+  
+  for ( var row = 0; row < rowCount; row++) {
+    var rowData = G_GRDT2MASTER.data.getItem(row); 
+
+    if (rowData.CHECK_YN == "Y") { 
+      chkCnt++;
+      var processData = {
+          P_CENTER_CD : $NC.getValue('#cboQCenter_Cd'),
+          P_BU_CD : $NC.getValue('#edtQBu_Cd'),
+          P_OUTBOUND_DATE1 : rowData.OUTBOUND_DATE,
+          P_OUTBOUND_DATE2 : rowData.OUTBOUND_DATE,
+          P_OUTBOUND_BATCH : rowData.OUTBOUND_BATCH,
+          P_ORDER_TYPE : rowData.ORDER_TYPE,
+          P_ENTRY_DATE : ""
+      };
+      processDS.push(processData);
+    }
+  }
+  if (chkCnt == 0) {
+    alert("출고지시 처리할 데이터를 선택하십시오.");
+    return;
+  }
+  if (processDS.length == 0) {
+    alert("선택한 데이터 중 출고지시 처리 가능한 데이터가 없습니다.");
+    return;
+  }
+
+  $NC.serviceCall("/LOM7090E/callOrderType.do", {
+    P_DS_MASTER: $NC.getParams(processDS),
+    P_PROCESS_CD: "C",
+    P_DIRECTION: "FW",
+    P_PROCESS_STATE_BW: $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CANCEL,
+    P_PROCESS_STATE_FW: $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CONFIRM,
+    P_USER_ID: $NC.G_USERINFO.USER_ID
+    ,P_INOUT_CD         : INOUT_CD          // 입출고구분
+    ,P_BU_NO            : BU_NO             // 주문번호
+    ,P_BRAND_CD         : BRAND_CD          // 판매사
+    ,P_ITEM_CD          : ITEM_CD           // 상품코드
+    ,P_ITEM_NM          : ITEM_NM           // 상품명
+    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+    ,P_MALL_CD          : MALL_CD           // 몰구분
+    ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
+    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+    ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    ,P_HOLD_YN          : HOLD_YN           // 보류여부
+    ,P_DEAL_ID          : DEAL_ID           // 딜ID
+    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
+  }, onSaveT2Confirm, onSaveErrorT2Confirm, 2);
+}
+
+/**
+ * T2 등록-마스터 취소
+ */
+function onProcessPreBM() {
+
+  var rowCount = G_GRDT2MASTER.data.getLength();
+  if (rowCount === 0) {
+    alert("조회 먼저 후 처리하십시오.");
+    return;
+  }
+
+  
+  var result = confirm("출고등록 취소 처리하시겠습니까?");
+  if (!result) {
+    return;
+  }
+  $NC.G_VAR.activeView.container = "#divT2DetailView";
+  $NC.G_VAR.activeView.PROCESS_CD = "B";
+
+  var processDS = [ ];
+  var chkCnt = 0;
+  var chkProcessState = $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CANCEL;
+  for ( var row = 0; row < rowCount; row++) {
+    var rowData = G_GRDT2MASTER.data.getItem(row);
+
+    if (rowData.CHECK_YN == "Y") {
+      chkCnt++;
+      var processData = {
+          P_CENTER_CD : $NC.getValue('#cboQCenter_Cd'),
+          P_BU_CD : $NC.getValue('#edtQBu_Cd'),
+          P_OUTBOUND_DATE1 : rowData.OUTBOUND_DATE,
+          P_OUTBOUND_DATE2 : rowData.OUTBOUND_DATE,
+          P_OUTBOUND_BATCH : rowData.OUTBOUND_BATCH,
+          P_ORDER_TYPE : rowData.ORDER_TYPE,
+          P_ENTRY_DATE : ""
+      };
+      processDS.push(processData);
+    }
+  }
+  
+  if (chkCnt == 0) {
+    alert("출고등록 취소 처리할 데이터를 선택하십시오.");
+    return;
+  }
+  if (processDS.length == 0) {
+    alert("선택한 데이터 중 출고등록 취소 처리 가능한 데이터가 없습니다.");
+    return;
+  }
+
+  $NC.serviceCall("/LOM7090E/callOrderType.do", {
+    P_DS_MASTER: $NC.getParams(processDS),
+    P_PROCESS_CD: "B",
+    P_DIRECTION: "BW",
+    P_PROCESS_STATE_BW: $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CANCEL,
+    P_PROCESS_STATE_FW: $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CONFIRM,
+    P_USER_ID: $NC.G_USERINFO.USER_ID
+    ,P_INOUT_CD         : INOUT_CD          // 입출고구분
+    ,P_BU_NO            : BU_NO             // 주문번호
+    ,P_BRAND_CD         : BRAND_CD          // 판매사
+    ,P_ITEM_CD          : ITEM_CD           // 상품코드
+    ,P_ITEM_NM          : ITEM_NM           // 상품명
+    ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+    ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+    ,P_MALL_CD          : MALL_CD           // 몰구분
+    ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
+    ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+    ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+    ,P_HOLD_YN          : HOLD_YN           // 보류여부
+    ,P_DEAL_ID          : DEAL_ID           // 딜ID
+    ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+    ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+    ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+    ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
+  }, onSaveT2Cancel, onSaveErrorT2Cancel, 2);
+}
+
+/**
+ * T2 등록-디테일 확정
  */
 function onProcessNxtB() {
 
@@ -2917,7 +3932,7 @@ function onSaveErrorT2Confirm(ajaxData) {
 }
 
 /**
- * T2 취소
+ * T2 등록-디테일 취소
  */
 function onProcessPreB() {
 
@@ -2987,7 +4002,124 @@ function onSaveErrorT2Cancel(ajaxData) {
 }
 
 /**
- * T3 취소
+ * T3 지시-마스터 취소
+ */
+function onProcessPreCM() {
+  
+  var rowDatas = G_GRDT3MASTER.data.getItems();
+  for (var i in rowDatas) {
+    if (rowDatas[i].PRINT_YN === 'Y') {
+      showMessage({
+        message: "이미 피킹라벨이 발행되었습니다.\n계속 진행 하시겠습니까?",
+        onYesFn: function() {
+          initCancel();
+        },
+        onNoFn: function() {
+          
+        }
+      });
+      return false;
+    }
+  }
+
+  initCancel();
+  function initCancel() {
+    var rowCount = G_GRDT3MASTER.data.getLength();
+    if (rowCount === 0) {
+      alert("조회 먼저 후 처리하십시오.");
+      return;
+    }
+    
+    //지시취소 에러체크 초기화.
+    $NC.serviceCallAndWait("/LOM7090E/callUpdate.do", {
+      P_QUERY_PARAMS: $NC.getParams({
+        P_ERR_CNT: 0,
+      })
+    });
+    
+    $NC.G_VAR.activeView.container = "#divT3DetailView";
+    $NC.G_VAR.activeView.PROCESS_CD = "C";
+
+    var processDS = [ ];
+    var chkCnt = 0;
+    var chkProcessState = $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CANCEL;
+    
+    for ( var row = 0; row < rowCount; row++) {
+      var rowData = G_GRDT3MASTER.data.getItem(row);
+
+      if (rowData.CHECK_YN == "Y") {
+        chkCnt++;
+        var processData = {
+            P_CENTER_CD : $NC.getValue('#cboQCenter_Cd'),
+            P_BU_CD : $NC.getValue('#edtQBu_Cd'),
+            P_OUTBOUND_DATE1 : rowData.OUTBOUND_DATE,
+            P_OUTBOUND_DATE2 : rowData.OUTBOUND_DATE,
+            P_OUTBOUND_BATCH : rowData.OUTBOUND_BATCH,
+            P_ORDER_TYPE : rowData.ORDER_TYPE,
+            P_ENTRY_DATE : ""
+        };
+        processDS.push(processData);
+      }
+    }
+
+    var result = confirm("출고지시 취소 처리하시겠습니까?");
+    if (!result) {
+      return;
+    }
+    if (chkCnt == 0) {
+      alert("출고지시 취소 처리할 데이터를 선택하십시오.");
+      return;
+    }
+    if (processDS.length == 0) {
+      alert("선택한 데이터 중 출고지시 취소 처리 가능한 데이터가 없습니다.");
+      return;
+    }
+
+    $NC.serviceCallAndWait("/LOM7090E/callOrderType.do", {
+      P_DS_MASTER: $NC.getParams(processDS),
+      P_PROCESS_CD: "C",
+      P_DIRECTION: "BW",
+      P_PROCESS_STATE_BW: $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CANCEL,
+      P_PROCESS_STATE_FW: $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CONFIRM,
+      P_USER_ID: $NC.G_USERINFO.USER_ID
+      ,P_INOUT_CD         : INOUT_CD          // 입출고구분
+      ,P_BU_NO            : BU_NO             // 주문번호
+      ,P_BRAND_CD         : BRAND_CD          // 판매사
+      ,P_ITEM_CD          : ITEM_CD           // 상품코드
+      ,P_ITEM_NM          : ITEM_NM           // 상품명
+      ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+      ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+      ,P_MALL_CD          : MALL_CD           // 몰구분
+      ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
+      ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+      ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+      ,P_HOLD_YN          : HOLD_YN           // 보류여부
+      ,P_DEAL_ID          : DEAL_ID           // 딜ID
+      ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+      ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+      ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+      ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사      
+    }, onSaveT3Cancel, onSaveErrorT3Cancel, 2);
+    
+    //지시취소 에러체크.
+    $NC.serviceCall("/LOM7090E/callSP.do", {
+      P_QUERY_ID: "WF.GET_TEMP_LOCNT_30",
+      P_QUERY_PARAMS: $NC.getParams({
+        P_ERR_CNT: 0,
+      })
+    }, function(ajaxData) {
+      var resultData = $NC.toArray(ajaxData);
+      if (!$NC.isNull(resultData)) {
+        if (resultData.O_MSG === "OK") {
+          alert(resultData.O_CHK_YN);
+        }
+      }
+    });
+  }
+}
+
+/**
+ * T3 지시-디테일 취소
  */
 function onProcessPreC() {
 
@@ -2997,10 +4129,6 @@ function onProcessPreC() {
     return;
   }
   
-  var result = confirm("출고지시 취소 처리하시겠습니까?");
-  if (!result) {
-    return;
-  }
   $NC.G_VAR.activeView.container = "#divT3DetailView";
   $NC.G_VAR.activeView.PROCESS_CD = "C";
 
@@ -3019,25 +4147,45 @@ function onProcessPreC() {
       };
       processDS.push(processData);
     }
+    if (rowData.PRINT_YN == "Y") {
+      showMessage({
+        message: "이미 피킹라벨이 발행되었습니다.\n지시취소 하시겠습니까?",
+        onYesFn: function() {
+          initCancel();
+        },
+        onNoFn: function() {
+          
+        }
+      });
+      //showMessage("이미 송장발행되었습니다. 취소 할 수 없습니다.");
+      return false;
+    }
   }
-  if (chkCnt == 0) {
-    alert("출고지시 취소 처리할 데이터를 선택하십시오.");
-    return;
-  }
-  if (processDS.length == 0) {
-    alert("선택한 데이터 중 출고지시 취소 처리 가능한 데이터가 없습니다.");
-    return;
-  }
+  initCancel();
+  function initCancel() {
+    var result = confirm("출고지시 취소 처리하시겠습니까?");
+    if (!result) {
+      return;
+    }
+    if (chkCnt == 0) {
+      alert("출고지시 취소 처리할 데이터를 선택하십시오.");
+      return;
+    }
+    if (processDS.length == 0) {
+      alert("선택한 데이터 중 출고지시 취소 처리 가능한 데이터가 없습니다.");
+      return;
+    }
 
-  $NC.serviceCall("/LOM7090E/callLOProcessing.do", {
-    P_DS_MASTER: $NC.getParams(processDS),
-    P_PROCESS_CD: "C",
-    P_ENTRY_DATE: "",
-    P_DIRECTION: "BW",
-    P_PROCESS_STATE_BW: $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CANCEL,
-    P_PROCESS_STATE_FW: $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CONFIRM,
-    P_USER_ID: $NC.G_USERINFO.USER_ID
-  }, onSaveT3Cancel, onSaveErrorT3Cancel, 2);
+    $NC.serviceCall("/LOM7090E/callLOProcessing.do", {
+      P_DS_MASTER: $NC.getParams(processDS),
+      P_PROCESS_CD: "C",
+      P_ENTRY_DATE: "",
+      P_DIRECTION: "BW",
+      P_PROCESS_STATE_BW: $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CANCEL,
+      P_PROCESS_STATE_FW: $NC.G_VAR.stateFWBW[$NC.G_VAR.activeView.PROCESS_CD].CONFIRM,
+      P_USER_ID: $NC.G_USERINFO.USER_ID
+    }, onSaveT3Cancel, onSaveErrorT3Cancel, 2);
+  }
 }
 
 function onSaveT3Cancel(ajaxData) {
@@ -3052,6 +4200,21 @@ function onSaveT3Cancel(ajaxData) {
 }
 
 function onSaveErrorT3Cancel(ajaxData) {
+  $NC.onError(ajaxData);
+}
+
+function onSaveT4Cancel(ajaxData) {
+  var resultData = $NC.toArray(ajaxData);
+  if (!$NC.isNull(resultData)) {
+    if (resultData.RESULT_DATA !== "OK") {
+      alert(resultData.RESULT_DATA);
+    }
+  }
+  $NC.hideProgressMessage();
+  _Inquiry();
+}
+
+function onSaveErrorT4Cancel(ajaxData) {
   $NC.onError(ajaxData);
 }
 
@@ -3071,15 +4234,14 @@ function setT1OrderDiv() {
     return;
   }
 
-  var result = confirm("배송유형을 변경 처리하시겠습니까?");
-  if (!result) {
-    return;
-  }
-  
   var processDS = [ ];
   var chkCnt = 0;
   for ( var row = 0; row < rowCount; row++) {
     var rowData = G_GRDT1DETAIL.data.getItem(row);
+    if (deliveryType === rowData.DELIVERY_TYPE) {
+      alert("변경할 배송유형이 같습니다.");
+      return;
+    }
     if (rowData.CHECK_YN == "Y") {
       chkCnt++;
       var processData = {
@@ -3090,6 +4252,11 @@ function setT1OrderDiv() {
       };
       processDS.push(processData);
     }
+  }
+
+  var result = confirm("배송유형을 변경 처리하시겠습니까?");
+  if (!result) {
+    return;
   }
 
   if (chkCnt == 0) {
@@ -3139,15 +4306,14 @@ function setT2OrderDiv() {
     return;
   }
 
-  var result = confirm("배송유형을 변경 처리하시겠습니까?");
-  if (!result) {
-    return;
-  }
-
   var processDS = [ ];
   var chkCnt = 0;
   for ( var row = 0; row < rowCount; row++) {
     var rowData = G_GRDT2DETAIL.data.getItem(row);
+    if (deliveryType === rowData.DELIVERY_TYPE) {
+      alert("변경할 배송유형이 같습니다.");
+      return;
+    }
     if (rowData.CHECK_YN == "Y") {
       chkCnt++;
       var processData = {
@@ -3158,6 +4324,11 @@ function setT2OrderDiv() {
       };
       processDS.push(processData);
     }
+  }
+
+  var result = confirm("배송유형을 변경 처리하시겠습니까?");
+  if (!result) {
+    return;
   }
 
   if (chkCnt == 0) {
@@ -3190,7 +4361,7 @@ function onSaveErrorT2OrderDiv(ajaxData) {
 }
 
 /**
- * 조회조건 - T2 주문유형
+ * 조회조건 - T3 주문유형
  */
 function setT3OrderDiv() {
   var rowCount = G_GRDT3DETAIL.data.getLength();
@@ -3205,15 +4376,14 @@ function setT3OrderDiv() {
     return;
   }
 
-  var result = confirm("배송유형을 변경 처리하시겠습니까?");
-  if (!result) {
-    return;
-  }
-
   var processDS = [ ];
   var chkCnt = 0;
   for ( var row = 0; row < rowCount; row++) {
     var rowData = G_GRDT3DETAIL.data.getItem(row);
+    if (deliveryType === rowData.DELIVERY_TYPE) {
+      alert("변경할 배송유형이 같습니다.");
+      return;
+    }
     if (rowData.CHECK_YN == "Y") {
       chkCnt++;
       var processData = {
@@ -3224,6 +4394,11 @@ function setT3OrderDiv() {
       };
       processDS.push(processData);
     }
+  }
+
+  var result = confirm("배송유형을 변경 처리하시겠습니까?");
+  if (!result) {
+    return;
   }
 
   if (chkCnt == 0) {
@@ -3282,6 +4457,110 @@ function grdT3MasterOnHeaderClick(e, args) {
         }
       }
       G_GRDT3MASTER.data.endUpdate(); 
+      
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }
+  }
+}
+
+/**
+ * 조회조건 - T4 주문유형
+ */
+function setT4OrderDiv() {
+  var rowCount = G_GRDT4DETAIL.data.getLength();
+  if (rowCount === 0) {
+    alert("조회 후 처리하십시오.");
+    return;
+  }
+  
+  var deliveryType = $NC.getValue("#cboQT4Delivery_TypeB");
+  if (deliveryType === '%') {
+    alert("변경할 배송유형을 선택해주세요.");
+    return;
+  }
+
+  var processDS = [ ];
+  var chkCnt = 0;
+  for ( var row = 0; row < rowCount; row++) {
+    var rowData = G_GRDT4DETAIL.data.getItem(row);
+    if (deliveryType === rowData.DELIVERY_TYPE) {
+      alert("변경할 배송유형이 같습니다.");
+      return;
+    }
+    if (rowData.CHECK_YN == "Y") {
+      chkCnt++;
+      var processData = {
+        P_CENTER_CD: rowData.CENTER_CD,
+        P_BU_CD: rowData.BU_CD,
+        P_OUTBOUND_DATE: rowData.OUTBOUND_DATE,
+        P_OUTBOUND_NO: rowData.OUTBOUND_NO
+      };
+      processDS.push(processData);
+    }
+  }
+
+  var result = confirm("배송유형을 변경 처리하시겠습니까?");
+  if (!result) {
+    return;
+  }
+
+  if (chkCnt == 0) {
+    alert("처리할 데이터를 선택하십시오.");
+    return;
+  }
+  if (processDS.length == 0) {
+    alert("처리 가능한 데이터가 없습니다.");
+    return;
+  }
+
+  $NC.serviceCall("/LOM7090E/callOrderDiv.do", {
+    P_ORDER_DIV: deliveryType,
+    P_PROCESS_CD: "B",
+    P_DS_MASTER: $NC.getParams(processDS)
+  }, onSaveT4OrderDiv, onSaveErrorT4OrderDiv, 2);
+}
+function onSaveT4OrderDiv(ajaxData) {
+  var resultData = $NC.toArray(ajaxData);
+  if (!$NC.isNull(resultData)) {
+    if (resultData.RESULT_DATA !== "OK") {
+      alert(resultData.RESULT_DATA);
+    }
+  }
+  $NC.hideProgressMessage();
+  _Inquiry();
+}
+function onSaveErrorT4OrderDiv(ajaxData) {
+  $NC.onError(ajaxData);
+}
+
+
+function grdT4MasterOnHeaderClick(e, args) {
+  
+  G_GRDT4MASTER.view.getCanvasNode().focus();
+  
+  if (args.column.id == "CHECK_YN") {
+    
+    if ($(e.target).is(":checkbox")) {
+      
+      if (G_GRDT4MASTER.data.getLength() == 0) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
+      
+      var checkVal = $(e.target).is(":checked") ? "Y" : "N";
+      var rowCount = G_GRDT4MASTER.data.getLength();
+      var rowData;
+      G_GRDT4MASTER.data.beginUpdate();
+      for ( var row = 0; row < rowCount; row++) {
+        rowData = G_GRDT4MASTER.data.getItem(row);
+        if (rowData.CHECK_YN !== checkVal) {
+          rowData.CHECK_YN = checkVal;
+          G_GRDT4MASTER.data.updateItem(rowData.id, rowData);
+        }
+      }
+      G_GRDT4MASTER.data.endUpdate(); 
       
       e.stopPropagation();
       e.stopImmediatePropagation();
@@ -3348,6 +4627,39 @@ function grdT3DetailOnHeaderClick(e, args) {
         }
       }
       G_GRDT3DETAIL.data.endUpdate();
+
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }
+  }
+}
+
+function grdT4DetailOnHeaderClick(e, args) {
+
+  G_GRDT4DETAIL.view.getCanvasNode().focus();
+
+  if (args.column.id == "CHECK_YN") {
+
+    if ($(e.target).is(":checkbox")) {
+
+      if (G_GRDT4DETAIL.data.getLength() == 0) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
+
+      var checkVal = $(e.target).is(":checked") ? "Y" : "N";
+      var rowCount = G_GRDT4DETAIL.data.getLength();
+      var rowData;
+      G_GRDT4DETAIL.data.beginUpdate();
+      for ( var row = 0; row < rowCount; row++) {
+        rowData = G_GRDT4DETAIL.data.getItem(row);
+        if (rowData.CHECK_YN !== checkVal) {
+          rowData.CHECK_YN = checkVal;
+          G_GRDT4DETAIL.data.updateItem(rowData.id, rowData);
+        }
+      }
+      G_GRDT4DETAIL.data.endUpdate();
 
       e.stopPropagation();
       e.stopImmediatePropagation();
@@ -3504,4 +4816,67 @@ function setOutboundBatchCombo(comboId, isAddAll, setPos) {
       }
     }
   });
+}
+
+function showMessage(options, hideFocus) {
+
+  if ($NC.isNull(options)) {
+    return;
+  }
+
+  if ($NC.isNull(hideFocus)) {
+    hideFocus = false;
+  }
+
+  if (typeof options == "string") {
+    $NC.G_MAIN.showMessage({
+      message: options,
+      buttons: {
+        "확인": function() {
+          $NC.G_MAIN.setFocusActiveWindow();
+          setFocusScan();
+        }
+      },
+      hideFocus: hideFocus
+    });
+    return;
+  }
+
+  if ($NC.isNull(options.buttons) && !$NC.isNull(options.focusSelector)) {
+    $NC.G_MAIN.showMessage({
+      message: options,
+      buttons: {
+        "확인": function() {
+          $NC.G_MAIN.setFocusActiveWindow();
+          $NC.setFocus(options.focusSelector);
+        }
+      },
+      hideFocus: hideFocus
+    });
+    return;
+  }
+
+  var buttons = {};
+  if (options.onYesFn) {
+    buttons["예"] = function() {
+      $NC.G_MAIN.setFocusActiveWindow();
+      options.onYesFn.call(this);
+    };
+  }
+  if (options.onNoFn) {
+    buttons["아니오"] = function() {
+      $NC.G_MAIN.setFocusActiveWindow();
+      options.onNoFn.call(this);
+    };
+  }
+
+  $NC.G_MAIN.showMessage({
+    message: options.message,
+    buttons: buttons,
+    hideFocus: hideFocus
+  });
+}
+
+function setFocusScan() {
+  return false;
 }

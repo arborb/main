@@ -552,6 +552,12 @@ function grdDetailEOnGetColumns() {
     minWidth: 80
   });
   $NC.setGridColumn(columns, {
+    id: "LOCATION_CD",
+    field: "LOCATION_CD",
+    name: "로케이션",
+    minWidth: 120
+  });
+  $NC.setGridColumn(columns, {
     id: "ITEM_STATE_F",
     field: "ITEM_STATE_F",
     name: "상태",
