@@ -675,6 +675,7 @@ function _Inquiry() {
   } else if (id === 3) {
     getDataT4Master();
   }
+  getCountAndQty();
   _OnConditionChange();
 }
 
@@ -4880,3 +4881,74 @@ function showMessage(options, hideFocus) {
 function setFocusScan() {
   return false;
 }
+
+/**
+ * 전표수와 수량을 조회한다.
+ */
+function getCountAndQty() {
+  var hasHoldYn = $('#tdQHold_Yn').css('display')
+    ,holdYn = HOLD_YN
+  if (hasHoldYn === 'none') {
+    holdYn = ''
+  }
+
+  $NC.serviceCall("/LOM7010E/getDataSet.do", {
+    P_QUERY_ID: 'LOM7090E.RS_MASTER',
+    P_QUERY_PARAMS: $NC.getParams({
+       P_CENTER_CD        : CENTER_CD         // 물류센터
+      ,P_BU_CD            : BU_CD             // 사업구분
+      ,P_ORDER_DATE1      : ORDER_DATE1       // 예정(출고)일자 시작
+      ,P_ORDER_DATE2      : ORDER_DATE2       // 예정(출고)일자 종료
+      ,P_INOUT_CD         : INOUT_CD          // 입출고구분
+      ,P_BU_NO            : BU_NO             // 주문번호
+      ,P_BRAND_CD         : BRAND_CD          // 판매사
+      ,P_ITEM_CD          : ITEM_CD           // 상품코드
+      ,P_ITEM_NM          : ITEM_NM           // 상품명
+      ,P_ORDERER_NM       : ORDERER_NM        // 주문자명
+      ,P_SHIPPER_NM       : SHIPPER_NM        // 수령자명
+      ,P_MALL_CD          : MALL_CD           // 몰구분
+      ,P_INORDER_TYPE     : INORDER_TYPE      // 매입형태
+      ,P_SHIP_TYPE        : SHIP_TYPE         // 운송구분
+      ,P_SHIP_PRICE_TYPE  : SHIP_PRICE_TYPE   // 운송비구분
+      ,P_HOLD_YN          : holdYn            // 보류여부
+      ,P_DEAL_ID          : DEAL_ID           // 딜ID
+      ,P_DELIVERY_TYPE    : DELIVERY_TYPE     // 배송유형
+      ,P_BU_TIME          : BU_TIME           // 주문시간 시작
+      ,P_DELIVERY_TYPE2   : DELIVERY_TYPE2    // 배송지역구분
+      ,P_OWN_BRAND_CD     : OWN_BRAND_CD      // 위탁사
+      ,P_USER_ID          : $NC.G_USERINFO.USER_ID
+    })
+  }, onCountAndQty);
+}
+
+function onCountAndQty (ajaxData) {
+  var req = $NC.toArray(ajaxData);
+  $('#lblLo_Cnt_A').text('전표수 : ' + req[0].CNT_A);
+  $('#lblLo_Qty_A').text('수량 : ' + req[0].QTY_A);
+  $('#lblLo_Cnt_B').text('전표수 : ' + req[0].CNT_B);
+  $('#lblLo_Qty_B').text('수량 : ' + req[0].QTY_B);
+  $('#lblLo_Cnt_C').text('전표수 : ' + req[0].CNT_C);
+  $('#lblLo_Qty_C').text('수량 : ' + req[0].QTY_C);
+  $('#lblLo_Cnt_D').text('전표수 : ' + req[0].CNT_D);
+  $('#lblLo_Qty_D').text('수량 : ' + req[0].QTY_D);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
