@@ -349,7 +349,7 @@ function onScan(scanVal, flag) {
 
     if (!isWorkingScan()) {
       showMessage({
-        message: "스캔한 상품이 조회조건과 다릅니다. 계속 진행하시겠습니까?",
+        message: "스캔한 정보가 상단의 조회조건 정보와 다릅니다. 계속 진행하시겠습니까?",
         onYesFn: function() {
           scanTotal();
         },
@@ -409,7 +409,7 @@ function onScan(scanVal, flag) {
 
     if (!isWorkingScan()) {
       showMessage({
-        message: "스캔한 상품이 조회조건과 다릅니다. 계속 진행하시겠습니까?",
+        message: "스캔한 정보가 상단의 조회조건 정보와 다릅니다. 계속 진행하시겠습니까?",
         onYesFn: function() {
           scanPicking();
         },
@@ -1346,7 +1346,7 @@ function onGetMaster(ajaxData) {
     $NC.setGridDisplayRows("#grdMaster", 0, 0);
 
     onChangingCondition();
-    showMessage("존재하지 않는 출고전표입니다. 확인 후 작업하십시오.");
+    showMessage("일반/혼합주문이 아니거나 유효하지 않은 전표입니다.\n대물주문은 출고대물검수에서 작업하세요.");
     return;
   }
 
@@ -1365,7 +1365,7 @@ function onGetMaster(ajaxData) {
     if (rowData.ORDER_DIV == "2") {
       alert("합포장 주문에 주문취소 건이 포함되어있습니다.\n\n 피킹지시서와 상품을 함께 사무실로 인계바랍니다.");
     } else {
-      alert("주문취소 건입니다.\n\n 피킹지시서와 상품을 함께 사무실로 인계바랍니다.");
+      alert("주문취소 건입니다.\n\n 피킹라벨과 상품을 함께 사무실로 인계바랍니다.");
     }
     setEnableButton("#btnBoxComplete", false);
     setEnableButton("#btnBoxManage", false);
@@ -1587,7 +1587,7 @@ function onChkFWScanConfirm() {
         && !$NC.isNull($NC.G_USERINFO.PRINT_CARD)) {
 
     } else {
-      alert("설정하신 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
+      alert("설정한 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
       return;
     }
     return;

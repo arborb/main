@@ -204,7 +204,7 @@ function _OnInputKeyUp(e, view) {
         $NC.G_VAR.MATCHINGYN = 'N';
         onScanItem(scanVal);
       } else {
-        alert('스캔 바코드 형식이 잘못되었습니다.');
+        alert('비정상적인 용기번호 입니다. 용기번호를 확인하세요.');
       }
       
     }
@@ -221,7 +221,7 @@ function _OnInputKeyUp(e, view) {
       }
       // 바코드 형식
       var labelType = validateLabelScanCode(scanVal);
-      var labelValue = getLabelCode(scanVal)
+      var labelValue = getLabelCode(scanVal);
       $NC.G_VAR.LABEL_VALUE = labelValue;
       if (labelType == $NC.G_CONSTS.SCAN_QUANTITY) {
         // 수량입력 : 스캔 가능여부 체크
@@ -262,7 +262,7 @@ function _OnInputKeyUp(e, view) {
         var labelScanValue = getLabelCode($NC.getValue('#edtLabel_No'))
           ,CENTER_CD = labelScanValue['center']
           ,BU_CD = labelScanValue['bu']
-          ,OUTBOUND_DATE = labelScanValue['outboundDate']
+          ,OUTBOUND_DATE = labelScanValue['outboundDate'];
         
         // 상품바코드
         var OUTBOUND_NO = rowData.OUTBOUND_NO;
@@ -556,7 +556,7 @@ function _Save(saveType) {
   switch (saveType) {
   case "onBoxComplete":
     if ($NC.G_VAR.SUM_INSPECT_QTY == 0) {
-      showMessage("검수 후 박스완료 처리하십시오.");
+      showMessage("용기매칭 후 담기완료 처리하십시오.");
       return;
     }
 
@@ -565,7 +565,7 @@ function _Save(saveType) {
     break;
   case "onBoxSave":
     //if (detailDS.length === 0) {
-      showMessage("검수 후 박스저장 처리하십시오.");
+      showMessage("용기매칭 후 저장 처리하십시오.");
       return;
     //}
 
@@ -735,7 +735,7 @@ function onBtnInit(e) {
     processFn.call(this);
   } else {
     showMessage({
-      message: "현재 검수 작업 중 입니다.\n\n초기화 하시겠습니까?",
+      message: "현재 용기매칭 작업 중 입니다.\n\n초기화 하시겠습니까?",
       onYesFn: function() {
         //processFn.call(this);
         clearForm();
@@ -1006,7 +1006,7 @@ function onGetLabelInfo(ajaxData) {
     rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
   } else {
     $NC.setGridDisplayRows("#grdMaster", 0, 0);
-    showMessage("조회된 데이터가 없습니다. 확인 후 작업하십시오.");
+    showMessage("대물상품의 피킹라벨이거나 조회된 출고데이터가 없습니다. 확인 후 작업하십시오.");
     rowData = G_GRDMASTER.data.getItem(0);
     return false;
   }
@@ -1016,9 +1016,9 @@ function onGetLabelInfo(ajaxData) {
   
   if (!rowData.TOTAL_BOX_CNT) {
     var rowDatas = G_GRDMASTER.data.getItems()
-      ,totalCount = 0
+      ,totalCount = 0;
     for (var i in rowDatas) {
-      totalCount += Number(rowDatas[i].CONFIRM_QTY)
+      totalCount += Number(rowDatas[i].CONFIRM_QTY);
     }
     setProgressBar(totalCount, $NC.G_VAR.BOX_VALUE);
   } else {
@@ -1165,7 +1165,7 @@ function onGetItemInfo(ajaxData) {
         G_GRDMASTER.data.addItem(resultArray[i]);
         $NC.G_VAR.labelList.push($('#edtLabelScan').val());
       } else {
-        alert('다른 주문자의 피킹라벨을 스캔했습니다. 다른 용기에 작업하세요.');
+        alert('다른 전표의 피킹라벨을 스캔했습니다. 다른 용기에 작업하세요.');
         setFocusScan();
         return false;
       }
@@ -1256,12 +1256,12 @@ function onScanItemCounting(scanVal, column_Nm, item_Cd) {
   rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
 
   if (rowData.BAR_CNT == "Y") {
-    showMessage("중복된 바코드 상품이 존재하여 검수 할 수 없습니다.");
+    showMessage("중복된 바코드 상품이 존재하여 용기매칭 할 수 없습니다.");
     return true;
   }
 
   if (rowData.INSPECT_YN == "Y") {
-    showMessage("검수가 완료된 상품입니다.");
+    showMessage("용기매칭이 완료된 상품입니다.");
     return true;
   }
   
@@ -1281,7 +1281,7 @@ function onScanItemCounting(scanVal, column_Nm, item_Cd) {
   var INSPECT_QTY = Number(rowData.INSPECT_QTY);
 
   if (ENTRY_QTY < INSPECT_QTY + CONFIRM_QTY + ITEM_QTY) {
-    showMessage("검수가 완료된 상품입니다. 다른 상품을 스캔하십시오.");
+    showMessage("용기매칭이 완료된 상품입니다. 다른 상품을 스캔하십시오.");
     return true;
   }
 

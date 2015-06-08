@@ -18,6 +18,37 @@
 <sqlMap namespace="LOM7090E">
 
 
+  <!-- [S] - RS_MASTER -->
+  <parameterMap id="paramRS_MASTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE1"             mode="IN" />
+    <parameter property="P_ORDER_DATE2"             mode="IN" />
+    <parameter property="P_INOUT_CD"                mode="IN" />
+    <parameter property="P_BU_NO"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_NM"                 mode="IN" />
+    <parameter property="P_ORDERER_NM"              mode="IN" />
+    <parameter property="P_SHIPPER_NM"              mode="IN" />
+    <parameter property="P_MALL_CD"                 mode="IN" />
+    <parameter property="P_INORDER_TYPE"            mode="IN" />
+    <parameter property="P_SHIP_TYPE"               mode="IN" />
+    <parameter property="P_SHIP_PRICE_TYPE"         mode="IN" />
+    <parameter property="P_DEAL_ID"                 mode="IN" />
+    <parameter property="P_DELIVERY_TYPE"           mode="IN" />
+    <parameter property="P_BU_TIME"                 mode="IN" />
+    <parameter property="P_DELIVERY_TYPE2"          mode="IN" />
+    <parameter property="P_OWN_BRAND_CD"            mode="IN" />
+    <parameter property="P_HOLD_YN"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+    { ? = call LOM7090E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_MASTER -->
+
   <!-- [S] - RS_T1_MASTER -->
   <parameterMap id="paramRS_T1_MASTER" class="java.util.Map">
     <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />

@@ -451,7 +451,7 @@ function _Inquiry() {
   
   var OUTBOUND_BATCH = $NC.getValue("#cboQOutbound_Batch");
   if ($NC.isNull(OUTBOUND_BATCH)) {
-    showMessage("대물주문건이 해당하는 출고차수가 없습니다.");
+    showMessage("대물주문건에 해당하는 출고차수가 없습니다.");
     return;
   }
 
@@ -832,7 +832,7 @@ function onBtnBoxComplete(e) {
 
   if ($NC.isNull($NC.G_USERINFO.PRINT_WB_NO) || $NC.isNull($NC.G_USERINFO.PRINT_LO_BILL)
       || $NC.isNull($NC.G_USERINFO.PRINT_CARD)) {
-    alert("설정하신 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
+    alert("설정한 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
     return;
   }
 
@@ -1066,7 +1066,7 @@ function onBtnInit(e) {
     if ($NC.G_VAR.INSPECT_YN == "Y") {
       processFn.call(this);
     } else {
-      showMessage("현재 검수 작업 중 입니다.  " +$NC.G_VAR.INSPECT_YN);
+      showMessage("현재 검수 작업 중 입니다.");
     }
     return;
   }
@@ -1074,27 +1074,34 @@ function onBtnInit(e) {
 }
 
 function onGetMaster(ajaxData) {
-  var rowData = $NC.toArray(ajaxData)
-  if (rowData[0].HAS_DIV == '1') {
-    $NC.setValue('#edtShipper_Nm');
-    $NC.setValue('#edtBu_No');
-    $NC.setValue('#edtOutbound_No');
-    $NC.setValue('#edtPacking_Batch');
-    $NC.setValue('#edtDelivery_Type');
-    $NC.setValue('#edtShip_Type');
-    $NC.setValue('#edtItem_Cd');
-    $NC.setValue('#edtItem_Barcd');
-    $NC.setValue('#edtItem_Nm');
-    $NC.setValue('#edtItem_Spec');
-    $NC.setValue('#edtQty_In_Box');
+  var rowData = $NC.toArray(ajaxData);
+  
+  if (rowData.length > 0){
+    if (rowData[0].HAS_DIV == '1') {
+      $NC.setValue('#edtShipper_Nm');
+      $NC.setValue('#edtBu_No');
+      $NC.setValue('#edtOutbound_No');
+      $NC.setValue('#edtPacking_Batch');
+      $NC.setValue('#edtDelivery_Type');
+      $NC.setValue('#edtShip_Type');
+      $NC.setValue('#edtItem_Cd');
+      $NC.setValue('#edtItem_Barcd');
+      $NC.setValue('#edtItem_Nm');
+      $NC.setValue('#edtItem_Spec');
+      $NC.setValue('#edtQty_In_Box');
 
-    var msg = '합포장대상' + rowData[0].FLOOR_DIV + '층)\n' + rowData[0].LOCATION_CD;
-    $NC.setValue("#edtBox_No", msg);
-    $('#edtBox_No').addClass('inspected');
-    doPrint4(rowData[0]);
-    return false;
-  } else if (rowData[0].HAS_DIV == '2') {
-    $NC.setInitGridData(G_GRDMASTER, ajaxData);
+      var msg = '합포장대상 (' + rowData[0].FLOOR_DIV + '층) ' + rowData[0].LOCATION_CD;
+      $NC.setValue("#edtBox_No", msg);
+      $('#edtBox_No').addClass('inspected');
+      doPrint4(rowData[0]);
+      return false;
+    } else if (rowData[0].HAS_DIV == '2') {
+      $NC.setInitGridData(G_GRDMASTER, ajaxData);
+    }    
+  }else{
+    showMessage("대물주문이 아니거나 유효하지 않은 전표입니다.\n일반/혼합주문은 출고스캔검수에서 작업하세요.");
+    onCalcSummary();
+    return;
   }
 
   if (G_GRDMASTER.data.getLength() > 0) {
@@ -1116,7 +1123,7 @@ function onGetMaster(ajaxData) {
 
 //    onChangingCondition();
     // showMessage("존재하지 않는 출고전표입니다. 확인 후 작업하십시오.");
-    showMessage("조회된 데이터가 없습니다. 확인 후 작업하십시오.");
+    showMessage("출고확정되었거나 대물주문이 아닙니다. 확인 후 작업하십시오.");
     rowData = G_GRDMASTER.data.getItem(0);
     setOrderInfoValue(rowData);
     onCalcSummary();
@@ -1184,7 +1191,7 @@ function onGetMaster(ajaxData) {
     } else if (rowData.HAS_DIV == '2') {
       $NC.setValue("#edtBox_No", rowData.BOX_NO);
     } else {
-      showMessage("오류입니다.");
+      showMessage("대물주문이 아니거나 출고데이터가 없습니다. 확인 후 작업하십시오.");
     }
   }
 
@@ -1608,7 +1615,7 @@ function onChkFWScanConfirm() {
       doPrint1();
       _Cancel();
     } else {
-      alert("설정하신 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
+      alert("설정한 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
       return;
     }
     return;
@@ -1625,7 +1632,7 @@ function setUpdateOrderCan(center_Cd, bu_Cd, outbound_Date, outbound_No, item_Cd
   
   if ($NC.isNull($NC.G_USERINFO.PRINT_WB_NO) || $NC.isNull($NC.G_USERINFO.PRINT_LO_BILL)
       || $NC.isNull($NC.G_USERINFO.PRINT_CARD)) {
-    alert("설정하신 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
+    alert("설정한 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
     return;
   }
 
@@ -1813,7 +1820,7 @@ function onScanOrder(scanVal, flag) {
 
   if (G_GRDMASTER.data.getLength() > 0) {
     if ($NC.G_VAR.INSPECT_YN == "N") {
-      showMessage("현재 검수 작업 중 입니다.  " +$NC.G_VAR.INSPECT_YN);
+      showMessage("현재 검수 작업 중 입니다.");
     } else {
       processFn.call(this);
     }

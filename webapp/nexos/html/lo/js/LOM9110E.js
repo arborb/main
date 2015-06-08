@@ -103,6 +103,7 @@ function _OnLoaded() {
   // 미처리/오류 내역 탭 화면에 splitter 설정
   $NC.setInitSplitter("#divT2DetailView", "v", 800);
   $NC.setInitSplitter("#divT3DetailView", "v", 700);
+  
 }
 
 /**
@@ -134,7 +135,8 @@ function _OnResize(parent) {
 
     // var clientWidth = parent.width() - $NC.G_LAYOUT.border1;
     // var clientHeight = parent.height() - $NC.G_OFFSET.nonClientHeight;
-
+    $("#lblQEND_YN").show();
+    $("#cboQEND_YN").show();
     // Splitter 컨테이너 크기 조정
     var container = $("#divT1DetailView");
     $NC.resizeContainer(container, clientWidth, clientHeight);
@@ -169,6 +171,9 @@ function _OnResize(parent) {
     $NC.resizeGrid("#grdT1Detail", $("#grdT1Detail").parent().width(), clientHeight - $NC.G_LAYOUT.header);
     */
   } else if ($("#divMasterView").tabs("option", "active") === 1) {
+    
+    $("#lblQEND_YN").hide();
+    $("#cboQEND_YN").hide();
 
     // Splitter 컨테이너 크기 조정
     var container = $("#divT2DetailView");
@@ -181,6 +186,8 @@ function _OnResize(parent) {
     $NC.resizeGrid("#grdT2Detail", $("#grdT2Detail").parent().width(), clientHeight - $NC.G_LAYOUT.header);
 
   } else if ($("#divMasterView").tabs("option", "active") === 2) {
+    $("#lblQEND_YN").hide();
+    $("#cboQEND_YN").hide();
     // Splitter 컨테이너 크기 조정
     var container = $("#divT3DetailView");
     $NC.resizeContainer(container, clientWidth, clientHeight);
@@ -324,6 +331,7 @@ function _Inquiry() {
   // 상품별 출고내역 화면
   if ($("#divMasterView").tabs("option", "active") === 0) {
 
+    var END_YN = $NC.getValue("#cboQEND_YN");
     // 조회시 전역 변수 값 초기화
     $NC.setInitGridVar(G_GRDT1MASTER);
     // $NC.setInitGridVar(G_GRDT1DETAIL);
@@ -351,10 +359,10 @@ function _Inquiry() {
       P_BU_NO: BU_NO,
       P_ORDERER_NM: ORDERER_NM,
       P_SHIPPER_NM: SHIPPER_NM,
-      P_END_YN: '%',
       P_LOCATION_CD: HASLOCATION_CD,
       P_OUTBOUND_NO: OUTBOUND_NO,
-      P_LOC_DIV: LOC_DIV
+      P_LOC_DIV: LOC_DIV,
+      P_END_YN: END_YN
     });
 
     // 데이터 조회
@@ -520,8 +528,8 @@ function grdT1MasterOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "END_YN",
     field: "END_YN",
-    name: "처리구분",
-    minWidth: 60,
+    name: "합포장구분",
+    minWidth: 80,
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
@@ -681,7 +689,7 @@ function grdT1DetailOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "END_YN",
     field: "END_YN",
-    name: "처리구분",
+    name: "합포장구분",
     minWidth: 100,
     cssClass: "align-center"
   });
@@ -903,8 +911,8 @@ function grdT2MasterOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "END_YN",
     field: "END_YN",
-    name: "처리구분",
-    minWidth: 60,
+    name: "합포장구분",
+    minWidth: 80,
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
@@ -1132,8 +1140,8 @@ function grdT3MasterOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "END_YN",
     field: "END_YN",
-    name: "처리구분",
-    minWidth: 60,
+    name: "합포장구분",
+    minWidth: 80,
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
@@ -1376,8 +1384,8 @@ function grdSubOnGetColumns() {
     minWidth: 90
   });
   $NC.setGridColumn(columns, {
-    id: "ENTRY_QTY",
-    field: "ENTRY_QTY",
+    id: "CONFIRM_QTY",
+    field: "CONFIRM_QTY",
     name: "구성수량",
     minWidth: 70,
     cssClass: "align-right"

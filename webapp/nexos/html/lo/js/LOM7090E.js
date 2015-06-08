@@ -749,7 +749,7 @@ function _Print(printIndex, printName) {
       }
 
       if (printIndex == '0' && rowData.PRINT_YN == "Y") {
-        if (!confirm('이미 출력 되었습니다.\n\n피킹라벨재출력 화면에서 출력 하시겠습니까?.\n\n[출고차수 : ' +rowData.OUTBOUND_BATCH+ ']')) {
+        if (!confirm('이미 출력 되었습니다.\n\n출력 하시겠습니까?.\n\n[출고차수 : ' +rowData.OUTBOUND_BATCH+ ']')) {
           return false;
         }
       }
