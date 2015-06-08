@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--[if lt IE 9]><script src="../common/js/misc/html5shiv.js"></script> <script src="../common/js/misc/IE9.js"></script><![endif]-->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<link rel="stylesheet"
+  href="../../layout/common/redmond/jquery-ui.custom.css"
+/>
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<script src="../common/js/common.js"></script>
+<script src="../popup/js/popup.js"></script>
+<link rel="stylesheet" href="../../layout/submain/lo/LOM7031P.css" />
+<script src="js/LOM7031P.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divMasterView" style="padding: 1px;">
+    <ul>
+      <li id="divTab1"><a href="#divDetailViewT1">박스관리</a></li>
+    </ul>
+    <div id="divDetailViewT1" style="padding: 0; border: 0;">
+      <div id="divLeftViewT1" class="ui-ctnr-left">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdMasterT1" class="ui-grd-title">박스내역</td>
+            <td id="divRowCount_grdMasterT1" class="ui-grd-rowcount"></td>
+          </tr>
+        </table>
+        <div id="grdMasterT1"></div>
+      </div>
+      <div id="divRightViewT1" class="ui-ctnr-right">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdDetailT1" class="ui-grd-title">상품별
+              검수내역</td>
+            <td id="divRowCount_grdDetailT1" class="ui-grd-rowcount"></td>
+          </tr>
+        </table>
+        <div id="grdDetailT1"></div>
+      </div>
+    </div>
+  </div>
+  <div id="divBottomView" class="ui-ctnr-bottom">
+    <div id="divButtons" style="display: inline-block;">
+      <input type="button" id="btnPrintInvoice" value="택배송장출력"
+        class="ui-btn-cmd" style="width: 100px;"
+      >
+    </div>
+    <div style="display: inline-block; text-align: right; width: 390px;">
+      <input type="button" id="btnCancel" value="닫기" class="ui-btn-cmd"
+        style="width: 80px;"
+      />
+    </div>
+  </div>
+</body>
+</html>
