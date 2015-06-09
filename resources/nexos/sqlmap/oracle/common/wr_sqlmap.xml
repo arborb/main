@@ -1433,4 +1433,30 @@
   </procedure>
   <!-- [E] - RS_LABEL_LOM13_NEW -->
           
+  <!-- [S] - RS_LABEL_LOM02_A_BOX -->
+  <parameterMap id="paramRS_LABEL_LOM02_A_BOX" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_PICK_SEQ"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM02_A_BOX" parameterMap="paramRS_LABEL_LOM02_A_BOX" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM02_A_BOX(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM02_A_BOX -->  
+  
+
+  <!-- [S] - RS_LABEL_LOM03_A_BOX -->
+  <parameterMap id="paramRS_LABEL_LOM03_A_BOX" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_PICK_SEQ"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM03_A_BOX" parameterMap="paramRS_LABEL_LOM03_A_BOX" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM03_A_BOX(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM03_A_BOX -->            
 </sqlMap>
