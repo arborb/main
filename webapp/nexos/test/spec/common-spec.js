@@ -18,10 +18,8 @@ describe('common.js', function(){
 				return true
 			});
 		})
-		it('비동기 통신: mockId가 있으면 가상데이터를 반환한다.', function(){
-			$NC.serviceCall("/WC/getSessionUserInfo.do", null, onSuccess, onError, {}, '7090E_RS_T1_MASTER');
-			
-			
+		xit('비동기 통신: mockId가 있으면 가상데이터를 반환한다.', function(){
+			$NC.serviceCall("/WC/getSessionUserInfo.do", null, onSuccess, onError, {}, '7090E_RS_T1_MASTER');			
 			expect().toBe();
 		})
 		xit('비동기 통신: mockId가 있으면 가상데이터를 반환한다.', function(){

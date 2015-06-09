@@ -1330,6 +1330,12 @@ function grdT1SubOnGetColumns() {
     minWidth: 180
   });
   $NC.setGridColumn(columns, {
+    id: "OPTION_ID",
+    field: "OPTION_ID",
+    name: "옵션ID",
+    minWidth: 90
+  });
+  $NC.setGridColumn(columns, {
     id: "OPTION_VALUE",
     field: "OPTION_VALUE",
     name: "옵션명",
@@ -1673,6 +1679,12 @@ function grdT2SubOnGetColumns() {
     field: "DEAL_NM",
     name: "딜명",
     minWidth: 180
+  });
+  $NC.setGridColumn(columns, {
+    id: "OPTION_ID",
+    field: "OPTION_ID",
+    name: "옵션ID",
+    minWidth: 90
   });
   $NC.setGridColumn(columns, {
     id: "OPTION_VALUE",
@@ -2050,8 +2062,14 @@ function grdT3SubOnGetColumns() {
     minWidth: 180
   });
   $NC.setGridColumn(columns, {
-    id: "DEAL_OPTION_NM",
-    field: "DEAL_OPTION_NM",
+    id: "OPTION_ID",
+    field: "OPTION_ID",
+    name: "옵션ID",
+    minWidth: 90
+  });
+  $NC.setGridColumn(columns, {
+    id: "OPTION_VALUE",
+    field: "OPTION_VALUE",
     name: "옵션명",
     minWidth: 180
   });
@@ -2401,8 +2419,14 @@ function grdT4SubOnGetColumns() {
     minWidth: 180
   });
   $NC.setGridColumn(columns, {
-    id: "DEAL_OPTION_NM",
-    field: "DEAL_OPTION_NM",
+    id: "OPTION_ID",
+    field: "OPTION_ID",
+    name: "옵션ID",
+    minWidth: 90
+  });
+  $NC.setGridColumn(columns, {
+    id: "OPTION_VALUE",
+    field: "OPTION_VALUE",
     name: "옵션명",
     minWidth: 180
   });

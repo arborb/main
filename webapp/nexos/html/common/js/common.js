@@ -803,8 +803,11 @@
      */
     $NC.serviceCall = function(requestUrl, requestData, onSuccessHandler, onErrorHandler, messageOptions, mockId) {
       var args = arguments;
+      if (!requestData) {
+        requestData = {};
+      }
       // ajax 이중 호출을 방지한다. if문 삭제시 작동하지 않음
-      if (!addServiceLog('serviceCall', args, 'SERVICE CALL(비동기통신)')) {
+      if (!requestData.arrowPolling && !addServiceLog('serviceCall', args, 'SERVICE CALL(비동기통신)')) {
         return false;
       };
       // 화면에서 개발시 가상으로 ajax를 호출하는 모듈 if문 삭제시 작동하지 않음
@@ -890,8 +893,11 @@
      */
     $NC.serviceCallAndWait = function(requestUrl, requestData, onSuccessHandler, onErrorHandler, messageOptions, mockId) {
       var args = arguments;
+      if (!requestData) {
+        requestData = {};
+      }
       // ajax 이중 호출을 방지한다. if문 삭제시 작동하지 않음
-      if (!addServiceLog('serviceCallAndWait', args, 'SERVICE CALL(동기통신)')) {
+      if (!requestData.arrowPolling && !addServiceLog('serviceCallAndWait', args, 'SERVICE CALL(동기통신)')) {
         return false;
       };
       // 화면에서 개발시 가상으로 ajax를 호출하는 모듈 if문 삭제시 작동하지 않음
@@ -6391,7 +6397,7 @@
       service = JSON.stringify(args).replace(/ /g, '');
       for (var i in serviceCallLog) {
         if (serviceCallLog[i] == service) {
-          console.error('serviceCall이 두 번 호출되었습니다.')
+          console.error('serviceCall이 두 번 호출되었습니다.( ' + serviceCallLog[i] + ' )')
           return false;
         }
       }

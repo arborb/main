@@ -68,7 +68,7 @@ function _Initialize() {
     }
   });
   
-  // 검색조건 상품구분 콤보
+  // 검색조건 상품구분 콤보, 상품구분 콤보
   $NC.setInitCombo("/WC/getDataSet.do", {
     P_QUERY_ID: "WC.POP_CMCODE",
     P_QUERY_PARAMS: $NC.getParams({
@@ -78,28 +78,12 @@ function _Initialize() {
       P_SUB_CD2: ""
     })
   }, {
-    selector: "#cboQItem_Div",
+    selector: ["#cboQItem_Div", "#cboItem_Div"],
     codeField: "CODE_CD",
     fullNameField: "CODE_CD_F",
     addAll: true,
     onComplete: function() {
       $NC.setValue("#cboQItem_Div", 0);
-    }
-  });
-  // 상품구분 콤보
-  $NC.setInitCombo("/WC/getDataSet.do", {
-    P_QUERY_ID: "WC.POP_CMCODE",
-    P_QUERY_PARAMS: $NC.getParams({
-      P_CODE_GRP: "ITEM_DIV",
-      P_CODE_CD: "%",
-      P_SUB_CD1: "",
-      P_SUB_CD2: ""
-    })
-  }, {
-    selector: "#cboItem_Div",
-    codeField: "CODE_CD",
-    fullNameField: "CODE_CD_F",
-    onComplete: function() {
       $NC.setValue("#cboItem_Div");
     }
   });

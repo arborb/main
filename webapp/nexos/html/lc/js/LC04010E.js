@@ -65,22 +65,26 @@ function _Initialize() {
     }
   });
 
-  // 조회조건 - 입출고구분 세팅
-  $NC.setInitCombo("/WC/getDataSet.do", {
-    P_QUERY_ID: "WC.POP_CMCODE",
-    P_QUERY_PARAMS: $NC.getParams({
-      P_CODE_GRP: "GAP_DIV",
-      P_CODE_CD: "",
-      P_SUB_CD1: "",
-      P_SUB_CD2: ""
-    })
-  }, {
-    selector: "#cboQGap_Div",
-    codeField: "CODE_CD",
-    nameField: "CODE_NM",
-    fullNameField: "CODE_CD_F",
-    addAll: true
-  });
+  // FIXME: 0.3초 이내 service를 2번 호출할수 없기때문에 불가피하게 0.4초 이후에 콤보박스를 호출합니다.
+  setTimeout(function(){
+    // 조회조건 - 입출고구분 세팅
+    $NC.setInitCombo("/WC/getDataSet.do", {
+      P_QUERY_ID: "WC.POP_CMCODE",
+      P_QUERY_PARAMS: $NC.getParams({
+        P_CODE_GRP: "GAP_DIV",
+        P_CODE_CD: "",
+        P_SUB_CD1: "",
+        P_SUB_CD2: ""
+      }),
+      arrowPolling: true
+    }, {
+      selector: "#cboQGap_Div",
+      codeField: "CODE_CD",
+      nameField: "CODE_NM",
+      fullNameField: "CODE_CD_F",
+      addAll: true
+    });
+  }, 500)
 
   setUserProgramPermission();
 }
@@ -1096,7 +1100,8 @@ function grdT1DetailOnGetColumns() {
         P_CODE_CD: "%",
         P_SUB_CD1: "",
         P_SUB_CD2: ""
-      })
+      }),
+      arrowPolling: true
     }, {
       codeField: "GAP_DIV",
       dataCodeField: "CODE_CD",

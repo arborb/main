@@ -593,11 +593,14 @@ function _Save(saveType) {
     onSucessFn = onBoxSave;
     break;
   case "onShowBoxManage":
-    if (detailDS.length === 0) {
-      onShowBoxManage();
-      return;
-    }
+//    if (detailDS.length === 0) {
+//      onShowBoxManage();
+//      return;
+//    }
 
+    onShowBoxManage();
+    return;
+    
     onSucessFn = onShowBoxManage;
     break;
   default:
@@ -717,6 +720,12 @@ function grdMasterOnGetColumns() {
     name: "취소수량",
     minWidth: 85,
     cssClass: "align-right"
+  });
+  $NC.setGridColumn(columns, {
+    id: "ITEM_CD",
+    field: "ITEM_CD",
+    name: "상품코드",
+    minWidth: 100
   });
   $NC.setGridColumn(columns, {
     id: "OUTBOUND_NO",
@@ -1207,7 +1216,8 @@ function doPrint1() {
   checkedValueDS.push($NC.getValue("#edtBox_No"));
 
   // 택배송장출력
-  if (rowData.CARRIER_CD == '0020') {
+  //if (rowData.CARRIER_CD == '0020') {
+  if (rowData.DELIVERY_TYPE == '1') {
     /*var reportDoc = "lo/LABEL_LOM09_1";
     var queryId = "WR.RS_LABEL_LOM03_1";
     var queryParams = {
@@ -1231,14 +1241,16 @@ function doPrint1() {
     });*/
     $NC.G_MAIN.silentPrint({
       printParams: [{
-        reportDoc: "lo/LABEL_LOM09_1",
-        queryId: "WR.RS_LABEL_LOM03_2",
+        //reportDoc: "lo/LABEL_LOM09_1",
+        reportDoc: "lo/LABEL_LOM08_NEW",
+        //queryId: "WR.RS_LABEL_LOM03_2",
+        queryId: "WR.RS_LABEL_LOM03_A",
         queryParams: {
           P_CENTER_CD: rowData.CENTER_CD,
           P_BU_CD: rowData.BU_CD,
           P_OUTBOUND_DATE: rowData.OUTBOUND_DATE,
-          P_PICK_SEQ: rowData.PICK_SEQ,
-          P_PRINT_YN: ""
+          P_PICK_SEQ: rowData.PICK_SEQ
+          //P_PRINT_YN: ""
         },
         iFrameNo: 1,
         //checkedValue: checkedValueDS.toString(),
@@ -1274,14 +1286,16 @@ function doPrint1() {
     });*/
     $NC.G_MAIN.silentPrint({
       printParams: [{
-        reportDoc: "lo/LABEL_LOM09_1",
-        queryId: "WR.RS_LABEL_LOM02_3",
+        //reportDoc: "lo/LABEL_LOM09_1",
+        reportDoc: "lo/LABEL_LOM08_NEW",
+        //queryId: "WR.RS_LABEL_LOM02_3",
+        queryId: "WR.RS_LABEL_LOM02_A",
         queryParams: {
           P_CENTER_CD: rowData.CENTER_CD,
           P_BU_CD: rowData.BU_CD,
           P_OUTBOUND_DATE: rowData.OUTBOUND_DATE,
-          P_PICK_SEQ: rowData.PICK_SEQ,
-          P_PRINT_YN: ""
+          P_PICK_SEQ: rowData.PICK_SEQ
+          //P_PRINT_YN: ""
         },
         iFrameNo: 1,
         //checkedValue: checkedValueDS.toString(),
@@ -1417,10 +1431,12 @@ function onShowBoxManage(ajaxData) {
   var OUTBOUND_NO = $NC.getValue("#edtQOutbound_No");
   var ITEM_CD = $NC.getValue("#edtQItem_Barcd");
 
+  var rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
+  
   $NC.G_MAIN.showProgramSubPopup({
-    PROGRAM_ID: "LOM7031P",
+    PROGRAM_ID: "LOM7231P",
     PROGRAM_NM: "박스통합",
-    url: "lo/LOM7031P.html",
+    url: "lo/LOM7231P.html",
     width: 870,
     height: 450,
     userData: {
@@ -1428,8 +1444,9 @@ function onShowBoxManage(ajaxData) {
       P_BU_CD: BU_CD,
       P_OUTBOUND_DATE: OUTBOUND_DATE,
       P_OUTBOUND_NO: OUTBOUND_NO,
-      P_ITEM_CD: ITEM_CD,
-      P_CARRIER_CD: $NC.G_VAR.CARRIER_CD,
+      P_ITEM_CD: rowData.PICK_SEQ,
+      //P_CARRIER_CD: $NC.G_VAR.CARRIER_CD,
+      P_CARRIER_CD: rowData.DELIVERY_TYPE,
       P_POLICY_LO450: $NC.G_VAR.policyVal.LO450,
       P_INSPECT_YN: $NC.G_VAR.INSPECT_YN === "Y" ? false : true,
       P_CARD_MSG_YN: $NC.isNull($NC.getValue("#edtCard_Msg")) === true ? false : true,

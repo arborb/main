@@ -1305,7 +1305,7 @@ function onBtnPrintInvoice() {
   var OUTBOUND_DATE = $NC.G_VAR.userData.P_OUTBOUND_DATE;
   var OUTBOUND_NO = $NC.G_VAR.userData.P_OUTBOUND_NO;
   var CARRIER_CD = $NC.G_VAR.userData.P_CARRIER_CD;
-  var ITEM_CD = $NC.G_VAR.userData.P_ITEM_CD;
+  var PICK_SEQ = $NC.G_VAR.userData.P_ITEM_CD;
 
   var checkedValueDS = [ ];
   var rowCount = G_GRDMASTERT1.data.getLength();
@@ -1320,21 +1320,25 @@ function onBtnPrintInvoice() {
     return;
   }
   
-  if (CARRIER_CD == '0020') {
-    reportDoc = "lo/LABEL_LOM09_1";
-    queryId = "WR.RS_LABEL_LOM03_1";    
+  if (CARRIER_CD == '1') {
+    //reportDoc = "lo/LABEL_LOM09_1";
+    //queryId = "WR.RS_LABEL_LOM03_1";
+    reportDoc = "lo/LABEL_LOM08_NEW";
+    queryId = "WR.RS_LABEL_LOM03_A_BOX";
   } else {
-    reportDoc = "lo/LABEL_LOM09_1";
-    queryId = "WR.RS_LABEL_LOM02_1"; 
+    //reportDoc = "lo/LABEL_LOM09_1";
+    //queryId = "WR.RS_LABEL_LOM02_1";
+    reportDoc = "lo/LABEL_LOM08_NEW";
+    queryId = "WR.RS_LABEL_LOM02_A_BOX";
   }
 
   var queryParams = {
       P_CENTER_CD: CENTER_CD,
       P_BU_CD: BU_CD,
       P_OUTBOUND_DATE: OUTBOUND_DATE,
-      P_OUTBOUND_NO: OUTBOUND_NO,
-      P_ITEM_CD: ITEM_CD,
-      P_PRINT_YN: "(재)"
+      //P_OUTBOUND_NO: OUTBOUND_NO,
+      P_PICK_SEQ: PICK_SEQ
+      //P_PRINT_YN: "(재)"
     };
 
     // 출력 호출

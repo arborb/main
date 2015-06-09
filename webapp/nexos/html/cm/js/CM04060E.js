@@ -4,7 +4,9 @@
 function _Initialize() {
 
   // 단위화면에서 사용될 일반 전역 변수 정의
-  // $NC.setGlobalVar({ });
+  $NC.setGlobalVar({
+    comboOption: []
+  });
 
   // 탭 초기화
   $NC.setInitTab("#divTabView", {
@@ -20,6 +22,19 @@ function _Initialize() {
 
   $("#btnT1AddItem").click(onBtnAddItem);
   $("#btnT2AddVendor").click(onBtnAddVendor);
+
+  // 콤보옵션을 불러온다.
+  $NC.serviceCallAndWait('/WC/getDataSet.do', {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "DEAL_DIV",
+      P_CODE_CD: "%",
+      P_SUB_CD1: "",
+      P_SUB_CD2: ""
+    })
+  }, function(ajaxData) {
+    $NC.G_VAR.comboOption = $NC.toArray(ajaxData);
+  });
 
   // 그리드 초기화
   grdT1MasterInitialize();
@@ -792,7 +807,7 @@ function grdT1SubOnGetColumns() {
     cssClass: "align-right",
     editor: Slick.Editors.Number
   });
-  $NC.setGridColumn(columns, {
+  /*$NC.setGridColumn(columns, {
     id: "DEAL_DIV_F",
     field: "DEAL_DIV_F",
     name: "거래구분",
@@ -812,6 +827,20 @@ function grdT1SubOnGetColumns() {
       dataFullNameField: "CODE_CD_F",
       isKeyField: true
     })
+  });*/
+  $NC.setGridColumn(columns, {
+    id: "DEAL_DIV_F",
+    field: "DEAL_DIV_F",
+    name: "거래구분",
+    minWidth: 90,
+    editor: Slick.Editors.ComboBox,
+    editorOptions: {
+      codeField: "DEAL_DIV",
+      dataCodeField: "CODE_CD",
+      dataFullNameField: "CODE_CD_F",
+      isKeyField: true,
+      data: $NC.G_VAR.comboOption
+    }
   });
   $NC.setGridColumn(columns, {
     id: "OPEN_DATE",
@@ -1246,7 +1275,7 @@ function grdT2SubOnGetColumns() {
     cssClass: "align-right",
     editor: Slick.Editors.Number
   });
-  $NC.setGridColumn(columns, {
+  /*$NC.setGridColumn(columns, {
     id: "DEAL_DIV_F",
     field: "DEAL_DIV_F",
     name: "거래구분",
@@ -1266,6 +1295,21 @@ function grdT2SubOnGetColumns() {
       dataFullNameField: "CODE_CD_F",
       isKeyField: true
     })
+  });*/
+
+  $NC.setGridColumn(columns, {
+    id: "DEAL_DIV_F",
+    field: "DEAL_DIV_F",
+    name: "거래구분",
+    minWidth: 90,
+    editor: Slick.Editors.ComboBox,
+    editorOptions: {
+      codeField: "DEAL_DIV",
+      dataCodeField: "CODE_CD",
+      dataFullNameField: "CODE_CD_F",
+      isKeyField: true,
+      data: $NC.G_VAR.comboOption
+    }
   });
   $NC.setGridColumn(columns, {
     id: "OPEN_DATE",

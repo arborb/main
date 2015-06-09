@@ -105,6 +105,7 @@ function _Initialize() {
   setEnableButton("#btnFWScanConfirm", false);
   setEnableButton("#btnBWScanConfirm", false);
   setEnableButton("#btnDeliveryChange", false);
+  setEnableButton("#btnBoxCancel", false);
 
   // 조회조건 - 물류센터 세팅
   $NC.setInitCombo("/WC/getDataSet.do", {
@@ -699,7 +700,7 @@ function onChangingCondition() {
   setEnableButton("#btnFWScanConfirm", false);
   setEnableButton("#btnBWScanConfirm", true);
   setEnableButton("#btnDeliveryChange", false);
-
+  
   setFocusScan();
 }
 
@@ -1027,6 +1028,8 @@ function onBtnBoxManage(e) {
   OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
   OUTBOUND_NO = $NC.getValue("#edtQOutbound_No");
 
+  var rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
+  
   $NC.G_MAIN.showProgramSubPopup({
     PROGRAM_ID: "LOM7211P",
     PROGRAM_NM: "박스관리",
@@ -1038,7 +1041,8 @@ function onBtnBoxManage(e) {
       P_BU_CD: BU_CD,
       P_OUTBOUND_DATE: OUTBOUND_DATE,
       P_OUTBOUND_NO: OUTBOUND_NO,
-      P_CARRIER_CD: $NC.G_VAR.CARRIER_CD,
+      //P_CARRIER_CD: $NC.G_VAR.CARRIER_CD,
+      P_CARRIER_CD: rowData.DELIVERY_TYPE,
       P_POLICY_LO450: $NC.G_VAR.policyVal.LO450,
       P_INSPECT_YN: $NC.G_VAR.INSPECT_YN === "Y" ? false : true,
       P_CARD_MSG_YN: $NC.isNull($NC.getValue("#edtCard_Msg")) === true ? false : true,
@@ -1363,7 +1367,7 @@ function onGetMaster(ajaxData) {
   // 주문취소
   if ($NC.G_VAR.ORDERCAN_CHK == "Y") {
     if (rowData.ORDER_DIV == "2") {
-      alert("합포장 주문에 주문취소 건이 포함되어있습니다.\n\n 피킹지시서와 상품을 함께 사무실로 인계바랍니다.");
+      alert("합포장 주문에 주문취소 건이 포함되어있습니다.\n\n 피킹라벨과 상품을 함께 사무실로 인계바랍니다.");
     } else {
       alert("주문취소 건입니다.\n\n 피킹라벨과 상품을 함께 사무실로 인계바랍니다.");
     }
@@ -1372,6 +1376,7 @@ function onGetMaster(ajaxData) {
     setEnableButton("#btnFWScanConfirm", false);
     setEnableButton("#btnBWScanConfirm", false);
     setEnableButton("#btnDeliveryChange", false);
+    setEnableButton("#btnBoxCancel", false);
     $NC.setValue("#edtBox_No", "주문취소");
     $("#edtBox_No").addClass("inspected");
     setUpdateOrderCan(rowData.CENTER_CD, rowData.BU_CD, rowData.OUTBOUND_DATE, rowData.OUTBOUND_NO);
@@ -1384,6 +1389,7 @@ function onGetMaster(ajaxData) {
     setEnableButton("#btnFWScanConfirm", false);
     setEnableButton("#btnBWScanConfirm", false);
     setEnableButton("#btnDeliveryChange", false);
+    setEnableButton("#btnBoxCancel", false);
     $NC.setValue("#edtBox_No", "주문보류");
     $("#edtBox_No").addClass("inspected");
     return;
@@ -1395,6 +1401,7 @@ function onGetMaster(ajaxData) {
     // setEnableButton("#btnBWScanConfirm", $NC.getProgramPermission().canConfirmCancel);
     setEnableButton("#btnBWScanConfirm", false);
     setEnableButton("#btnDeliveryChange", true);
+    setEnableButton("#btnBoxCancel", true);
     var invCnt = '(' + rowData.INV_CNT + ')';
     $NC.setValue("#edtBox_No", "검수완료" + invCnt);
     $("#edtBox_No").addClass("inspected");
@@ -1407,6 +1414,7 @@ function onGetMaster(ajaxData) {
     setEnableButton("#btnFWScanConfirm", false);
     setEnableButton("#btnBWScanConfirm", false);
     setEnableButton("#btnDeliveryChange", false);
+    setEnableButton("#btnBoxCancel", false);
     $NC.setValue("#edtBox_No", "합포장대상 ");
     $("#edtBox_No").addClass("inspected");
     return;
@@ -1421,6 +1429,7 @@ function onGetMaster(ajaxData) {
   // setEnableButton("#btnFWScanConfirm", true);
   setEnableButton("#btnBWScanConfirm", true);
   setEnableButton("#btnDeliveryChange", false);
+  setEnableButton("#btnBoxCancel", true);
   setFocusScan();
 }
 
@@ -1433,12 +1442,14 @@ function doPrint1() {
   checkedValueDS.push($NC.getValue("#edtBox_No"));
 
   // 택배송장출력
-  if ($NC.G_VAR.CARRIER_CD == '0020') {
+  //if ($NC.G_VAR.CARRIER_CD == '0020') {
+  if (rowData.DELIVERY_TYPE == '1') {
 
     // 출력 호출
     $NC.G_MAIN.silentPrint({
       printParams: [{
-        reportDoc: "lo/LABEL_LOM08",
+        //reportDoc: "lo/LABEL_LOM08",
+        reportDoc: "lo/LABEL_LOM08_NEW",
         queryId: "WR.RS_LABEL_LOM03_A",
         queryParams: {
           P_CENTER_CD: rowData.CENTER_CD,
@@ -1463,7 +1474,8 @@ function doPrint1() {
     // 출력 호출
     $NC.G_MAIN.silentPrint({
       printParams: [{
-        reportDoc: "lo/LABEL_LOM08",
+        //reportDoc: "lo/LABEL_LOM08",
+        reportDoc: "lo/LABEL_LOM08_NEW",
         queryId: "WR.RS_LABEL_LOM02_A",
         queryParams: {
           P_CENTER_CD: rowData.CENTER_CD,
