@@ -57,6 +57,9 @@ function _Initialize() {
 
   showMenu(false);
   loadSessionUserInfo();
+  setTimeout(function(){
+    hashLoad();
+  }, 500)
 }
 
 /**
@@ -922,6 +925,7 @@ function showProgramPopup(programInfo) {
     $NC.G_VAR.windows.splice(winIndex, 1);
     $NC.G_VAR.windows.push(view);
     view.focus();
+    window.location.hash = $NC.G_VAR.activeWindow.get('userData').WEB_URL;
     return;
   }
 
@@ -1022,6 +1026,9 @@ function showProgramPopup(programInfo) {
   if ($("#divCommonButtons").css("display") == "none") {
     $NC.showView("#divCommonButtons");
   }
+
+  // 해시태그 변경
+  window.location.hash = programInfo.WEB_URL;
 }
 
 /**
@@ -1804,6 +1811,7 @@ function removeChildWindow(view) {
   if (viewCount > 0) {
     $NC.G_VAR.activeWindow = $NC.G_VAR.windows[viewCount - 1];
     $NC.G_VAR.activeWindow.focus();
+    window.location.hash = $NC.G_VAR.activeWindow.get("userData").WEB_URL;
 
     if ($("#divProgramList").css("display") != "none") {
       G_GRDPROGRAMLIST.view.resetActiveCell();
@@ -1823,6 +1831,7 @@ function removeChildWindow(view) {
     clearTimeout($NC.G_VAR.onProgramListTimeout);
     $NC.hideView("#divProgramList");
     $NC.hideView("#divCommonButtons");
+    window.location.hash = '';
 
     topButtonsInitialize(true);
     scrollViewToTop();
@@ -3195,6 +3204,25 @@ function hideCopyGridData() {
 
   $NC.hideView("#divCopyGridDataView");
 };
+
+/**
+ * hash를 읽어와서 마지막 페이지를 로드한다.
+ */
+function hashLoad() {
+  if (typeof G_GRDPROGRAMLIST !== 'object') {
+    return false;
+  }
+  var hash = window.location.hash.replace('#', '')
+    ,programs = G_GRDPROGRAMLIST.data.getItems()
+  for (var i in programs) {
+    if (hash === programs[i].WEB_URL) {
+      $NC.setValue("#edtMenuAdd", programs[i].PROGRAM_ID);
+      showProgramPopup(programs[i]);
+      return false;
+    }
+  }
+  window.location.hash = '';
+}
 
 /**
  * 자동 출력
