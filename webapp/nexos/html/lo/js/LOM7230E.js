@@ -469,7 +469,7 @@ function _Inquiry() {
   G_GRDMASTER.queryId = "LOM7230E.RS_MASTER1";
   // 데이터 조회
   $NC.serviceCall("/LOM7230E/getDataSet.do", 
-      $NC.getGridParams(G_GRDMASTER), onGetMaster, onError, null, '7030E_RS_MASTER1');
+      $NC.getGridParams(G_GRDMASTER), onGetMaster, onError, null, '7230E_RS_MASTER1');
 
 }
 
@@ -1481,6 +1481,11 @@ function onBoxComplete(ajaxData) {
   var rowDatas = G_GRDMASTER.data.getItems();
   var isAllComfirm = false;
   
+  /*
+   * rowData.REMAIN_QTY  : 미검수수량
+   * rowData.ENTRY_QTY   : 등록수량
+   * rowData.CONFIRM_QTY : 확정수량
+   */
   if (rowData.REMAIN_QTY == 0 && (rowData.ENTRY_QTY == rowData.CONFIRM_QTY)) {
     $NC.G_VAR.SCANCOMPLETE = false;
     if (!$NC.isNull($NC.G_USERINFO.PRINT_WB_NO) && !$NC.isNull($NC.G_USERINFO.PRINT_LO_BILL)
@@ -1492,6 +1497,7 @@ function onBoxComplete(ajaxData) {
           isAllComfirm = true;
         } else {
           isAllComfirm = false;
+          break;
         }
       }
       if (isAllComfirm) {

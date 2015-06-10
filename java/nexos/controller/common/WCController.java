@@ -471,9 +471,10 @@ public class WCController extends CommonController {
 		// }
 		//
 		// return result;
-		ResponseEntity<String> result = null;
-
+		
 		Map<String, Object> params = new HashMap<String, Object>();
+		
+		ResponseEntity<String> result = null;
 		params.put(Consts.PK_USER_ID, user_Id);
 
 		try {
@@ -482,6 +483,7 @@ public class WCController extends CommonController {
 			if (auth != null) {
 				new SecurityContextLogoutHandler().logout(request, response,
 						auth);
+				//service.logout(params);
 			}
 			result = getResponseEntity(request, Consts.OK);
 		} catch (Exception e) {

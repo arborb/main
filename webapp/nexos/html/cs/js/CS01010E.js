@@ -437,6 +437,8 @@ function _OnGridCheckBoxFormatterClick(e, view, args) {
     grdObject = G_GRDDETAIL3;
     selectorCd = "#edtBu_Cd";
     selectorNm = "#edtBu_Nm";
+  } else if (args.grid === "grdDetail5") {
+    return false;
   }
 
   if (grdObject.view.getEditorLock().isActive()) {
@@ -2029,7 +2031,7 @@ function onGetDetail6(ajaxData) {
  * @param ajaxData
  */
 function onSave(ajaxData) {
-
+  $NC.G_VAR.isPasswordChanged = null;
   var lastKeyVal = $NC.getGridLastKeyVal(G_GRDMASTER, {
     selectKey: "USER_ID"
   });

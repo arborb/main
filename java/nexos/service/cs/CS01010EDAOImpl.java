@@ -155,6 +155,12 @@ public class CS01010EDAOImpl implements CS01010EDAO {
 										.get("P_USER_PWD")));
 					}
 					nexosDAO.insert(USER_INSERT_ID, rowData);
+					
+					// 사용자 비밀번호 내역에 저장한다.
+					rowData.put("P_CLIENT_IP", getMachineInfo()
+							.getHostAddress());
+					rowData.put("P_CLIENT_NAME", getMachineInfo().getHostName());
+					nexosDAO.insert("WC.INSERT_CSUSERPASSINFO", rowData);
 				} else if (Consts.DV_CRUD_U.equals(crud)) {
 					if (rowData.containsKey("P_USER_PWD")) {
 						rowData.put("P_USER_PWD",

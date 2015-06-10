@@ -143,7 +143,8 @@ function _Save() {
   }
 
   // 비밀번호 유효성 검사
-  if (!devMode) {
+  var devMode = localStorage.getItem('_MODE')
+  if (devMode !== 'DEV') {
     var varidPw = $NC.varidationPw(NEW_USER_PWD1); 
     if (!varidPw) {
       return false;

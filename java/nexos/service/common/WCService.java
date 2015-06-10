@@ -355,6 +355,29 @@ public class WCService {
 
 		return result;
 	}
+	
+	/**
+	 * 로그인 처리 및 사용자 정보 리턴
+	 * 
+	 * @param params
+	 *            조회조건
+	 * @throws UnknownHostException
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Secured("IS_AUTHENTICATED_ANONYMOUSLY")
+	public void logout(Map<String, Object> params) throws UnknownHostException {
+
+		TransactionStatus ts = transactionManager
+				.getTransaction(new DefaultTransactionDefinition());
+		try {
+			dao.getLogout(params);
+
+			transactionManager.commit(ts);
+		} catch (Exception e) {
+			transactionManager.rollback(ts);
+			throw new RuntimeException(e.getMessage());
+		}
+	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Map mappingSession(Map userInfo) throws UnknownHostException {
