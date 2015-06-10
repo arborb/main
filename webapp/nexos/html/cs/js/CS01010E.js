@@ -850,6 +850,7 @@ function _Save() {
         P_SYS_LANG: rowData.SYS_LANG,
         P_GROUP_NOTICE_DIV: rowData.GROUP_NOTICE_DIV,
         P_USER_ENABLE: rowData.ENABLE,
+        P_PW_CHANGED: $NC.G_VAR.isPasswordChanged ? 'Y' : 'N',
         P_REG_USER_ID: null,
         P_REG_DATETIME: null,
         P_CRUD: rowData.CRUD

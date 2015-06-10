@@ -300,7 +300,6 @@ public class WCDAOImpl implements WCDAO {
 		return resultMap;
 	}
 
-	@Secured("IS_AUTHENTICATED_ANONYMOUSLY")
 	@Override
 	public void getLogout(Map<String, Object> params) {
 		params.put("P_PROCESS_FLAG", Consts.SUCCESS_LOGOUT);

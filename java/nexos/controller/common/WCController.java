@@ -450,7 +450,6 @@ public class WCController extends CommonController {
 	 * @param params
 	 *            조회조건
 	 */
-	@Secured("IS_AUTHENTICATED_ANONYMOUSLY")
 	@RequestMapping(value = "/getLogout.do", method = RequestMethod.POST)
 	public ResponseEntity<String> getLogout(HttpServletRequest request,
 			HttpServletResponse response,
@@ -471,11 +470,19 @@ public class WCController extends CommonController {
 		// }
 		//
 		// return result;
-		
-		Map<String, Object> params = new HashMap<String, Object>();
-		
+	  
+	  
 		ResponseEntity<String> result = null;
+
+		Map<String, Object> params = new HashMap<String, Object>();
 		params.put(Consts.PK_USER_ID, user_Id);
+		
+		try{
+		  service.logout(params);  
+		}catch (Exception e){
+		  result = getResponseEntityError(request, e);
+		  return result;
+		}
 
 		try {
 			Authentication auth = SecurityContextHolder.getContext()
@@ -483,7 +490,6 @@ public class WCController extends CommonController {
 			if (auth != null) {
 				new SecurityContextLogoutHandler().logout(request, response,
 						auth);
-				//service.logout(params);
 			}
 			result = getResponseEntity(request, Consts.OK);
 		} catch (Exception e) {
