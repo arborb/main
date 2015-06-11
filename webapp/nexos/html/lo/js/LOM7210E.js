@@ -807,6 +807,12 @@ function _Save(ITEM_QTY, procType) {
 
   var rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
 
+  if(rowData.DELIVERY_TYPE == "1"){
+    CARRIER_CD = "0020";
+  }else{
+    CARRIER_CD = "0010";
+  }
+  
   if (procType === "1") {
     // 상품코드 검수후 저장
     $NC.serviceCall("/LOM7210E/callScanBoxSave.do", {

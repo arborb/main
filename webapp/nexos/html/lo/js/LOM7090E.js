@@ -675,6 +675,7 @@ function _Inquiry() {
   } else if (id === 3) {
     getDataT4Master();
   }
+  
   getCountAndQty();
   _OnConditionChange();
 }
@@ -4911,9 +4912,9 @@ function setFocusScan() {
  */
 function getCountAndQty() {
   var hasHoldYn = $('#tdQHold_Yn').css('display')
-    ,holdYn = HOLD_YN
+    ,holdYn = HOLD_YN;
   if (hasHoldYn === 'none') {
-    holdYn = ''
+    holdYn = '';
   }
 
   $NC.serviceCall("/LOM7010E/getDataSet.do", {
@@ -4956,23 +4957,3 @@ function onCountAndQty (ajaxData) {
   $('#lblLo_Cnt_D').text('전표수 : ' + req[0].CNT_D);
   $('#lblLo_Qty_D').text('수량 : ' + req[0].QTY_D);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

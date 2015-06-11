@@ -137,10 +137,12 @@ function onGetReport(ajaxData) {
     $NC.setValue("#edtOrder_Info", rowData.ORDER_INFO);
     $NC.setValue("#edtPoc_Result", rowData.POC_RESULT);
     $NC.setValue("#edtShowMessage", rowData.SHOW_MESSAGE);
+    $NC.setValue("#edtScan", "");
   } 
  
   if(!resultData.length){
     $NC.setValue("#edtOrder_Info", "존재하지 않는 송장번호 입니다.");
+    $NC.setValue("#edtScan", "");
   }
 }
 

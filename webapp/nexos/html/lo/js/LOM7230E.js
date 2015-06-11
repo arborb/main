@@ -1099,7 +1099,7 @@ function onGetMaster(ajaxData) {
       $NC.setValue('#edtItem_Spec');
       $NC.setValue('#edtQty_In_Box');
 
-      var msg = '합포장대상 (' + rowData[0].FLOOR_DIV + '층) ' + rowData[0].LOCATION_CD;
+      var msg = '합포장대상 (' + rowData[0].FLOOR_DIV + ') ' + rowData[0].LOCATION_CD;
       $NC.setValue("#edtBox_No", msg);
       $('#edtBox_No').addClass('inspected');
       doPrint4(rowData[0]);
@@ -1108,7 +1108,7 @@ function onGetMaster(ajaxData) {
       $NC.setInitGridData(G_GRDMASTER, ajaxData);
     }    
   }else{
-    showMessage("대물주문이 아니거나 유효하지 않은 전표입니다.\n일반/혼합주문은 출고스캔검수에서 작업하세요.");
+    showMessage("대물주문이 아니거나 유효하지 않은 전표입니다.\n일반주문은 출고스캔검수에서 작업하세요.");
     onCalcSummary();
     return;
   }
