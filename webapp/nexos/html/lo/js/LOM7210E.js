@@ -260,9 +260,9 @@ function _OnInputKeyUp(e, view) {
 }
 
 function scanValueType(scanVal) {
-  if (scanVal.substr(0, 2) === 'TP') {
-    return $NC.G_CONSTS.SCAN_TOTAL; // 0
-  }
+//  if (scanVal.substr(0, 2) === 'TP') {
+//    return $NC.G_CONSTS.SCAN_TOTAL; // 0
+//  }
   if (scanVal.substr(0, 2) === 'OP') {
     return $NC.G_CONSTS.SCAN_PICKING; // 1
   }
@@ -320,72 +320,68 @@ function onScan(scanVal, flag) {
   }
 
   // 0. 토탈피킹
-  if (flag == $NC.G_CONSTS.SCAN_TOTAL) {
-    var SCAN_DATA = scanVal.substr(2).split($NC.G_VAR.BARCD_DATA_DIV)
-      ,SCAN_CENTER_CD = SCAN_DATA[0]
-      ,SCAN_BU_CD = SCAN_DATA[1]
-      ,SCAN_OUTBOUND_DATE = $NC.getDate(SCAN_DATA[2])
-      ,SCAN_PICK_SEQ = SCAN_DATA[3];
-    $NC.G_VAR.LAST_SCAN_TOTAL = scanVal;
-    if (G_GRDMASTER.data.getLength() > 0 && $NC.G_VAR.INSPECT_YN === "N") {
-      showMessage({
-        message: "검수중인 상품이 있습니다. 계속 진행하시겠습니까?",
-        onYesFn: function() {
-          $NC.serviceCall("/LOM7210E/callBWScanConfirm.do", {
-            P_QUERY_PARAMS: $NC.getParams({
-              P_CENTER_CD: CENTER_CD,
-              P_BU_CD: BU_CD,
-              P_OUTBOUND_DATE: OUTBOUND_DATE,
-              P_OUTBOUND_NO: OUTBOUND_NO,
-              P_USER_ID: $NC.G_USERINFO.USER_ID
-            })
-          }, scanTotal, onError, null, 'LOM7210E_CANCEL');
-        },
-        onNoFn: function() {
-          setFocusScan();
-        }
-      });
-      return false;
-    }
-
-    if (!isWorkingScan()) {
-      showMessage({
-        message: "스캔한 정보가 상단의 조회조건 정보와 다릅니다. 계속 진행하시겠습니까?",
-        onYesFn: function() {
-          scanTotal();
-        },
-        onNoFn: function() {
-          setFocusScan();
-        }
-      });
-      return false;
-    }
-    // 피킹스캔실시
-    function scanTotal() {
-      // 초기화
-      onChangingCondition();
-
-      $NC.setValue("#cboQCenter_Cd", SCAN_CENTER_CD);
-      $NC.setValue("#edtQBu_Cd", SCAN_BU_CD);
-      $NC.setValue("#dtpQOutbound_Date", SCAN_OUTBOUND_DATE);
-      
-      $NC.G_VAR.PICK_SEQ = SCAN_PICK_SEQ;
-
-      _Inquiry();
-      setFocusScan();
-    }
-    scanTotal();
-    return false;
-  }
+//  if (flag == $NC.G_CONSTS.SCAN_TOTAL) {
+//    var SCAN_DATA = scanVal.substr(2).split($NC.G_VAR.BARCD_DATA_DIV)
+//      ,SCAN_CENTER_CD = SCAN_DATA[0]
+//      ,SCAN_BU_CD = SCAN_DATA[1]
+//      ,SCAN_OUTBOUND_DATE = $NC.getDate(SCAN_DATA[2])
+//      ,SCAN_PICK_SEQ = SCAN_DATA[3];
+//    $NC.G_VAR.LAST_SCAN_TOTAL = scanVal;
+//    if (G_GRDMASTER.data.getLength() > 0 && $NC.G_VAR.INSPECT_YN === "N") {
+//      showMessage({
+//        message: "검수중인 상품이 있습니다. 계속 진행하시겠습니까?",
+//        onYesFn: function() {
+//          $NC.serviceCall("/LOM7210E/callBWScanConfirm.do", {
+//            P_QUERY_PARAMS: $NC.getParams({
+//              P_CENTER_CD: CENTER_CD,
+//              P_BU_CD: BU_CD,
+//              P_OUTBOUND_DATE: OUTBOUND_DATE,
+//              P_OUTBOUND_NO: OUTBOUND_NO,
+//              P_USER_ID: $NC.G_USERINFO.USER_ID
+//            })
+//          }, scanTotal, onError, null, 'LOM7210E_CANCEL');
+//        },
+//        onNoFn: function() {
+//          setFocusScan();
+//        }
+//      });
+//      return false;
+//    }
+//
+//    if (!isWorkingScan()) {
+//      showMessage({
+//        message: "스캔한 정보가 상단의 조회조건 정보와 다릅니다. 계속 진행하시겠습니까?",
+//        onYesFn: function() {
+//          scanTotal();
+//        },
+//        onNoFn: function() {
+//          setFocusScan();
+//        }
+//      });
+//      return false;
+//    }
+//    // 피킹스캔실시
+//    function scanTotal() {
+//      // 초기화
+//      onChangingCondition();
+//
+//      $NC.setValue("#cboQCenter_Cd", SCAN_CENTER_CD);
+//      $NC.setValue("#edtQBu_Cd", SCAN_BU_CD);
+//      $NC.setValue("#dtpQOutbound_Date", SCAN_OUTBOUND_DATE);
+//      
+//      $NC.G_VAR.PICK_SEQ = SCAN_PICK_SEQ;
+//
+//      _Inquiry();
+//      setFocusScan();
+//    }
+//    scanTotal();
+//    return false;
+//  }
   // 1. 피킹라벨
   if (flag == $NC.G_CONSTS.SCAN_PICKING) {
     $NC.G_VAR.isLabelScan = $NC.G_CONSTS.SCAN_PICKING;
     $NC.G_VAR.LAST_SCAN_PICKING = scanVal;
-    var SCAN_DATA = scanVal.substr(2).split($NC.G_VAR.BARCD_DATA_DIV)
-      ,SCAN_CENTER_CD = SCAN_DATA[0]
-      ,SCAN_BU_CD = SCAN_DATA[1]
-      ,SCAN_OUTBOUND_DATE = $NC.getDate(SCAN_DATA[2])
-      ,SCAN_PICK_SEQ = SCAN_DATA[3];
+    var SCAN_PICK_SEQ = scanVal.substr(2, scanVal.length);
     
     if (G_GRDMASTER.data.getLength() > 0 && $NC.G_VAR.INSPECT_YN === "N") {
       showMessage({
@@ -425,10 +421,6 @@ function onScan(scanVal, flag) {
     function scanPicking() {
       // 초기화
       onChangingCondition();
-
-      $NC.setValue("#cboQCenter_Cd", SCAN_CENTER_CD);
-      $NC.setValue("#edtQBu_Cd", SCAN_BU_CD);
-      $NC.setValue("#dtpQOutbound_Date", SCAN_OUTBOUND_DATE);
       
       $NC.G_VAR.PICK_SEQ = SCAN_PICK_SEQ;
 
@@ -585,13 +577,13 @@ function onScan(scanVal, flag) {
 
   // 스캔데이터와 현재 조건 비교
   function isWorkingScan() {
-    if (SCAN_CENTER_CD == CENTER_CD && 
-      SCAN_BU_CD == BU_CD && 
-      SCAN_OUTBOUND_DATE == OUTBOUND_DATE
-      ) {
-        return true;
-    }
-    return false;
+//    if (SCAN_CENTER_CD == CENTER_CD && 
+//      SCAN_BU_CD == BU_CD && 
+//      SCAN_OUTBOUND_DATE == OUTBOUND_DATE
+//      ) {
+//        return true;
+//    }
+    return true;
   };
 }
 
@@ -1356,7 +1348,7 @@ function onGetMaster(ajaxData) {
     $NC.setGridDisplayRows("#grdMaster", 0, 0);
 
     onChangingCondition();
-    showMessage("일반/혼합주문이 아니거나 유효하지 않은 전표입니다.\n대물주문은 출고대물검수에서 작업하세요.");
+    showMessage("일반/혼합주문이 아니거나 유효하지 않은 전표입니다.\n출고일자를 확인하시거나, 대물주문은 출고대물검수에서 작업하세요.");
     return;
   }
 
@@ -1976,6 +1968,7 @@ function setItemInfoValue(rowData) {
   $NC.setValue("#edtOutbound_No", rowData.OUTBOUND_NO);
   $NC.setValue("#edtQOutbound_No", rowData.OUTBOUND_NO);
   $NC.setValue("#edtBu_No", rowData.BU_NO);
+  $NC.setValue("#edtItem_State", rowData.ITEM_STATE_F);
   if (rowData.DELIVERY_TYPE == "1") {
     $NC.G_VAR.CARRIER_CD = "0020";
   } else {

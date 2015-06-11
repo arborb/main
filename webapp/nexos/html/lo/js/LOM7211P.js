@@ -42,8 +42,6 @@ function _Initialize() {
 
   $("#btnPrintInvoice").click(onBtnPrintInvoice); // 택배송장출력 버튼 클릭
 
-  //$NC.setEnable("#btnBoxDelete", $NC.G_VAR.userData.P_INSPECT_YN);
-  //$NC.setEnable("#btnBoxMerge", $NC.G_VAR.userData.P_INSPECT_YN);
   $NC.setEnable("#btnBoxDelete", true);
   $NC.setEnable("#btnBoxMerge", true);
   $NC.setEnable("#btnSaveT2", $NC.G_VAR.userData.P_INSPECT_YN);

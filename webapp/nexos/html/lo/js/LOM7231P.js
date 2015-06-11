@@ -144,31 +144,6 @@ function _Inquiry() {
   G_GRDDETAILT1.queryParams = queryParams;
   // 데이터 조회
   $NC.serviceCall("/LOM7230E/getDataSet.do", $NC.getGridParams(G_GRDDETAILT1), onGetDetailT1);
-  /*
-  $NC.setInitGridVar(G_GRDMASTERT2);
-  // 파라메터 세팅
-  G_GRDMASTERT2.queryParams = queryParams;
-  // 데이터 조회
-  $NC.serviceCall("/LOM7230E/getDataSet.do", $NC.getGridParams(G_GRDMASTERT2), onGetMasterT2);
-
-  $NC.setInitGridVar(G_GRDDETAILT2);
-  // 파라메터 세팅
-  G_GRDDETAILT2.queryParams = queryParams;
-  // 데이터 조회
-  $NC.serviceCall("/LOM7230E/getDataSet.do", $NC.getGridParams(G_GRDDETAILT2), onGetDetailT2);
-
-  $NC.setInitGridVar(G_GRDMASTERT3);
-  // 파라메터 세팅
-  G_GRDMASTERT3.queryParams = queryParams;
-  // 데이터 조회
-  $NC.serviceCall("/LOM7230E/getDataSet.do", $NC.getGridParams(G_GRDMASTERT3), onGetMasterT3);
-
-  $NC.setInitGridVar(G_GRDDETAILT3);
-  // 파라메터 세팅
-  G_GRDDETAILT3.queryParams = queryParams;
-  // 데이터 조회
-  $NC.serviceCall("/LOM7230E/getDataSet.do", $NC.getGridParams(G_GRDDETAILT3), onGetDetailT3);
-  */
 }
 
 /**

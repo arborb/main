@@ -19,6 +19,7 @@
           ,TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')                       AS PRINT_DATETIME
 ,'' AS FIRST_YN
 ,'' AS DELIVERY_TYPE1
+,'' AS ITEM_STATE_F
       FROM (
             SELECT L3.*
                   ,CEIL(
@@ -182,6 +183,7 @@
 	<field name="PRINT_DATETIME" class="java.lang.String"/>
 	<field name="FIRST_YN" class="java.lang.String"/>
 	<field name="DELIVERY_TYPE1" class="java.lang.String"/>
+	<field name="ITEM_STATE_F" class="java.lang.String"/>
 	<group name="GRP_PICK_SEQ" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{PICK_SEQ}]]></groupExpression>
 	</group>
@@ -418,7 +420,7 @@
 				<textFieldExpression><![CDATA["[" + $F{ENTRY_QTY} + "]"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="65" y="0" width="131" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="43ff77a6-6cd1-477b-9e1e-2ed574a0aef2"/>
+				<reportElement mode="Transparent" x="5" y="0" width="153" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="43ff77a6-6cd1-477b-9e1e-2ed574a0aef2"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="나눔고딕 ExtraBold" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -433,12 +435,14 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DELIVERY_TYPE1}]]></textFieldExpression>
 			</textField>
-			<componentElement>
-				<reportElement x="3" y="0" width="62" height="15" uuid="3f2ff57b-524e-4b0e-995f-c8957c1bb434"/>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barHeight="60">
-					<jr:codeExpression><![CDATA[$F{ITEM_CD}]]></jr:codeExpression>
-				</jr:barbecue>
-			</componentElement>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="158" y="0" width="38" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="d5b0800d-fb47-4281-b9c6-217299fa697b"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_STATE_F}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>

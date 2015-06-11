@@ -53,6 +53,7 @@
 ,'' AS FLOOR_DIV
 ,'' AS DELIVERY_TYPE1
 ,'' AS FIRST_YN
+,'' AS ITEM_STATE_F
     FROM (
           SELECT M1.CENTER_CD
                 ,M1.BU_CD
@@ -275,6 +276,7 @@
 	<field name="FLOOR_DIV" class="java.lang.String"/>
 	<field name="DELIVERY_TYPE1" class="java.lang.String"/>
 	<field name="FIRST_YN" class="java.lang.String"/>
+	<field name="ITEM_STATE_F" class="java.lang.String"/>
 	<group name="GRP_PICK_SEQ" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{PAPER_NO}]]></groupExpression>
 	</group>
@@ -411,8 +413,8 @@
 				<text><![CDATA[합계 :]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement x="27" y="14" width="185" height="25" uuid="f7fab1e9-bcc4-47c7-bbbc-537134cb304f"/>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barHeight="70">
+				<reportElement x="77" y="12" width="82" height="24" uuid="f7fab1e9-bcc4-47c7-bbbc-537134cb304f"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barHeight="85">
 					<jr:codeExpression><![CDATA[$F{PAPER_NO}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
@@ -423,7 +425,7 @@
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="3" y="1" width="64" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="a03c326c-568d-4e63-a4e6-d38a1828d92c"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
-					<font fontName="나눔고딕 ExtraBold" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<font fontName="나눔고딕 ExtraBold" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{LOCATION_CD}]]></textFieldExpression>
@@ -447,10 +449,10 @@
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="3" y="16" width="64" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="223a0227-331b-4e14-b9d2-ee3255e7076a"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
-					<font fontName="나눔고딕 ExtraBold" size="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<font fontName="나눔고딕 ExtraBold" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{CAUTION}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ITEM_STATE_F}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="196" y="16" width="29" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="7e281cfb-3509-4415-a1ee-e81aedc80dcc"/>
@@ -460,12 +462,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DELIVERY_TYPE1}]]></textFieldExpression>
 			</textField>
-			<componentElement>
-				<reportElement x="5" y="16" width="62" height="15" uuid="91bd3e49-7660-426f-a3f8-05432cc50e67"/>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barHeight="50">
-					<jr:codeExpression><![CDATA[$F{ITEM_CD}]]></jr:codeExpression>
-				</jr:barbecue>
-			</componentElement>
 		</band>
 	</detail>
 	<pageFooter>

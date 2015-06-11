@@ -1361,8 +1361,8 @@ function grdT1SubOnGetColumns() {
     minWidth: 80
   });
   $NC.setGridColumn(columns, {
-    id: "ITEM_STATE",
-    field: "ITEM_STATE",
+    id: "ITEM_STATE_F",
+    field: "ITEM_STATE_F",
     name: "상태",
     minWidth: 40
   });

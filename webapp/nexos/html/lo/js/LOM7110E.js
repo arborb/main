@@ -343,22 +343,17 @@ function validateLabelScanCode(scanVal) {
  * 라벨코드값을 파싱한다.
  */
 function getLabelCode(scanVal) {
-  var scan = scanVal.split('-');
-  if (scanVal.length != 24 || 
-      scan.length != 4 ||
-      scanVal.substr(0, 2) != 'OP' ||
-      scanVal.substr(4,1) != '-' || 
-      scanVal.substr(9,1) != '-' || 
-      scanVal.substr(18,1) != '-'
+  var scan = scanVal;
+  if (scan.length != 11 ||
+      scanVal.substr(0, 2) != 'OP'
   ) {
     return false;
   }
-  var outboundDate = scan[2].substr(0, 4) + '-' + scan[2].substr(4,2) + '-' + scan[2].substr(6);
   return {
-    center: scan[0].substr(2),
-    bu: scan[1],
-    outboundDate: outboundDate,
-    pickSeq: scan[3]
+    center: $NC.getValue('#cboQCenter_Cd'),
+    bu: $NC.getValue('#edtQBu_Cd'),
+    outboundDate: $NC.getValue('#dtpQOutbound_Date'),
+    pickSeq: scan
   };
 }
 

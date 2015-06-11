@@ -252,7 +252,7 @@ function _OnInputKeyUp(e, view) {
     var id = view.prop("id").substr(3).toUpperCase();
     if (id === 'SCAN') {
       var scanVal = $NC.getValue(view).toUpperCase()
-        ,scanType = scanValueType(scanVal)
+        ,scanType = scanValueType(scanVal);
 
       $('#btnBoxManage').addClass('disabled');
       if (scanType == $NC.G_CONSTS.SCAN_TOTAL) {
@@ -283,15 +283,14 @@ function _OnInputKeyUp(e, view) {
  * 스캔라벨 타입을 리턴한다.
  */
 function scanValueType(scanVal) {
-  var scanArr = scanVal.split('-')
-  if (scanVal.substr(0, 2) === 'TP' && scanArr.length == 5) {
-    $NC.G_VAR.LAST_SCAN_TOTAL = scanVal;
-    $NC.G_VAR.PICK_SEQ = scanArr[scanArr.length-1];
-    return $NC.G_CONSTS.SCAN_TOTAL; // 0
-  }
-  if (scanVal.substr(0, 2) === 'OP' && scanArr.length == 4) {
+//  if (scanVal.substr(0, 2) === 'TP' && scanVal.length == 5) {
+//    $NC.G_VAR.LAST_SCAN_TOTAL = scanVal;
+//    $NC.G_VAR.PICK_SEQ = scanArr[scanArr.length-1];
+//    return $NC.G_CONSTS.SCAN_TOTAL; // 0
+//  }
+  if (scanVal.substr(0, 2) === 'OP' && scanVal.length == 11) {
     $NC.G_VAR.LAST_SCAN_PICKING = scanVal;
-    $NC.G_VAR.PICK_SEQ = scanArr[scanArr.length-1];
+    $NC.G_VAR.PICK_SEQ = scanVal.substr(2, scanVal.length);
     return $NC.G_CONSTS.SCAN_PICKING; // 1
   }
   if (isNaN(Number(scanVal)) && scanVal.length === 6 ||
@@ -449,13 +448,13 @@ function _Inquiry() {
     return;
   }
   
-  var OUTBOUND_BATCH = $NC.getValue("#cboQOutbound_Batch");
-  if ($NC.isNull(OUTBOUND_BATCH)) {
-    showMessage("대물주문건에 해당하는 출고차수가 없습니다.");
-    return;
-  }
+//  var OUTBOUND_BATCH = $NC.getValue("#cboQOutbound_Batch");
+//  if ($NC.isNull(OUTBOUND_BATCH)) {
+//    showMessage("대물주문건에 해당하는 출고차수가 없습니다.");
+//    return;
+//  }
 
-  var ITEM_BAR_CD = $NC.getValue("#edtQItem_Barcd");
+  //var ITEM_BAR_CD = $NC.getValue("#edtQItem_Barcd");
 
   // 파라메터 세팅
   G_GRDMASTER.queryParams = $NC.getParams({
@@ -572,7 +571,7 @@ function _Save(saveType) {
   */
  
   var rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
-  var COMPLETE_YN = "N";
+  //var COMPLETE_YN = "N";
   var onSucessFn;
   switch (saveType) {
   case "onBoxComplete":
@@ -581,7 +580,7 @@ function _Save(saveType) {
 //      return;
 //    }
 
-    COMPLETE_YN = "Y";
+    //COMPLETE_YN = "Y";
     onSucessFn = onBoxComplete;
     break;
   case "onBoxSave":
@@ -665,7 +664,7 @@ function _Cancel() {
     if (getInspectYn()) {
       $NC.setValue("#edtBox_No", "검수완료");
       $("#edtBox_No").addClass("inspected");
-      $('#btnBoxManage').removeClass('disabled')
+      $('#btnBoxManage').removeClass('disabled');
     }
     //_Inquiry();
   }, 400);
@@ -1098,6 +1097,9 @@ function onGetMaster(ajaxData) {
       $NC.setValue('#edtItem_Nm');
       $NC.setValue('#edtItem_Spec');
       $NC.setValue('#edtQty_In_Box');
+      $NC.setValue('#edtItem_State');
+      
+      $NC.setValue("#edtQPaper_No", rowData.PAPER_NO);
 
       var msg = '합포장대상 (' + rowData[0].FLOOR_DIV + ') ' + rowData[0].LOCATION_CD;
       $NC.setValue("#edtBox_No", msg);
@@ -1108,7 +1110,7 @@ function onGetMaster(ajaxData) {
       $NC.setInitGridData(G_GRDMASTER, ajaxData);
     }    
   }else{
-    showMessage("대물주문이 아니거나 유효하지 않은 전표입니다.\n일반주문은 출고스캔검수에서 작업하세요.");
+    showMessage("대물주문이 아니거나 유효하지 않은 전표입니다.\n출고일자를 확인하시거나, 일반주문은 출고스캔검수에서 작업하세요.");
     onCalcSummary();
     return;
   }
@@ -1429,7 +1431,7 @@ function onShowBoxManage(ajaxData) {
   var BU_CD = $NC.getValue("#edtQBu_Cd");
   var OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
   var OUTBOUND_NO = $NC.getValue("#edtQOutbound_No");
-  var ITEM_CD = $NC.getValue("#edtQItem_Barcd");
+  //var ITEM_CD = $NC.getValue("#edtQItem_Barcd");
 
   var rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
   
@@ -1823,20 +1825,20 @@ function onScanOrder(scanVal, flag) {
     onChangingCondition();
 
     // 바코드 파싱
-    var SCAN_DATA = scanVal.substr(2).split($NC.G_VAR.BARCD_DATA_DIV);
+    var SCAN_DATA = scanVal;
 
-    var SCAN_CENTER_CD = SCAN_DATA[0];
-    var SCAN_BU_CD = SCAN_DATA[1];
-    var SCAN_OUTBOUND_DATE = $NC.getDate(SCAN_DATA[2]);
-    var SCAN_OUTBOUND_BATCH = SCAN_DATA[3];
-    var SCAN_ITEM_CD = SCAN_DATA[4];
-    $NC.G_VAR.COMPARE_SCAN = SCAN_DATA[4];
+//    var SCAN_CENTER_CD = SCAN_DATA[0];
+//    var SCAN_BU_CD = SCAN_DATA[1];
+//    var SCAN_OUTBOUND_DATE = $NC.getDate(SCAN_DATA[2]);
+//    var SCAN_OUTBOUND_BATCH = SCAN_DATA[3];
+//    var SCAN_ITEM_CD = SCAN_DATA[4];
+    $NC.G_VAR.COMPARE_SCAN = SCAN_DATA;
 
-    $NC.setValue("#cboQCenter_Cd", SCAN_CENTER_CD);
-    $NC.setValue("#edtQBu_Cd", SCAN_BU_CD);
-    $NC.setValue("#dtpQOutbound_Date", SCAN_OUTBOUND_DATE);
-    $NC.setValue("#cboQOutbound_Batch", SCAN_OUTBOUND_BATCH);
-    $NC.setValue("#edtQItem_Barcd", SCAN_ITEM_CD);
+//    $NC.setValue("#cboQCenter_Cd", SCAN_CENTER_CD);
+//    $NC.setValue("#edtQBu_Cd", SCAN_BU_CD);
+//    $NC.setValue("#dtpQOutbound_Date", SCAN_OUTBOUND_DATE);
+//    $NC.setValue("#cboQOutbound_Batch", SCAN_OUTBOUND_BATCH);
+    $NC.setValue("#edtQItem_Barcd", SCAN_DATA);
 
     _Inquiry();
   };
@@ -2073,7 +2075,7 @@ function onScanFnNumDivide(scanVal) {
   var ENTRY_QTY = Number(rowData.ENTRY_QTY);
   var CONFIRM_QTY = Number(rowData.CONFIRM_QTY);
   var INSPECT_QTY = Number(rowData.INSPECT_QTY);
-  var ORG_INSPECT_QTY = INSPECT_QTY;
+  //var ORG_INSPECT_QTY = INSPECT_QTY;
   var ITEM_QTY = 0;
 
   var scanLen = scanVal.length;
@@ -2373,6 +2375,7 @@ function setItemInfoValue(rowData) {
   $NC.setValue("#edtItem_Spec", rowData.ITEM_SPEC);
   $NC.setValue("#edtQty_In_Box", rowData.QTY_IN_BOX);
   $NC.setValue("#edtQPaper_No", rowData.PAPER_NO);
+  $NC.setValue("#edtItem_State", rowData.ITEM_STATE_F);
 //  $NC.setValue("#edtEntry_Qty", rowData.ENTRY_QTY);
 //  $NC.setValue("#edtConfirm_Qty", rowData.CONFIRM_QTY);
 //  $NC.setValue("#edtInspect_Qty", rowData.INSPECT_QTY);
@@ -2495,8 +2498,8 @@ function setProgressBar(val) {
   }
 
   $NC.G_VAR.SUM_INSPECT_QTY = $NC.G_VAR.SUM_INSPECT_QTY + Number(val);
-  var TOTAL_INSPECT_QTY = $NC.G_VAR.SUM_CONFIRM_QTY + $NC.G_VAR.SUM_INSPECT_QTY;
-  var CONFIRM_RATE = $NC.getRoundVal((TOTAL_INSPECT_QTY / $NC.G_VAR.SUM_ENTRY_QTY) * 100);
+  //var TOTAL_INSPECT_QTY = $NC.G_VAR.SUM_CONFIRM_QTY + $NC.G_VAR.SUM_INSPECT_QTY;
+  //var CONFIRM_RATE = $NC.getRoundVal((TOTAL_INSPECT_QTY / $NC.G_VAR.SUM_ENTRY_QTY) * 100);
 
 //  $NC.setValue("#divProgressVal", TOTAL_INSPECT_QTY + " / " + $NC.G_VAR.SUM_ENTRY_QTY + " [ " + CONFIRM_RATE + "%]");
 //  $("#divProgressbar").progressbar("value", CONFIRM_RATE);
