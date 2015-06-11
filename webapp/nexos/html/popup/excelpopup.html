@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS -->
+<script src="../popup/js/popup.js"></script>
+<!-- Notice Popup CSS/JS -->
+<link rel="stylesheet" href="../../layout/popup/excelpopup.css" />
+<script src="js/excelpopup.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divMasterView" style="padding: 0; border-width: 1px; border-style: solid;">
+    <div class="ui-ctnr-row">
+      <div class="ui-lbl-key" style="color: red; width: 250px;">※ 엑셀파일을 다운로드 하는 사유를 써주세요.</div>
+    </div>
+    <div class="ui-ctnr-row">
+      <div id="lblUser_Id" class="ui-lbl-normal">사용자ID</div>
+      <input class="ui-edt-display" type="text" id="edtUser_Id" disabled="disabled" style="width: 200px;" />
+    </div>
+    <div class="ui-ctnr-row">
+      <div id="lblUser_Nm" class="ui-lbl-normal">사용자명</div>
+      <input class="ui-edt-display" type="text" id="edtUser_Nm" disabled="disabled" style="width: 200px;" />
+    </div>
+    <div class="ui-ctnr-row">
+      <div id="lblUser_Pwd" class="ui-lbl-key">현재 비밀번호</div>
+      <input class="ui-edt-key" type="password" id="edtUser_Pwd" style="width: 200px;" maxlength="20" />
+    </div>
+    <div class="ui-ctnr-row">
+      <div id="lblNew_User_Pwd1" class="ui-lbl-key">비밀번호 변경</div>
+      <input class="ui-edt-key" type="password" id="edtNew_User_Pwd1" style="width: 200px;" maxlength="20" />
+    </div>
+    <div class="ui-ctnr-row">
+      <div id="lblNew_User_Pwd2" class="ui-lbl-key">비밀번호 확인</div>
+      <input class="ui-edt-key" type="password" id="edtNew_User_Pwd2" style="width: 200px;" maxlength="20" />
+    </div>
+  </div>
+  <div id="divBottomView" style="text-align: right; padding: 5px;">
+    <span style="float:left">
+      <input type="button" id="btnLogout" value="로그아웃" class="ui-btn-cmd" style="width: 80px;" />
+    </span>
+    <input type="button" id="btnOk" value="확인" class="ui-btn-cmd" style="width: 80px;" />
+    <input type="button" id="btnCancel" value="취소" class="ui-btn-cmd" style="width: 80px;" />
+  </div>
+</body>
+</html>
