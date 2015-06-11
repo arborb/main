@@ -802,23 +802,8 @@
      * @param messageOptions
      *          기본: "데이터를 가져오는 중입니다.", 다른 메시지로 표시할 경우 입력
      */
-    $NC.serviceCall = function(requestUrl, requestData, onSuccessHandler, onErrorHandler, messageOptions, mockId) {
-      var args = arguments;
-      if (!requestData) {
-        requestData = {};
-      }
-      // ajax 이중 호출을 방지한다. if문 삭제시 작동하지 않음
-      if (!requestData.arrowPolling && !addServiceLog('serviceCall', args, 'SERVICE CALL(비동기통신)')) {
-        return false;
-      };
-      // 화면에서 개발시 가상으로 ajax를 호출하는 모듈 if문 삭제시 작동하지 않음
-      if (localStorage.getItem('_MOCK') == 'true' && mockId) {
-        var isCon = serviceMock(requestUrl, requestData, onSuccessHandler, onErrorHandler, messageOptions, mockId);
-        if (!isCon) {
-          console.warn(mockId, '가상 데이터를 사용하고 있습니다.');
-          return false;
-        }
-      }
+    $NC.serviceCall = function(requestUrl, requestData, onSuccessHandler, onErrorHandler, messageOptions) {
+
       var ajaxData = {
         success: null,
         error: null
@@ -856,12 +841,10 @@
         complete: function(jqXHR, textStatus) {
           // 성공, 실패에 대한 Event 호출
           if (ajaxData.success) {
-            removeServiceLog('serviceCall', args, 'SUCCESS');
             if (onSuccessHandler) {
               onSuccessHandler(ajaxData.success);
             }
           } else {
-            removeServiceLog('serviceCall', args, 'ERROR');
             if ($.isFunction(onErrorHandler)) {
               onErrorHandler(ajaxData.error);
             } else {
@@ -892,23 +875,8 @@
      * @param messageOptions
      *          기본: "데이터를 가져오는 중입니다.", 다른 메시지로 표시할 경우 입력
      */
-    $NC.serviceCallAndWait = function(requestUrl, requestData, onSuccessHandler, onErrorHandler, messageOptions, mockId) {
-      var args = arguments;
-      if (!requestData) {
-        requestData = {};
-      }
-      // ajax 이중 호출을 방지한다. if문 삭제시 작동하지 않음
-      if (!requestData.arrowPolling && !addServiceLog('serviceCallAndWait', args, 'SERVICE CALL(동기통신)')) {
-        return false;
-      };
-      // 화면에서 개발시 가상으로 ajax를 호출하는 모듈 if문 삭제시 작동하지 않음
-      if (localStorage.getItem('_MOCK') == 'true' && mockId) {
-        var isCon = serviceMock(requestUrl, requestData, onSuccessHandler, onErrorHandler, messageOptions, mockId);
-        if (!isCon) {
-          console.warn(mockId, '가상 데이터를 사용하고 있습니다.');
-          return false;
-        }
-      }
+    $NC.serviceCallAndWait = function(requestUrl, requestData, onSuccessHandler, onErrorHandler, messageOptions) {
+
       var ajaxData = {
         success: null,
         error: null
@@ -948,12 +916,10 @@
         complete: function(jqXHR, textStatus) {
           // 성공, 실패에 대한 Event 호출
           if (ajaxData.success) {
-            removeServiceLog('serviceCall', args, 'SUCCESS');
             if (onSuccessHandler) {
               onSuccessHandler(ajaxData.success);
             }
           } else {
-            removeServiceLog('serviceCall', args, 'ERROR');
             if ($.isFunction(onErrorHandler)) {
               onErrorHandler(ajaxData.error);
             } else {
@@ -2286,7 +2252,7 @@
      *          서비스 호출 파라메터
      * @param comboOptions
      *          Select(ComboBox) 옵션<br>
-     *          [S]selector[필수]: Select(ComboBox) Selector(#cboCenter_Cd ...), Selector(['#cboCenter_Cd'])<br>
+     *          [S]selector[필수]: Select(ComboBox) Selector(#cboCenter_Cd ...)<br>
      *          [S]codeField[필수]: 코드 필드명<br>
      *          [S]nameField[필수]: 명 필드명<br>
      *          [S]fullNameField[필수]: 코드 - 명 필드명 -> 코드 - 명 필드가 지정되면 코드 - 명 필드를 표시<br>
@@ -2303,6 +2269,7 @@
 
       var comboInitFn = function(resultSet) {
 
+        var cboObj = $(comboOptions.selector).empty();
         var optionStr = "";
         if (comboOptions.addAll) {
           optionStr += "<option value='%'>%" + $NC.G_CONSTS.DIV_COMBO + "전체</option>";
@@ -2328,18 +2295,7 @@
                 + $NC.G_CONSTS.DIV_COMBO + rowData[comboOptions.nameField] + "</option>";
           }
         }
-        var selector = comboOptions.selector
-          ,cboObj
-        if (typeof selector === 'string') {
-          cboObj = $(selector).empty();
-          cboObj.append(optionStr);
-        } else {
-          for (var i in selector) {
-            cboObj = $(selector[i]).empty();
-            cboObj.append(optionStr);
-          }
-        }
-        
+        cboObj.append(optionStr);
         if (!$NC.isNull(comboOptions.selectVal)) {
           $NC.setValue(cboObj, comboOptions.selectVal);
         } else if (!$NC.isNull(comboOptions.selectOption)) {
@@ -6377,50 +6333,6 @@
       }
 
       return result;
-    }
-
-    /**
-     * ajax Service 이중 발생 방지
-     * ID를 기록하고, Service 성공시 삭제한다.
-     */
-    var serviceCallLog = []
-      ,removeServiceLogTimeoutId = null
-    function addServiceLog (id, args, flag) {
-      var mode = localStorage.getItem('_MODE');
-      if (mode === 'DEV') {
-        console.info(flag + ': ', id, args)
-      }
-      clearTimeout(removeServiceLogTimeoutId);
-      removeServiceLogTimeoutId = setTimeout(function(){
-        removeAllServiceLog();
-      }, 200)
-      args.id = id
-      service = JSON.stringify(args).replace(/ /g, '');
-      for (var i in serviceCallLog) {
-        if (serviceCallLog[i] == service) {
-          console.error('serviceCall이 두 번 호출되었습니다.( ' + serviceCallLog[i] + ' )')
-          return false;
-        }
-      }
-      serviceCallLog.push(service)
-      return true;
-    }
-    function removeServiceLog (id, args, flag) {
-      var mode = localStorage.getItem('_MODE');
-      if (mode === 'DEV') {
-        console.info(flag + ': ', id, args)
-      }
-      args.id = id
-      service = JSON.stringify(args).replace(/ /g, '');
-      for (var i in serviceCallLog) {
-        if (serviceCallLog[i] == service) {
-          serviceCallLog.splice(i, 1);
-          return true;
-        }
-      }
-    }
-    function removeAllServiceLog() {
-      serviceCallLog.length = 0;
     }
 
     /**
