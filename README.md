@@ -36,6 +36,14 @@
 * CS01080EDAOImpl.java
 * cs01080e_sqlmap.xml
 
+## 개인세션 관련 파일
+* 생성 *
+* /java/nexos/common/spring/security/SecurityUserAuthenticationFilter.java
+* /java/nexos/common/spring/security/SecurityUserAuthenticationToken.java
+* /java/nexos/common/spring/security/SecurityUserDetailsService.java
+* /java/nexos/common/spring/security/SecurityUserPasswordEncoder.java
+
+
 
 ---
 # DB 변경내역
