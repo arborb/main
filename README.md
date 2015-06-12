@@ -20,6 +20,14 @@
 * CS01010EDAOImpl.java
 * cs01010e_sqlmap.xml
 
+## 전체메뉴
+* CS01060Q.html
+* CS01060Q.js
+
+## 즐겨찾기
+* CS01070Q.html
+* CS01070Q.js
+
 ## 사용자로그조회
 * CS04050Q.html
 * CS04050Q.js
