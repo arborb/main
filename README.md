@@ -32,7 +32,7 @@
 * CS01080E.js
 * CS01080EController.java
 * CS01080EService.java
-* CS01080EDAO.java
+* CS01080EDAO.java  
 * CS01080EDAOImpl.java
 * cs01080e_sqlmap.xml
 
@@ -113,8 +113,15 @@ CREATE TABLE CSUSERPROGRAMBOOKMARK
 )
 ```
 
-
-
+---
+# 설정변경
+## web.xml
+```html
+<error-page>
+	<error-code>404</error-code>
+	<location>/error/404.html</location>
+</error-page>
+```
 
 
 
