@@ -116,6 +116,7 @@ CREATE TABLE CSUSERPROGRAMBOOKMARK
 ---
 # 설정변경
 ## web.xml
+* 404 페이지 삽입
 ```html
 <error-page>
 	<error-code>404</error-code>
