@@ -5,7 +5,12 @@
 
 ## 공통
 * common.js
+* main.html
 * main.js
+* WCController.java
+* WCService.java
+* WCDAO.java
+* WCDAOImpl.java
 
 ## 사용자 비밀번호 변경
 * CS01030P.html
