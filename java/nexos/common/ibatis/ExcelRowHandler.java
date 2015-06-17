@@ -1,9 +1,5 @@
 package nexos.common.ibatis;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,13 +7,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
-import nexos.common.Consts;
-import nexos.common.spring.security.Encryption;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -28,6 +17,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+
+import nexos.common.Consts;
 
 import com.ibatis.sqlmap.client.event.RowHandler;
 
@@ -142,7 +133,6 @@ public class ExcelRowHandler implements RowHandler {
     Map rowData = (Map)valueObject;
 
     writeXLSRow(rowData);
-    
   }
 
   /**
@@ -157,30 +147,7 @@ public class ExcelRowHandler implements RowHandler {
       writeHeaderRow(rowData);
     }
 
-    try {
-      writeDataRow(rowData);
-    } catch (InvalidKeyException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (UnsupportedEncodingException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (NoSuchAlgorithmException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (NoSuchPaddingException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (InvalidAlgorithmParameterException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (IllegalBlockSizeException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (BadPaddingException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    writeDataRow(rowData);
 
     // RowCount 증가
     xlsRowNum++;
@@ -352,32 +319,16 @@ public class ExcelRowHandler implements RowHandler {
     }
   }
 
-
   /**
    * Data Row 기록
    * 
    * @param rowData
-   * @throws BadPaddingException 
-   * @throws IllegalBlockSizeException 
-   * @throws InvalidAlgorithmParameterException 
-   * @throws NoSuchPaddingException 
-   * @throws NoSuchAlgorithmException 
-   * @throws UnsupportedEncodingException 
-   * @throws InvalidKeyException 
    */
-  private void writeDataRow(Map<String, Object> rowData) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+  private void writeDataRow(Map<String, Object> rowData) {
 
     // Data Row 기록
     HSSFRow xlsRow = xlsSheet.createRow(xlsRowNum);
     xlsRow.setHeight(XLS_ROW_HEIGHT);
-    rowData.put("SHIPPER_NM",   Encryption.aesDecode((String)rowData.get("SHIPPER_NM")));
-    rowData.put("SHIPPER_TEL",   Encryption.aesDecode((String)rowData.get("SHIPPER_TEL")));
-    rowData.put("ORDERER_HP",   Encryption.aesDecode((String)rowData.get("ORDERER_HP")));
-    rowData.put("ORDERER_TEL",   Encryption.aesDecode((String)rowData.get("ORDERER_TEL")));
-    rowData.put("SHIPPER_HP",   Encryption.aesDecode((String)rowData.get("SHIPPER_HP")));
-    rowData.put("ORDERER_NM",   Encryption.aesDecode((String)rowData.get("ORDERER_NM")));
-    rowData.put("SHIPPER_ADDR_BASIC",   Encryption.aesDecode((String)rowData.get("SHIPPER_ADDR_BASIC")));
-    rowData.put("SHIPPER_ADDR_DETAIL",   Encryption.aesDecode((String)rowData.get("SHIPPER_ADDR_DETAIL")));
     for (int i = 0; i < xlsColumnCount; i++) {
       writeDataCell(xlsRow, i, xlsColumns.get(i), rowData);
     }

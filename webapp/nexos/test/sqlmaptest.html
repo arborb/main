@@ -4,336 +4,315 @@
 <title> NewDocument </title>
 <meta charset="utf-8">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
-<style>
-.wran {color:red;}
-</style>
+<script>
+    var _xml;
+    var _arrTarget = [];
+    var _arrLink = [];
+    var _arrDesc = [];
+</script>
 </head>
 <body>
-<div id="msg"></div>
 <script>
-
-/**
- * sqlmap.xml 검증기 :
- * sqlmap.xml에서 parameterMap의 갯수와 procedure의 파라미터 갯수를 비교한다.
- * 사용법: 
- *  1. /main/resource/nexos/sqlmap/oracle/ 폴더를 /main/webapp/nexos/test/ 폴더로 복사한다.
- *  2. 서버를 구동한다.
- *  3. 크롬에서 http://localhost:8080/nexos/test/sqlmaptest.html url로 접속한 후 로그를 확인한다.
- *  4. 검증이 끝나면 /main/webapp/nexos/test/oracle 폴더는 삭제한다.
- * G_GRDPROGRAMLIST 에 저장된 프로그램 ID를 기준으로 xml을 검증한다.
- *
- * 작성자: 백국경(romeoh78@gmail.com)
- */
 $(document).ready(function(){
     for (var i in xmls) {
         init(xmls[i]);
     }
-    //init('lo/lo07010e_sqlmap.xml');
+    //init('lo/lom7030e_sqlmap.xml');
 });
 
 function init(map){
     jQuery.ajax({
-        dataType: 'xml',
-        url: 'oracle/' + map, 
+        dataType:"xml",
+        url: "oracle/" + map, 
+        //url:"oracle/cm/cm03050e_sqlmap.xml",
         success:function(data){
             load(map, data);
         },
+        complete:function(){
+            //alert("complete");
+        },
         error:function(xhr,status){
-            var msg = '<p class="wran">[오류] 파일이 존재하지 않음: oracle/' + map + '</p>';
-            msg += '<hr>';
-            $('#msg').append(msg);
+            console.log(xhr, status);
         }
     });
 }
 
-function load(map, xml) {
-    var  msg = ''
-        ,$xml = $( xml )
-        ,$map = $xml.find( 'parameterMap' )
-        ,$procedure = $xml.find( 'procedure' );
+function load(map, xml)
+{
+    var $xml = $( xml ),
+        $map = $xml.find( "parameterMap" ),
+        $procedure = $xml.find( "procedure" );
 
     for (var i=0; i<$map.length; i++) {
-        var  parameter = $($map[i]).find( 'parameter' )
-            ,modeIn = $($map[i]).find( 'parameter[mode="IN"]' )
-            ,ortn = $($map[i]).find( 'parameter[property="O_RTN"]' )
-            ,param = $($procedure[i]).text();
-        
+        var  parameter = $($map[i]).find('parameter')
+            ,modeIn = $($map[i]).find('parameter[mode="IN"]')
+            ,ortn = $($map[i]).find('parameter[property="O_RTN"]')
         if (modeIn.length != 0) {
-            var paramLengh = param.split('(')[1].split('?').length - 1;
+            var param = $($procedure[i]).text()
+            var paramLengh = param.split('(')[1].split('?').length - 1
+            
             if (ortn.length != 0) {
                 if (paramLengh == modeIn.length) {
-                    msg += '<p>[성공] 파일명: ' + map + '  프로시져: '+ $($map[i]).attr('id') + '</p>';
+                    console.log('성공')
                 } else {
-                    msg += '<p class="wran">[주의] 파일명: ' + map + '  프로시져: '+ $($map[i]).attr('id') + ' 확인요망</p>';
+                    console.log('ortn: 파일명: ' + map +' : id: '+ $($map[i]).attr('id'))  
                 }
             } else {
-                if (param.indexOf('? =') != -1 || param.indexOf('?=') != -1) {
-                    msg += '<p class="wran">[주의] 파일명: ' + map +' 프로시져: '+ $($map[i]).attr('id') + ' 파라미터와 프로시져의 return 형식이 다릅니다.</p>';
+                if (paramLengh == parameter.length) {
+                    console.log('성공')
                 } else {
-                    if (paramLengh == parameter.length) {
-                        msg += '<p>[성공] 파일명: ' + map + '  프로시져: '+ $($map[i]).attr('id') + '</p>';
-                    } else {
-                        msg += '<p class="wran">[주의] 파일명: ' + map +' 프로시져: '+ $($map[i]).attr('id') + ' 확인요망</p>';
-                    }
+                    console.log('파일명: ' + map +' : id: '+ $($map[i]).attr('id'))  
                 }
             }
-        } else {
-            if (ortn.length != 0) {
-                msg += '<p>[성공] 파일명: ' + map + ' 프로시져: '+ $($map[i]).attr('id') + ' (파라미터가 없음)</p>';
-            } else {
-                if (param.indexOf('? =') != -1 || param.indexOf('?=') != -1) {
-                    msg += '<p class="wran">[주의] 파일명: ' + map +' 프로시져: '+ $($map[i]).attr('id') + ' 파라미터와 프로시져의 return 형식이 다릅니다.</p>';
-                }
-            }
+
         }
     }
-    msg += '<hr>';
-    $('#msg').append(msg);
+    
 }
 
 var xmls = [
-     'lv/lv01000q_sqlmap.xml'
-    ,'cs/cs01000e_sqlmap.xml'
-    ,'cs/cs01010e_sqlmap.xml'
-    ,'cs/cs01020e_sqlmap.xml'
-    ,'cs/cs01040q_sqlmap.xml'
-    ,'cs/cs01050e_sqlmap.xml'
-    ,'cs/cs02010q_sqlmap.xml'
-    ,'cs/cs03010e_sqlmap.xml'
-    ,'cs/cs03020e_sqlmap.xml'
-    ,'cs/cs04010e_sqlmap.xml'
-    ,'cs/cs04030e_sqlmap.xml'
-    ,'cs/cs04020e_sqlmap.xml'
-    ,'cs/cs04040q_sqlmap.xml'
-    ,'cs/cs06010e_sqlmap.xml'
-    ,'cs/cs06020e_sqlmap.xml'
-    ,'cs/cs05010e_sqlmap.xml'
-    ,'cs/cs09010q_sqlmap.xml'
-    ,'cs/cs01060q_sqlmap.xml'
-    ,'cs/cs01070q_sqlmap.xml'
-    ,'cs/cs04050q_sqlmap.xml'
-    ,'cs/cs01080e_sqlmap.xml'
-    ,'cm/cm01010e_sqlmap.xml'
-    ,'cm/cm01020e_sqlmap.xml'
-    ,'cm/cm01030e_sqlmap.xml'
-    ,'cm/cm01040q_sqlmap.xml'
-    ,'cm/cm02050e_sqlmap.xml'
-    ,'cm/cm02030e_sqlmap.xml'
-    ,'cm/cm03020e_sqlmap.xml'
-    ,'cm/cm03060e_sqlmap.xml'
-    ,'cm/cm03030e_sqlmap.xml'
-    ,'cm/cm03040e_sqlmap.xml'
-    ,'cm/cm04010e_sqlmap.xml'
-    ,'cm/cm04020e_sqlmap.xml'
-    ,'cm/cm04030e_sqlmap.xml'
-    ,'cm/cm04040e_sqlmap.xml'
-    ,'cm/cm04060e_sqlmap.xml'
-    ,'cm/cm05010e_sqlmap.xml'
-    ,'cm/cm05020e_sqlmap.xml'
-    ,'cm/cm05030q_sqlmap.xml'
-    ,'cm/cm06010e_sqlmap.xml'
-    ,'cm/cm07010e_sqlmap.xml'
-    ,'cm/cm07020e_sqlmap.xml'
-    ,'cm/cm09010e_sqlmap.xml'
-    ,'cm/cm10020e_sqlmap.xml'
-    ,'cm/cm06020e_sqlmap.xml'
-    ,'cm/cm10010e_sqlmap.xml'
-    ,'cm/cm04070q_sqlmap.xml'
-    ,'cm/cm03080e_sqlmap.xml'
-    ,'cm/cm03090e_sqlmap.xml'
-    ,'cm/cm07030e_sqlmap.xml'
-    ,'cm/cm02060e_sqlmap.xml'
-    ,'cm/cm04090e_sqlmap.xml'
-    ,'cm/cm04080e_sqlmap.xml'
-    ,'cm/cm09090e_sqlmap.xml'
-    ,'cm/cm20010e_sqlmap.xml'
-    ,'cm/cm20020e_sqlmap.xml'
-    ,'la/la01010e_sqlmap.xml'
-    ,'la/la01020e_sqlmap.xml'
-    ,'la/la01030q_sqlmap.xml'
-    ,'la/la02010e_sqlmap.xml'
-    ,'la/la02020q_sqlmap.xml'
-    ,'la/la02030e_sqlmap.xml'
-    ,'li/li01010e_sqlmap.xml'
-    ,'li/li02010e_sqlmap.xml'
-    ,'li/li03010q_sqlmap.xml'
-    ,'li/li03020q_sqlmap.xml'
-    ,'li/li03030q_sqlmap.xml'
-    ,'li/li04010e_sqlmap.xml'
-    ,'li/li03040q_sqlmap.xml'
-    ,'lo/lo01010e_sqlmap.xml'
-    ,'lo/lo01020q_sqlmap.xml'
-    ,'lo/lo01030q_sqlmap.xml'
-    ,'lo/lo02010e_sqlmap.xml'
-    ,'lo/lo03010q_sqlmap.xml'
-    ,'lo/lo03020q_sqlmap.xml'
-    ,'lo/lo03040q_sqlmap.xml'
-    ,'lo/lo03030q_sqlmap.xml'
-    ,'lo/lo05010q_sqlmap.xml'
-    ,'lo/lo04010e_sqlmap.xml'
-    ,'lo/lo07010e_sqlmap.xml'
-    ,'lo/lom1010e_sqlmap.xml'
-    ,'lo/lom1020q_sqlmap.xml'
-    ,'lo/lom1030q_sqlmap.xml'
-    ,'lo/lom2010e_sqlmap.xml'
-    ,'lo/lom3010q_sqlmap.xml'
-    ,'lo/lom3020q_sqlmap.xml'
-    ,'lo/lom3040q_sqlmap.xml'
-    ,'lo/lom3030q_sqlmap.xml'
-    ,'lo/lom5010q_sqlmap.xml'
-    ,'lo/lom4010e_sqlmap.xml'
-    ,'lo/lom7010e_sqlmap.xml'
-    ,'lo/lom7020e_sqlmap.xml'
-    ,'lo/lom8010q_sqlmap.xml'
-    ,'lo/lom8020q_sqlmap.xml'
-    ,'lo/lom9030e_sqlmap.xml'
-    ,'lo/lom9020q_sqlmap.xml'
-    ,'lo/lom9050q_sqlmap.xml'
-    ,'lo/lom9040q_sqlmap.xml'
-    ,'lo/lom9060q_sqlmap.xml'
-    ,'lo/lom9070e_sqlmap.xml'
-    ,'lo/lom9070q_sqlmap.xml'
-    ,'lo/lom9080q_sqlmap.xml'
-    ,'lo/lom3050q_sqlmap.xml'
-    ,'lo/lom7030e_sqlmap.xml'
-    ,'lo/lom9090q_sqlmap.xml'
-    ,'lo/lom9110e_sqlmap.xml'
-    ,'lo/lom3060e_sqlmap.xml'
-    ,'lo/lom3080q_sqlmap.xml'
-    ,'lo/lom3090q_sqlmap.xml'
-    ,'lo/lom7090e_sqlmap.xml'
-    ,'lo/lom7110e_sqlmap.xml'
-    ,'lo/lom7120q_sqlmap.xml'
-    ,'lo/lom9130q_sqlmap.xml'
-    ,'lo/lom9170e_sqlmap.xml'
-    ,'lo/lom9150q_sqlmap.xml'
-    ,'lo/lom9140q_sqlmap.xml'
-    ,'lo/lom7210e_sqlmap.xml'
-    ,'lo/lom7230e_sqlmap.xml'
-    ,'lo/lom9999x_sqlmap.xml'
-    ,'lo/lom7040e_sqlmap.xml'
-    ,'lo/lom7050e_sqlmap.xml'
-    ,'ri/rim6020q_sqlmap.xml'
-    ,'lo/lom8030q_sqlmap.xml'
-    ,'ro/ro04050e_sqlmap.xml'
-    ,'lo/lom1110e_sqlmap.xml'
-    ,'ro/ro04060e_sqlmap.xml'
-    ,'ro/ro03010e_sqlmap.xml'
-    ,'ld/ld01010e_sqlmap.xml'
-    ,'ld/ld02010e_sqlmap.xml'
-    ,'lo/loc2010e_sqlmap.xml'
-    ,'lo/lom9999e_sqlmap.xml'
-    ,'ri/ri01010e_sqlmap.xml'
-    ,'ri/ri02010e_sqlmap.xml'
-    ,'ri/ri03020q_sqlmap.xml'
-    ,'ri/ri03030q_sqlmap.xml'
-    ,'ri/rim1010e_sqlmap.xml'
-    ,'ri/rim2010e_sqlmap.xml'
-    ,'ri/rim3020q_sqlmap.xml'
-    ,'ri/rim3030q_sqlmap.xml'
-    ,'ri/rim6010e_sqlmap.xml'
-    ,'ro/ro01010e_sqlmap.xml'
-    ,'ro/ro02010e_sqlmap.xml'
-    ,'ro/ro03020q_sqlmap.xml'
-    ,'ro/ro03030q_sqlmap.xml'
-    ,'ro/ro04040e_sqlmap.xml'
-    ,'lc/lc01010e_sqlmap.xml'
-    ,'lc/lc02010e_sqlmap.xml'
-    ,'lc/lc02020e_sqlmap.xml'
-    ,'lc/lc03010e_sqlmap.xml'
-    ,'lc/lc04010e_sqlmap.xml'
-    ,'lc/lc05010e_sqlmap.xml'
-    ,'lc/lc02040e_sqlmap.xml'
-    ,'lc/lc07010q_sqlmap.xml'
-    ,'lc/lc08010e_sqlmap.xml'
-    ,'ls/ls01010q_sqlmap.xml'
-    ,'ls/ls01020q_sqlmap.xml'
-    ,'ls/ls02010q_sqlmap.xml'
-    ,'ls/ls02020q_sqlmap.xml'
-    ,'ls/ls03010q_sqlmap.xml'
-    ,'ls/ls04010q_sqlmap.xml'
-    ,'ls/ls05010q_sqlmap.xml'
-    ,'ls/ls07010q_sqlmap.xml'
-    ,'ls/ls01030q_sqlmap.xml'
-    ,'ls/ls08010q_sqlmap.xml'
-    ,'ls/ls06011q_sqlmap.xml'
-    ,'lf/lf01010e_sqlmap.xml'
-    ,'lf/lf01020e_sqlmap.xml'
-    ,'lf/lf02010e_sqlmap.xml'
-    ,'lf/lf02020e_sqlmap.xml'
-    ,'lf/lf02030e_sqlmap.xml'
-    ,'lf/lf02040e_sqlmap.xml'
-    ,'lf/lf02050e_sqlmap.xml'
-    ,'lf/lf02060e_sqlmap.xml'
-    ,'lf/lf02080e_sqlmap.xml'
-    ,'lf/lf02090e_sqlmap.xml'
-    ,'lf/lf02091e_sqlmap.xml'
-    ,'lf/lf05010e_sqlmap.xml'
-    ,'lf/lf03010e_sqlmap.xml'
-    ,'lf/lf03020e_sqlmap.xml'
-    ,'lf/lf03030e_sqlmap.xml'
-    ,'lf/lf03040e_sqlmap.xml'
-    ,'lf/lf04010q_sqlmap.xml'
-    ,'lf/lf04020q_sqlmap.xml'
-    ,'lf/lf04030q_sqlmap.xml'
-    ,'lf/lf06010q_sqlmap.xml'
-    ,'lf/lf06020q_sqlmap.xml'
-    ,'lf/lf07010q_sqlmap.xml'
-    ,'lf/lf04040q_sqlmap.xml'
-    ,'lf/lf06070q_sqlmap.xml'
-    ,'lf/lf06080q_sqlmap.xml'
-    ,'lf/lf08010q_sqlmap.xml'
-    ,'lf/lf01030e_sqlmap.xml'
-    ,'lf/lf01130e_sqlmap.xml'
-    ,'lv/lv01010q_sqlmap.xml'
-    ,'lv/lv02010q_sqlmap.xml'
-    ,'lv/lv02020q_sqlmap.xml'
-    ,'lv/lv02040q_sqlmap.xml'
-    ,'lv/lv02050q_sqlmap.xml'
-    ,'lv/lv02060q_sqlmap.xml'
-    ,'lv/lv03010q_sqlmap.xml'
-    ,'lv/lv03020q_sqlmap.xml'
-    ,'lv/lv04010q_sqlmap.xml'
-    ,'lv/lv04020q_sqlmap.xml'
-    ,'lv/lv04030q_sqlmap.xml'
-    ,'lk/lk01010q_sqlmap.xml'
-    ,'lk/lk02010q_sqlmap.xml'
-    ,'lk/lk03010q_sqlmap.xml'
-    ,'lk/lk04010q_sqlmap.xml'
-    ,'lk/lk05010q_sqlmap.xml'
-    ,'ed/ed01010e_sqlmap.xml'
-    ,'ed/ed01020e_sqlmap.xml'
-    ,'ed/ed02010e_sqlmap.xml'
-    ,'ed/ed02020e_sqlmap.xml'
-    ,'ed/ed02030e_sqlmap.xml'
-    ,'ed/ed05010q_sqlmap.xml'
-    ,'ed/ed03010e_sqlmap.xml'
-    ,'ed/ed03020e_sqlmap.xml'
-    ,'ed/ed03030e_sqlmap.xml'
-    ,'ed/ed06010e_sqlmap.xml'
-    ,'ed/ed06020e_sqlmap.xml'
-    ,'ed/ed03040e_sqlmap.xml'
-    ,'ed/ed03050e_sqlmap.xml'
-    ,'ed/ed06030e_sqlmap.xml'
-    ,'ed/ed03060e_sqlmap.xml'
-    ,'ed/ed03070e_sqlmap.xml'
-    ,'ed/ed03080e_sqlmap.xml'
-    ,'ed/ed03090e_sqlmap.xml'
-    ,'ed/ed03100e_sqlmap.xml'
-    ,'ed/ed03110e_sqlmap.xml'
-    ,'ed/ed03120e_sqlmap.xml'
-    ,'ed/ed10010e_sqlmap.xml'
-    ,'ed/ed09080q_sqlmap.xml'
-    ,'ed/ed04010e_sqlmap.xml'
-    ,'ed/ed04020e_sqlmap.xml'
-    ,'ed/ed04030e_sqlmap.xml'
-    ,'ed/ed04040e_sqlmap.xml'
-    ,'ed/ed04050e_sqlmap.xml'
-    ,'ed/ed08010e_sqlmap.xml'
-    ,'ed/ed04060e_sqlmap.xml'
-    ,'ed/ed09070q_sqlmap.xml'
-    ,'ed/sc01010e_sqlmap.xml'
-];
+'lv/lv01000q_sqlmap.xml',
+'cs/cs01000e_sqlmap.xml',
+'cs/cs01010e_sqlmap.xml',
+'cs/cs01020e_sqlmap.xml',
+'cs/cs01040q_sqlmap.xml',
+'cs/cs01050e_sqlmap.xml',
+'cs/cs02010q_sqlmap.xml',
+'cs/cs03010e_sqlmap.xml',
+'cs/cs03020e_sqlmap.xml',
+'cs/cs04010e_sqlmap.xml',
+'cs/cs04030e_sqlmap.xml',
+'cs/cs04020e_sqlmap.xml',
+'cs/cs04040q_sqlmap.xml',
+'cs/cs06010e_sqlmap.xml',
+'cs/cs06020e_sqlmap.xml',
+'cs/cs05010e_sqlmap.xml',
+'cs/cs09010q_sqlmap.xml',
+'cs/cs01060q_sqlmap.xml',
+'cs/cs01070q_sqlmap.xml',
+'cs/cs04050q_sqlmap.xml',
+'cs/cs01080e_sqlmap.xml',
+'cm/cm01010e_sqlmap.xml',
+'cm/cm01020e_sqlmap.xml',
+'cm/cm01030e_sqlmap.xml',
+'cm/cm01040q_sqlmap.xml',
+'cm/cm02050e_sqlmap.xml',
+'cm/cm02030e_sqlmap.xml',
+'cm/cm03020e_sqlmap.xml',
+'cm/cm03060e_sqlmap.xml',
+'cm/cm03030e_sqlmap.xml',
+'cm/cm03040e_sqlmap.xml',
+'cm/cm04010e_sqlmap.xml',
+'cm/cm04020e_sqlmap.xml',
+'cm/cm04030e_sqlmap.xml',
+'cm/cm04040e_sqlmap.xml',
+'cm/cm04060e_sqlmap.xml',
+'cm/cm05010e_sqlmap.xml',
+'cm/cm05020e_sqlmap.xml',
+'cm/cm05030q_sqlmap.xml',
+'cm/cm06010e_sqlmap.xml',
+'cm/cm07010e_sqlmap.xml',
+'cm/cm07020e_sqlmap.xml',
+'cm/cm09010e_sqlmap.xml',
+'cm/cm10020e_sqlmap.xml',
+'cm/cm06020e_sqlmap.xml',
+'cm/cm10010e_sqlmap.xml',
+'cm/cm04070q_sqlmap.xml',
+'cm/cm03080e_sqlmap.xml',
+'cm/cm03090e_sqlmap.xml',
+'cm/cm07030e_sqlmap.xml',
+'cm/cm02060e_sqlmap.xml',
+'cm/cm04090e_sqlmap.xml',
+'cm/cm04080e_sqlmap.xml',
+'cm/cm09090e_sqlmap.xml',
+'cm/cm20010e_sqlmap.xml',
+'cm/cm20020e_sqlmap.xml',
+'la/la01010e_sqlmap.xml',
+'la/la01020e_sqlmap.xml',
+'la/la01030q_sqlmap.xml',
+'la/la02010e_sqlmap.xml',
+'la/la02020q_sqlmap.xml',
+'la/la02030e_sqlmap.xml',
+'li/li01010e_sqlmap.xml',
+'li/li02010e_sqlmap.xml',
+'li/li03010q_sqlmap.xml',
+'li/li03020q_sqlmap.xml',
+'li/li03030q_sqlmap.xml',
+'li/li04010e_sqlmap.xml',
+'li/li03040q_sqlmap.xml',
+'lo/lo01010e_sqlmap.xml',
+'lo/lo01020q_sqlmap.xml',
+'lo/lo01030q_sqlmap.xml',
+'lo/lo02010e_sqlmap.xml',
+'lo/lo03010q_sqlmap.xml',
+'lo/lo03020q_sqlmap.xml',
+'lo/lo03040q_sqlmap.xml',
+'lo/lo03030q_sqlmap.xml',
+'lo/lo05010q_sqlmap.xml',
+'lo/lo04010e_sqlmap.xml',
+'lo/lo07010e_sqlmap.xml',
+'lo/lom1010e_sqlmap.xml',
+'lo/lom1020q_sqlmap.xml',
+'lo/lom1030q_sqlmap.xml',
+'lo/lom2010e_sqlmap.xml',
+'lo/lom3010q_sqlmap.xml',
+'lo/lom3020q_sqlmap.xml',
+'lo/lom3040q_sqlmap.xml',
+'lo/lom3030q_sqlmap.xml',
+'lo/lom5010q_sqlmap.xml',
+'lo/lom4010e_sqlmap.xml',
+'lo/lom7010e_sqlmap.xml',
+'lo/lom7020e_sqlmap.xml',
+'lo/lom8010q_sqlmap.xml',
+'lo/lom8020q_sqlmap.xml',
+'lo/lom9030e_sqlmap.xml',
+'lo/lom9020q_sqlmap.xml',
+'lo/lom9050q_sqlmap.xml',
+'lo/lom9040q_sqlmap.xml',
+'lo/lom9060q_sqlmap.xml',
+'lo/lom9070e_sqlmap.xml',
+'lo/lom9070q_sqlmap.xml',
+'lo/lom9080q_sqlmap.xml',
+'lo/lom3050q_sqlmap.xml',
+'lo/lom7030e_sqlmap.xml',
+'lo/lom9090q_sqlmap.xml',
+'lo/lom9110e_sqlmap.xml',
+'lo/lom3060e_sqlmap.xml',
+'lo/lom3080q_sqlmap.xml',
+'lo/lom3090q_sqlmap.xml',
+'lo/lom7090e_sqlmap.xml',
+'lo/lom7110e_sqlmap.xml',
+'lo/lom7120q_sqlmap.xml',
+'lo/lom9130q_sqlmap.xml',
+'lo/lom9170e_sqlmap.xml',
+'lo/lom9150q_sqlmap.xml',
+'lo/lom9140q_sqlmap.xml',
+'lo/lom7210e_sqlmap.xml',
+'lo/lom7230e_sqlmap.xml',
+'lo/lom9999x_sqlmap.xml',
+'lo/lom7040e_sqlmap.xml',
+'lo/lom7050e_sqlmap.xml',
+'ri/rim6020q_sqlmap.xml',
+'lo/lom8030q_sqlmap.xml',
+'ro/ro04050e_sqlmap.xml',
+'lo/lom1110e_sqlmap.xml',
+'ro/ro04060e_sqlmap.xml',
+'ro/ro03010e_sqlmap.xml',
+'ld/ld01010e_sqlmap.xml',
+'ld/ld02010e_sqlmap.xml',
+'lo/loc2010e_sqlmap.xml',
+'lo/lom9999e_sqlmap.xml',
+'ri/ri01010e_sqlmap.xml',
+'ri/ri02010e_sqlmap.xml',
+'ri/ri03020q_sqlmap.xml',
+'ri/ri03030q_sqlmap.xml',
+'ri/rim1010e_sqlmap.xml',
+'ri/rim2010e_sqlmap.xml',
+'ri/rim3020q_sqlmap.xml',
+'ri/rim3030q_sqlmap.xml',
+'ri/rim6010e_sqlmap.xml',
+'ro/ro01010e_sqlmap.xml',
+'ro/ro02010e_sqlmap.xml',
+'ro/ro03020q_sqlmap.xml',
+'ro/ro03030q_sqlmap.xml',
+'ro/ro04040e_sqlmap.xml',
+'lc/lc01010e_sqlmap.xml',
+'lc/lc02010e_sqlmap.xml',
+'lc/lc02020e_sqlmap.xml',
+'lc/lc03010e_sqlmap.xml',
+'lc/lc04010e_sqlmap.xml',
+'lc/lc05010e_sqlmap.xml',
+'lc/lc02040e_sqlmap.xml',
+'lc/lc07010q_sqlmap.xml',
+'lc/lc08010e_sqlmap.xml',
+'ls/ls01010q_sqlmap.xml',
+'ls/ls01020q_sqlmap.xml',
+'ls/ls02010q_sqlmap.xml',
+'ls/ls02020q_sqlmap.xml',
+'ls/ls03010q_sqlmap.xml',
+'ls/ls04010q_sqlmap.xml',
+'ls/ls05010q_sqlmap.xml',
+'ls/ls07010q_sqlmap.xml',
+'ls/ls01030q_sqlmap.xml',
+'ls/ls08010q_sqlmap.xml',
+'ls/ls06011q_sqlmap.xml',
+'lf/lf01010e_sqlmap.xml',
+'lf/lf01020e_sqlmap.xml',
+'lf/lf02010e_sqlmap.xml',
+'lf/lf02020e_sqlmap.xml',
+'lf/lf02030e_sqlmap.xml',
+'lf/lf02040e_sqlmap.xml',
+'lf/lf02050e_sqlmap.xml',
+'lf/lf02060e_sqlmap.xml',
+'lf/lf02080e_sqlmap.xml',
+'lf/lf02090e_sqlmap.xml',
+'lf/lf02091e_sqlmap.xml',
+'lf/lf05010e_sqlmap.xml',
+'lf/lf03010e_sqlmap.xml',
+'lf/lf03020e_sqlmap.xml',
+'lf/lf03030e_sqlmap.xml',
+'lf/lf03040e_sqlmap.xml',
+'lf/lf04010q_sqlmap.xml',
+'lf/lf04020q_sqlmap.xml',
+'lf/lf04030q_sqlmap.xml',
+'lf/lf06010q_sqlmap.xml',
+'lf/lf06020q_sqlmap.xml',
+'lf/lf07010q_sqlmap.xml',
+'lf/lf04040q_sqlmap.xml',
+'lf/lf06070q_sqlmap.xml',
+'lf/lf06080q_sqlmap.xml',
+'lf/lf08010q_sqlmap.xml',
+'lf/lf01030e_sqlmap.xml',
+'lf/lf01130e_sqlmap.xml',
+'lv/lv01010q_sqlmap.xml',
+'lv/lv02010q_sqlmap.xml',
+'lv/lv02020q_sqlmap.xml',
+'lv/lv02040q_sqlmap.xml',
+'lv/lv02050q_sqlmap.xml',
+'lv/lv02060q_sqlmap.xml',
+'lv/lv03010q_sqlmap.xml',
+'lv/lv03020q_sqlmap.xml',
+'lv/lv04010q_sqlmap.xml',
+'lv/lv04020q_sqlmap.xml',
+'lv/lv04030q_sqlmap.xml',
+'lk/lk01010q_sqlmap.xml',
+'lk/lk02010q_sqlmap.xml',
+'lk/lk03010q_sqlmap.xml',
+'lk/lk04010q_sqlmap.xml',
+'lk/lk05010q_sqlmap.xml',
+'ed/ed01010e_sqlmap.xml',
+'ed/ed01020e_sqlmap.xml',
+'ed/ed02010e_sqlmap.xml',
+'ed/ed02020e_sqlmap.xml',
+'ed/ed02030e_sqlmap.xml',
+'ed/ed05010q_sqlmap.xml',
+'ed/ed03010e_sqlmap.xml',
+'ed/ed03020e_sqlmap.xml',
+'ed/ed03030e_sqlmap.xml',
+'ed/ed06010e_sqlmap.xml',
+'ed/ed06020e_sqlmap.xml',
+'ed/ed03040e_sqlmap.xml',
+'ed/ed03050e_sqlmap.xml',
+'ed/ed06030e_sqlmap.xml',
+'ed/ed03060e_sqlmap.xml',
+'ed/ed03070e_sqlmap.xml',
+'ed/ed03080e_sqlmap.xml',
+'ed/ed03090e_sqlmap.xml',
+'ed/ed03100e_sqlmap.xml',
+'ed/ed03110e_sqlmap.xml',
+'ed/ed03120e_sqlmap.xml',
+'ed/ed10010e_sqlmap.xml',
+'ed/ed09080q_sqlmap.xml',
+'ed/ed04010e_sqlmap.xml',
+'ed/ed04020e_sqlmap.xml',
+'ed/ed04030e_sqlmap.xml',
+'ed/ed04040e_sqlmap.xml',
+'ed/ed04050e_sqlmap.xml',
+'ed/ed08010e_sqlmap.xml',
+'ed/ed04060e_sqlmap.xml',
+'ed/ed09070q_sqlmap.xml',
+'ed/sc01010e_sqlmap.xml'
+]
 
 </script>
 </body>

@@ -66,9 +66,9 @@ public class WCSessionImpl implements WCSession {
         SecurityContextHolder.clearContext();
         SecurityContextHolder.getContext().setAuthentication(authentication);
       }
-      // logger.info("Authentication User = " + authentication.getName() + (isNewAuthentication ? "" :
-      // ", 이미 보안 승인되어 있음"));
-      // logger.info("Authentications     = " + authentication.getAuthorities());
+       //logger.info("Authentication User = " + authentication.getName() + (isNewAuthentication ? "" :
+       //", 이미 보안 승인되어 있음"));
+       //logger.info("Authentications     = " + authentication.getAuthorities());
     } catch (Exception e) {
       logger.error(e.getMessage());
       throw new RuntimeException("보안 승인중 오류가 발생하였습니다.");
