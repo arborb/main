@@ -2,7 +2,6 @@ package nexos.service.common;
 
 import java.util.HashMap;
 import java.util.List;
-// import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -11,6 +10,7 @@ import nexos.common.ibatis.JsonDataSet;
 import nexos.common.ibatis.NexosDAO;
 
 import org.springframework.stereotype.Repository;
+// import java.util.List;
 
 /**
  * Class: CommonDAOImpl<br>
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Repository;
  * @author ASETEC
  * @version 1.0
  * 
- *          <pre style="font-family: NanumGothicCoding, GulimChe">
+ * <pre style="font-family: NanumGothicCoding, GulimChe">
  * ---------------------------------------------------------------------------------------------------------------------
  *  Version    Date          Author           Description
  * ---------  ------------  ---------------  ---------------------------------------------------------------------------
@@ -32,48 +32,41 @@ import org.springframework.stereotype.Repository;
 @Repository("COMMONDAO")
 public class CommonDAOImpl implements CommonDAO {
 
-	// private final Logger logger =
-	// LoggerFactory.getLogger(CommonDAOImpl.class);
+  // private final Logger logger = LoggerFactory.getLogger(CommonDAOImpl.class);
 
-	@Resource
-	private NexosDAO nexosDAO;
+  @Resource
+  private NexosDAO nexosDAO;
 
-	@Override
-	public HashMap<String, Object> callSP(String queryId,
-			Map<String, Object> params) {
+  @SuppressWarnings("rawtypes")
+  @Override
+  public List getDataSet(String queryId, Map<String, Object> params) {
 
-		return nexosDAO.callSP(queryId, params);
-	}
+    return nexosDAO.list(queryId, params);
+  }
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public List getDataSet(String queryId) {
+  @SuppressWarnings("rawtypes")
+  @Override
+  public List getDataSet(String queryId) {
 
-		return nexosDAO.list(queryId);
-	}
+    return nexosDAO.list(queryId);
+  }
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public List getDataSet(String queryId, Map<String, Object> params) {
+  @Override
+  public JsonDataSet getJsonDataSet(String queryId, Map<String, Object> params) {
 
-		return nexosDAO.list(queryId, params);
-	}
+    return nexosDAO.jsonList(queryId, params);
+  }
 
-	@Override
-	public JsonDataSet getJsonDataSet(String queryId) {
+  @Override
+  public JsonDataSet getJsonDataSet(String queryId) {
 
-		return nexosDAO.jsonList(queryId);
-	}
+    return nexosDAO.jsonList(queryId);
+  }
 
-	@Override
-	public JsonDataSet getJsonDataSet(String queryId, Map<String, Object> params) {
-		JsonDataSet result = null;
-		try {
-			result = nexosDAO.jsonList(queryId, params);
-		} catch (Exception e) {
-			return result;
-		}
-		return result;
-	}
+  @Override
+  public HashMap<String, Object> callSP(String queryId, Map<String, Object> params) {
+
+    return nexosDAO.callSP(queryId, params);
+  }
 
 }

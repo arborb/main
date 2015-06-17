@@ -46,7 +46,6 @@
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs01050e_sqlmap.xml" /><!-- 자동출력프린터설정 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs01060q_sqlmap.xml" /><!-- 전체메뉴가져오기 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs01070q_sqlmap.xml" /><!-- 즐겨찾기하이어키 -->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs01080e_sqlmap.xml" /><!-- 세션/비밀번호변경시간설정 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs02010q_sqlmap.xml" /><!-- 테이블정보조회하기 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs03010e_sqlmap.xml" /><!-- 프로세스관리 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs03020e_sqlmap.xml" /><!-- 브랜드별프로세스관리 -->
@@ -54,7 +53,6 @@
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs04020e_sqlmap.xml" /><!-- 브랜드별정책관리 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs04030e_sqlmap.xml" /><!-- 물류센터별정책관리 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs04040q_sqlmap.xml" /><!-- 정책조회 -->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs04050q_sqlmap.xml" /><!-- 사용자로그인정보조회 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs05010e_sqlmap.xml" /><!-- 상용코드관리 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs06010e_sqlmap.xml" /><!-- 화면표시관리 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs06020e_sqlmap.xml" /><!-- 메세지관리 -->
@@ -103,11 +101,11 @@
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm10010e_sqlmap.xml" /><!-- 딜옵션관리 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm10020e_sqlmap.xml" /><!-- 이벤트관리 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm06020e_sqlmap.xml" /><!-- 일자별안전재고관리 -->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm20010e_sqlmap.xml" /><!-- 일자별안전재고관리 -->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm20020e_sqlmap.xml" /><!-- 일자별안전재고관리 -->
   
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm09090e_sqlmap.xml" /><!-- TEST -->
  
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm20010e_sqlmap.xml" /><!-- 용기관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm20020e_sqlmap.xml" /><!-- 주문유형관리 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/procedure_sqlmap.xml" /><!-- 마스터 Procedure -->
   <!-- [E] - 마스터관리 -->
   <!-- [S] - 발주관리 -->
@@ -169,14 +167,11 @@
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom6010q_sqlmap.xml" /><!-- 적재팔레트출력및내역 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7010e_sqlmap.xml" /><!-- 출고스캔검수 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7020e_sqlmap.xml" /><!-- 출고단품검수 -->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7030e_sqlmap.xml" /><!-- 출고대물검수 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7030e_sqlmap.xml" /><!-- 출고단품검수 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7040e_sqlmap.xml" /><!-- 백화점집하장스캔 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7050e_sqlmap.xml" /><!-- 센터입고스캔 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7080e_sqlmap.xml" /><!-- 출고피킹검수-->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7090e_sqlmap.xml" /><!-- new출고작업-->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7110e_sqlmap.xml" /><!-- new피킹검수-->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7120q_sqlmap.xml" /><!-- new피킹검수-->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7210e_sqlmap.xml" /><!-- new피킹검수-->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7230e_sqlmap.xml" /><!-- new피킹검수-->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom8010e_sqlmap.xml" /><!-- 팔레타이징 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom8010q_sqlmap.xml" /><!-- 주문보류관리 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom8020q_sqlmap.xml" /><!-- 배송진행상태 -->
@@ -193,10 +188,7 @@
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9080e_sqlmap.xml" /><!-- 출고 합포장관리1 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9090e_sqlmap.xml" /><!-- 출고 합포장조회 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9110e_sqlmap.xml" /><!-- 출고 합포장관리2-->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9130q_sqlmap.xml" /><!-- 출고 합포장관리2-->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9140q_sqlmap.xml" /><!-- 출고 합포장관리2-->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9150q_sqlmap.xml" /><!-- 출고 합포장관리2-->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9170e_sqlmap.xml" /><!-- 출고 합포장관리2-->
  
   
   <!-- 출고공통 -->
@@ -271,8 +263,8 @@
   <!-- [S] - 정산 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf01010e_sqlmap.xml" /><!-- 보안설정/해제 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf01020e_sqlmap.xml" /><!-- 월마감관리 -->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf01030e_sqlmap.xml" /><!-- 청구정산관리 -->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf01130e_sqlmap.xml" /><!-- 지급정산관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf01030e_sqlmap.xml" /><!-- 수정중 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf01130e_sqlmap.xml" /><!-- 수정중 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf02010e_sqlmap.xml" /><!-- 정산마스터관리 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf02020e_sqlmap.xml" /><!-- 위탁수수료 기준관리 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf02030e_sqlmap.xml" /><!-- 임대수수료 기준관리 -->
@@ -366,8 +358,6 @@
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed09060e_sqlmap.xml" /><!-- [송신]변동가용재고 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed09070q_sqlmap.xml" /><!-- [송신]출고지시내역 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed09080q_sqlmap.xml" /><!-- [송신]출고취소내역조회 -->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed10010e_sqlmap.xml" /><!-- [즉시수신]통합 -->
-  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/sc01010e_sqlmap.xml" /><!-- [즉시수신]통합 -->
   
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/edcommon_sqlmap.xml" /><!-- EDI 공통 -->
   <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/procedure_sqlmap.xml" /><!-- EDI Procedure -->

@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.penta.scpdb.ScpDbAgent;
+
 /**
  * Class: WMS 공통 컨트롤러<br>
  * Description: WMS Common Controller Class<br>
@@ -321,12 +323,22 @@ public class WCController extends CommonController {
       result = getResponseEntityError(request, oMsg);
       return result;
     }
+    //woo
+    ///Scp
+    ScpDbAgent agt = new ScpDbAgent();
+    String iniFilePath = "/usr/scp/scpdb_agent_unix.ini"; 
+    String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );  
+    
+    System.out.println("\n ###########[outKey]#############: " + outKey);
+    System.out.println("\n ###########[outKey]#############: " + outKey);
+    
+    exportParams.put("P_SCPKEY", outKey);
+    
     exportParams.put(Consts.PK_QUERY_PARAMS, mapParams);
     exportParams.put("P_EXCEL_TITLE", excelTitle);
     exportParams.put("P_EXPORT_TYPE", exportType);
     exportParams.put(Consts.PK_USER_ID, user_Id);
-
-    
+    exportParams.put("P_SCPKEY", outKey);
     
     Map<String, Object> mapResult = null;
     try {

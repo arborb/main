@@ -4,10 +4,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.xmlbeans.SystemProperties;
+
 import nexos.common.Consts;
+import nexos.common.spring.security.Encryption;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibatis.sqlmap.client.event.RowHandler;
+
+import java.util.Properties;
+
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
+import javax.annotation.Resource;
+
 
 /**
  * Class: JsonRowHandler<br>
@@ -27,7 +42,8 @@ import com.ibatis.sqlmap.client.event.RowHandler;
  * </pre>
  */
 public class JsonRowHandler implements RowHandler {
-
+  
+  
   private final int               PAGE_SIZE = 10000;
   private int                     rowNum;
 
@@ -37,7 +53,8 @@ public class JsonRowHandler implements RowHandler {
   private StringBuilder           sbWriter;
   private ArrayList<String>       alColumns;
   private int                     colCount;
-
+  
+  
   public JsonRowHandler() {
 
     this.dsJson = new JsonDataSet();
@@ -49,7 +66,8 @@ public class JsonRowHandler implements RowHandler {
     this.alColumns = null;
     this.colCount = 0;
   }
-
+//
+//  
   @SuppressWarnings({"rawtypes", "unchecked"})
   @Override
   public void handleRow(Object valueObject) {
@@ -59,7 +77,7 @@ public class JsonRowHandler implements RowHandler {
     if (rowNum == 0) {
       dsJson.setColumns(rowData);
       alColumns = dsJson.getColumns();
-      colCount = dsJson.getDataColumnCount();
+      colCount = dsJson.getDataColumnCount(); 
     }
 
     addRow(rowData);
@@ -70,12 +88,113 @@ public class JsonRowHandler implements RowHandler {
    * 
    * @param rowData
    */
-  public void addRow(Map<String, Object> rowData) {
-
+  public void addRow(Map<String, Object> rowData) { 
+    
+    String DescryptedDataTotalAddr = null;
     try {
       // hmWriter.clear();
+      
       for (int col = 0; col < colCount; col++) {
-        hmWriter.put("" + col, rowData.get(alColumns.get(col)));
+        //System.out.println("For : " + alColumns.get(col).toString());
+        
+        String Diff = alColumns.get(col).toString();
+        String DeScryStr = null;
+        //System.out.println("rowData.keySet() : " +rowData.keySet());
+        /*
+        System.out.println("For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"); 
+        System.out.println("SystemProperties.getProperty(value1) : " +SystemProperties.getProperty(value1));
+        System.out.println("For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        */
+        
+        
+        //암호화/복호화 대상 컬럼지정
+        /*
+        String DeCrytAddr = globalProps.getProperty("encrypt.db.addrbasic");
+        String DeCrytAddrDetail = globalProps.getProperty("db.enaddrdetail");
+        String DeCrytTelno = globalProps.getProperty("db.entelno");
+        System.out.println("For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("암호화 및 복호화 대상 컬럼 [ 컬럼명 ] 0: [" + DeCrytAddr + " ]");
+        System.out.println("암호화 및 복호화 대상 컬럼 [ 컬럼명 ] 1: [" + DeCrytAddrDetail + " ]");
+        System.out.println("암호화 및 복호화 대상 컬럼 [ 컬럼명 ] 2: [" + DeCrytTelno + " ]"); 
+        */
+ 
+         Encryption en = new Encryption();
+         /*
+         if(Diff.equals(en.Rsa_Col1) || Diff.equals(en.Rsa_Col2) || Diff.equals(en.Rsa_Col3) 
+         //              || Diff.equals(en.Rsa_Col4) || Diff.equals(en.Rsa_Col5) || Diff.equals(en.Rsa_Col6) || Diff.equals(en.Rsa_Col7))
+         {
+         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+         System.out.println("rowData.get(alColumns.get(col)).toString() : [" + rowData.get(alColumns.get(col)).toString() + " ]");
+         System.out.println("Diff.equals(en.Rsa_Col1) : [" + Diff.equals(en.Rsa_Col1) + " ]");
+         System.out.println("rowData.get(alColumns.get(col)).toString() : [" + Diff.equals(en.Rsa_Col2) + " ]");
+         System.out.println("rowData.get(alColumns.get(col)).toString() : [" + Diff.equals(en.Rsa_Col3) + " ]");
+         System.out.println("rowData.get(alColumns.get(col)).toString() : [" + Diff.equals(en.Rsa_Col4) + " ]");
+         System.out.println("rowData.get(alColumns.get(col)).toString() : [" + Diff.equals(en.Rsa_Col5) + " ]");
+         System.out.println("rowData.get(alColumns.get(col)).toString() : [" + Diff.equals(en.Rsa_Col6) + " ]");
+         System.out.println("rowData.get(alColumns.get(col)).toString() : [" + Diff.equals(en.Rsa_Col7) + " ]");
+         System.out.println("rowData.get(alColumns.get(col)).toString() : [" + Diff.equals(en.Rsa_Col8) + " ]");
+         System.out.println("rowData.get(alColumns.get(col)).toString() : [" + Diff.equals(en.Rsa_Col9) + " ]");
+         System.out.println("rowData.get(alColumns.get(col)).toString() : [" + Diff.equals(en.Rsa_Col10) + " ]"); 
+         */
+         
+         //System.out.println("\n For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"); 
+         //System.out.println("\n Get Colunm : " + Diff + '\t');
+         //System.out.println("\n For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+         
+         
+         if(Diff.equals(en.Rsa_Col1) || Diff.equals(en.Rsa_Col2) 
+                                     || Diff.equals(en.Rsa_Col3) 
+                                     || Diff.equals(en.Rsa_Col4) 
+                                     || Diff.equals(en.Rsa_Col5) 
+                                     || Diff.equals(en.Rsa_Col6) 
+                                     || Diff.equals(en.Rsa_Col7)
+                                     || Diff.equals(en.Rsa_Col8)
+                                     || Diff.equals(en.Rsa_Col9)
+                                     || Diff.equals(en.Rsa_Col10)
+                                     || Diff.equals(en.Rsa_Col11)
+                                     || Diff.equals(en.Rsa_Col12)
+                                     || Diff.equals(en.Rsa_Col13)
+                                     || Diff.equals(en.Rsa_Col14)
+                                     || Diff.equals(en.Rsa_Col15)
+                                     || Diff.equals(en.Rsa_Col17))
+                                     //|| alColumns.get(col).toString().equals("SHIPPER_ADDR"))//  
+           /* 
+         if(Diff.equals(en.Rsa_Col1))
+         */
+          {
+          // 
+           /*
+           System.out.println("\n For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");    
+           System.out.println("\n For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+           System.out.println("\n For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+           System.out.println("\n For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+           System.out.println("\n For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+           System.out.println("\n Get Colunm : " + Diff + '\t');
+           System.out.println("\n For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+           System.out.println("\n For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+           System.out.println("\n For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+           System.out.println("\n For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"); 
+           */
+           
+          String EnStr = rowData.get(alColumns.get(col)).toString();
+          //System.out.println("EnStr ########@@@@@@@@@@--> :" + EnStr);  
+          String DescryptedData = en.aesDecode(EnStr);
+          
+          System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+          System.out.println("\n 암호화 문자열 : [" + EnStr + " ] :: " + "\n 복호화 문자열 : [" + DescryptedData + " ]" + '\t'); 
+          System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+          //System.out.println("복호화 [ DescryptedData ] : [" + DescryptedData + " ]");
+          //System.out.println("For DeScryStr Return: 00--> :" + DescryptedData); 
+          //System.out.println("For DeScryStr Return: 11--> :" + rowData.get(alColumns.get(col)));
+          //System.out.println("For @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");    
+            
+            hmWriter.put("" + col, DescryptedData);
+          
+        }else{
+          //System.out.println("ELSE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+          hmWriter.put("" + col, rowData.get(alColumns.get(col)));
+          //System.out.println("ELSE rowData.get(alColumns.get(col))"); 
+        }
       }
       hmWriter.put("" + colCount, Consts.DV_ID_PREFIX + rowNum);
       hmWriter.put("" + (colCount + 1), Consts.DV_CRUD_R);
@@ -100,6 +219,7 @@ public class JsonRowHandler implements RowHandler {
     int len = sbWriter.length();
     if (len > 0) {
       sbWriter.setLength(len - 1);
+      //System.out.println("sbWriter 0: " + sbWriter);
       dsJson.appendData(sbWriter);
       sbWriter = new StringBuilder();
     }

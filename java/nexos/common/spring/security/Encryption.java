@@ -19,20 +19,36 @@ import com.penta.scpdb.ScpDbAgent;
 
 public class Encryption {
 
-  private static final String iniFilePath = "/opt/SCP/scpdb_agent_unix.ini"; //개발기
+  //private static final String iniFilePath = "/opt/SCP/scpdb_agent_unix.ini"; //개발기
+  private static final String iniFilePath = "usr/scp/scpdb_agent_unix.ini"; //개발기
   
   public static final String Rsa_Col1 = "ORDERER_NM";
   public static final String Rsa_Col2 = "ORDERER_HP";
-  public static final String Rsa_Col3 = "ORDERER_EMAIL";
+  public static final String Rsa_Col3 = "ORDERER_EMAIL"; 
   public static final String Rsa_Col4 = "SHIPPER_NM";
   public static final String Rsa_Col5 = "SHIPPER_HP";
   public static final String Rsa_Col6 = "SHIPPER_ADDR_BASIC";
   public static final String Rsa_Col7 = "SHIPPER_ADDR_DETAIL";
+  public static final String Rsa_Col8 = "ORDERER_ADDR_BASIC";
+  public static final String Rsa_Col9 = "ORDERER_ADDR_DETAIL";
+  public static final String Rsa_Col10 = "SHIPPER_TEL";
   
+  public static final String Rsa_Col11 = "SHIPPER_NM1";
+  public static final String Rsa_Col12 = "SHIPPER_TEL1"; 
+  public static final String Rsa_Col13 = "SHIPPER_HP1";
+  public static final String Rsa_Col14 = "SHIPPER_ADDR_BASIC1";
+  public static final String Rsa_Col15 = "SHIPPER_ADDR_DETAIL1";
+  
+  //public static final String Rsa_Col16 = "SHIPPER_ADDR";   
+  public static final String Rsa_Col17 = "ORDERER_TEL";  
+  
+   
+
   private static String iv;
   private static Key keySpec;
   
-
+  
+ 
 
   /**
    * Decrypt Data 
@@ -57,7 +73,7 @@ public class Encryption {
       ret = agt.AgentInit( iniFilePath );
       
       String key = agt.ScpExportKey( iniFilePath, "KEY1", "" );    
-      System.out.println("OutKey : " + key );  
+      //System.out.println("OutKey : " + key );  
       
       iv = key.substring(0, 16);
       byte[] keyBytes = new byte[16];
@@ -65,18 +81,19 @@ public class Encryption {
       
           int len = b.length;
           if(len > keyBytes.length)
-              len = keyBytes.length;
+              len = keyBytes.length; 
           System.arraycopy(b, 0, keyBytes, 0, len); 
           keySpec = new SecretKeySpec(keyBytes, "AES");
-          System.out.println("keySpec : " + keySpec);
+         // System.out.println("keySpec : " + keySpec);
           
       
       Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
-      c.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(iv.getBytes("UTF-8")));
+      c.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(iv.getBytes("UTF-8"))); 
 
-      byte[] byteStr = Base64.decodeBase64(str.getBytes());
+      byte[] byteStr = Base64.decodeBase64(str.getBytes()); 
 
       return new String(c.doFinal(byteStr),"UTF-8");
+      
   }
 
   /**
@@ -86,7 +103,7 @@ public class Encryption {
    */
 
   public static String aesEncode(String str) throws java.io.UnsupportedEncodingException, NoSuchAlgorithmException,
-                                                   NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException,
+                                                   NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, 
                                                    IllegalBlockSizeException, BadPaddingException{
     
     int ret;
@@ -96,7 +113,7 @@ public class Encryption {
     ret = agt.AgentInit( iniFilePath );
     
     String key = agt.ScpExportKey( iniFilePath, "KEY1", "" );
-    System.out.println("OutKey : " + key );
+    //System.out.println("OutKey 00: " + key );
     
     iv = key.substring(0, 16);
     byte[] keyBytes = new byte[16];
@@ -107,7 +124,7 @@ public class Encryption {
             len = keyBytes.length;       
         System.arraycopy(b, 0, keyBytes, 0, len);
         keySpec = new SecretKeySpec(keyBytes, "AES");
-        System.out.println("keySpec : " + keySpec); 
+        //System.out.println("keySpec : " + keySpec);  
         
         
       Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
