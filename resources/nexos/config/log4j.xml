@@ -4,12 +4,12 @@
 
   <!-- Log Level: DEBUG < INFO < WARN < ERROR < FATAL -->
   <!-- Appenders - File -->
-  <appender name="WMS-FILE" class="org.apache.log4j.DailyRollingFileAppender">
+  <appender name="NEXOS-FILE" class="org.apache.log4j.DailyRollingFileAppender">
     <param name="threshold" value="DEBUG" />
     <param name="immediateFlush" value="true" />
-    <param name="file" value="${wms.webapp.root}WEB-INF/logs/wmslog.log" />
+    <param name="file" value="${nexos.webapp.root}WEB-INF/logs/NexosApp.log" />
     <param name="append" value="true" />
-    <param name="datePattern" value="'.'yyyy-MM-dd" />
+    <param name="datePattern" value="'.'yyyyMMdd" />
     <param name="encoding" value="UTF-8" />
     <!-- <param name="MaxFileSize" value="10MB" /> -->
     <layout class="org.apache.log4j.PatternLayout">
@@ -17,7 +17,7 @@
     </layout>
   </appender>
 
-  <appender name="WMS-CONSOLE" class="org.apache.log4j.ConsoleAppender">
+  <appender name="NEXOS-CONSOLE" class="org.apache.log4j.ConsoleAppender">
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} [%-5p] [%c{2} %x] - %m%n" />
     </layout>
@@ -26,118 +26,139 @@
   <!-- Application Loggers -->
   <logger name="nexos" additivity="false">
     <level value="DEBUG" />
-    <appender-ref ref="WMS-FILE" />
-    <appender-ref ref="WMS-CONSOLE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
   <!-- 3rdparty Loggers -->
   <logger name="org.springframework" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
   <!--
     <logger name="org.springframework.core" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
     </logger>
 
     <logger name="org.springframework.beans" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
     </logger>
 
     <logger name="org.springframework.context" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
     </logger>
 
     <logger name="org.springframework.web" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
     </logger>
   -->
   <logger name="java.sql" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
   <logger name="java.sql.Connection" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
   <logger name="java.sql.Statement" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
   <logger name="java.sql.PreparedStatement" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
   <logger name="java.sql.ResultSet" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
   <logger name="com.ibatis" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
   <logger name="com.ibatis.common.jdbc.SimpleDataSource" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
   <logger name="com.ibatis.common.jdbc.ScriptRunner" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
   <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
   <logger name="com.mchange.v2" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
   <logger name="net.sf.jasperreports" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
   <logger name="org.apache" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
-  <!-- 
+  <!--
   <logger name="org.apache.axis" additivity="false">
     <level value="DEBUG" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
    -->
 
   <!--
   <logger name="org.apache.cxf" additivity="false">
     <level value="DEBUG" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
    -->
 
   <logger name="org.quartz" additivity="false">
     <level value="INFO" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </logger>
 
   <!-- Root Logger -->
   <root>
     <level value="DEBUG" />
-    <appender-ref ref="WMS-FILE" />
+    <appender-ref ref="NEXOS-FILE" />
+    <appender-ref ref="NEXOS-CONSOLE" />
   </root>
 </log4j:configuration>

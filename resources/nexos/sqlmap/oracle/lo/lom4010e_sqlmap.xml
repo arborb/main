@@ -41,10 +41,9 @@
       <parameter property="P_DEAL_ID"                 mode="IN" />
       <parameter property="P_DELIVERY_TYPE"           mode="IN" />
       <parameter property="P_USER_ID"                 mode="IN" />
-      <parameter property="P_SCPKEY"                  mode="IN" />
     </parameterMap>
     <procedure id="RS_T1_MASTER" parameterMap="paramRS_T1_MASTER" resultClass="java.util.HashMap">
-      { ? = call LOM4010E.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+      { ? = call LOM4010E.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_T1_MASTER -->
   

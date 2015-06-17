@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.penta.scpdb.ScpDbAgent;
-
 /**
  * Class: 출고내역 컨트롤러<br>
  * Description: 온라인출고 미출고사유등록 Controller<br>
@@ -60,16 +58,6 @@ public class LOM4010EController extends CommonController {
             result = getResponseEntityError(request, oMsg);
             return result;
         }
-        
-        ///Scp
-        ScpDbAgent agt = new ScpDbAgent();
-        String iniFilePath = "/usr/scp/scpdb_agent_unix.ini"; 
-        String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );  
-        
-        System.out.println("\n ###########[outKey]#############: " + outKey);
-        System.out.println("\n ###########[outKey]#############: " + outKey);
-        
-        params.put("P_SCPKEY", outKey);
 
         try {
             result = getResponseEntity(request, service.getDataSet(queryId, params));

@@ -192,7 +192,7 @@ public class NexosDAO {
    */
   public HashMap<String, Object> callSP(String queryId, Map<String, Object> map) {
 
-   HashMap<String, Object> resultMap = new HashMap<String, Object>(map);
+    HashMap<String, Object> resultMap = new HashMap<String, Object>(map);
     sqlMapClientTemplate.update(queryId, resultMap);
     return resultMap;
   }
