@@ -1,4 +1,5 @@
 /**
+ * security
  * 공통 Function Object
  * 
  * @since 5.0
@@ -56,7 +57,10 @@
       RESULT_TYPE_MAP: "M",
       RESULT_TYPE_LIST: "L",
       RESULT_TYPE_SLIST: "SL",
-      RESULT_TYPE_MLIST: "ML"
+      RESULT_TYPE_MLIST: "ML",
+
+      //SCREENSAVER_TIME: 10*60,
+      SCREENSAVER_ALERT: 60
     };
 
     /**
@@ -315,6 +319,7 @@
               || e.keyCode == 37 // left
               || e.keyCode == 39 // right
               || (e.keyCode == 65 && e.ctrlKey === true) // Ctrl+A
+              || (e.keyCode == 65 && e.metaKey === true) // Command+A
           ) {
             if (existOnInputKeyDown) {
               window._OnInputKeyDown(e, $(e.target));
@@ -372,6 +377,7 @@
               || e.keyCode == 37 // left
               || e.keyCode == 39 // right
               || (e.keyCode == 65 && e.ctrlKey === true) // Ctrl+A
+              || (e.keyCode == 65 && e.metaKey === true) // Ctrl+A
           ) {
             if (existOnInputKeyDown) {
               window._OnInputKeyDown(e, $(e.target));
@@ -430,6 +436,7 @@
               || e.keyCode == 37 // left
               || e.keyCode == 39 // right
               || (e.keyCode == 65 && e.ctrlKey === true) // Ctrl+A
+              || (e.keyCode == 65 && e.metaKey === true) // Ctrl+A
           ) {
             if (existOnInputKeyDown) {
               window._OnInputKeyDown(e, $(e.target));
@@ -496,6 +503,7 @@
               || e.keyCode == 37 // left
               || e.keyCode == 39 // right
               || (e.keyCode == 65 && e.ctrlKey === true) // Ctrl+A
+              || (e.keyCode == 65 && e.metaKey === true) // Ctrl+A
           ) {
             if (existOnInputKeyDown) {
               window._OnInputKeyDown(e, $(e.target));
@@ -1036,7 +1044,7 @@
         var eventArray = $._data(progressLayout.get(0), "events");
         if ($NC.isNull(eventArray) || !("click" in eventArray)) {
           progressLayout.click(function(e) {
-            if (e.ctrlKey === true) {
+            if (e.ctrlKey === true || e.metaKey === true) {
               $NC.hideProgressMessage();
             }
           }).keydown(function(e) {
@@ -1096,7 +1104,7 @@
         var eventArray = $._data(loadingLayout.get(0), "events");
         if ($NC.isNull(eventArray) || !("click" in eventArray)) {
           loadingLayout.click(function(e) {
-            if (e.ctrlKey === true) {
+            if (e.ctrlKey === true || e.metaKey === true) {
               $NC.hideLoadingMessage(true);
             }
           }).keydown(function(e) {
@@ -1167,7 +1175,7 @@
         var eventArray = $._data(loadingLayout.get(0), "events");
         if ($NC.isNull(eventArray) || !("click" in eventArray)) {
           loadingLayout.click(function(e) {
-            if (e.ctrlKey === true) {
+            if (e.ctrlKey === true || e.metaKey === true) {
               $NC.hidePrintingMessage();
             }
           }).keydown(function(e) {
@@ -1404,7 +1412,7 @@
         if (errorData.RESULT_CD == $NC.G_CONSTS.RESULT_CD_ACCESSDENIED) {
           if (!$NC.isDialogOpen($($NC.G_MAIN.document).find("#divLoginView"))) {
             resultData.RESULT_CD = $NC.G_CONSTS.RESULT_CD_ACCESSDENIED;
-            resultData.RESULT_MSG = "세션이 만료되었습니다. 다시 로그인하십시오.";
+            resultData.RESULT_MSG = "세션이 종료되었습니다. 다시 로그인하십시오.";
           }
           return resultData;
         }
@@ -3142,6 +3150,217 @@
       dateObj.setDate(dateObj.getDate() + Number(addVal));
       return $NC.dateToStr(dateObj);
     };
+
+    /**
+     * 날짜비교값을 리턴한다.
+     * 
+     * @param date
+     * @param addVal
+     * @returns {String}
+     */
+    $NC.getDiffDate = function(date, option) {
+      var d1 = new Date()
+        ,d2 = new Date(date)
+        ,diffMilSec = d2 - d1
+        ,diffSec = diffMilSec / 1000
+        ,diffMin = diffSec / 60
+        ,diffHour = diffMin / 60
+        ,diffDay = diffHour / 24;
+
+      if (option === 'sec' || option === 'second') {
+        return Math.floor(diffSec);
+      }
+      if (option === 'min' || option === 'minite') {
+        return Math.floor(diffMin);
+      }
+      if (option === 'hour') {
+        return Math.floor(diffHour);
+      }
+      if (option === 'day') {
+        return Math.floor(diffDay);
+      }
+      if (option === 'day' || !option) {
+        var t2 = d2.getTime();
+        var t1 = d1.getTime();
+        return parseInt((t2-t1)/(24*3600*1000));
+      }
+      if (option === 'week') {
+        var t2 = d2.getTime();
+        var t1 = d1.getTime();
+        return parseInt((t2-t1)/(24*3600*1000*7));
+      }
+      if (option === 'month' || option === 'mon') {
+        return Math.floor(diffDay / 30);
+      }
+      if (option === 'year') {
+        return d2.getFullYear()-d1.getFullYear();
+      }
+    }
+
+    /**
+     * 비밀번호 유효성 검사
+     * 
+     * @param date
+     * @param addVal
+     * @returns {String}
+     */
+    $NC.varidationPw = function(pwd, uInfo) {
+      var userInfo = uInfo || $NC.G_USERINFO;
+      if ($NC.isNull(pwd)) {
+        return false;
+      }
+      
+      var chk_num = pwd.search(/[0-9]/g) != -1 ? true : false
+        ,chk_eng_low = pwd.search(/[a-z]/g) != -1 ? true : false
+        ,chk_eng_high = pwd.search(/[A-Z]/g) != -1 ? true : false
+        ,chk_Special = pwd.search(/[~`!@#$%^&*()_+=?<>"',.:;/|\]\[\}\{-]/g) != -1 ? true : false
+        ,countKind = 0
+        ,msg_contain = '비밀번호에 ID 또는 이름을 포함할 수 없습니다.'
+        ,msg_short = '비밀번호는 최소 8자리 이상이어야 합니다.'
+        ,msg_mix = '영문 소문자, 대문자, 숫자, 특수문자 중 2가지 이상의 문자 조합 시: 최소 10자리 이상 비밀번호 입력, \r\n영문 소문자, 대문자, 숫자, 특수문자 중 3가지 이상의 문자 조합 시: 최소 8자리 이상 비밀번호 입력 하세요'
+        ,msg_continue = '연속된 문자열(1234 또는 4321, abcd, dcba 등)을\n 4자 이상 사용 할 수 없습니다.'
+        ,msg_same = '동일문자를 3번 이상 사용할 수 없습니다.';
+
+      if (chk_num) {
+        countKind++;
+      }
+      if (chk_eng_low) {
+        countKind++;
+      }
+      if (chk_eng_high) {
+        countKind++;
+      }
+      if (chk_Special) {
+        countKind++;
+      }
+
+      // 요건: 비밀번호에 ID를 포함할수 없음 (사번, 생일은 서버에 요청)
+      if (pwd.toUpperCase().indexOf(userInfo.USER_ID.toUpperCase()) != -1 || 
+          pwd.toUpperCase().indexOf(userInfo.USER_NM.toUpperCase()) != -1) {
+        alert(msg_contain);
+        return false;
+      }
+      // 요건: 대문자, 소문자, 숫자, 특수문자조합이 2이면 10자리보다 많아야 한다.
+      if (pwd.length < 8) {
+        alert(msg_short);
+        return false;
+      }
+      if (countKind < 4 && pwd.length < 8) {
+        alert(msg_mix);
+        return false;
+      }
+      if (countKind < 3 && pwd.length < 10) {
+        alert(msg_mix);
+        return false;
+      }
+      
+      // 동일문자
+      var samePass0 = 0; //동일문자 카운트
+      var samePass1 = 0; //연속성(+) 카운드
+      var samePass2 = 0; //연속성(-) 카운드
+      var chr_pass0,
+        chr_pass1;
+      
+      for(var i=0; i < pwd.length; i++){
+        chr_pass0 = pwd.charAt(i);
+        chr_pass1 = pwd.charAt(i+1);
+
+        //동일문자 카운트
+        if(chr_pass0 == chr_pass1) {
+          samePass0++;
+        }
+
+        //연속성(+) 카운드
+        if(chr_pass0.charCodeAt(0) - chr_pass1.charCodeAt(0) == -1) {
+          samePass1++;
+        }
+
+        //연속성(-) 카운드
+        if(chr_pass0.charCodeAt(0) - chr_pass1.charCodeAt(0) == 1) {
+          samePass2++;
+        }
+      }
+      if(samePass0 > 1) {
+        // 현재까지 업무요건에 없음
+        //alert(msg_same);
+        //return false;
+      }
+
+      if(samePass1 >= 3 || samePass2 >= 3 ) {
+        alert(msg_continue); 
+        return false;
+      }
+      return true;
+    }
+
+    /**
+     * 날짜기간을 한글 스트링으로 반환한다.
+     * 
+     * @param data
+     * @returns {}
+     */
+    $NC.getPassDivString = function(string) {
+      if(string == 'month') {
+        return '개월';
+      }
+      if(string == 'week') {
+        return '주';
+      }
+      if(string == 'day') {
+        return '일';
+      }
+    }
+    
+    /**
+     * 프로그램 메뉴를 hierarchy구조로 반환한다.
+     * 
+     * @param data
+     * @returns {}
+     */
+    $NC.makeMenuTree = function(data) {
+      if ($NC.isNull(data)) {
+        return false;
+      }
+      var result = []
+      for (var i in data) {
+        var last = result.length-1
+        
+        // 최상위 그룹
+        if (data[i]['MENU_INDENT'] === 0) {
+          result.push(data[i]);
+          continue;
+        }
+
+        // 중간그룹
+        if (data[i]['MENU_INDENT'] === 1) {
+          if (!result[last].child) {
+            result[last].child = [];
+          }
+          result[last].child.push(data[i]);
+          continue;
+        }
+
+        // 하위그룹 상위
+        if (data[i]['MENU_INDENT'] === 2 && data[i]['PROGRAM_DIV'] === 'M') {
+          if (!result[last].child) {
+            result[last].child = [];
+          }
+          result[last].child.push(data[i]);
+          continue;
+        }
+
+        // 하위그룹 하위
+        if (data[i]['MENU_INDENT'] === 2) {
+          var childLast = result[last].child.length - 1;
+          if (!result[last].child[childLast].child) {
+            result[last].child[childLast].child = [];
+          }
+          result[last].child[childLast].child.push(data[i]);
+          continue;
+        }
+      }
+      return result;
+    }
 
     /**
      * option 값에 따라 콤보박스의 선택된 Index 또는 Value를 검색해서 결과 값 리턴
@@ -5834,7 +6053,7 @@
       // args -> cell, row, grid
       if ($NC.isNull(options.canCopyData) || options.canCopyData) {
         grdObj.view.onClick.subscribe(function(e, args) {
-          if (e.ctrlKey === true) {
+          if (e.ctrlKey === true || e.metaKey === true) {
             var rowData = args.grid.getDataItem(args.row);
             var column = args.grid.getColumns()[args.cell];
             if ($NC.isNull(column.field)) {
@@ -6158,6 +6377,9 @@ $(document).ready(function() {
       }, 300);
     }
   }
+  $(window).on('scroll', function(){
+    window.scrollTo(0,0);
+  })
 });
 
 /**
@@ -6285,48 +6507,6 @@ function _AfterInitialize(windowType) {
   $NC.setInitViewShortCutKeyDownEvent();
 }
 
-
-$NC.setInitDatePicker1 = function(selector, date, option) {
-
-  var view = $NC.getView(selector);
-  if (view.length == 0) {
-    return;
-  }
-
-  if (!view.hasClass("hasDatepicker")) {
-    view.wrap("<div style='display: inline-block;'></div>");
-    view.datepicker({
-      dateFormat: "yy-mm-dd",
-      changeYear: true,
-      changeMonth: true,
-      showOtherMonths: true,
-      selectOtherMonths: true,
-      showButtonPanel: true,
-      buttonImageOnly: false,
-      onSelect: function(dateText, inst) {
-        if ($(this).data("lastDate") !== dateText) {
-          $(this).change();
-        }
-        $(this).removeData("lastDate");
-      }
-    });
-  }
-
-  if ($NC.isNull(date)) {
-    date = $NC.G_USERINFO.LOGIN_DATE;
-  }
-  if ($NC.isNull(option)) {
-    $NC.setValue(view, date);
-  } else {
-    if (option === "F") {
-      $NC.setValue(view, $NC.getFirstDate(date));
-    } else if (option === "L") {
-      $NC.setValue(view, $NC.getLastDate(date));
-    } else {
-      $NC.setValue(view);
-    }
-  }
-};
 /**
  * 그리드 CheckBox Formatter의 클릭이벤트 처리
  * 
