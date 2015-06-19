@@ -170,6 +170,7 @@ public class LOM7090EController extends CommonController {
 		params.put("P_DIRECTION", direction);
 		params.put("P_PROCESS_STATE_BW", process_State_BW); // 취소가능 진행상태
 		params.put("P_PROCESS_STATE_FW", process_State_FW); // 처리가능 진행상태
+		
 		params.put(Consts.PK_USER_ID, user_Id);
 
 		try {
@@ -205,6 +206,23 @@ public class LOM7090EController extends CommonController {
 	    @RequestParam("P_DIRECTION") String direction,
 	    @RequestParam("P_PROCESS_STATE_BW") String process_State_BW,
 	    @RequestParam("P_PROCESS_STATE_FW") String process_State_FW,
+      @RequestParam("P_INOUT_CD") String inout_Cd,
+      @RequestParam("P_BU_NO") String bu_No,
+      @RequestParam("P_BRAND_CD") String brand_Cd,
+      @RequestParam("P_ITEM_CD") String item_Cd,
+      @RequestParam("P_ITEM_NM") String item_Nm,
+      @RequestParam("P_ORDERER_NM") String orderer_Nm,
+      @RequestParam("P_SHIPPER_NM") String shipper_Nm,
+      @RequestParam("P_MALL_CD") String mall_Cd,
+      @RequestParam("P_INORDER_TYPE") String inorder_Type,
+      @RequestParam("P_SHIP_TYPE") String ship_Type,
+      @RequestParam("P_SHIP_PRICE_TYPE") String ship_Price_Type,
+      @RequestParam("P_DEAL_ID") String deal_Id,
+      @RequestParam("P_DELIVERY_TYPE") String delivery_Type,
+      @RequestParam("P_BU_TIME") String bu_Time,
+      @RequestParam("P_DELIVERY_TYPE2") String delivery_Type2,
+      @RequestParam("P_OWN_BRAND_CD") String own_Brand_Cd,
+      @RequestParam("P_HOLD_YN") String hold_Yn,
 	    @RequestParam(Consts.PK_USER_ID) String user_Id) {
 	  
 	  ResponseEntity<String> result = null;
@@ -220,6 +238,25 @@ public class LOM7090EController extends CommonController {
 	  params.put("P_DIRECTION", direction);
 	  params.put("P_PROCESS_STATE_BW", process_State_BW); // 취소가능 진행상태
 	  params.put("P_PROCESS_STATE_FW", process_State_FW); // 처리가능 진행상태
+
+	  params.put("P_INOUT_CD", inout_Cd); 
+	  params.put("P_BU_NO", bu_No); 
+	  params.put("P_BRAND_CD", brand_Cd);
+	  params.put("P_ITEM_CD", item_Cd); 
+	  params.put("P_ITEM_NM", item_Nm); 
+	  params.put("P_ORDERER_NM", orderer_Nm);
+	  params.put("P_SHIPPER_NM", shipper_Nm);
+	  params.put("P_MALL_CD", mall_Cd); 
+	  params.put("P_INORDER_TYPE", inorder_Type);
+	  params.put("P_SHIP_TYPE", ship_Type); 
+	  params.put("P_SHIP_PRICE_TYPE", ship_Price_Type);
+	  params.put("P_DEAL_ID", deal_Id); 
+	  params.put("P_DELIVERY_TYPE", delivery_Type);
+	  params.put("P_BU_TIME", bu_Time); 
+	  params.put("P_DELIVERY_TYPE2", delivery_Type2);
+	  params.put("P_OWN_BRAND_CD", own_Brand_Cd); 
+	  params.put("P_HOLD_YN", hold_Yn); 
+      
 	  params.put(Consts.PK_USER_ID, user_Id);
 	  
 	  try {
@@ -350,4 +387,38 @@ public class LOM7090EController extends CommonController {
 
 		return result;
 	}
+	
+  /**
+   * 지시취소 체크 Update
+   * 
+   * @param request HttpServletRequest
+   * @param queryId 쿼리ID
+   * @param queryParams 쿼리 호출 파라메터
+   * @return
+   */
+    
+  @SuppressWarnings("rawtypes")
+  @RequestMapping(value = "/callUpdate.do", method = RequestMethod.POST)
+  public ResponseEntity<String> callUserDelete(HttpServletRequest request,
+    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+
+    ResponseEntity<String> result = null;
+
+    Map<String, Object> params = getParameter(queryParams);
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    try {
+      Map mapResult = service.callUpdate(params);
+      result = getResponseEntity(request, mapResult);
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+  }
+  
 }

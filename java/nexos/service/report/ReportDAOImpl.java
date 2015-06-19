@@ -21,8 +21,6 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.orm.ibatis.SqlMapClientTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.penta.scpdb.ScpDbAgent;
-
 /**
  * Class: ReportDAOImpl<br>
  * Description: Report DAO (Data Access Object)<br>
@@ -101,16 +99,6 @@ public class ReportDAOImpl implements ReportDAO {
         result.put(Consts.PK_RESULT_MSG, oMsg);
         return result;
       }
-      
-      //Scp
-      ScpDbAgent agt = new ScpDbAgent();
-      String iniFilePath = "/opt/SCP/scpdb_agent_unix.ini"; 
-      String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "AccountName" );
-      
-      
-      System.out.println("[java] 11111111111111111111111111111111111111ScpExportKey : " + outKey);
-        
-      
       // Report 파라메터 세팅
       queryParams.put("P_SYSDATE", mapSysDate.get("SYS_DATETIME"));
       queryParams.put(Consts.PK_USER_ID, params.get(Consts.PK_USER_ID));
@@ -119,7 +107,6 @@ public class ReportDAOImpl implements ReportDAO {
       queryParams.put("P_BI_CUST_DIR", WEB_ROOT_PATH + BI_CUST_PATH);
       queryParams.put("P_BI_BU_DIR", WEB_ROOT_PATH + BI_BU_PATH);
       queryParams.put("P_BI_BRAND_DIR", WEB_ROOT_PATH + BI_BRAND_PATH);
-      queryParams.put("P_SCPKEY", outKey);
 
       // Package의 Query로 출력
       if (Consts.NO.equals(internalQueryYn)) {

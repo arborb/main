@@ -69,12 +69,47 @@ public class LOM7110EDAOImpl implements LOM7110EDAO {
     return result;
   }
 
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings("unchecked")
   @Override
-  public Map callFWScanConfirm(Map<String, Object> params) throws Exception {
+  public String callFWScanConfirm(Map<String, Object> params) throws Exception {
 
     final String LO_FW_SCAN_CONFIRM_ORDER_ID = "LO_FW_SCAN_PICK_PROC";
-
-    return nexosDAO.callSP(LO_FW_SCAN_CONFIRM_ORDER_ID, params);
+    
+    String result = Consts.OK;
+    //String user_Id = (String)params.get(Consts.PK_USER_ID);
+    
+    HashMap<String, Object> mapResult = null;
+    String oMsg;
+    
+    // 파라메터 처리
+    List<Map<String, Object>> masterDS = (List<Map<String, Object>>)params.get(Consts.PK_DS_MASTER);
+    
+    int dsCnt = masterDS.size();
+    if (dsCnt > 0) {
+      // 디테일 처리
+      for (int i = 0; i < dsCnt; i++) {
+        Map<String, Object> rowData = masterDS.get(i);
+        
+        //rowData.put(Consts.PK_USER_ID, user_Id);
+        mapResult = nexosDAO.callSP(LO_FW_SCAN_CONFIRM_ORDER_ID, rowData);
+        
+        oMsg = (String)mapResult.get(Consts.PK_O_MSG);
+        if (!Consts.OK.equals(oMsg)) {
+          throw new RuntimeException(oMsg);
+        }
+      }
+    }
+    
+    return result;
   }
+
+  @SuppressWarnings("rawtypes")
+  @Override
+  public Map callScanBoxMerge(Map<String, Object> params) throws Exception {
+
+    final String LO_SCAN_BOX_MERGE_ID = "LO_PICK_SCAN_BOX_MERGE";
+
+    return nexosDAO.callSP(LO_SCAN_BOX_MERGE_ID, params);
+  }
+  
 }

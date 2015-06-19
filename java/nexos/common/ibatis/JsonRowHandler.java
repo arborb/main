@@ -4,11 +4,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.xmlbeans.SystemProperties;
+
 import nexos.common.Consts;
 import nexos.common.spring.security.Encryption;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibatis.sqlmap.client.event.RowHandler;
+
+import java.util.Properties;
+
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
+import javax.annotation.Resource;
 
 
 /**
@@ -167,9 +180,9 @@ public class JsonRowHandler implements RowHandler {
           //System.out.println("EnStr ########@@@@@@@@@@--> :" + EnStr);  
           String DescryptedData = en.aesDecode(EnStr);
           
-          //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-          //System.out.println("\n 암호화 문자열 : [" + EnStr + " ] :: " + "\n 복호화 문자열 : [" + DescryptedData + " ]" + '\t'); 
-          //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+          System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+          System.out.println("\n 암호화 문자열 : [" + EnStr + " ] :: " + "\n 복호화 문자열 : [" + DescryptedData + " ]" + '\t'); 
+          System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
           //System.out.println("복호화 [ DescryptedData ] : [" + DescryptedData + " ]");
           //System.out.println("For DeScryStr Return: 00--> :" + DescryptedData); 
           //System.out.println("For DeScryStr Return: 11--> :" + rowData.get(alColumns.get(col)));
@@ -209,7 +222,6 @@ public class JsonRowHandler implements RowHandler {
       //System.out.println("sbWriter 0: " + sbWriter);
       dsJson.appendData(sbWriter);
       sbWriter = new StringBuilder();
-      //System.out.println("\n sbWriter : " + sbWriter);
     }
   }
 

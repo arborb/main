@@ -55,23 +55,22 @@ public class LOM4010EController extends CommonController {
         ResponseEntity<String> result = null;
 
         Map<String, Object> params = getParameter(queryParams);
-        
         String oMsg = getResultMessage(params);
         if (!Consts.OK.equals(oMsg)) {
             result = getResponseEntityError(request, oMsg);
             return result;
         }
         
-        
-
-        // Scp 복호화 키 파라미터 송신
-
+        ///Scp
         ScpDbAgent agt = new ScpDbAgent();
-        String iniFilePath = "/usr/scp/scpdb_agent_unix.ini";
-        String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );
+        String iniFilePath = "/usr/scp/scpdb_agent_unix.ini"; 
+        String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );  
+        
+        System.out.println("\n ###########[outKey]#############: " + outKey);
+        System.out.println("\n ###########[outKey]#############: " + outKey);
+        
         params.put("P_SCPKEY", outKey);
 
-        
         try {
             result = getResponseEntity(request, service.getDataSet(queryId, params));
         } catch (Exception e) {
@@ -80,7 +79,6 @@ public class LOM4010EController extends CommonController {
 
         return result;
     }
-    
     
     /**
      * 저장 처리

@@ -13,7 +13,6 @@ import nexos.service.common.CommonDAO;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
@@ -66,169 +65,6 @@ public class LC04010EService {
    * @param params
    *            신규, 수정된 데이터
    */
-
-  @SuppressWarnings("unchecked")
-  public String callLcsave(Map<String, Object> params) throws Exception {
-    final String PROCEDUREM_ID = "LC_040MSAVE";
-    final String PROCEDURED_ID = "LC_040DSAVE";
-    final String PROCEDUREUPDATE_ID = "LC_040DUPDATE";
-    final String PROCEDUREDELETE_ID = "LC_040DELETE";
-    final String LC040NM_GETNO_ID = "WT.LC_040NM_GETNO";
-    // final String LC040ND_GETNO_ID = "WT.LC_040ND_GETNO";
-    List<Map<String, Object>> detailDS = (List<Map<String, Object>>)params.get(Consts.PK_DS_DETAIL);
-
-    Map<String, Object> masterDS = (HashMap<String, Object>)params.get(Consts.PK_DS_MASTER);
-
-    String user_Id = (String)params.get(Consts.PK_USER_ID);
-    String process_Cd = (String)params.get("P_PROCESS_CD");
-    String invest_No = null;
-    int dsCnt = detailDS.size();
-    int line_No = 0;
-    // 신규 등록
-    if (Consts.PROCESS_ENTRY_NEW.equals(process_Cd)) {
-
-      StringBuffer smResult = new StringBuffer();
-      TransactionDefinition tm = new DefaultTransactionDefinition();
-      TransactionStatus tg = transactionManager.getTransaction(tm);
-
-      if (dsCnt < 1) {
-        throw new RuntimeException("재고실사등록 상세내역이 존재하지 않습니다.");
-      }
-
-      // 입고번호 채번
-      HashMap<String, Object> mapResult1 = nexosDAO.callSP(LC040NM_GETNO_ID, masterDS);
-      String oMsg = (String)mapResult1.get(Consts.PK_O_MSG);
-      if (!Consts.OK.equals(oMsg)) {
-        throw new RuntimeException(oMsg);
-      }
-      
-      
-     // masterDS.put("P_MANAGER_ID", masterDS.get("재고실사"));
-      masterDS.put("P_INVEST_END_DATE", masterDS.get("P_INVEST_START_DATE"));
-      invest_No = (String)mapResult1.get("O_INVEST_NO");
-      masterDS.put("P_INVEST_NO", invest_No);
-
-      // 마스터 생성, CRUD 체크 안함
-      try {
-        masterDS.put(Consts.PK_USER_ID, user_Id);
-        HashMap<String, Object> mapResult = callSP(PROCEDUREM_ID, masterDS);
-        oMsg = (String)mapResult.get(Consts.PK_O_MSG);
-        // 오류면 Rollback
-        if (!Consts.OK.equals(oMsg)) {
-          transactionManager.rollback(tg);
-          smResult.append(oMsg);
-          smResult.append("\r\n");
-        }
-        transactionManager.commit(tg);
-      } catch (Exception e) {
-        // SP 내에서 오류가 아니면 Exit
-        transactionManager.rollback(tg);
-        throw new RuntimeException(e.getMessage());
-      }
-
-    }
-
-    // 브랜드 단위 Transaction
-    final int dsCnt1 = detailDS.size();
-    StringBuffer sbResult = new StringBuffer();
-    String oMsg;
-
-    TransactionDefinition td = new DefaultTransactionDefinition();
-
-    for (int i = 0; i < dsCnt1; i++) {
-
-      // SP 호출 파라메터
-      Map<String, Object> callParams = detailDS.get(i);
-      String crud = (String)callParams.get(Consts.PK_CRUD);
-      if (Consts.DV_CRUD_C.equals(crud)) {
-        // LS_010NM_PROPERTIES_UPDATE 호출
-        TransactionStatus ts = transactionManager.getTransaction(td);
-        try {
-          callParams.put(Consts.PK_USER_ID, user_Id);
-          callParams.put("P_INVEST_DATE", masterDS.get("P_INVEST_DATE"));
-          callParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
-          callParams.put("P_BU_CD", masterDS.get("P_BU_CD"));
-          callParams.put("P_INVEST_NO", invest_No);
-          if ("".equals(String.valueOf(callParams.get("P_LINE_NO")))) {
-            callParams.put("P_LINE_NO", line_No);
-            line_No++;
-          }
-          HashMap<String, Object> mapResult = callSP(PROCEDURED_ID, callParams);
-          oMsg = (String)mapResult.get(Consts.PK_O_MSG);
-          // 오류면 Rollback
-          if (!Consts.OK.equals(oMsg)) {
-            transactionManager.rollback(ts);
-            sbResult.append(oMsg);
-            sbResult.append("\r\n");
-            continue;
-          }
-          transactionManager.commit(ts);
-        } catch (Exception e) {
-          // SP 내에서 오류가 아니면 Exit
-          transactionManager.rollback(ts);
-          throw new RuntimeException(e.getMessage());
-        }
-      } else if (Consts.DV_CRUD_U.equals(crud)) {
-
-        // LS_010NM_PROPERTIES_UPDATE 호출
-        TransactionStatus ts = transactionManager.getTransaction(td);
-        try {
-          callParams.put(Consts.PK_USER_ID, user_Id);
-          callParams.put("P_INVEST_DATE", masterDS.get("P_INVEST_DATE"));
-          callParams.put("P_INVEST_NO", masterDS.get("P_INVEST_NO"));
-          callParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
-          callParams.put("P_BU_CD", masterDS.get("P_BU_CD"));
-
-          HashMap<String, Object> mapResult = callSP(PROCEDUREUPDATE_ID, callParams);
-          oMsg = (String)mapResult.get(Consts.PK_O_MSG);
-          // 오류면 Rollback
-          if (!Consts.OK.equals(oMsg)) {
-            transactionManager.rollback(ts);
-            sbResult.append(oMsg);
-            sbResult.append("\r\n");
-            continue;
-          }
-          transactionManager.commit(ts);
-        } catch (Exception e) {
-          // SP 내에서 오류가 아니면 Exit
-          transactionManager.rollback(ts);
-          throw new RuntimeException(e.getMessage());
-        }
-
-      } else if (Consts.DV_CRUD_D.equals(crud)) {
-        // LS_010NM_PROPERTIES_UPDATE 호출
-        TransactionStatus ts = transactionManager.getTransaction(td);
-        try {
-          callParams.put(Consts.PK_USER_ID, user_Id);
-          callParams.put("P_INVEST_DATE", masterDS.get("P_INVEST_DATE"));
-          callParams.put("P_INVEST_NO", masterDS.get("P_INVEST_NO"));
-          callParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
-          callParams.put("P_BU_CD", masterDS.get("P_BU_CD"));
-
-          HashMap<String, Object> mapResult = callSP(PROCEDUREDELETE_ID, callParams);
-          oMsg = (String)mapResult.get(Consts.PK_O_MSG);
-          // 오류면 Rollback
-          if (!Consts.OK.equals(oMsg)) {
-            transactionManager.rollback(ts);
-            sbResult.append(oMsg);
-            sbResult.append("\r\n");
-            continue;
-          }
-          transactionManager.commit(ts);
-        } catch (Exception e) {
-          // SP 내에서 오류가 아니면 Exit
-          transactionManager.rollback(ts);
-          throw new RuntimeException(e.getMessage());
-        }
-      }
-    }
-
-    if (sbResult.length() == 0) {
-      sbResult.append(Consts.OK);
-    }
-    return sbResult.toString();
-  }
-
   @SuppressWarnings("unchecked")
   public String save(Map<String, Object> params) throws Exception {
 
@@ -358,20 +194,20 @@ public class LC04010EService {
     }
     return mapResult;
   }
-
+  
   /**
    * ERP 재고실사 전송 SP 실행 후 처리 결과를 Map 형태로 Return
    */
   @SuppressWarnings("rawtypes")
   public HashMap callEsStErpCreation(Map<String, Object> params) throws Exception {
-
+    
     final String PROCEDURE_ID = "ES_ST_ERP_CREATION";
     HashMap<String, Object> mapResult;
-
+    
     TransactionStatus ts = transactionManager.getTransaction(new DefaultTransactionDefinition());
     try {
       mapResult = common.callSP(PROCEDURE_ID, params);
-
+      
       String oMsg = (String)mapResult.get(Consts.PK_O_MSG);
       if (!Consts.OK.equals(oMsg)) {
         throw new RuntimeException(oMsg);

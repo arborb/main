@@ -11,8 +11,5 @@ public interface LC03010EDAO {
    * @throws Exception
    */
   void save(Map<String, Object> params) throws Exception;
-  
-
-  void save1(Map<String, Object> params) throws Exception;
 
 }

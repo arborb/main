@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.penta.scpdb.ScpDbAgent;
-
 /**
  * Class: 출고작업[온라인] 컨트롤러<br>
  * Description: 출고작업[온라인] 관리 Controller
@@ -70,6 +68,33 @@ public class LOM2010EController extends CommonController {
       } else {
         result = getResponseEntity(request, service.callInvProc(params));
       }
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+  }
+
+  /**
+   * SP 처리 - 출고 지시확정 처리 체크처리
+   * 
+   * @param params 조회조건
+   */
+  @RequestMapping(value = "/callWbProc.do", method = RequestMethod.POST)
+  public ResponseEntity<String> callLoCancel(HttpServletRequest request,
+    @RequestParam(Consts.PK_QUERY_ID) String queryId, @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+
+    ResponseEntity<String> result = null;
+
+    Map<String, Object> params = getParameter(queryParams);
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    try {
+      result = getResponseEntity(request, service.callWbProc(queryId, params));
     } catch (Exception e) {
       result = getResponseEntityError(request, e);
     }
@@ -272,6 +297,72 @@ public class LOM2010EController extends CommonController {
   }
 
   /**
+   * 지시취소 체크 Update
+   * 
+   * @param request HttpServletRequest
+   * @param queryId 쿼리ID
+   * @param queryParams 쿼리 호출 파라메터
+   * @return
+   */
+    
+  @SuppressWarnings("rawtypes")
+  @RequestMapping(value = "/callUpdate.do", method = RequestMethod.POST)
+  public ResponseEntity<String> callUserDelete(HttpServletRequest request,
+    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+
+    ResponseEntity<String> result = null;
+
+    Map<String, Object> params = getParameter(queryParams);
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    try {
+      Map mapResult = service.callUpdate(params);
+      result = getResponseEntity(request, mapResult);
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+  }
+
+  /**
+   * 확정취소 체크 Update
+   * 
+   * @param request HttpServletRequest
+   * @param queryId 쿼리ID
+   * @param queryParams 쿼리 호출 파라메터
+   * @return
+   */
+    
+  @SuppressWarnings("rawtypes")
+  @RequestMapping(value = "/callUpdateD.do", method = RequestMethod.POST)
+  public ResponseEntity<String> callUserDeleteD(HttpServletRequest request,
+    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+
+    ResponseEntity<String> result = null;
+
+    Map<String, Object> params = getParameter(queryParams);
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    try {
+      Map mapResult = service.callUpdateD(params);
+      result = getResponseEntity(request, mapResult);
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+  }
+
+  /**
    * 프린터 출력여부
    *
    * @param request HttpServletRequest
@@ -281,7 +372,7 @@ public class LOM2010EController extends CommonController {
    */
   @RequestMapping(value = "/Cksave.do", method = RequestMethod.POST)
   public ResponseEntity<String> Cksave(HttpServletRequest request, @RequestParam(Consts.PK_DS_DETAIL) String detailDS,
-    @RequestParam(Consts.PK_USER_ID) String user_Id) {
+    @RequestParam("P_PROCESS_CD") String process_Cd,@RequestParam(Consts.PK_USER_ID) String user_Id) {
 
     ResponseEntity<String> result = null;
 
@@ -295,7 +386,11 @@ public class LOM2010EController extends CommonController {
     params.put(Consts.PK_USER_ID, user_Id);
 
     try {
-      result = getResponseEntity(request, service.Cksave(params));
+      if(process_Cd.equals("B")){
+        //result = getResponseEntity(request, service.savePrintHis(params));
+      } else {
+        result = getResponseEntity(request, service.Cksave(params));                
+      }
     } catch (Exception e) {
       result = getResponseEntityError(request, e);
     }
@@ -318,21 +413,12 @@ public class LOM2010EController extends CommonController {
     ResponseEntity<String> result = null;
 
     Map<String, Object> params = getParameter(queryParams);
-    
-    
     String oMsg = getResultMessage(params);
     if (!Consts.OK.equals(oMsg)) {
       result = getResponseEntityError(request, oMsg);
       return result;
     }
-    // Scp 복호화 키 파라미터 송신
-    ScpDbAgent agt = new ScpDbAgent();
-    String iniFilePath = "/usr/scp/scpdb_agent_unix.ini";
-    String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );
-    params.put("P_SCPKEY", outKey);
-   
-   
-    
+
     try {
       result = getResponseEntity(request, service.getDataSet(queryId, params));
     } catch (Exception e) {
@@ -362,16 +448,7 @@ public class LOM2010EController extends CommonController {
       result = getResponseEntityError(request, oMsg);
       return result;
     }
-    
-    
-    
 
-    // Scp 복호화 키 파라미터 송신
-    ScpDbAgent agt = new ScpDbAgent();
-    String iniFilePath = "/usr/scp/scpdb_agent_unix.ini";
-    String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );
-    params.put("P_SCPKEY", outKey);
-    
     try {
       result = getResponseEntity(request, service.getDataSetEntryBT(queryId, params));
     } catch (Exception e) {
@@ -436,7 +513,7 @@ public class LOM2010EController extends CommonController {
 
     return result;
   }
-
+  
   /**
    * 출고확정 저장 처리
    *
@@ -478,7 +555,7 @@ public class LOM2010EController extends CommonController {
 
     return result;
   }
-
+  
   /**
    * 배송완료 저장 처리
    *
@@ -511,7 +588,7 @@ public class LOM2010EController extends CommonController {
 
     return result;
   }
-
+  
   /**
    * 출고등록 (일괄) 저장 처리
    *
@@ -537,99 +614,6 @@ public class LOM2010EController extends CommonController {
 
     try {
       result = getResponseEntity(request, service.saveEntryBT(params));
-    } catch (Exception e) {
-      result = getResponseEntityError(request, e);
-    }
-
-    return result;
-  }
-  
-  /**
-   * SP 처리 - 출고 지시확정 처리 체크처리
-   * 
-   * @param params 조회조건
-   */
-  @RequestMapping(value = "/callWbProc.do", method = RequestMethod.POST)
-  public ResponseEntity<String> callLoCancel(HttpServletRequest request,
-    @RequestParam(Consts.PK_QUERY_ID) String queryId, @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
-
-    ResponseEntity<String> result = null;
-
-    Map<String, Object> params = getParameter(queryParams);
-    String oMsg = getResultMessage(params);
-    if (!Consts.OK.equals(oMsg)) {
-      result = getResponseEntityError(request, oMsg);
-      return result;
-    }
-
-    try {
-      result = getResponseEntity(request, service.callWbProc(queryId, params));
-    } catch (Exception e) {
-      result = getResponseEntityError(request, e);
-    }
-
-    return result;
-  }
-  
-  /**
-   * 지시취소 체크 Update
-   * 
-   * @param request HttpServletRequest
-   * @param queryId 쿼리ID
-   * @param queryParams 쿼리 호출 파라메터
-   * @return
-   */
-    
-  @SuppressWarnings("rawtypes")
-  @RequestMapping(value = "/callUpdate.do", method = RequestMethod.POST)
-  public ResponseEntity<String> callUserDelete(HttpServletRequest request,
-    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
-
-    ResponseEntity<String> result = null;
-
-    Map<String, Object> params = getParameter(queryParams);
-    String oMsg = getResultMessage(params);
-    if (!Consts.OK.equals(oMsg)) {
-      result = getResponseEntityError(request, oMsg);
-      return result;
-    }
-
-    try {
-      Map mapResult = service.callUpdate(params);
-      result = getResponseEntity(request, mapResult);
-    } catch (Exception e) {
-      result = getResponseEntityError(request, e);
-    }
-
-    return result;
-  }
-  
-  /**
-   * 확정취소 체크 Update
-   * 
-   * @param request HttpServletRequest
-   * @param queryId 쿼리ID
-   * @param queryParams 쿼리 호출 파라메터
-   * @return
-   */
-    
-  @SuppressWarnings("rawtypes")
-  @RequestMapping(value = "/callUpdateD.do", method = RequestMethod.POST)
-  public ResponseEntity<String> callUserDeleteD(HttpServletRequest request,
-    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
-
-    ResponseEntity<String> result = null;
-
-    Map<String, Object> params = getParameter(queryParams);
-    String oMsg = getResultMessage(params);
-    if (!Consts.OK.equals(oMsg)) {
-      result = getResponseEntityError(request, oMsg);
-      return result;
-    }
-
-    try {
-      Map mapResult = service.callUpdateD(params);
-      result = getResponseEntity(request, mapResult);
     } catch (Exception e) {
       result = getResponseEntityError(request, e);
     }

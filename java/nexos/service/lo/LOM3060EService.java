@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 
 import nexos.common.Consts;
 import nexos.common.ibatis.JsonDataSet;
-import nexos.common.spring.security.Encryption;
 import nexos.service.common.CommonDAO;
 
 import org.springframework.stereotype.Service;
@@ -111,25 +110,11 @@ public class LOM3060EService {
 
       // SP 호출 파라메터
       Map<String, Object> callParams = spcallDS.get(i);
-      
 //      Map<String, Object> test;
       // LS_010NM_PROPERTIES_UPDATE 호출
       TransactionStatus ts = transactionManager.getTransaction(td);
       try {
-        
-        String ScpEncStr1 =  (String)callParams.get(Consts.DK_SCP_DATA_1);
-        String ScpEncStr2 =  (String)callParams.get(Consts.DK_SCP_DATA_2);
-        String ScpEncStr3 =  (String)callParams.get(Consts.DK_SCP_DATA_3);
-        String ScpEncStr5 =  (String)callParams.get(Consts.DK_SCP_DATA_5);
-        Encryption EncStr = new Encryption();
-        
-        
-        callParams.put(Consts.DK_SCP_DATA_1, EncStr.aesEncode(ScpEncStr1));
-        callParams.put(Consts.DK_SCP_DATA_2, EncStr.aesEncode(ScpEncStr2));
-        callParams.put(Consts.DK_SCP_DATA_3, EncStr.aesEncode(ScpEncStr3));
-        callParams.put(Consts.DK_SCP_DATA_5, EncStr.aesEncode(ScpEncStr5));
-        
-        
+        callParams.put(Consts.PK_USER_ID, user_Id);
         HashMap<String, Object> mapResult = callSP(PROCEDURE_ID, callParams);
         oMsg = (String)mapResult.get(Consts.PK_O_MSG);
         

@@ -3,7 +3,6 @@ package nexos.common.ibatis;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,15 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 
 import nexos.common.Consts;
+import nexos.common.spring.security.Encryption;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
@@ -34,9 +30,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 
 import com.ibatis.sqlmap.client.event.RowHandler;
-import com.penta.scpdb.ScpDbAgent;
-//보안관련
-//
 
 /**
  * Class: ExcelRowHandler<br>
@@ -123,42 +116,6 @@ public class ExcelRowHandler implements RowHandler {
 
   private String                         xlsExportType;
   private String                         xlsTitle;
-  //보안관련
-  private static String iv;
-  private static Key keySpec;
-  //
-  public static String aesDecode(String str,String scpkey) throws java.io.UnsupportedEncodingException, NoSuchAlgorithmException,
-  NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException,
-  IllegalBlockSizeException, BadPaddingException {
-
-
-    String key = scpkey;
-    
-    System.out.println("OutKey : " + key );
-    
-    iv = key.substring(0, 16);
-    byte[] keyBytes = new byte[16];
-    byte[] b = key.getBytes("UTF-8");
-    
-    int len = b.length;
-    if(len > keyBytes.length)
-    len = keyBytes.length;
-    System.arraycopy(b, 0, keyBytes, 0, len);
-    keySpec = new SecretKeySpec(keyBytes, "AES");
-    System.out.println("keySpec : " + keySpec);
-    
-    
-    Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
-    c.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(iv.getBytes("UTF-8")));
-    
-    byte[] byteStr = Base64.decodeBase64(str.getBytes());
-    
-    return new String(c.doFinal(byteStr),"UTF-8");
-
-}
-
-  //
-  
 
   public ExcelRowHandler(HSSFWorkbook xlsWorkbook, List<Map<String, Object>> grdColumns, String xlsExportType,
     String xlsTitle) {
@@ -185,6 +142,7 @@ public class ExcelRowHandler implements RowHandler {
     Map rowData = (Map)valueObject;
 
     writeXLSRow(rowData);
+    
   }
 
   /**
@@ -199,7 +157,30 @@ public class ExcelRowHandler implements RowHandler {
       writeHeaderRow(rowData);
     }
 
-    writeDataRow(rowData);
+    try {
+      writeDataRow(rowData);
+    } catch (InvalidKeyException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (UnsupportedEncodingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (NoSuchAlgorithmException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (NoSuchPaddingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (InvalidAlgorithmParameterException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IllegalBlockSizeException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (BadPaddingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
 
     // RowCount 증가
     xlsRowNum++;
@@ -371,310 +352,35 @@ public class ExcelRowHandler implements RowHandler {
     }
   }
 
+
   /**
    * Data Row 기록
    * 
    * @param rowData
+   * @throws BadPaddingException 
+   * @throws IllegalBlockSizeException 
+   * @throws InvalidAlgorithmParameterException 
+   * @throws NoSuchPaddingException 
+   * @throws NoSuchAlgorithmException 
+   * @throws UnsupportedEncodingException 
+   * @throws InvalidKeyException 
    */
-  private void writeDataRow(Map<String, Object> rowData) {
+  private void writeDataRow(Map<String, Object> rowData) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
 
     // Data Row 기록
     HSSFRow xlsRow = xlsSheet.createRow(xlsRowNum);
     xlsRow.setHeight(XLS_ROW_HEIGHT);
-
-
-    ScpDbAgent agt = new ScpDbAgent();
-    String iniFilePath = "/usr/scp/scpdb_agent_unix.ini";
-    String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );
-    String DecStr_1,DecStr_2, DecStr_3,DecStr_4, DecStr_5, DecStr_6, DecStr_7, DecStr_8, DecStr_9, DecStr_10 = null;
-
-    
+    rowData.put("SHIPPER_NM",   Encryption.aesDecode((String)rowData.get("SHIPPER_NM")));
+    rowData.put("SHIPPER_TEL",   Encryption.aesDecode((String)rowData.get("SHIPPER_TEL")));
+    rowData.put("ORDERER_HP",   Encryption.aesDecode((String)rowData.get("ORDERER_HP")));
+    rowData.put("ORDERER_TEL",   Encryption.aesDecode((String)rowData.get("ORDERER_TEL")));
+    rowData.put("SHIPPER_HP",   Encryption.aesDecode((String)rowData.get("SHIPPER_HP")));
+    rowData.put("ORDERER_NM",   Encryption.aesDecode((String)rowData.get("ORDERER_NM")));
+    rowData.put("SHIPPER_ADDR_BASIC",   Encryption.aesDecode((String)rowData.get("SHIPPER_ADDR_BASIC")));
+    rowData.put("SHIPPER_ADDR_DETAIL",   Encryption.aesDecode((String)rowData.get("SHIPPER_ADDR_DETAIL")));
     for (int i = 0; i < xlsColumnCount; i++) {
-      
-      if(xlsColumns.get(i).get("P_COLUMN_NM").equals("ORDERER_NM")){
-        try {
-          DecStr_1 = aesDecode((String)rowData.get("ORDERER_NM"),outKey);
-          rowData.put("ORDERER_NM",DecStr_1);
-        } catch (InvalidKeyException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (BadPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } 
-        
-      }
-      if(xlsColumns.get(i).get("P_COLUMN_NM").equals("SHIPPER_NM")){
-        try {
-          DecStr_2 = aesDecode((String)rowData.get("SHIPPER_NM"),outKey);
-          rowData.put("SHIPPER_NM",DecStr_2);
-        } catch (InvalidKeyException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (BadPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-        
-      }
-      if(xlsColumns.get(i).get("P_COLUMN_NM").equals("SHIPPER_ADDR_BASIC")){
-        try {
-          DecStr_3 = aesDecode((String)rowData.get("SHIPPER_ADDR_BASIC"),outKey);
-          rowData.put("SHIPPER_ADDR_BASIC",DecStr_3);
-        } catch (InvalidKeyException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (BadPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-        
-      }
-      if(xlsColumns.get(i).get("P_COLUMN_NM").equals("SHIPPER_ADDR_DETAIL")){
-        try {
-          DecStr_4 = aesDecode((String)rowData.get("SHIPPER_ADDR_DETAIL"),outKey);
-          rowData.put("SHIPPER_ADDR_DETAIL",DecStr_4);
-        } catch (InvalidKeyException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (BadPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-        
-      }
-      if(xlsColumns.get(i).get("P_COLUMN_NM").equals("ORDERER_ADDR_BASIC")){
-        try {
-          DecStr_5 = aesDecode((String)rowData.get("ORDERER_ADDR_BASIC"),outKey);
-          rowData.put("ORDERER_ADDR_BASIC",DecStr_5);
-        } catch (InvalidKeyException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (BadPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-        
-      }
-      if(xlsColumns.get(i).get("P_COLUMN_NM").equals("ORDERER_ADDR_DETAIL")){
-        try {
-          DecStr_6 = aesDecode((String)rowData.get("ORDERER_ADDR_DETAIL"),outKey);
-          rowData.put("ORDERER_ADDR_DETAIL",DecStr_6);
-        } catch (InvalidKeyException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (BadPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-        
-      }
-      if(xlsColumns.get(i).get("P_COLUMN_NM").equals("ORDERER_HP")){
-        try {
-          DecStr_7 = aesDecode((String)rowData.get("ORDERER_HP"),outKey);
-          rowData.put("ORDERER_HP",DecStr_7);
-        } catch (InvalidKeyException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (BadPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-        
-      }
-      if(xlsColumns.get(i).get("P_COLUMN_NM").equals("ORDERER_TEL")){
-        try {
-          DecStr_8 = aesDecode((String)rowData.get("ORDERER_TEL"),outKey);
-          rowData.put("ORDERER_TEL",DecStr_8);
-        } catch (InvalidKeyException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (BadPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-        
-      }
-      if(xlsColumns.get(i).get("P_COLUMN_NM").equals("SHIPPER_TEL")){
-        try {
-          DecStr_9 = aesDecode((String)rowData.get("SHIPPER_TEL"),outKey);
-          rowData.put("SHIPPER_TEL",DecStr_9);
-        } catch (InvalidKeyException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (BadPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-        
-      }
-      if(xlsColumns.get(i).get("P_COLUMN_NM").equals("SHIPPER_HP")){
-        try {
-          DecStr_10 = aesDecode((String)rowData.get("SHIPPER_HP"),outKey);
-          rowData.put("SHIPPER_HP",DecStr_10);
-        } catch (InvalidKeyException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        } catch (BadPaddingException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-        
-      }
-  
       writeDataCell(xlsRow, i, xlsColumns.get(i), rowData);
     }
-    
   }
 
   /**
@@ -876,4 +582,3 @@ public class ExcelRowHandler implements RowHandler {
     xlsDatetimeCell.setDataFormat(xlsDataFormat.getFormat(XLS_DATETIME_FORMAT));
   }
 }
-

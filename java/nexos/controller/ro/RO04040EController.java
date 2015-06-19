@@ -200,5 +200,38 @@ public class RO04040EController extends CommonController {
     return result;
   }
   
+  /**
+   * 위메프 송장발행기록 등록 처리
+   * 
+   * @param request HttpServletRequest
+   * @param subDS DataSet
+   * @param user_Id 사용자ID
+   * @return
+   */
+  @RequestMapping(value = "/callWbSaveProc.do", method = RequestMethod.POST)
+  public ResponseEntity<String> callLOProcessingC(HttpServletRequest request,
+    @RequestParam(Consts.PK_DS_MASTER) String masterDS) {
+
+    ResponseEntity<String> result = null;
+
+    // DataSet Map에 추가
+    Map<String, Object> params = getDataSet(masterDS, Consts.PK_DS_MASTER);
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    try {
+      result = getResponseEntity(request, service.callWbSave(params));
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+  }
+
+  
+  
 
 }

@@ -48,39 +48,6 @@ public class CM10020EService {
   private PlatformTransactionManager transactionManager;
 
   /**
-   * 이벤트 재적용 SP 호출
-   * @param params
-   * @return
-   * @throws Exception
-   */
-  public String callProcEventExec(String queryId, Map<String, Object> params) throws Exception {
-
-    StringBuffer sbResult = new StringBuffer();
-    TransactionStatus ts = transactionManager.getTransaction(new DefaultTransactionDefinition());
-
-    try {
-      HashMap<String, Object> mapResult = common.callSP(queryId, params);
-      String oMsg = (String)mapResult.get(Consts.PK_O_MSG);
-
-      // 오류면 Rollback
-      if (!Consts.OK.equals(oMsg)) {
-        transactionManager.rollback(ts);
-        sbResult.append(oMsg);
-        sbResult.append(Consts.CRLF);
-      } else {
-        transactionManager.commit(ts);
-        sbResult.append(Consts.OK);
-      }
-    } catch (Exception e) {
-      // SP 내에서 오류가 아니면 Exit
-      transactionManager.rollback(ts);
-      throw new RuntimeException(e.getMessage());
-    }
-
-    return sbResult.toString();
-  }
-
-  /**
    * SP 호출 후 OUTPUT 값을 Map 형태로 Return
    *
    * @param queryId
