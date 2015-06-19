@@ -621,4 +621,38 @@
   <!-- [E] - ES_LO_ORDER_XLS_REAL -->
 
 
+  <!-- [S] - ES_PROCESSING1 -->
+  <parameterMap id="paramES_PROCESSING1" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_SEND_DATE"               mode="IN" />
+    <parameter property="P_SEND_NO"                 mode="IN" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_INOUT_DATE"              mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_SCPKEY"                  mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ES_PROCESSING1" parameterMap="paramES_PROCESSING1" resultClass="java.util.HashMap">
+      { call ES_PROCESSING1(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ES_PROCESSING1 -->
+
+  <!-- [S] - ER_LOORDER_TO_REAL_EX -->
+  <parameterMap id="paramER_LOORDER_TO_REAL_EX" class="java.util.Map">
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_EDI_DIV"                 mode="IN" />
+    <parameter property="P_DEFINE_NO"               mode="IN" />
+    <parameter property="P_RECV_DATE"               mode="IN" />
+    <parameter property="P_RECV_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="ER_LOORDER_TO_REAL_EX" parameterMap="paramER_LOORDER_TO_REAL_EX" resultClass="java.util.HashMap">
+      { call ER_LOORDER_TO_REAL_EX(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - ER_LOORDER_TO_REAL_EX -->
+  
 </sqlMap>

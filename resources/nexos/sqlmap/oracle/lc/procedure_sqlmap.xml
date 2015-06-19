@@ -244,11 +244,12 @@
     <parameter property="P_BU_CD"                   mode="IN" />
     <parameter property="P_MOVE_DATE"               mode="IN" />
     <parameter property="P_MOVE_NO"                 mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
     <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
   </parameterMap>
     <procedure id="LC_FW_MOVE_CONFIRM" parameterMap="paramLC_FW_MOVE_CONFIRM" resultClass="java.util.HashMap">
-      { call LC_FW_MOVE_CONFIRM(?, ?, ?, ?, ?, ?) }
+      { call LC_FW_MOVE_CONFIRM(?, ?, ?, ?, ?, ?, ?) }
     </procedure>
   <!-- [E] - LC_FW_MOVE_CONFIRM -->
 
@@ -424,5 +425,128 @@
     </procedure>
   <!-- [E] - ES_ST_ERP_CREATION -->
   
+    <!-- [S] - LC_040MSAVE -->
+  <parameterMap id="paramLC_040MSAVE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INVEST_DATE"             mode="IN" />
+    <parameter property="P_INVEST_NO"               mode="IN" />
+    <parameter property="P_INVEST_DIV"              mode="IN" />
+    <parameter property="P_INVEST_START_DATE"       mode="IN" />
+    <parameter property="P_INVEST_END_DATE"         mode="IN" />
+   <!--  <parameter property="P_MANAGER_ID"              mode="IN" /> -->
+    <parameter property="P_REMARK1"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LC_040MSAVE" parameterMap="paramLC_040MSAVE" resultClass="java.util.HashMap">
+      { call LC_040MSAVE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LC_040MSAVE -->
+  
+    <!-- [S] - LC_040DSAVE -->
+  <parameterMap id="paramLC_040DSAVE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INVEST_DATE"             mode="IN" />
+    <parameter property="P_INVEST_NO"               mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <!-- <parameter property="P_ITEM_LOT"                mode="IN" /> -->
+    <parameter property="P_STOCK_QTY"               mode="IN" />
+    <parameter property="P_INVEST_QTY"              mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LC_040DSAVE" parameterMap="paramLC_040DSAVE" resultClass="java.util.HashMap">
+      { call LC_040DSAVE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LC_040DSAVE -->
+  
+  
+   <!-- [S] - LC_040DUPDATE -->
+  <parameterMap id="paramLC_040DUPDATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INVEST_DATE"             mode="IN" />
+    <parameter property="P_INVEST_NO"               mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <!-- <parameter property="P_ITEM_LOT"                mode="IN" /> -->
+    <parameter property="P_STOCK_QTY"               mode="IN" />
+    <parameter property="P_INVEST_QTY"              mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LC_040DUPDATE" parameterMap="paramLC_040DUPDATE" resultClass="java.util.HashMap">
+      { call LC_040DUPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LC_040DUPDATE -->
+  
+        <!-- [S] - LC_040DELETE -->
+  <parameterMap id="paramLC_040DELETE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INVEST_DATE"             mode="IN" />
+    <parameter property="P_INVEST_NO"               mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <!-- <parameter property="P_ITEM_LOT"                mode="IN" /> -->
+    <parameter property="P_STOCK_QTY"               mode="IN" />
+    <parameter property="P_INVEST_QTY"              mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LC_040DELETE" parameterMap="paramLC_040DELETE" resultClass="java.util.HashMap">
+      { call LC_040DELETE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LC_040DELETE -->
+          <!-- [S] - LC_040_ALLSAVE -->
+    <parameterMap id="paramLC_040_ALLSAVE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_INVEST_DATE"             mode="IN" />
+    <parameter property="P_INVEST_DIV"              mode="IN" />
+    <parameter property="P_INVEST_START_DATE"       mode="IN" />
+    <parameter property="P_REMARK1"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LC_040_ALLSAVE" parameterMap="paramLC_040_ALLSAVE" resultClass="java.util.HashMap">
+      { call LC_040_ALLSAVE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LC_040_ALLSAVE -->
+  
+<!-- [S] - LC_BW_MOVE_UPDATE -->
+  <parameterMap id="paramLC_BW_MOVE_UPDATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MOVE_DATE"               mode="IN" />
+    <parameter property="P_MOVE_NO"                 mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_VALID_DATE"              mode="IN" />
+    <parameter property="P_BATCH_NO"                mode="IN" />
+    <parameter property="P_STOCK_QTY"               mode="IN" />
+    <parameter property="P_MSTOCK_QTY"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LC_BW_MOVE_UPDATE" parameterMap="paramLC_BW_MOVE_UPDATE" resultClass="java.util.HashMap">
+      { call LC_BW_MOVE_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LC_BW_MOVE_UPDATE -->
 
 </sqlMap>

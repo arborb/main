@@ -38,10 +38,11 @@
         <parameter property="P_ITEM_NM"           mode="IN" />
         <parameter property="P_STATE_PRE_YN"      mode="IN" />
         <parameter property="P_STATE_CUR_YN"      mode="IN" />
+        <parameter property="P_BU_NO"             mode="IN" />
         <parameter property="P_USER_ID"           mode="IN" />
     </parameterMap>
     <procedure id="RS_T1_MASTER" parameterMap="paramRS_T1_MASTER" resultClass="java.util.HashMap">
-        { ? = call LI02010E.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+        { ? = call LI02010E.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_T1_MASTER -->
 
@@ -75,10 +76,11 @@
         <parameter property="P_ITEM_NM"           mode="IN" />
         <parameter property="P_STATE_PRE_YN"      mode="IN" />
         <parameter property="P_STATE_CUR_YN"      mode="IN" />
+        <parameter property="P_BU_NO"             mode="IN" />
         <parameter property="P_USER_ID"           mode="IN" />
     </parameterMap>
     <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
-        { ? = call LI02010E.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+        { ? = call LI02010E.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_T2_MASTER -->
 
@@ -139,10 +141,11 @@
         <parameter property="P_ITEM_NM"           mode="IN" />
         <parameter property="P_STATE_PRE_YN"      mode="IN" />
         <parameter property="P_STATE_CUR_YN"      mode="IN" />
+        <parameter property="P_BU_NO"             mode="IN" />
         <parameter property="P_USER_ID"           mode="IN" />
     </parameterMap>
     <procedure id="RS_T3_MASTER" parameterMap="paramRS_T3_MASTER" resultClass="java.util.HashMap">
-        { ? = call LI02010E.RS_T3_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+        { ? = call LI02010E.RS_T3_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_T3_MASTER -->
 
@@ -188,10 +191,11 @@
         <parameter property="P_ITEM_NM"           mode="IN" />
         <parameter property="P_STATE_PRE_YN"      mode="IN" />
         <parameter property="P_STATE_CUR_YN"      mode="IN" />
+        <parameter property="P_BU_NO"             mode="IN" />
         <parameter property="P_USER_ID"           mode="IN" />
     </parameterMap>
     <procedure id="RS_T4_MASTER" parameterMap="paramRS_T4_MASTER" resultClass="java.util.HashMap">
-        { ? = call LI02010E.RS_T4_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+        { ? = call LI02010E.RS_T4_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_T4_MASTER -->
 
@@ -238,10 +242,11 @@
         <parameter property="P_BRAND_CD"          mode="IN" />
         <parameter property="P_ITEM_CD"           mode="IN" />
         <parameter property="P_ITEM_NM"           mode="IN" />
+        <parameter property="P_BU_NO"             mode="IN" />
         <parameter property="P_USER_ID"           mode="IN" />
     </parameterMap>
     <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-        { ? = call LI02010E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+        { ? = call LI02010E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_MASTER -->
 

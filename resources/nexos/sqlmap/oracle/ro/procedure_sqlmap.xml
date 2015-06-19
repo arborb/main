@@ -304,7 +304,7 @@
   <!-- [E] - RO_BOX_SAVE -->
 
 
- <!-- [S] - RO_FW_DIRECTIONS_PROC -->
+  <!-- [S] - RO_FW_DIRECTIONS_PROC -->
   <parameterMap id="paramRO_FW_DIRECTIONS_PROC" class="java.util.Map">
     <parameter property="P_CENTER_CD"               mode="IN" />
     <parameter property="P_BU_CD"                   mode="IN" />
@@ -318,7 +318,35 @@
     </procedure>
   <!-- [E] - RO_FW_DIRECTIONS_PROC -->
   
- <!-- [S] - RO030LP_DELETE -->
+  <!-- [S] - RO_SCAN_LT_STEP2 -->
+  <parameterMap id="paramRO_SCAN_LT_STEP2" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="RO_SCAN_LT_STEP2" parameterMap="paramRO_SCAN_LT_STEP2" resultClass="java.util.HashMap">
+      { call RO_SCAN_LT_STEP2(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - RO_SCAN_LT_STEP2 -->
+  
+  <!-- [S] - RO_SCAN_LT_STEP4 -->
+  <parameterMap id="paramRO_SCAN_LT_STEP4" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="RO_SCAN_LT_STEP4" parameterMap="paramRO_SCAN_LT_STEP4" resultClass="java.util.HashMap">
+      { call RO_SCAN_LT_STEP4(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - RO_SCAN_LT_STEP4 -->
+  
+  <!-- [S] - RO030LP_DELETE -->
   <parameterMap id="paramRO030LP_DELETE" class="java.util.Map">
     <parameter property="P_CENTER_CD"               mode="IN" />
     <parameter property="P_BU_CD"                   mode="IN" />
@@ -333,7 +361,7 @@
   <!-- [E] - RO030LP_DELETE -->
   
   
-   <!-- [S] - RO_BOX_DELETE -->
+  <!-- [S] - RO_BOX_DELETE -->
   <parameterMap id="paramRO_BOX_DELETE" class="java.util.Map">
     <parameter property="P_CENTER_CD"               mode="IN" />
     <parameter property="P_BU_CD"                   mode="IN" />

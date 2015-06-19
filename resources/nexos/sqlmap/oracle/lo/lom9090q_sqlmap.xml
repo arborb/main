@@ -32,13 +32,70 @@
       <parameter property="P_OUTBOUND_BATCH"          mode="IN" />
       <parameter property="P_OWN_BRAND_CD"            mode="IN" />
       <parameter property="P_USER_ID"                 mode="IN" />
+      <parameter property="P_ORDERER_NM"              mode="IN" />
+      <parameter property="P_SCPKEY"                  mode="IN" />
       </parameterMap>
     <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-      { ? = call LOM9090Q.RS_MASTER(?, ?, ?, ?, ?, ?) }
+      { ? = call LOM9090Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_MASTER -->
 
-
+  <!-- [S] - INSERT_LO010PM [출고예정부가정보마스터(온라인고객)] -->
+    <insert id="INSERT_LO010PM" parameterClass="java.util.Map">
+      INSERT INTO LO010PM
+                 (
+                  CENTER_CD
+                 ,BU_CD
+                 ,ORDER_DATE
+                 ,ORDER_NO
+                 <isNotEmpty prepend = "," property= "P_MALL_MSG"                >MALL_MSG                   </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_ORDERER_CD"              >ORDERER_CD                 </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_ORDERER_NM"              >ORDERER_NM                 </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_ORDERER_TEL"             >ORDERER_TEL                </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_ORDERER_HP"              >ORDERER_HP                 </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_ORDERER_EMAIL"           >ORDERER_EMAIL              </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_ORDERER_MSG"             >ORDERER_MSG                </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_SHIPPER_NM"              >SHIPPER_NM                 </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_SHIPPER_TEL"             >SHIPPER_TEL                </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_SHIPPER_HP"              >SHIPPER_HP                 </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_SHIPPER_ZIP_CD"          >SHIPPER_ZIP_CD             </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_SHIPPER_ADDR_BASIC"      >SHIPPER_ADDR_BASIC         </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_SHIPPER_ADDR_DETAIL"     >SHIPPER_ADDR_DETAIL        </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_GIFT_WRAP_YN"            >GIFT_WRAP_YN               </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_CARD_MSG"                >CARD_MSG                   </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_CARD_FROM"               >CARD_FROM                  </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_CARD_TO"                 >CARD_TO                    </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_REMARK1"                 >REMARK1                    </isNotEmpty>
+                 ,REG_USER_ID
+                 ,REG_DATETIME
+                 )
+          VALUES (
+                  #P_CENTER_CD#
+                 ,#P_BU_CD#
+                 ,#P_ORDER_DATE#
+                 ,#P_ORDER_NO#
+                 <isNotEmpty prepend = "," property= "P_MALL_MSG"                >#P_MALL_MSG#               </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_ORDERER_CD"              >#P_ORDERER_CD#             </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_ORDERER_NM"              >#P_ORDERER_NM#             </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_ORDERER_TEL"             >WF.GET_ENCSTR(#P_ORDERER_TEL#)            </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_ORDERER_HP"              >WF.GET_ENCSTR(#P_ORDERER_HP#)             </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_ORDERER_EMAIL"           >WF.GET_ENCSTR(#P_ORDERER_EMAIL#)          </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_ORDERER_MSG"             >#P_ORDERER_MSG#            </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_SHIPPER_NM"              >#P_SHIPPER_NM#             </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_SHIPPER_TEL"             >WF.GET_ENCSTR(#P_SHIPPER_TEL#)            </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_SHIPPER_HP"              >WF.GET_ENCSTR(#P_SHIPPER_HP#)             </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_SHIPPER_ZIP_CD"          >#P_SHIPPER_ZIP_CD#         </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_SHIPPER_ADDR_BASIC"      >WF.GET_ENCSTR(#P_SHIPPER_ADDR_BASIC#)     </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_SHIPPER_ADDR_DETAIL"     >WF.GET_ENCSTR(#P_SHIPPER_ADDR_DETAIL#)    </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_GIFT_WRAP_YN"            >#P_GIFT_WRAP_YN#           </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_CARD_MSG"                >#P_CARD_MSG#               </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_CARD_FROM"               >#P_CARD_FROM#              </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_CARD_TO"                 >#P_CARD_TO#                </isNotEmpty>
+                 <isNotEmpty prepend = "," property= "P_REMARK1"                 >#P_REMARK1#                </isNotEmpty>
+                 ,#P_USER_ID#
+                 ,SYSDATE
+                 )
+    </insert>
     <!--
       //================================================================================================================
       // INSERT/UPDATE/DELETE SQLMAP

@@ -59,11 +59,12 @@
     // INSERT/UPDATE/DELETE SQLMAP
     //================================================================================================================
   -->
-  
-    <!-- [S] - UPDATE_CMDEAL [딜마스터] -->
+ 
+  <!-- [S] - UPDATE_CMDEAL [딜마스터] -->
   <update id="UPDATE_CMDEAL" parameterClass="java.util.Map">
     UPDATE CMDEAL
        SET DEAL_DIV                  = #P_DEAL_DIV#
+          <isNotNull prepend = "," property= "P_RESALE_DEAL_YN"          >RESALE_DEAL_YN           = #P_RESALE_DEAL_YN#               </isNotNull>
      WHERE BU_CD                     = #P_BU_CD#
        AND MALL_CD                   = #P_MALL_CD#
        AND DEAL_ID                   = #P_DEAL_ID#

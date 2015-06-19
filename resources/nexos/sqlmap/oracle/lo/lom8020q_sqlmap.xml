@@ -18,6 +18,7 @@
 <sqlMap namespace="LOM8020Q">
 
 
+
     <!-- [S] - RS_MASTER -->
     <parameterMap id="paramRS_MASTER" class="java.util.Map">
       <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
@@ -29,9 +30,11 @@
       <parameter property="P_SHIPPER_NM"              mode="IN" />
       <parameter property="P_WB_NO"                   mode="IN" />
       <parameter property="P_DELIVERY_TYPE"           mode="IN" />
+      <parameter property="P_USER_ID"                 mode="IN" />
+      <parameter property="P_SCPKEY"                  mode="IN" />
     </parameterMap>
     <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-      { ? = call LOM8020Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?) }
+      { ? = call LOM8020Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_MASTER -->
 

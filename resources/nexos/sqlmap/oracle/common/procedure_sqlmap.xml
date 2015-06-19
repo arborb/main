@@ -1252,4 +1252,40 @@
       { call WF.GET_TEMP_LOCNT_40(?, ?, ?) }
     </procedure>
   <!-- [E] - WF.GET_TEMP_LOCNT_40 -->
+  
+  
+  <!-- [S] - WF.GET_MOVE_OUTWAIT_QTY -->
+  <parameterMap id="paramWF.GET_MOVE_OUTWAIT_QTY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MOVE_DATE"               mode="IN" />
+    <parameter property="P_MOVE_NO"                 mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_VALID_DATE"              mode="IN" />
+    <parameter property="P_BATCH_NO"                mode="IN" />
+    <parameter property="P_MSTOCK_QTY"              mode="IN" />
+    <parameter property="O_OUTWAIT_YN"              mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.GET_MOVE_OUTWAIT_QTY" parameterMap="paramWF.GET_MOVE_OUTWAIT_QTY" resultClass="java.util.HashMap">
+      { call WF.GET_MOVE_OUTWAIT_QTY(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_MOVE_OUTWAIT_QTY -->
+  
+    <!-- [S] - WF.ROLE_BRAND_MATCHING -->
+  <parameterMap id="paramWF.ROLE_BRAND_MATCHING" class="java.util.Map">
+    <parameter property="P_DEAL_ID"                 mode="IN" />
+    <parameter property="O_DEAL_MESSEGE"            mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="WF.ROLE_BRAND_MATCHING" parameterMap="paramWF.ROLE_BRAND_MATCHING" resultClass="java.util.HashMap">
+      { call WF.ROLE_BRAND_MATCHING(?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.ROLE_BRAND_MATCHING -->
+  
 </sqlMap>

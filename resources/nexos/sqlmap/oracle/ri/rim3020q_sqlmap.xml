@@ -58,9 +58,10 @@
     <parameter property="P_SHIPPER_NM"              mode="IN" />
     <parameter property="P_OWN_BRAND_CD"            mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_SCPKEY"                  mode="IN" />
   </parameterMap>
   <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
-    { ? = call RIM3020Q.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call RIM3020Q.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T2_MASTER -->
 

@@ -34,9 +34,10 @@
       <parameter property="P_ORDERER_NM"              mode="IN" />
       <parameter property="P_BU_KEY"                  mode="IN" />
       <parameter property="P_USER_ID"                 mode="IN" />
+      <parameter property="P_SCPKEY"                  mode="IN" />
     </parameterMap>
     <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-      { ? = call LOM3060E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?) }
+      { ? = call LOM3060E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_MASTER -->
 

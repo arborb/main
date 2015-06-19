@@ -32,11 +32,9 @@
         <parameter property="P_DEAL_DIV3"         mode="IN" />
         <parameter property="P_VENDOR_CD"         mode="IN" />
         <parameter property="P_VENDOR_NM"         mode="IN" />
-        <parameter property="P_FROM"              mode="IN" />
-        <parameter property="P_TOTAL"             mode="IN" />
     </parameterMap>
     <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-        { ? = call CM03030E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?) }
+        { ? = call CM03030E.RS_MASTER(?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_MASTER -->
 

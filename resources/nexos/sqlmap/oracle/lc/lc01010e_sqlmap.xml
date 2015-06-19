@@ -34,10 +34,12 @@
     <parameter property="P_BRAND_CD"                mode="IN" />
     <parameter property="P_ITEM_CD"                 mode="IN" />
     <parameter property="P_ITEM_NM"                 mode="IN" />
+    <parameter property="P_CONFIRM_CHK"             mode="IN" />
+    <parameter property="P_ITEM_DIV"                mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
   </parameterMap>
   <procedure id="RS_T1_MASTER" parameterMap="paramRS_T1_MASTER" resultClass="java.util.HashMap">
-    { ? = call LC01010E.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LC01010E.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T1_MASTER -->
 
@@ -67,10 +69,11 @@
     <parameter property="P_BRAND_CD"                mode="IN" />
     <parameter property="P_ITEM_CD"                 mode="IN" />
     <parameter property="P_ITEM_NM"                 mode="IN" />
+    <parameter property="P_ITEM_DIV"                mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
   </parameterMap>
   <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
-    { ? = call LC01010E.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LC01010E.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T2_MASTER -->
 

@@ -36,9 +36,10 @@
         <parameter property="P_DEPART_CD"         mode="IN" />
         <parameter property="P_LINE_CD"           mode="IN" />
         <parameter property="P_CLASS_CD"          mode="IN" />
+        <parameter property="P_BU_NO"             mode="IN" />
     </parameterMap>
     <procedure id="RS_T1_MASTER" parameterMap="paramRS_T1_MASTER" resultClass="java.util.HashMap">
-        { ? = call LI03010Q.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+        { ? = call LI03010Q.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_T1_MASTER -->
 
@@ -57,9 +58,10 @@
         <parameter property="P_DEPART_CD"         mode="IN" />
         <parameter property="P_LINE_CD"           mode="IN" />
         <parameter property="P_CLASS_CD"          mode="IN" />
+        <parameter property="P_BU_NO"             mode="IN" />
     </parameterMap>
     <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
-        { ? = call LI03010Q.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+        { ? = call LI03010Q.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_T2_MASTER -->
 
@@ -107,9 +109,10 @@
         <parameter property="P_DEPART_CD"         mode="IN" />
         <parameter property="P_LINE_CD"           mode="IN" />
         <parameter property="P_CLASS_CD"          mode="IN" />
+        <parameter property="P_BU_NO"             mode="IN" />
     </parameterMap>
     <procedure id="RS_T2_SUB2" parameterMap="paramRS_T2_SUB2" resultClass="java.util.HashMap">
-        { ? = call LI03010Q.RS_T2_SUB2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+        { ? = call LI03010Q.RS_T2_SUB2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_T2_SUB2 -->
 

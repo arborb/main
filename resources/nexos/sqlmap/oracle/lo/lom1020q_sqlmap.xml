@@ -28,30 +28,41 @@
       <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
       <parameter property="P_CENTER_CD"               mode="IN" />
       <parameter property="P_BU_CD"                   mode="IN" />
+      
       <parameter property="P_ORDER_DATE1"             mode="IN" />
       <parameter property="P_ORDER_DATE2"             mode="IN" />
+      
       <parameter property="P_INOUT_CD"                mode="IN" />
       <parameter property="P_BU_NO"                   mode="IN" />
+      
       <parameter property="P_OWN_BRAND_CD"            mode="IN" />
       <parameter property="P_ITEM_CD"                 mode="IN" />
+      
       <parameter property="P_ITEM_NM"                 mode="IN" />
       <parameter property="P_ORDERER_NM"              mode="IN" />
+      
       <parameter property="P_SHIPPER_NM"              mode="IN" />
       <parameter property="P_MALL_CD"                 mode="IN" />
+      
       <parameter property="P_INORDER_TYPE"            mode="IN" />
       <parameter property="P_SHIP_TYPE"               mode="IN" />
+      
       <parameter property="P_SHIP_PRICE_TYPE"         mode="IN" />
       <parameter property="P_DEAL_ID"                 mode="IN" />
+      
       <parameter property="P_DELIVERY_TYPE"           mode="IN" />
       <parameter property="P_DELIVERY_TYPE2"          mode="IN" />
+      
       <parameter property="P_BRAND_CD"                mode="IN" />
       <parameter property="P_DEPART_CD"               mode="IN" />
+      
       <parameter property="P_LINE_CD"                 mode="IN" />
       <parameter property="P_CLASS_CD"                mode="IN" />
       <parameter property="P_USER_ID"                 mode="IN" />
+      <parameter property="P_SCPKEY"                  mode="IN" />
       </parameterMap>
     <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-      { ? = call LOM1020Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+      { ? = call LOM1020Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_MASTER -->
 

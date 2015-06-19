@@ -37,12 +37,10 @@
         <parameter property="P_ITEM_DIV"          mode="IN" />
         <parameter property="P_SAP_ITEM_CD"       mode="IN" />
         <parameter property="P_USER_ID"           mode="IN" />
-        <parameter property="P_FROM"              mode="IN" />
-        <parameter property="P_TOTAL"             mode="IN" />
-
+ 
     </parameterMap>
     <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-        { ? = call CM04020E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+        { ? = call CM04020E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_MASTER -->
 
@@ -108,9 +106,8 @@
                    <isNotEmpty prepend = "," property= "P_DELIVERY_TYPE1"   >DELIVERY_TYPE1    </isNotEmpty>
                    <isNotEmpty prepend = "," property= "P_DELIVERY_TYPE2"   >DELIVERY_TYPE2    </isNotEmpty>
                    <isNotEmpty prepend = "," property= "P_DELIVERY_BOX"     >DELIVERY_BOX      </isNotEmpty>
-                   <isNotEmpty prepend = "," property= "P_IN_UNIT_QTY"     >IN_UNIT_QTY      </isNotEmpty>
-                   <isNotEmpty prepend = "," property= "P_OUT_UNIT_QTY"     >OUT_UNIT_QTY      </isNotEmpty>
-                   
+                   <isNotEmpty prepend = "," property= "P_HAS_TYPE"         >HAS_TYPE          </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CAUTION"         >CAUTION          </isNotEmpty>
                    ,REG_USER_ID
                    ,REG_DATETIME
                    )
@@ -163,9 +160,10 @@
                    <isNotEmpty prepend = "," property= "P_ITEM_CBM"         >#P_ITEM_CBM#        </isNotEmpty>
                    <isNotEmpty prepend = "," property= "P_DELIVERY_TYPE1"   >#P_DELIVERY_TYPE1#  </isNotEmpty>
                    <isNotEmpty prepend = "," property= "P_DELIVERY_TYPE2"   >#P_DELIVERY_TYPE2#  </isNotEmpty>
-                   <isNotEmpty prepend = "," property= "P_DELIVERY_BOX"     >#P_DELIVERY_BOX#     </isNotEmpty>
-                   <isNotEmpty prepend = "," property= "P_IN_UNIT_QTY"     >#P_IN_UNIT_QTY#     </isNotEmpty>
-                   <isNotEmpty prepend = "," property= "P_OUT_UNIT_QTY"     >#P_OUT_UNIT_QTY#     </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_DELIVERY_BOX"     >#P_DELIVERY_BOX#    </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_HAS_TYPE"         >#P_HAS_TYPE#        </isNotEmpty>
+                   <isNotEmpty prepend = "," property= "P_CAUTION"          >#P_CAUTION#         </isNotEmpty>
+                 
                    ,#P_REG_USER_ID#
                    ,SYSDATE
                    )
@@ -222,8 +220,8 @@
               <isNotNull prepend = "," property= "P_DELIVERY_TYPE1"   >DELIVERY_TYPE1    = #P_DELIVERY_TYPE1#  </isNotNull>
               <isNotNull prepend = "," property= "P_DELIVERY_TYPE2"   >DELIVERY_TYPE2    = #P_DELIVERY_TYPE2#  </isNotNull>
               <isNotNull prepend = "," property= "P_DELIVERY_BOX"     >DELIVERY_BOX      = #P_DELIVERY_BOX#    </isNotNull>
-              <isNotNull prepend = "," property= "P_IN_UNIT_QTY"     >IN_UNIT_QTY      = #P_IN_UNIT_QTY#    </isNotNull>
-              <isNotNull prepend = "," property= "P_OUT_UNIT_QTY"     >OUT_UNIT_QTY      = #P_OUT_UNIT_QTY#    </isNotNull>
+              <isNotNull prepend = "," property= "P_HAS_TYPE"         >HAS_TYPE          = #P_HAS_TYPE#        </isNotNull>
+              <isNotNull prepend = "," property= "P_CAUTION"          >CAUTION           = #P_CAUTION#        </isNotNull>
               ,REG_USER_ID       = #P_REG_USER_ID#
               ,REG_DATETIME      = SYSDATE
          WHERE BRAND_CD          = #P_BRAND_CD#

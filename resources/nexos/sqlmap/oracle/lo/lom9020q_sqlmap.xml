@@ -38,9 +38,10 @@
       <parameter property="P_DEAL_ID"                 mode="IN" />
       <parameter property="P_DELIVERY_TYPE"           mode="IN" />
       <parameter property="P_USER_ID"                 mode="IN" />
+      <parameter property="P_SCPKEY"                  mode="IN" />
     </parameterMap>
     <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-      { ? = call LOM9020Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+      { ? = call LOM9020Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_MASTER -->
 

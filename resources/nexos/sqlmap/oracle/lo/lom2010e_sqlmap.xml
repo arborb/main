@@ -52,9 +52,10 @@
     <parameter property="P_DELIVERY_TYPE2"          mode="IN" />
     <parameter property="P_OWN_BRAND_CD"            mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_SCPKEY"                  mode="IN" />
   </parameterMap>
   <procedure id="RS_T1A_MASTER" parameterMap="paramRS_T1A_MASTER" resultClass="java.util.HashMap">
-    { ? = call LOM2010E.RS_T1A_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LOM2010E.RS_T1A_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T1A_MASTER -->
 
@@ -92,9 +93,10 @@
     <parameter property="P_SHIPPER_NM"              mode="IN" />
     <parameter property="P_BU_TIME"                 mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_SCPKEY"                  mode="IN" />
   </parameterMap>
   <procedure id="RS_T1B_MASTER" parameterMap="paramRS_T1B_MASTER" resultClass="java.util.HashMap">
-    { ? = call LOM2010E.RS_T1B_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LOM2010E.RS_T1B_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T1B_MASTER -->
 
@@ -151,9 +153,10 @@
     <parameter property="P_DELIVERY_TYPE2"          mode="IN" />
     <parameter property="P_OWN_BRAND_CD"            mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_SCPKEY"                  mode="IN" />
   </parameterMap>
   <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
-    { ? = call LOM2010E.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LOM2010E.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T2_MASTER -->
 
@@ -198,9 +201,10 @@
     <parameter property="P_DELIVERY_TYPE2"          mode="IN" />
     <parameter property="P_OWN_BRAND_CD"            mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_SCPKEY"                  mode="IN" />
   </parameterMap>
   <procedure id="RS_T3_MASTER" parameterMap="paramRS_T3_MASTER" resultClass="java.util.HashMap">
-    { ? = call LOM2010E.RS_T3_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LOM2010E.RS_T3_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T3_MASTER -->
 
@@ -259,9 +263,10 @@
     <parameter property="P_DELIVERY_TYPE2"          mode="IN" />
     <parameter property="P_OWN_BRAND_CD"            mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_SCPKEY"                  mode="IN" />
   </parameterMap>
   <procedure id="RS_T4_MASTER" parameterMap="paramRS_T4_MASTER" resultClass="java.util.HashMap">
-    { ? = call LOM2010E.RS_T4_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LOM2010E.RS_T4_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T4_MASTER -->
 
@@ -305,9 +310,10 @@
     <parameter property="P_DELIVERY_TYPE2"          mode="IN" />
     <parameter property="P_OWN_BRAND_CD"            mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_SCPKEY"                  mode="IN" />
   </parameterMap>
   <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-    { ? = call LOM2010E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LOM2010E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_MASTER -->
 

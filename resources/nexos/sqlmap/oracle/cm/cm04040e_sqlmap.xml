@@ -68,24 +68,6 @@
   <!-- [E] - RS_SUB -->
 
 
-
-
-  <!-- [S] - RS_SUB1 -->
-  <parameterMap id="paramRS_SUB1" class="java.util.Map">
-    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
-    <parameter property="P_BU_CD"                   mode="IN" />
-    <parameter property="P_BRAND_CD"                mode="IN" javaType="java.lang.String"  jdbcType="VARCHAR" />
-    <parameter property="P_ITEM_CD"                 mode="IN" />
-    <parameter property="P_VIEW_DIV"                mode="IN" />
-    <parameter property="P_DEPART_CD"               mode="IN" />
-    <parameter property="P_LINE_CD"                 mode="IN" />
-    <parameter property="P_CLASS_CD"                mode="IN" />
-  </parameterMap>
-  <procedure id="RS_SUB1" parameterMap="paramRS_SUB1" resultClass="java.util.HashMap">
-    { ? = call CM04040E.RS_SUB1(?, ?, ?, ?, ?, ?, ?) }
-  </procedure>
-  <!-- [E] - RS_SUB1 -->
-
   <!--
     //================================================================================================================
     // INSERT/UPDATE/DELETE SQLMAP
@@ -99,7 +81,12 @@
                ,MALL_CD
                ,DEAL_ID
                <isNotEmpty prepend = "," property= "P_DEAL_NM"                 >DEAL_NM                    </isNotEmpty>
-               <isNotEmpty prepend = "," property= "P_DEAL_DIV"                >DEAL_DIV                   </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_DEAL_DIV"                >DEAL_DIV                    </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_RESALE_DEAL_YN"          >RESALE_DEAL_YN             </isNotEmpty> 
+               <!-- 
+               <isNotEmpty prepend = "," property= "P_CIRCULATION_ID"          >CIRCULATION_ID             </isNotEmpty>
+               -->
+               <isNotEmpty prepend = "," property= "P_OUT_CENTER_CD"           >OUT_CENTER_CD              </isNotEmpty>
                <isNotEmpty prepend = "," property= "P_BRAND_CD"                >BRAND_CD                   </isNotEmpty>
                <isNotEmpty prepend = "," property= "P_COMPANY_ID"              >COMPANY_ID                 </isNotEmpty>
                <isNotEmpty prepend = "," property= "P_OPEN_DATE"               >OPEN_DATE                  </isNotEmpty>
@@ -114,6 +101,11 @@
                ,#P_DEAL_ID#
                <isNotEmpty prepend = "," property= "P_DEAL_NM"                 >#P_DEAL_NM#                </isNotEmpty>
                <isNotEmpty prepend = "," property= "P_DEAL_DIV"                >#P_DEAL_DIV#               </isNotEmpty>
+               <isNotEmpty prepend = "," property= "P_RESALE_DEAL_YN"          >#P_RESALE_DEAL_YN#           </isNotEmpty> 
+               <!-- 
+               <isNotEmpty prepend = "," property= "P_CIRCULATION_ID"          >#P_CIRCULATION_ID#         </isNotEmpty>
+               -->
+               <isNotEmpty prepend = "," property= "P_OUT_CENTER_CD"           >#P_OUT_CENTER_CD#          </isNotEmpty>
                <isNotEmpty prepend = "," property= "P_BRAND_CD"                >#P_BRAND_CD#               </isNotEmpty>
                <isNotEmpty prepend = "," property= "P_COMPANY_ID"              >#P_COMPANY_ID#             </isNotEmpty>
                <isNotEmpty prepend = "," property= "P_OPEN_DATE"               >#P_OPEN_DATE#              </isNotEmpty>
@@ -131,6 +123,11 @@
     UPDATE CMDEAL
        SET DEAL_NM                  = #P_DEAL_NM#
           <isNotNull prepend = "," property= "P_DEAL_DIV"                >DEAL_DIV                 = #P_DEAL_DIV#               </isNotNull>
+          <isNotNull prepend = "," property= "P_RESALE_DEAL_YN"          >RESALE_DEAL_YN           = #P_RESALE_DEAL_YN#               </isNotNull>
+          <!-- 
+          <isNotNull prepend = "," property= "P_CIRCULATION_ID"          >CIRCULATION_ID           = #P_CIRCULATION_ID#         </isNotNull>
+          -->
+          <isNotNull prepend = "," property= "P_OUT_CENTER_CD"           >OUT_CENTER_CD            = #P_OUT_CENTER_CD#         </isNotNull>
           <isNotNull prepend = "," property= "P_OPEN_DATE"               >OPEN_DATE                = #P_OPEN_DATE#              </isNotNull>
           <isNotNull prepend = "," property= "P_CLOSE_DATE"              >CLOSE_DATE               = #P_CLOSE_DATE#             </isNotNull>
           <isNotNull prepend = "," property= "P_REMARK1"                 >REMARK1                  = #P_REMARK1#                </isNotNull>

@@ -30,13 +30,14 @@
       <parameter property="O_RTN"               mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
       <parameter property="P_CUST_CD"           mode="IN" />
       <parameter property="P_BRAND_CD"          mode="IN" />
+      <parameter property="P_BRAND_NM"          mode="IN" />
       <parameter property="P_DEAL_DIV1"         mode="IN" />
       <parameter property="P_DEAL_DIV2"         mode="IN" />
       <parameter property="P_DEAL_DIV3"         mode="IN" />
       <parameter property="P_USER_ID"                 mode="IN" />
   </parameterMap>
   <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-      { ? = call CM03020E.RS_MASTER(?, ?, ?, ?, ?, ?) }
+      { ? = call CM03020E.RS_MASTER(?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_MASTER -->
 

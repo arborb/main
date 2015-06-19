@@ -468,6 +468,7 @@
   <!-- [S] - LI_ORDER_UPD_PROC -->
   <parameterMap id="paramLI_ORDER_UPD_PROC" class="java.util.Map">
     <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_ORDER_DATE_ORG"          mode="IN" />
     <parameter property="P_BU_CD"                   mode="IN" />
     <parameter property="P_ORDER_DATE"              mode="IN" />
     <parameter property="P_ORDER_NO"                mode="IN" />
@@ -476,7 +477,7 @@
     <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
   </parameterMap>
     <procedure id="LI_ORDER_UPD_PROC" parameterMap="paramLI_ORDER_UPD_PROC" resultClass="java.util.HashMap">
-      { call LI_ORDER_UPD_PROC(?, ?, ?, ?, ?, ?, ?) }
+      { call LI_ORDER_UPD_PROC(?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
   <!-- [E] - LI_ORDER_UPD_PROC -->
 

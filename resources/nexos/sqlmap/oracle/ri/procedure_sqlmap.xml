@@ -454,5 +454,127 @@
     </procedure>
   <!-- [E] - ES_RIORDER_FROM_REAL_TYPE2 -->
   
+  <!-- [S] - RIM_1010PM_INSERT -->
+  <parameterMap id="paramRIM_1010PM_INSERT" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_ORDERER_CD"              mode="IN" />
+    <parameter property="P_ORDERER_NM"              mode="IN" />
+    <parameter property="P_ORDERER_TEL"             mode="IN" />
+    <parameter property="P_ORDERER_HP"              mode="IN" />
+    <parameter property="P_ORDERER_EMAIL"           mode="IN" />
+    <parameter property="P_ORDERER_MSG"             mode="IN" />
+    <parameter property="P_ORDERER_ZIP_CD"          mode="IN" />
+    <parameter property="P_ORDERER_ADDR_BASIC"      mode="IN" />
+    <parameter property="P_ORDERER_ADDR_DETAIL"     mode="IN" />
+    <parameter property="P_SHIPPER_NM"              mode="IN" />
+    <parameter property="P_SHIPPER_TEL"             mode="IN" />
+    <parameter property="P_SHIPPER_HP"              mode="IN" />
+    <parameter property="P_SHIPPER_ZIP_CD"          mode="IN" />
+    <parameter property="P_SHIPPER_ADDR_BASIC"      mode="IN" />
+    <parameter property="P_SHIPPER_ADDR_DETAIL"     mode="IN" />
+    <parameter property="P_REMARK1"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_SCPKEY"                  mode="IN" /> 
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="RIM_1010PM_INSERT" parameterMap="paramRIM_1010PM_INSERT" resultClass="java.util.HashMap">
+      { call RIM_1010PM_INSERT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - RIM_1010PM_INSERT -->
   
+  <!-- [S] - RIM_1010PM_UPDATE -->
+  <parameterMap id="paramRIM_1010PM_UPDATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_ORDERER_CD"              mode="IN" />
+    <parameter property="P_ORDERER_NM"              mode="IN" />
+    <parameter property="P_ORDERER_TEL"             mode="IN" />
+    <parameter property="P_ORDERER_HP"              mode="IN" />
+    <parameter property="P_ORDERER_EMAIL"           mode="IN" />
+    <parameter property="P_ORDERER_MSG"             mode="IN" />
+    <parameter property="P_ORDERER_ZIP_CD"          mode="IN" />
+    <parameter property="P_ORDERER_ADDR_BASIC"      mode="IN" />
+    <parameter property="P_ORDERER_ADDR_DETAIL"     mode="IN" />
+    <parameter property="P_SHIPPER_NM"              mode="IN" />
+    <parameter property="P_SHIPPER_TEL"             mode="IN" />
+    <parameter property="P_SHIPPER_HP"              mode="IN" />
+    <parameter property="P_SHIPPER_ZIP_CD"          mode="IN" />
+    <parameter property="P_SHIPPER_ADDR_BASIC"      mode="IN" />
+    <parameter property="P_SHIPPER_ADDR_DETAIL"     mode="IN" />
+    <parameter property="P_REMARK1"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_SCPKEY"                  mode="IN" /> 
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="RIM_1010PM_UPDATE" parameterMap="paramRIM_1010PM_UPDATE" resultClass="java.util.HashMap">
+      { call RIM_1010PM_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - RIM_1010PM_UPDATE -->
+  
+  <!-- [S] - RIM_2010PM_INSERT -->
+  <parameterMap id="paramRIM_2010PM_INSERT" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INBOUND_DATE"            mode="IN" />
+    <parameter property="P_INBOUND_NO"              mode="IN" />
+    <parameter property="P_ORDERER_CD"              mode="IN" />
+    <parameter property="P_ORDERER_NM"              mode="IN" />
+    <parameter property="P_ORDERER_TEL"             mode="IN" />
+    <parameter property="P_ORDERER_HP"              mode="IN" />
+    <parameter property="P_ORDERER_EMAIL"           mode="IN" />
+    <parameter property="P_ORDERER_MSG"             mode="IN" />
+    <parameter property="P_ORDERER_ZIP_CD"          mode="IN" />
+    <parameter property="P_ORDERER_ADDR_BASIC"      mode="IN" />
+    <parameter property="P_ORDERER_ADDR_DETAIL"     mode="IN" />
+    <parameter property="P_SHIPPER_NM"              mode="IN" />
+    <parameter property="P_SHIPPER_TEL"             mode="IN" />
+    <parameter property="P_SHIPPER_HP"              mode="IN" />
+    <parameter property="P_SHIPPER_ZIP_CD"          mode="IN" />
+    <parameter property="P_SHIPPER_ADDR_BASIC"      mode="IN" />
+    <parameter property="P_SHIPPER_ADDR_DETAIL"     mode="IN" />
+    <parameter property="P_REMARK1"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_SCPKEY"                  mode="IN" /> 
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="RIM_2010PM_INSERT" parameterMap="paramRIM_2010PM_INSERT" resultClass="java.util.HashMap">
+      { call RIM_2010PM_INSERT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - RIM_2010PM_INSERT -->
+  
+  <!-- [S] - RIM_2010PM_UPDATE -->
+  <parameterMap id="paramRIM_2010PM_UPDATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_INBOUND_DATE"            mode="IN" />
+    <parameter property="P_INBOUND_NO"              mode="IN" />
+    <parameter property="P_ORDERER_CD"              mode="IN" />
+    <parameter property="P_ORDERER_NM"              mode="IN" />
+    <parameter property="P_ORDERER_TEL"             mode="IN" />
+    <parameter property="P_ORDERER_HP"              mode="IN" />
+    <parameter property="P_ORDERER_EMAIL"           mode="IN" />
+    <parameter property="P_ORDERER_MSG"             mode="IN" />
+    <parameter property="P_ORDERER_ZIP_CD"          mode="IN" />
+    <parameter property="P_ORDERER_ADDR_BASIC"      mode="IN" />
+    <parameter property="P_ORDERER_ADDR_DETAIL"     mode="IN" />
+    <parameter property="P_SHIPPER_NM"              mode="IN" />
+    <parameter property="P_SHIPPER_TEL"             mode="IN" />
+    <parameter property="P_SHIPPER_HP"              mode="IN" />
+    <parameter property="P_SHIPPER_ZIP_CD"          mode="IN" />
+    <parameter property="P_SHIPPER_ADDR_BASIC"      mode="IN" />
+    <parameter property="P_SHIPPER_ADDR_DETAIL"     mode="IN" />
+    <parameter property="P_REMARK1"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_SCPKEY"                  mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="RIM_2010PM_UPDATE" parameterMap="paramRIM_2010PM_UPDATE" resultClass="java.util.HashMap">
+      { call RIM_2010PM_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - RIM_2010PM_UPDATE -->  
 </sqlMap>

@@ -36,10 +36,11 @@
     <parameter property="P_ITEM_CD"                 mode="IN" />
     <parameter property="P_ITEM_NM"                 mode="IN" />
     <parameter property="P_INBOUND_STATE"           mode="IN" />
+    <parameter property="P_BU_NO"                   mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
   </parameterMap>
   <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-    { ? = call LI01010E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LI01010E.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_MASTER -->
 
@@ -93,7 +94,8 @@
                ,ORDER_DATETIME
                )
         VALUES (
-                #P_CENTER_CD#
+                <!-- #P_CENTER_CD# -->
+                #P_CENTER_CD_ORG#
                ,#P_BU_CD#
                ,#P_ORDER_DATE_ORG#
                ,#P_ORDER_NO#
@@ -144,7 +146,10 @@
       
           ,ORDER_USER_ID     = #P_USER_ID# 
           ,ORDER_DATETIME    = SYSDATE
+     <!-- 
      WHERE CENTER_CD                = #P_CENTER_CD#
+     -->
+     WHERE CENTER_CD                = #P_CENTER_CD_ORG#
        AND BU_CD                    = #P_BU_CD#
        AND ORDER_DATE               = #P_ORDER_DATE_ORG#
        AND ORDER_NO                 = #P_ORDER_NO#
@@ -156,7 +161,10 @@
   <delete id="DELETE_LI010NM" parameterClass="java.util.Map">
     DELETE 
       FROM LI010NM
+     <!-- 
      WHERE CENTER_CD                = #P_CENTER_CD#
+     -->
+     WHERE CENTER_CD                = #P_CENTER_CD_ORG#
        AND BU_CD                    = #P_BU_CD#
        AND ORDER_DATE               = #P_ORDER_DATE_ORG#
        AND ORDER_NO                 = #P_ORDER_NO#

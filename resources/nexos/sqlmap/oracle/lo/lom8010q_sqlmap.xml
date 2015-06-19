@@ -51,10 +51,12 @@
     <parameter property="P_PACKING_BATCH"           mode="IN" />
     <parameter property="P_BU_KEY"                  mode="IN" />
     <parameter property="P_CANCEL_STATE"            mode="IN" />
+    <parameter property="P_INOUT_CD"            mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_SCPKEY"                  mode="IN" />
   </parameterMap>
   <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
-    { ? = call LOM8010Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LOM8010Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_MASTER -->
 

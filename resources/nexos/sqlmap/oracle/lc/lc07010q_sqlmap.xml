@@ -34,16 +34,11 @@
     <parameter property="P_SHIPPER_NM"              mode="IN" />
     <parameter property="P_BU_NO"                   mode="IN" />
     <parameter property="P_BU_KEY"                  mode="IN" />
-    <parameter property="P_BRAND_CD"                mode="IN" />
-    <parameter property="P_CARRIER_CD"              mode="IN" />
-    <parameter property="P_ITEM_SIZE"               mode="IN" />
-    <parameter property="P_DEPART_CD"               mode="IN" />
-    <parameter property="P_LINE_CD"                 mode="IN" />
-    <parameter property="P_CLASS_CD"                mode="IN" />
+    <parameter property="P_BRAND_CD"                 mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
   </parameterMap>
   <procedure id="RS_T1_MASTER" parameterMap="paramRS_T1_MASTER" resultClass="java.util.HashMap">
-    { ? = call LC07010Q.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LC07010Q.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T1_MASTER -->
 
@@ -59,15 +54,10 @@
     <parameter property="P_BU_NO"                   mode="IN" />
     <parameter property="P_BU_KEY"                  mode="IN" />
     <parameter property="P_BRAND_CD"                mode="IN" />
-    <parameter property="P_CARRIER_CD"              mode="IN" />
-    <parameter property="P_ITEM_SIZE"               mode="IN" />
-    <parameter property="P_DEPART_CD"               mode="IN" />
-    <parameter property="P_LINE_CD"                 mode="IN" />
-    <parameter property="P_CLASS_CD"                mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
   </parameterMap>
   <procedure id="RS_T2_MASTER" parameterMap="paramRS_T2_MASTER" resultClass="java.util.HashMap">
-    { ? = call LC07010Q.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LC07010Q.RS_T2_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T2_MASTER -->
 
@@ -85,15 +75,10 @@
     <parameter property="P_OUTBOUND_BATCH"          mode="IN" />
     <parameter property="P_DEAL_ID"                 mode="IN" />
     <parameter property="P_BRAND_CD"                mode="IN" />
-    <parameter property="P_CARRIER_CD"              mode="IN" />
-    <parameter property="P_ITEM_SIZE"               mode="IN" />
-    <parameter property="P_DEPART_CD"               mode="IN" />
-    <parameter property="P_LINE_CD"                 mode="IN" />
-    <parameter property="P_CLASS_CD"                mode="IN" />
     <parameter property="P_USER_ID"                 mode="IN" />
   </parameterMap>
   <procedure id="RS_T3_MASTER" parameterMap="paramRS_T3_MASTER" resultClass="java.util.HashMap">
-    { ? = call LC07010Q.RS_T3_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    { ? = call LC07010Q.RS_T3_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_T3_MASTER -->
 

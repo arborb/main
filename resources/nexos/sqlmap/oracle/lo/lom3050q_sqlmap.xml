@@ -47,9 +47,10 @@
       <parameter property="P_ITEM_CD"                 mode="IN" />
       <parameter property="P_ITEM_NM"                 mode="IN" />
       <parameter property="P_USER_ID"                 mode="IN" />
+      <parameter property="P_SCPKEY"                  mode="IN" />
     </parameterMap>
     <procedure id="RS_T1_MASTER" parameterMap="paramRS_T1_MASTER" resultClass="java.util.HashMap">
-      { ? = call LOM3050Q.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+      { ? = call LOM3050Q.RS_T1_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
     </procedure>
     <!-- [E] - RS_T1_MASTER -->
   

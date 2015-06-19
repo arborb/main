@@ -33,20 +33,6 @@
   <!-- [E] - RS_MASTER -->
 
 
-  <!-- [S] - RS_MASTER1 -->
-  <parameterMap id="paramRS_MASTER1" class="java.util.Map">
-    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
-    <parameter property="P_CENTER_CD"               mode="IN" />
-    <parameter property="P_BU_CD"                   mode="IN" />
-    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
-    <parameter property="P_PICK_BOX_NO"             mode="IN" />
-  </parameterMap>
-  <procedure id="RS_MASTER1" parameterMap="paramRS_MASTER1" resultClass="java.util.HashMap">
-    { ? = call LOM7110E.RS_MASTER1(?, ?, ?, ?) }
-  </procedure>
-  <!-- [E] - RS_MASTER1 -->
-
-
   <!-- [S] - RS_DETAIL -->
   <parameterMap id="paramRS_DETAIL" class="java.util.Map">
     <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
@@ -60,35 +46,20 @@
   </procedure>
   <!-- [E] - RS_DETAIL -->
 
-  <!-- [S] - RS_DETAIL1 -->
-  <parameterMap id="paramRS_DETAIL1" class="java.util.Map">
-    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+
+  <!-- [S] - GET_PICK_BOX_INFO -->
+  <parameterMap id="paramGET_PICK_BOX_INFO" class="java.util.Map">
     <parameter property="P_CENTER_CD"               mode="IN" />
     <parameter property="P_BU_CD"                   mode="IN" />
     <parameter property="P_OUTBOUND_DATE"           mode="IN" />
     <parameter property="P_PICK_BOX_NO"             mode="IN" />
+    <parameter property="O_USED_YN"                 mode="OUT"  javaType="java.lang.String"  jdbcType="VARCHAR"/>
+    <parameter property="O_MSG"                     mode="OUT"  javaType="java.lang.String"  jdbcType="VARCHAR"/>
   </parameterMap>
-  <procedure id="RS_DETAIL1" parameterMap="paramRS_DETAIL1" resultClass="java.util.HashMap">
-    { ? = call LOM7110E.RS_DETAIL1(?, ?, ?, ?) }
+  <procedure id="GET_PICK_BOX_INFO" parameterMap="paramGET_PICK_BOX_INFO" resultClass="java.util.HashMap">
+    { call LOM7110E.GET_PICK_BOX_INFO(?, ?, ?, ?, ?, ?) }
   </procedure>
-  <!-- [E] - RS_DETAIL1 -->
-
-  <!-- [S] - GET_ITEM_INFO -->
-  <parameterMap id="paramGET_ITEM_INFO" class="java.util.Map">
-    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
-    <parameter property="P_CENTER_CD"               mode="IN" />
-    <parameter property="P_BU_CD"                   mode="IN" />
-    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
-    <parameter property="P_OUTBOUND_NO"             mode="IN" />
-    <parameter property="P_ITEM_BAR_CD"             mode="IN" />
-  </parameterMap>
-  <procedure id="GET_ITEM_INFO" parameterMap="paramGET_ITEM_INFO" resultClass="java.util.HashMap">
-    { ? = call LOM7110E.GET_ITEM_INFO(?, ?, ?, ?, ?) }
-  </procedure>
-  <!-- [E] - GET_ITEM_INFO -->
-
-
-
+  <!-- [E] - GET_PICK_BOX_INFO -->
 
 
 </sqlMap>
