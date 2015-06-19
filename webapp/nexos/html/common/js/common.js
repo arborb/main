@@ -1,7 +1,7 @@
 /**
  * main branch
  * 공통 Function Object
- * 
+ * 백국경
  * @since 5.0
  */
 
