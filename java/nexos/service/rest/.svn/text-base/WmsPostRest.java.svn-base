@@ -1,0 +1,405 @@
+package nexos.service.rest;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
+
+import org.json.JSONException;
+
+@Path("/")
+public class WmsPostRest {
+
+	private static Connection dBconnect;
+	static int RecvStatus = 0;
+	static String CompanyId = null;
+	static String SetResponseData = null;
+	static String SetResSultData = null;
+	static String SetResponseErrData = null;
+	static String SetResSultErrData = null;
+	static String WmpRestSeqNo = null;
+	static long StartTime;
+	static long EndTime;
+	static String AirTime;
+/*---------------------------------------------------------------*/
+//  Date --> .
+  // private static java.sql.Date getCurrentDate() {
+  // java.util.Date today = new java.util.Date();
+  // return new java.sql.Date(today.getTime());
+  // }
+/*-----------------------------------------------------------------*/
+	public static void ResultProcess() throws SQLException {
+		PreparedStatement pstmtLog = null;
+		PreparedStatement  pstmt1 = null;
+		ResultSet rs1 = null;
+		Connection connect = null;
+		Connection DBconn = null;
+
+		//
+		//JDBC Connect
+		//WmpRestSeqNo
+		//운영기
+		//String url9      = "jdbc:oracle:thin:@172.20.50.11:31521:WMSORA";
+		//개발기--
+		  String url9      = "jdbc:oracle:thin:@192.168.0.35:1521:WMS11G";
+		  String userName9 = "WMS_USER";
+		  String passwd9   = "WMS_PWD";
+
+		  try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		  DBconn = DriverManager.getConnection(url9, userName9, passwd9);
+
+			String REST_SEQ_NO = "SELECT WMP_REST_SEQ_NO.NEXTVAL FROM DUAL ";
+		   pstmt1 = DBconn.prepareStatement(REST_SEQ_NO);
+		   rs1 = pstmt1.executeQuery();
+		 while(rs1.next()){
+			 WmpRestSeqNo = rs1.getString(1);
+		 }
+		 pstmt1.clearParameters();
+
+		 System.out.println("\n  WmpRestSeqNo : " + WmpRestSeqNo + '\t');
+		 System.out.println("\n  Sequence 채번 End.." + '\t');
+
+		try {
+			System.out.println("###################### 0" + '\t');
+			//운영기
+		    //String DBurl    = "jdbc:oracle:thin:@172.20.50.11:31521:WMSORA";
+		    //개발기--
+			String DBurl      = "jdbc:oracle:thin:@192.168.0.35:1521:WMS11G";
+		    String userName = "WMS_USER";
+		    String passwd   = "WMS_PWD";
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+					String Send_Query = "INSERT INTO REST_HISTORY "
+								+ " (COMPANY_ID,SEQ_NO,START_DATE,END_DATE,AIR_TIME,REG_DATE ) VALUES "
+								+ " (NVL(?,'00000'),?,?,?,?,SYSDATE)";
+
+					System.out.println("\n Send_WmpQuery : " + Send_Query + '\t');
+				    connect = DriverManager.getConnection(DBurl, userName, passwd);
+				    pstmtLog = connect.prepareStatement(Send_Query);
+					pstmtLog.setString(1, CompanyId);		//COMPANY_ID
+					pstmtLog.setString(2, WmpRestSeqNo);	//SEQ_NO
+					pstmtLog.setLong(3, StartTime);			//START_DATE
+					pstmtLog.setLong(4, EndTime);	        //SEND_DATE
+					pstmtLog.setString(5, AirTime);			//AIR_TIME
+					//SYSDATE								//REG_DATE
+
+					rs1 = pstmtLog.executeQuery();
+
+		 } catch (SQLException e) {
+
+				System.out.println(e.getMessage());
+
+			} finally {
+
+				if (pstmtLog != null ) {
+					pstmtLog.close();
+				}
+
+				if (dBconnect != null) {
+					pstmtLog.close();
+				}
+
+				if (pstmt1 != null ) {
+					pstmt1.close();
+				}
+
+				if (DBconn != null) {
+					pstmt1.close();
+				}
+
+			}
+
+		System.out.println("ResultProcess Setting Finished ......: " +'\t');
+
+}
+/*-----------------------------------------------------------------*/
+	  @Path("stock")
+	  @POST
+	  @Consumes(MediaType.APPLICATION_JSON)
+
+	  public String StockInfo(String company_id)	throws JSONException {
+
+		System.out.println("Value in name: " + company_id);
+		// Start time
+		long startTime = System.currentTimeMillis();
+		StartTime = startTime;
+		System.out.println("\n 요청시작시간  :  " + StartTime);
+
+
+		//return "{\"serviceName\": \"Mr.Server\"}";
+		//CompanyId
+		CompanyId = company_id;
+
+		System.out.println("param 값  :  " + CompanyId);
+
+		if(CompanyId.equals("")){
+
+			org.json.JSONObject ErrchildObj = new org.json.JSONObject();
+			org.json.JSONObject ErrparentObj = new org.json.JSONObject();
+			org.json.JSONArray ErrArray = new org.json.JSONArray();
+			//{"result":{"code":200,"message":"Success"}}
+			ErrchildObj.put("code",   "100");
+			ErrchildObj.put("message",   "판매사 ID 가 없습니다.");
+			ErrArray.put(ErrchildObj);
+			ErrparentObj.put("result", ErrchildObj);
+			String SetResponseErrData = ((Object) ErrparentObj).toString();
+			SetResSultErrData = SetResponseErrData;
+			System.out.println("\n Send Data Err: [ " + SetResSultErrData + "] " + '\t');
+			// End time
+			long endTime = System.currentTimeMillis();
+			EndTime = endTime;
+			System.out.println("\n 요청종료시간  :  " + endTime);
+
+			long lTime = endTime - startTime;
+			AirTime = lTime/1000.0f +"초";
+			System.out.println("TIME : " + lTime + "(ms)");
+
+			try {
+				ResultProcess();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return SetResSultErrData;
+		}
+
+	    org.json.JSONObject parentObj = new org.json.JSONObject();
+		org.json.JSONArray jArray = new org.json.JSONArray();
+
+	    System.out.println("######################" + '\t');
+	    System.out.println("[ Make Data Start ] " + '\t');
+	    System.out.println("######################" + '\t');
+
+	try {
+		System.out.println("###################### 0" + '\t');
+		//운영기
+	    //String DBurl    = "jdbc:oracle:thin:@172.20.50.11:31521:WMSORA";
+	    //개발기--
+		String DBurl    = "jdbc:oracle:thin:@192.168.0.35:1521:WMS11G";
+	    String userName = "WMS_USER";
+	    String passwd   = "WMS_PWD";
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Connection connect = null;
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		/////////////////////////////////////////////////////////////////////////////////
+		String Send_WmpQuery = "WITH T_LO010NMD AS(" +
+				" SELECT /*+ INDEX(M2 LO010ND_IDXPK) */ " +
+				"  M1.CENTER_CD " +
+				" ,M1.BU_CD " +
+				" ,M2.BRAND_CD " +
+				" ,M2.ITEM_CD " +
+				" ,M2.ITEM_STATE " +
+				" ,M2.ITEM_LOT " +
+				" ,SUM(M2.ORDER_QTY)    AS ORDER_QTY" +
+				" FROM LO010NM M1 " +
+				" JOIN LO010ND M2 ON M2.CENTER_CD  = M1.CENTER_CD " +
+				"         AND M2.BU_CD      = M1.BU_CD " +
+				"         AND M2.ORDER_DATE = M1.ORDER_DATE " +
+				"         AND M2.ORDER_NO   = M1.ORDER_NO " +
+				"         WHERE M1.CENTER_CD      = 'G1' " +
+				"         AND M1.BU_CD IN  ('5000','5200') " +
+				"         AND M1.OUTBOUND_STATE = WD.C_STATE_ORDER " +
+				"         GROUP BY M1.CENTER_CD,M1.BU_CD,M2.BRAND_CD,M2.ITEM_CD,M2.ITEM_STATE,M2.ITEM_LOT), " +
+				" T_LO020NMD AS(" +
+				"         SELECT /*+ INDEX(M2 LO020ND_IDXPK) */ " +
+				"          M1.CENTER_CD" +
+				"         ,M1.BU_CD " +
+				"         ,M2.BRAND_CD" +
+				"         ,M2.ITEM_CD" +
+				"         ,M2.ITEM_STATE" +
+				"         ,M2.ITEM_LOT" +
+				"         ,SUM(M2.ENTRY_QTY)    AS ENTRY_QTY " +
+				"         FROM LO020NM M1 " +
+				"              JOIN LO020ND M2 ON M2.CENTER_CD      = M1.CENTER_CD " +
+				"              AND M2.BU_CD          = M1.BU_CD " +
+				"              AND M2.OUTBOUND_DATE  = M1.OUTBOUND_DATE " +
+				"              AND M2.OUTBOUND_NO    = M1.OUTBOUND_NO " +
+				"        WHERE M1.CENTER_CD      = 'G1' " +
+				"          AND M1.BU_CD IN  ('5000','5200') " +
+				"          AND M1.OUTBOUND_STATE IN (WD.C_STATE_ENTRY, WD.C_STATE_DIRECTIONS) " +
+				"          GROUP BY M1.CENTER_CD,M1.BU_CD,M2.BRAND_CD,M2.ITEM_CD,M2.ITEM_STATE,M2.ITEM_LOT) " +
+				"  SELECT L2.* " +
+				" 		,L2.STOCK_QTY - L2.OUT_ORDER_QTY - L2.OUT_WAIT_QTY1 AS OUT_QTY1 " +
+				"  FROM ( " +
+				"		SELECT L1.* " +
+				"        ,NVL(T1.ORDER_QTY,0)     AS OUT_ORDER_QTY " +
+				"        ,NVL(T2.ENTRY_QTY,0)     AS OUT_WAIT_QTY1 " +
+				"      FROM ( " +
+				"       SELECT /*+ INDEX(M1 LS010NM_IDXPK) */" +
+				"         M1.CENTER_CD " +
+				"        ,M1.BU_CD" +
+				"        ,C1.BU_NM" +
+				"        ,M1.BRAND_CD                                AS OWN_BRAND_CD " +
+				"        ,C3.OWN_BRAND_NM " +
+				"        ,M1.ITEM_CD " +
+				"        ,M1.ITEM_LOT " +
+				"        ,C2.ITEM_NM " +
+				"        ,M1.ITEM_STATE " +
+				"        ,C2.ITEM_SPEC " +
+				"        ,WF.DSP_COMBO (M1.ITEM_STATE ,C6.CODE_NM)   AS ITEM_STATE_F " +
+				"        ,SUM(M1.STOCK_QTY)                          AS STOCK_QTY " +
+				"        ,C2.ITEM_DIV " +
+				"        ,C5.CODE_NM                                 AS ITEM_DIV_D " +
+				"  FROM LS010NM M1 " +
+				"         JOIN CMBU        C1   ON C1.BU_CD        = M1.BU_CD " +
+				"         JOIN CMITEM      C2   ON C2.BRAND_CD     = M1.BRAND_CD " +
+				"                               AND C2.ITEM_CD      = M1.ITEM_CD " +
+				"         JOIN CMOWNBRAND  C3   ON C3.BU_CD        = M1.BU_CD " +
+				"                              AND C3.OWN_BRAND_CD = M1.BRAND_CD " +
+				"         JOIN CMCODE      C5   ON C5.CODE_CD      = C2.ITEM_DIV " +
+				"                              AND C5.CODE_GRP     = 'ITEM02' " +
+				"         JOIN CMCODE      C6   ON C6.CODE_CD      = M1.ITEM_STATE " +
+				"                              AND C6.CODE_GRP     = WF.GET_CODE_GRP('ITEM_STATE')" +
+				"         JOIN CMROLE      C7   ON C7.CUST_CD      = '0000' " +
+				"                              AND C7.BU_CD        = M1.BU_CD " +
+				"                              AND C7.OWN_BRAND_CD = M1.BRAND_CD " +
+				"         JOIN CMBRAND     C8   ON C8.BRAND_CD     = C7.BRAND_CD " +
+				"                              AND C8.REMARK1      = ? " +
+ " WHERE M1.CENTER_CD        = 'G1' "
+        +
+				"     AND M1.BU_CD IN  ('5000','5200') " +
+				"   GROUP BY M1.CENTER_CD,M1.BU_CD,C1.BU_NM,M1.BRAND_CD,C3.OWN_BRAND_NM,M1.ITEM_CD,M1.ITEM_LOT,C2.ITEM_NM,M1.ITEM_STATE,C2.ITEM_SPEC,C6.CODE_NM,C2.ITEM_DIV,C5.CODE_NM " +
+				"   ORDER BY M1.CENTER_CD,M1.BU_CD,C1.BU_NM,M1.BRAND_CD,C3.OWN_BRAND_NM,M1.ITEM_CD,C2.ITEM_NM,M1.ITEM_STATE,C6.CODE_NM,C2.ITEM_DIV,C5.CODE_NM " +
+				" ) L1 " +
+				" LEFT JOIN T_LO010NMD T1 ON T1.CENTER_CD  = L1.CENTER_CD " +
+				"                        AND T1.BU_CD      = L1.BU_CD " +
+				"                        AND T1.BRAND_CD   = L1.OWN_BRAND_CD " +
+				"                        AND T1.ITEM_CD    = L1.ITEM_CD " +
+				"                        AND T1.ITEM_STATE = L1.ITEM_STATE " +
+				"                        AND T1.ITEM_LOT   = L1.ITEM_LOT " +
+				" LEFT JOIN T_LO020NMD T2 ON T2.CENTER_CD  = L1.CENTER_CD " +
+				"                        AND T2.BU_CD      = L1.BU_CD " +
+				"                        AND T2.BRAND_CD   = L1.OWN_BRAND_CD " +
+				"                        AND T2.ITEM_CD    = L1.ITEM_CD " +
+				"                        AND T2.ITEM_STATE = L1.ITEM_STATE " +
+				"                        AND T2.ITEM_LOT   = L1.ITEM_LOT " +
+				" ) L2" +
+				" ORDER BY L2.CENTER_CD,L2.BU_CD,L2.OWN_BRAND_CD,L2.ITEM_CD,L2.ITEM_STATE ";
+
+		////////////////////////////////////////////////////////////////////////////////
+
+			System.out.println("\n Send_WmpQuery : " + Send_WmpQuery + '\t');
+		    connect = DriverManager.getConnection(DBurl, userName, passwd);
+			pstmt = connect.prepareStatement(Send_WmpQuery);
+			pstmt.setString(1, CompanyId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				org.json.JSONObject childObj = new org.json.JSONObject();
+				/*
+				System.out.println("# center_cd " 		+ rs.getString(1) + '\t');
+				System.out.println("# bu_cd " 			+ rs.getString(2) + '\t');
+				System.out.println("# bu_nm " 			+ rs.getString(3) + '\t');
+				System.out.println("# own_brand_cd " 	+ rs.getString(4) + '\t');
+				System.out.println("# own_brand_nm " 	+ rs.getString(5) + '\t');
+				System.out.println("# item_cd " 		+ rs.getString(6) + '\t');
+				System.out.println("# item_lot " 		+ rs.getString(7) + '\t');
+				System.out.println("# item_nm " 		+ rs.getString(8) + '\t');
+				System.out.println("# item_state " 		+ rs.getString(9) + '\t');
+				System.out.println("# item_spec " 		+ rs.getString(10) + '\t');
+				System.out.println("# item_state_f " 	+ rs.getString(11) + '\t');
+				System.out.println("# stock_qty " 		+ rs.getString(12) + '\t');
+				System.out.println("# item_div " 		+ rs.getString(13) + '\t');
+				System.out.println("# item_div_d " 		+ rs.getString(14) + '\t');
+				System.out.println("# out_order_qty " 	+ rs.getString(15) + '\t');
+				System.out.println("# out_wait_qty1 " 	+ rs.getString(14) + '\t');
+				System.out.println("# out_qty1 " 		+ rs.getString(15) + '\t');
+				*/
+
+
+				try {
+					//childObj.put("center_cd",    	(rs.getString(1) == null) ? "" : rs.getString(1));  /**/
+					//childObj.put("bu_cd",    	 	(rs.getString(2) == null) ? "" : rs.getString(2));  /**/
+					//childObj.put("bu_nm",    	 	(rs.getString(3) == null) ? "" : rs.getString(3));  /**/
+					//childObj.put("own_brand_cd",    (rs.getString(4) == null) ? "" : rs.getString(4));  /**/
+					//childObj.put("own_brand_nm",    (rs.getString(5) == null) ? "" : rs.getString(5));  /**/
+					childObj.put("item_cd",    	 	rs.getString(6) == null ? "" : rs.getString(6));  /**/
+					//childObj.put("item_lot",    	(rs.getString(7) == null) ? "" : rs.getString(7));  /**/
+					childObj.put("item_nm",    		rs.getString(8) == null ? "" : rs.getString(8));  /**/
+					//childObj.put("item_state",    	(rs.getString(9) == null) ? "" : rs.getString(9));  /**/
+					childObj.put("item_spec",    	rs.getString(10) == null ? "" : rs.getString(10)); /**/
+					childObj.put("item_state_f",    rs.getString(11) == null ? "" : rs.getString(11)); /**/
+					childObj.put("stock_qty",    	rs.getString(12) == null ? "" : rs.getString(12)); /**/
+					//childObj.put("item_div",        (rs.getString(13) == null) ? "" : rs.getString(13)); /**/
+					//childObj.put("item_div_d",    	(rs.getString(14) == null) ? "" : rs.getString(14)); /**/
+					childObj.put("out_order_qty",   rs.getString(15) == null ? "" : rs.getString(15)); /**/
+					childObj.put("out_wait_qty1",   rs.getString(16) == null ? "" : rs.getString(16)); /**/
+					childObj.put("out_qty1",        rs.getString(17) == null ? "" : rs.getString(17)); /**/
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				jArray.put(childObj);
+
+				try {
+					parentObj.put("Entry", jArray);
+					System.out.println("Count: [ " + rs.getRow() + "] " + '\t');
+					String SetResponseData = ((Object) parentObj).toString();
+					SetResSultData = SetResponseData;
+					//System.out.println("Send Data : [ " + SetResponseData + "] " + '\t');
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			//Response outputJsonObj = new JSONObject();
+			//System.out.println("Send Data : 99 [ " + SetResponseData + "] " + '\t');
+		    //outputJsonObj.put("output", SetResponseData);
+		    //return outputJsonObj;
+	System.out.println("\n Send Data : [ " + SetResSultData + "] " + '\t');
+	// End time
+	long endTime = System.currentTimeMillis();
+	EndTime = endTime;
+	System.out.println("\n 요청종료시간  :  " + endTime);
+
+	long lTime = endTime - startTime;
+	AirTime = lTime/1000.0f +"초";
+	System.out.println("TIME : " + lTime + "(ms)");
+	try {
+		ResultProcess();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return SetResSultData;
+
+	}
+
+	}

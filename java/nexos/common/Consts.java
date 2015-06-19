@@ -145,4 +145,16 @@ public class Consts {
   public static final String PK_MALL_CD                = "P_MALL_CD";
   public static final String PK_O_MSG                  = "O_MSG";
   public static final String PK_O_HAS_NO               = "O_HAS_NO";
+  
+  public static final String DK_SCP_DATA_1        = "P_SHIPPER_ADDR_BASIC";
+  public static final String DK_SCP_DATA_2        = "P_SHIPPER_ADDR_DETAIL";
+  public static final String DK_SCP_DATA_3        = "P_SHIPPER_HP";
+  public static final String DK_SCP_DATA_4        = "P_SHIPPER_TEL";
+  public static final String DK_SCP_DATA_5        = "P_ORDERER_NM";
+  public static final String DK_SCP_DATA_6        = "P_ORDERER_EMAIL";
+  public static final String DK_SCP_DATA_7        = "P_ORDERER_HP";
+  public static final String DK_SCP_DATA_8        = "P_SHIPPER_NM";
+  public static final String DK_SCP_DATA_9        = "P_ORDERER_ADDR_BASIC";
+  public static final String DK_SCP_DATA_10       = "P_ORDERER_ADDR_DETAIL"; 
+  public static final String DK_SCP_DATA_11       = "P_ORDERER_TEL";
 }

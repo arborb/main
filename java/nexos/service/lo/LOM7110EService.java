@@ -131,39 +131,14 @@ public class LOM7110EService {
    *
    * @param params
    */
-  public String callFWScanConfirm(Map<String, Object> params) throws Exception {
-    
-    String result;
-    
-    TransactionStatus ts = transactionManager.getTransaction(new DefaultTransactionDefinition());
-    try {
-      result = dao.callFWScanConfirm(params);
-      // 오류면 Rollback
-      if (!Consts.OK.equals(result)) {
-        transactionManager.rollback(ts);
-      }
-      transactionManager.commit(ts);
-    } catch (Exception e) {
-      transactionManager.rollback(ts);
-      throw new RuntimeException(e.getMessage());
-    }
-    
-    return result;
-  }
-
-  /**
-   * 출고스캔검수-박스 통합(팝업화면에서)
-   * 
-   * @param params
-   */
   @SuppressWarnings("rawtypes")
-  public Map callScanBoxMerge(Map<String, Object> params) throws Exception {
+  public Map callFWScanConfirm(Map<String, Object> params) throws Exception {
 
     Map result;
 
     TransactionStatus ts = transactionManager.getTransaction(new DefaultTransactionDefinition());
     try {
-      result = dao.callScanBoxMerge(params);
+      result = dao.callFWScanConfirm(params);
       String oMsg = (String)result.get(Consts.PK_O_MSG);
       // 오류면 Rollback
       if (!Consts.OK.equals(oMsg)) {

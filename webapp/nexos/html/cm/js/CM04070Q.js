@@ -5,18 +5,15 @@ function _Initialize() {
  
   // 단위화면에서 사용될 일반 전역 변수 정의
   $NC.setGlobalVar({
-    TEST:0,
+    TEST: 0,
     printOptions: [{
       PRINT_INDEX: 0,
       PRINT_COMMENT: "상품라벨 출력"
     }]
   });
   
-
   // 그리드 초기화
   grdMasterInitialize();
-
-  
 
   $NC.setValue("#edtQBrand_Cd", $NC.G_USERINFO.BRAND_CD);
   $NC.setValue("#edtQBrand_Nm", $NC.G_USERINFO.BRAND_NM);
@@ -56,7 +53,6 @@ function _OnConditionChange(e, view, val) {
   // 조회 조건에 Object Change
 
   var id = view.prop("id").substr(4).toUpperCase();
-
 
   switch (id) {
   case "BU_CD":
@@ -127,12 +123,11 @@ function onChangingCondition() {
  */
 function _Inquiry() {
 
-
   // 조회시 전역 변수 값 초기화
   $NC.setInitGridVar(G_GRDMASTER);
 
-  var BRAND_CD = $NC.getValue("#edtQBrand_Cd",true);
-  var BU_CD = $NC.getValue("#edtQBu_Cd",true);
+  var BRAND_CD = $NC.getValue("#edtQBrand_Cd", true);
+  var BU_CD = $NC.getValue("#edtQBu_Cd", true);
   var BRAND_NM = $NC.getValue("#edtQBrand_Nm");
   var ITEM_CD = $NC.getValue("#edtQItem_Cd");
   var ITEM_NM = $NC.getValue("#edtQItem_Nm");
@@ -191,10 +186,14 @@ function _Print(printIndex, printName) {
 
   var checkedValueDS = [ ];
   var rowCount = G_GRDMASTER.data.getLength();
-  for (var row = 0; row < rowCount; row++) {
+  for ( var row = 0; row < rowCount; row++) {
     var rowData = G_GRDMASTER.data.getItem(row);
     if (rowData.CHECK_YN == "Y") {
-      checkedValueDS.push(rowData.PRINT_QTY +'-'+  rowData.ITEM_CD);
+      if (rowData.PRINT_QTY == null) {
+        alert("출력물 할 수량을 출력수량 란에 입력 하십시요.");
+        return;
+      }
+      checkedValueDS.push(rowData.PRINT_QTY + '-' + rowData.ITEM_CD);
     }
   }
   if (checkedValueDS.length == 0) {

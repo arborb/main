@@ -6,13 +6,6 @@
 
   <display-name>Nexos Application</display-name>
 
-  <!--
-  <error-page>
-    <error-code>404</error-code>
-    <location>/error/404.html</location>
-  </error-page>
-  -->
-  
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
@@ -150,5 +143,16 @@
     <servlet-name>neXosCXFServlet</servlet-name>
     <url-pattern>/WS/*</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+  <servlet-name>Jersey Web Application</servlet-name>
+  <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+  <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>Jersey Web Application</servlet-name>
+  <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+  
 
 </web-app>

@@ -1,6 +1,7 @@
 package nexos.service.lc;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -11,6 +12,7 @@ import nexos.service.common.CommonDAO;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
@@ -231,9 +233,97 @@ public class LC03010EService {
    * @param params
    * @return
    */
+  
+  @SuppressWarnings("unchecked")
+  public String save1(Map<String, Object> params) throws Exception {
+
+    // 테이블구분([A]기타입출고, [B]재고이동, [C]재고실사)
+    final String TABLE_DIV = "B";
+
+    // 신규 등록이 아닐 경우 저장 전 입고진행상태 체크
+    Map<String, Object> masterDS = (HashMap<String, Object>)params.get(Consts.PK_DS_MASTER);
+    String process_Cd = (String)params.get("P_PROCESS_CD");
+
+    if (!Consts.PROCESS_ENTRY_NEW.equals(process_Cd)) {
+      Map<String, Object> checkParams = new HashMap<String, Object>();
+      checkParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
+      checkParams.put("P_BU_CD", masterDS.get("P_BU_CD"));
+      checkParams.put("P_ETC_DATE", masterDS.get("P_MOVE_DATE"));
+      checkParams.put("P_ETC_NO", masterDS.get("P_MOVE_NO"));
+      checkParams.put("P_TABLE_DIV", TABLE_DIV);
+
+      String oMsg = getConfirmYn(checkParams);
+      if (!Consts.OK.equals(oMsg)) {
+        throw new RuntimeException(oMsg);
+      }
+    }
+    // 저장 처리
+    String result = Consts.ERROR;
+    TransactionStatus ts = transactionManager.getTransaction(new DefaultTransactionDefinition());
+    try {
+      dao.save(params);
+      transactionManager.commit(ts);
+      result = Consts.OK;
+    } catch (Exception e) {
+      transactionManager.rollback(ts);
+      throw new RuntimeException(e.getMessage());
+    }
+    return result;
+  }
+
   public HashMap<String, Object> callSP(String queryId, Map<String, Object> params) {
 
     return common.callSP(queryId, params);
   }
 
+  /**
+   * 합포장관리 강제완료/작업취소11
+   * @param params
+   * @return
+   * @throws Exception
+   */
+  @SuppressWarnings("unchecked")
+  public String callStock_Move(Map<String, Object> params) throws Exception {
+
+    final String PROCEDURE_ID = "LC_FW_MOVE_CONFIRM";
+    List<Map<String, Object>> spcallDS = (List<Map<String, Object>>)params.get(Consts.PK_DS_MASTER);
+    String user_Id = (String)params.get(Consts.PK_USER_ID);
+
+    // 브랜드 단위 Transaction
+    final int dsCnt = spcallDS.size();
+    StringBuffer sbResult = new StringBuffer();
+    String oMsg;
+
+    TransactionDefinition td = new DefaultTransactionDefinition();
+    for (int i = 0; i < dsCnt; i++) {
+
+      // SP 호출 파라메터
+      Map<String, Object> callParams = spcallDS.get(i);
+
+      // LS_010NM_PROPERTIES_UPDATE 호출
+      TransactionStatus ts = transactionManager.getTransaction(td);
+      try {
+        callParams.put(Consts.PK_USER_ID, user_Id);
+        HashMap<String, Object> mapResult = callSP(PROCEDURE_ID, callParams);
+        oMsg = (String)mapResult.get(Consts.PK_O_MSG);
+        // 오류면 Rollback
+        if (!Consts.OK.equals(oMsg)) {
+          throw new RuntimeException(oMsg);
+          //sbResult.append(oMsg);
+          //sbResult.append("\r\n");
+          //continue;
+        }
+        transactionManager.commit(ts);
+      } catch (Exception e) {
+        // SP 내에서 오류가 아니면 Exit
+        transactionManager.rollback(ts);
+        throw new RuntimeException(e.getMessage());
+  }
+    }
+
+    if (sbResult.length() == 0) {
+      sbResult.append(Consts.OK);
+    }
+    return sbResult.toString();
+  }
 }

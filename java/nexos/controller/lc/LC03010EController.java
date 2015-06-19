@@ -49,7 +49,7 @@ public class LC03010EController extends CommonController {
    */
   @RequestMapping(value = "/getDataSet.do", method = RequestMethod.POST)
   public ResponseEntity<String> getDataSet(HttpServletRequest request,
-    @RequestParam(Consts.PK_QUERY_ID) String queryId, @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+      @RequestParam(Consts.PK_QUERY_ID) String queryId, @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
 
@@ -80,8 +80,8 @@ public class LC03010EController extends CommonController {
    */
   @RequestMapping(value = "/save.do", method = RequestMethod.POST)
   public ResponseEntity<String> save(HttpServletRequest request, @RequestParam(Consts.PK_DS_MASTER) String masterDS,
-    @RequestParam(Consts.PK_DS_SUB) String subDS, @RequestParam("P_PROCESS_CD") String process_Cd,
-    @RequestParam(Consts.PK_USER_ID) String user_Id) {
+      @RequestParam(Consts.PK_DS_SUB) String subDS, @RequestParam("P_PROCESS_CD") String process_Cd,
+      @RequestParam(Consts.PK_USER_ID) String user_Id) {
 
     ResponseEntity<String> result = null;
 
@@ -116,7 +116,7 @@ public class LC03010EController extends CommonController {
 
   @RequestMapping(value = "/getConfirmYn.do", method = RequestMethod.POST)
   public ResponseEntity<String> getConfirmYn(HttpServletRequest request,
-    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     final String PROCEDURE_ID = "WF.GET_LC_CONFIRM_YN";
 
@@ -147,7 +147,7 @@ public class LC03010EController extends CommonController {
    */
   @RequestMapping(value = "/callSP.do", method = RequestMethod.POST)
   public ResponseEntity<String> callSP(HttpServletRequest request, @RequestParam(Consts.PK_QUERY_ID) String queryId,
-    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
 
@@ -170,7 +170,7 @@ public class LC03010EController extends CommonController {
 
   @RequestMapping(value = "/callLcBwMoveEntry.do", method = RequestMethod.POST)
   public ResponseEntity<String> callLcBwMoveEntry(HttpServletRequest request,
-    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
 
@@ -191,7 +191,7 @@ public class LC03010EController extends CommonController {
 
   @RequestMapping(value = "/callLcMoveConfirm.do", method = RequestMethod.POST)
   public ResponseEntity<String> callLcMoveConfirm(HttpServletRequest request,
-    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
 
@@ -213,7 +213,7 @@ public class LC03010EController extends CommonController {
 
   @RequestMapping(value = "/callLcFWFillupEmergencyEntry.do", method = RequestMethod.POST)
   public ResponseEntity<String> callLcFWFillupEmergencyEntry(HttpServletRequest request,
-    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
 
@@ -231,10 +231,10 @@ public class LC03010EController extends CommonController {
 
     return result;
   }
-  
+
   @RequestMapping(value = "/callLcFWFillupSafetyEntry.do", method = RequestMethod.POST)
   public ResponseEntity<String> callLcFWFillupSafetyEntry(HttpServletRequest request,
-    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
 
@@ -252,4 +252,98 @@ public class LC03010EController extends CommonController {
 
     return result;
   }
+
+  @RequestMapping(value = "/getMoveoutwaitqty.do", method = RequestMethod.POST)
+  public ResponseEntity<String> getMoveoutwaitqty(HttpServletRequest request,
+      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+
+    final String PROCEDURE_ID = "WF.GET_MOVE_OUTWAIT_QTY";
+
+    ResponseEntity<String> result = null;
+
+    Map<String, Object> params = getParameter(queryParams);
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    try {
+      result = getResponseEntity(request, service.callSP(PROCEDURE_ID, params));
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+  }
+
+  /**
+   * 저장 처리
+   * @param request
+   * @param masterDS
+   * @param subDS
+   * @param process_Cd
+   * @param user_Id
+   * @return
+   */
+  @RequestMapping(value = "/save1.do", method = RequestMethod.POST)
+  public ResponseEntity<String> save1(HttpServletRequest request, @RequestParam(Consts.PK_DS_MASTER) String masterDS,
+      @RequestParam(Consts.PK_DS_SUB) String subDS, @RequestParam("P_PROCESS_CD") String process_Cd,
+      @RequestParam(Consts.PK_USER_ID) String user_Id) {
+
+    ResponseEntity<String> result = null;
+
+    // 로케이션이동 디테일 내역 DataSet Map에 추가
+    Map<String, Object> params = getDataSet(subDS, Consts.PK_DS_SUB);
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    // 로케이션이동 마스터 DataSet Map에 추가
+    Map<String, Object> masterParams = getParameter(masterDS);
+    oMsg = getResultMessage(masterParams);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    params.put(Consts.PK_DS_MASTER, masterParams);
+    params.put(Consts.PK_USER_ID, user_Id);
+    params.put("P_PROCESS_CD", process_Cd); // 수정추가
+
+    try {
+      result = getResponseEntity(request, service.save1(params));
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+  }
+  
+  @RequestMapping(value = "/callStock_Move.do", method = RequestMethod.POST)
+  public ResponseEntity<String> callStock_Move(HttpServletRequest request,
+      @RequestParam(Consts.PK_DS_MASTER) String masterDS, @RequestParam(Consts.PK_USER_ID) String user_Id) {
+
+    ResponseEntity<String> result = null;
+
+    // DataSet Map에 추가
+    Map<String, Object> params = getDataSet(masterDS, Consts.PK_DS_MASTER);
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+    params.put(Consts.PK_USER_ID, user_Id);
+
+    try {
+      result = getResponseEntity(request, service.callStock_Move(params));
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+}
+
 }

@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import nexos.common.Consts;
 import nexos.common.ibatis.NexosDAO;
+import nexos.common.spring.security.Encryption;
 
 import org.springframework.stereotype.Repository;
 
@@ -58,10 +59,15 @@ public class RIM2010EDAOImpl implements RIM2010EDAO {
     final String DETAIL_DELETE_ID = PRORAM_ID + ".DELETE_" + DETAIL_TABLE_NM;
 
     // 온라인반입예정테이블
-    final String SUB_TABLE_NM = "RI020PM";
-    final String SUB_INSERT_ID = PRORAM_ID + ".INSERT_" + SUB_TABLE_NM;
-    final String SUB_UPDATE_ID = PRORAM_ID + ".UPDATE_" + SUB_TABLE_NM;
+    //final String SUB_TABLE_NM = "RI020PM";
+    //final String SUB_INSERT_ID = PRORAM_ID + ".INSERT_" + SUB_TABLE_NM;
+   // final String SUB_UPDATE_ID = PRORAM_ID + ".UPDATE_" + SUB_TABLE_NM;
 
+
+    final String RIM_INSERT_ID1 = "RIM_2010PM_INSERT";
+    final String RIM_UPDATE_ID1 = "RIM_2010PM_UPDATE";
+
+    
     final String RIM20NM_GETNO_ID = "WT.RI_020NM_GETNO";
     final String RIM20ND_GETNO_ID = "WT.RI_020ND_GETNO";
     final String RI_PROCESSING_ID = "RI_PROCESSING";
@@ -80,6 +86,7 @@ public class RIM2010EDAOImpl implements RIM2010EDAO {
 
     // 등록자ID 입력
     masterDS.put(Consts.PK_USER_ID, user_Id);
+    subDS.put(Consts.PK_USER_ID, user_Id);
 
     Map<String, Object> newParams;
     // 등록 처리 -> 예정 > 등록, 신규 등록
@@ -107,9 +114,43 @@ public class RIM2010EDAOImpl implements RIM2010EDAO {
       masterDS.put("P_INBOUND_NO", inbound_No);
       subDS.put("P_INBOUND_NO", inbound_No);
 
+      // 고개정보 보안키
+
+
+      String ScpMasterEncStr1 =  (String)subDS.get(Consts.DK_SCP_DATA_11); //P_ORDERER_TEL
+      String ScpMasterEncStr2 =  (String)subDS.get(Consts.DK_SCP_DATA_7);  //P_ORDERER_HP
+      String ScpMasterEncStr3 =  (String)subDS.get(Consts.DK_SCP_DATA_6);  //P_ORDERER_EMAIL
+      String ScpMasterEncStr6 =  (String)subDS.get(Consts.DK_SCP_DATA_4);  //P_SHIPPER_TEL
+      String ScpMasterEncStr7 =  (String)subDS.get(Consts.DK_SCP_DATA_3);  //P_SHIPPER_HP
+      String ScpMasterEncStr8 =  (String)subDS.get(Consts.DK_SCP_DATA_1);  //P_SHIPPER_ADDR_BASIC
+      String ScpMasterEncStr9 =  (String)subDS.get(Consts.DK_SCP_DATA_2);  //P_SHIPPER_ADDR_DETAIL
+      String ScpMasterEncStr10 =  (String)subDS.get(Consts.DK_SCP_DATA_5);  //P_ORDERER_NM
+      String ScpMasterEncStr11 =  (String)subDS.get(Consts.DK_SCP_DATA_8);  //P_SHIPPER_NM
+      String ScpMasterEncStr12 =  (String)subDS.get(Consts.DK_SCP_DATA_9);  //P_SHIPPER_NM
+      String ScpMasterEncStr13 =  (String)subDS.get(Consts.DK_SCP_DATA_10);  //P_SHIPPER_NM
+      
+
+      
+      Encryption EncStr = new Encryption();
+
+      subDS.put(Consts.DK_SCP_DATA_9, EncStr.aesEncode(ScpMasterEncStr12));
+      subDS.put(Consts.DK_SCP_DATA_10, EncStr.aesEncode(ScpMasterEncStr13));
+      subDS.put(Consts.DK_SCP_DATA_11, EncStr.aesEncode(ScpMasterEncStr1));
+      subDS.put(Consts.DK_SCP_DATA_7, EncStr.aesEncode(ScpMasterEncStr2));
+      subDS.put(Consts.DK_SCP_DATA_6, EncStr.aesEncode(ScpMasterEncStr3));
+      subDS.put(Consts.DK_SCP_DATA_4, EncStr.aesEncode(ScpMasterEncStr6));
+      subDS.put(Consts.DK_SCP_DATA_3, EncStr.aesEncode(ScpMasterEncStr7));
+      subDS.put(Consts.DK_SCP_DATA_1, EncStr.aesEncode(ScpMasterEncStr8));
+      subDS.put(Consts.DK_SCP_DATA_2, EncStr.aesEncode(ScpMasterEncStr9));
+      subDS.put(Consts.DK_SCP_DATA_5, EncStr.aesEncode(ScpMasterEncStr10));
+      subDS.put(Consts.DK_SCP_DATA_8, EncStr.aesEncode(ScpMasterEncStr11));
+      
+      
+
       // 마스터 생성, CRUD 체크 안함
       nexosDAO.insert(MASTER_INSERT_ID, masterDS);
-      nexosDAO.insert(SUB_INSERT_ID, subDS);
+      nexosDAO.callSP(RIM_INSERT_ID1, subDS);
+      //nexosDAO.insert(SUB_INSERT_ID, subDS);
     } else {
       // 수정 처리
       // 온라인반입순번 채번
@@ -127,6 +168,34 @@ public class RIM2010EDAOImpl implements RIM2010EDAO {
       }
 
       line_No = ((Number)mapResult.get("O_LINE_NO")).intValue();
+      
+      String ScpMasterEncStr1 =  (String)subDS.get(Consts.DK_SCP_DATA_11); //P_ORDERER_TEL
+      String ScpMasterEncStr2 =  (String)subDS.get(Consts.DK_SCP_DATA_7);  //P_ORDERER_HP
+      String ScpMasterEncStr3 =  (String)subDS.get(Consts.DK_SCP_DATA_6);  //P_ORDERER_EMAIL
+      String ScpMasterEncStr6 =  (String)subDS.get(Consts.DK_SCP_DATA_4);  //P_SHIPPER_TEL
+      String ScpMasterEncStr7 =  (String)subDS.get(Consts.DK_SCP_DATA_3);  //P_SHIPPER_HP
+      String ScpMasterEncStr8 =  (String)subDS.get(Consts.DK_SCP_DATA_1);  //P_SHIPPER_ADDR_BASIC
+      String ScpMasterEncStr9 =  (String)subDS.get(Consts.DK_SCP_DATA_2);  //P_SHIPPER_ADDR_DETAIL
+      String ScpMasterEncStr10 =  (String)subDS.get(Consts.DK_SCP_DATA_5);  //P_ORDERER_NM
+      String ScpMasterEncStr11 =  (String)subDS.get(Consts.DK_SCP_DATA_8);  //P_SHIPPER_NM
+      String ScpMasterEncStr12 =  (String)subDS.get(Consts.DK_SCP_DATA_9);  //P_SHIPPER_NM
+      String ScpMasterEncStr13 =  (String)subDS.get(Consts.DK_SCP_DATA_10);  //P_SHIPPER_NM
+      
+
+      
+      Encryption EncStr = new Encryption();
+
+      subDS.put(Consts.DK_SCP_DATA_9, EncStr.aesEncode(ScpMasterEncStr12));
+      subDS.put(Consts.DK_SCP_DATA_10, EncStr.aesEncode(ScpMasterEncStr13));
+      subDS.put(Consts.DK_SCP_DATA_11, EncStr.aesEncode(ScpMasterEncStr1));
+      subDS.put(Consts.DK_SCP_DATA_7, EncStr.aesEncode(ScpMasterEncStr2));
+      subDS.put(Consts.DK_SCP_DATA_6, EncStr.aesEncode(ScpMasterEncStr3));
+      subDS.put(Consts.DK_SCP_DATA_4, EncStr.aesEncode(ScpMasterEncStr6));
+      subDS.put(Consts.DK_SCP_DATA_3, EncStr.aesEncode(ScpMasterEncStr7));
+      subDS.put(Consts.DK_SCP_DATA_1, EncStr.aesEncode(ScpMasterEncStr8));
+      subDS.put(Consts.DK_SCP_DATA_2, EncStr.aesEncode(ScpMasterEncStr9));
+      subDS.put(Consts.DK_SCP_DATA_5, EncStr.aesEncode(ScpMasterEncStr10));
+      subDS.put(Consts.DK_SCP_DATA_8, EncStr.aesEncode(ScpMasterEncStr11));
 
       // 마스터 수정, 마스터를 수정했으면
       if (Consts.DV_CRUD_U.equals(masterDS.get(Consts.PK_CRUD))) {
@@ -135,7 +204,8 @@ public class RIM2010EDAOImpl implements RIM2010EDAO {
 
       // 반입부가정보 마스터(온라인고객)를 수정했으면 업데이트
       if (Consts.DV_CRUD_U.equals(subDS.get(Consts.PK_CRUD))) {
-        nexosDAO.update(SUB_UPDATE_ID, subDS);
+        //nexosDAO.update(SUB_UPDATE_ID, subDS);
+        nexosDAO.callSP(RIM_UPDATE_ID1, subDS);
       }
     }
 

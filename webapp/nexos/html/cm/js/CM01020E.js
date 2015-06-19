@@ -154,7 +154,7 @@ function _New() {
     ZONE_CD: null,
     ZONE_NM: null,
     ZONE_DIV: "1",
-    FLOOR_DIV: "01",
+    FLOOR_DIV: "00",
     ZONE_ORDER: 0,
     MANAGER_ID: null,
     REMARK1: null,
@@ -168,7 +168,7 @@ function _New() {
     }),    
     FLOOR_DIV_F: $NC.getGridComboName(G_GRDMASTER, {
       colFullNameField: "FLOOR_DIV_F",
-      searchVal: "01",
+      searchVal: "00",
       dataCodeField: "CODE_CD",
       dataFullNameField: "CODE_CD_F"
     }),
@@ -341,7 +341,7 @@ function grdMasterOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "FLOOR_DIV_F",
     field: "FLOOR_DIV_F",
-    name: "층구분",
+    name: "합포장존구분",
     minWidth: 120,
     editor: Slick.Editors.ComboBox,
     editorOptions: $NC.getGridComboEditorOptions("/WC/getDataSet.do", {

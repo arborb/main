@@ -192,9 +192,8 @@ public class LOM2010EService {
     final String PROCEDURE_ID = "LO_PROCESSING";
     final String ENTRY_PROCEDURE_ID = "LO_FW_ENTRY_PROCESSING";
     // 합포장 적용 SP 추가
-    //final String FW_DIRECTIONS_PROC = "LO_FW_DIRECTIONS_PICK_PROC";
+    final String FW_DIRECTIONS_PROC = "LO_FW_DIRECTIONS_ORDER_PROC";
 
-    final String FW_DIRECTIONS_PROC = "LO_FW_DIRECTIONS_PICK_PROC";
     List<Map<String, Object>> saveDS = (List<Map<String, Object>>)params.get(Consts.PK_DS_MASTER);
     String process_Cd = (String)params.get("P_PROCESS_CD");
     String direction = (String)params.get("P_DIRECTION");
@@ -211,6 +210,7 @@ public class LOM2010EService {
     String CHECK_STATE = "";
     String CHECK_PROCESS_CD = Consts.PROCESS_ENTRY;
     // 처리
+    
     if (Consts.DIRECTION_FW.equals(direction)) {
       CHECK_STATE = process_State_FW;
       if (Consts.PROCESS_ENTRY.equals(process_Cd) || Consts.PROCESS_ENTRY_T1.equals(process_Cd)) {
@@ -346,7 +346,6 @@ public class LOM2010EService {
         spParams.put("P_BU_CD", checkParams.get("P_BU_CD"));
         spParams.put("P_OUTBOUND_DATE", checkParams.get("P_OUTBOUND_DATE"));
         spParams.put("P_OUTBOUND_BATCH", outbound_batch); 
-        spParams.put(Consts.PK_USER_ID, user_Id);  
 
         HashMap<String, Object> mapResult = callSP(FW_DIRECTIONS_PROC, spParams); 
         String oMsg = (String)mapResult.get(Consts.PK_O_MSG);

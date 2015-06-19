@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import nexos.common.Consts;
 import nexos.common.ibatis.NexosDAO;
+import nexos.common.spring.security.Encryption;
 
 import org.springframework.stereotype.Repository;
 
@@ -42,25 +43,36 @@ public class LOM3060EDAOImpl implements LOM3060EDAO {
     List<Map<String, Object>> saveDS = (List<Map<String, Object>>)params.get(Consts.PK_DS_MASTER);
     String user_Id = (String)params.get(Consts.PK_USER_ID);
 
-    final String PRORAM_ID = "LOM3060E";
-    final String TABLE_NM = "LO010PM";
-    final String INSERT_ID = PRORAM_ID + ".INSERT_" + TABLE_NM;
-    final String UPDATE_ID = PRORAM_ID + ".UPDATE_" + TABLE_NM;
-    final String DELETE_ID = PRORAM_ID + ".DELETE_" + TABLE_NM;
+
+    final String PROCEDURE_ID = "LO_SHIPPER_UPDATE";
+
+    
 
     int dsCnt = saveDS.size();
     for (int i = 0; i < dsCnt; i++) {
       Map<String, Object> rowData = saveDS.get(i);
-      rowData.put(Consts.PK_REG_USER_ID, user_Id);
 
-      String crud = (String)rowData.get(Consts.PK_CRUD);
-      if (Consts.DV_CRUD_C.equals(crud)) {
-        nexosDAO.insert(INSERT_ID, rowData);
-      } else if (Consts.DV_CRUD_U.equals(crud)) {
-        nexosDAO.update(UPDATE_ID, rowData);
-      } else if (Consts.DV_CRUD_D.equals(crud)) {
-        nexosDAO.delete(DELETE_ID, rowData);
-      }
+
+      
+      String ScpEncStr1 =  (String)rowData.get(Consts.DK_SCP_DATA_1);
+      String ScpEncStr2 =  (String)rowData.get(Consts.DK_SCP_DATA_2);
+      String ScpEncStr3 =  (String)rowData.get(Consts.DK_SCP_DATA_3);
+      String ScpEncStr5 =  (String)rowData.get(Consts.DK_SCP_DATA_8);
+      Encryption EncStr = new Encryption();
+      
+      
+      rowData.put(Consts.DK_SCP_DATA_1, EncStr.aesEncode(ScpEncStr1));
+      rowData.put(Consts.DK_SCP_DATA_2, EncStr.aesEncode(ScpEncStr2));
+      rowData.put(Consts.DK_SCP_DATA_3, EncStr.aesEncode(ScpEncStr3));
+      rowData.put(Consts.DK_SCP_DATA_8, EncStr.aesEncode(ScpEncStr5));
+      
+      System.out.println("ScpEncStr1 : " +ScpEncStr1);
+      System.out.println("ScpEncStr1 : " +ScpEncStr2);
+      System.out.println("ScpEncStr1 : " +ScpEncStr3);
+      System.out.println("ScpEncStr1 : " +ScpEncStr5);
+      
+  
+        nexosDAO.callSP(PROCEDURE_ID, rowData);
     }
   }
 

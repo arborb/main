@@ -18,12 +18,28 @@ function _Initialize() {
       P_SUB_CD2: ""
     })
   }, {
-    selector: ["#cboQRef_Cust_Div", "#cboRef_Cust_Div"],
+    selector: "#cboQRef_Cust_Div",
     codeField: "CODE_CD",
     fullNameField: "CODE_CD_F",
     addAll: true,
     onComplete: function() {
       $NC.setValue("#cboQRef_Cust_Div", 0);
+    }
+  });
+
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "REF_CUST_DIV",
+      P_CODE_CD: "%",
+      P_SUB_CD1: "",
+      P_SUB_CD2: ""
+    })
+  }, {
+    selector: "#cboRef_Cust_Div",
+    codeField: "CODE_CD",
+    fullNameField: "CODE_CD_F",
+    onComplete: function() {
       $NC.setValue("#cboRef_Cust_Div", -1);
     }
   });

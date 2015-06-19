@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LABEL_LOM02" pageWidth="575" pageHeight="300" orientation="Landscape" columnWidth="575" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="da653a23-3e4e-40db-96d3-c459e3f38269">
-	<property name="ireport.zoom" value="2.1961500000000007"/>
-	<property name="ireport.x" value="126"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="P_CENTER_CD" class="java.lang.String"/>
 	<parameter name="P_BOX_NO" class="java.lang.String"/>
@@ -377,6 +377,14 @@
 	<detail>
 		<band height="300" splitType="Stretch">
 			<componentElement>
+				<reportElement x="400" y="158" width="161" height="60" uuid="67a4085c-899d-405e-8c20-1e477ff4763a">
+					<printWhenExpression><![CDATA[$F{DELIVERY_TYPE}.toString().equals("1")]]></printWhenExpression>
+				</reportElement>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128A" drawText="false" checksumRequired="false" barWidth="4" barHeight="270">
+					<jr:codeExpression><![CDATA[$F{WB_NO}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<componentElement>
 				<reportElement x="-3" y="28" width="111" height="48" uuid="20e0253d-ddaa-4c7b-9b28-51bedc13ca6c">
 					<printWhenExpression><![CDATA[($F{DELIVERY_TYPE}.toString().equals("2") && $F{SHIP_DIV}.toString().equals("1"))]]></printWhenExpression>
 				</reportElement>
@@ -561,7 +569,7 @@
 				</jr:barbecue>
 			</componentElement>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="450" y="220" width="111" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0daed32a-3ba6-46a4-9372-72aa49c20e22">
+				<reportElement mode="Transparent" x="436" y="220" width="111" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0daed32a-3ba6-46a4-9372-72aa49c20e22">
 					<printWhenExpression><![CDATA[$F{PAGE_NUM}.toString().equals("1")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
@@ -924,14 +932,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{GTX_TML_CD}]]></textFieldExpression>
 			</textField>
-			<componentElement>
-				<reportElement x="400" y="158" width="161" height="60" uuid="67a4085c-899d-405e-8c20-1e477ff4763a">
-					<printWhenExpression><![CDATA[$F{DELIVERY_TYPE}.toString().equals("1")]]></printWhenExpression>
-				</reportElement>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128A" drawText="false" checksumRequired="false" barWidth="4" barHeight="270">
-					<jr:codeExpression><![CDATA[$F{WB_NO}]]></jr:codeExpression>
-				</jr:barbecue>
-			</componentElement>
 			<componentElement>
 				<reportElement x="-3" y="34" width="142" height="40" uuid="8d6292d9-8e81-4e17-b1ce-082e591d8b0c">
 					<printWhenExpression><![CDATA[($F{DELIVERY_TYPE}.toString().equals("1") && $F{SHIP_DIV}.toString().equals("1"))]]></printWhenExpression>

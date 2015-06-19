@@ -4,14 +4,7 @@
 function _Initialize() {
 
   // 단위화면에서 사용될 일반 전역 변수 정의
-  var pageItems = 500;
-
-  $NC.setGlobalVar({
-    P_PAGE_COUNT: 0,
-    P_PAGE_ITEMS: pageItems,
-    P_CONTENT_HEIGHT:0,
-    P_LOAD_CONTENT: true
-  });
+  // $NC.setGlobalVar({ });
 
   // 그리드 초기화
   grdMasterInitialize();
@@ -114,14 +107,7 @@ function _Inquiry() {
 
   // 조회시 전역 변수 값 초기화
   $NC.setInitGridVar(G_GRDMASTER);
-  loadContents();
-}
 
-/**
- * 컨텐츠 읽어오기
- * @return 
- */
-function loadContents() {
   // 조회조건 체크
   var CUST_CD = $NC.G_USERINFO.CUST_CD;
   
@@ -138,9 +124,7 @@ function loadContents() {
     P_DEAL_DIV2: DEAL_DIV2,
     P_DEAL_DIV3: DEAL_DIV3,
     P_VENDOR_CD: VENDOR_CD,
-    P_VENDOR_NM: VENDOR_NM,
-    P_FROM: $NC.G_VAR.P_PAGE_ITEMS * $NC.G_VAR.P_PAGE_COUNT,
-    P_TOTAL: $NC.G_VAR.P_PAGE_ITEMS * ($NC.G_VAR.P_PAGE_COUNT+1)
+    P_VENDOR_NM: VENDOR_NM
   });
 
   // 데이터 조회
@@ -567,24 +551,10 @@ function grdMasterInitialize() {
     gridOptions: options
   });
   G_GRDMASTER.view.onSelectedRowsChanged.subscribe(grdMasterOnAfterScroll);
-  G_GRDMASTER.view.onScroll.subscribe(grdMasterOnScroll);
-}
-
-/**
- * Master Grid 스크롤 처리
- */
-function grdMasterOnScroll(e, args){
-  var screenHeight = parseInt($('#grdMaster').css('height'), 10)
-    ,contentHeight = $NC.G_VAR.P_CONTENT_HEIGHT
-    ,curScroll = args.scrollTop
-
-  if (contentHeight - screenHeight < curScroll && $NC.G_VAR.P_LOAD_CONTENT) {
-    $NC.G_VAR.P_LOAD_CONTENT = false;
-    loadContents();
-  }
 }
 
 function grdMasterOnAfterScroll(e, args) {
+
   var row = args.rows[0];
   if (G_GRDMASTER.lastRow != null) {
     if (row == G_GRDMASTER.lastRow) {
@@ -708,26 +678,12 @@ function grdMasterOnCellChange(e, args) {
 
 function onGetMaster(ajaxData) {
 
-  if (G_GRDMASTER.data.getLength() === 0) {
     $NC.setInitGridData(G_GRDMASTER, ajaxData);
-  } else {
-    var resultArray = $NC.toArray(ajaxData);
-    for (var i in resultArray) {
-      resultArray[i].id = 'id_' + (parseInt(($NC.G_VAR.P_PAGE_ITEMS * $NC.G_VAR.P_PAGE_COUNT)) + parseInt(i));
-      G_GRDMASTER.data.addItem(resultArray[i]);
-    }
-  }
-  $NC.G_VAR.P_PAGE_COUNT++;
-  $NC.G_VAR.P_CONTENT_HEIGHT = ($NC.G_VAR.P_PAGE_ITEMS * $NC.G_VAR.P_PAGE_COUNT) * 25;
-  $NC.G_VAR.P_TOTAL = $NC.G_VAR.P_PAGE_ITEMS * $NC.G_VAR.P_PAGE_COUNT;
-  $NC.G_VAR.P_LOAD_CONTENT = true;
 
   if (G_GRDMASTER.data.getLength() > 0) {
     $NC.setEnableGroup("#divMasterInfoView", true);
     if ($NC.isNull(G_GRDMASTER.lastKeyVal)) {
-      if ($NC.G_VAR.P_PAGE_COUNT == 1) {
         $NC.setGridSelectRow(G_GRDMASTER, 0);
-      }
     } else {
       $NC.setGridSelectRow(G_GRDMASTER, {
         selectKey: "VENDOR_CD",

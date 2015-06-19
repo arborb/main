@@ -13,7 +13,7 @@
          ,BU_CD
          ,HAS_DATE
          ,HAS_NO
-         ,LINE_NO
+         ,HAS_LINE_NO
          ,OUTBOUND_DATE
          ,OUTBOUND_NO
          ,ORDERER_NM
@@ -36,7 +36,7 @@
 	<field name="BU_CD" class="java.lang.String"/>
 	<field name="HAS_DATE" class="java.lang.String"/>
 	<field name="HAS_NO" class="java.lang.String"/>
-	<field name="LINE_NO" class="java.math.BigDecimal"/>
+	<field name="HAS_LINE_NO" class="java.math.BigDecimal"/>
 	<field name="OUTBOUND_DATE" class="java.lang.String"/>
 	<field name="OUTBOUND_NO" class="java.lang.String"/>
 	<field name="ORDERER_NM" class="java.lang.String"/>
@@ -52,7 +52,7 @@
 	<field name="END_YN_REMAKCK" class="java.lang.String"/>
 	<field name="REMARK1" class="java.lang.String"/>
 	<field name="REG_USER_ID" class="java.lang.String"/>
-	<field name="REG_DATETIME" class="java.sql.Timestamp"/>
+	<field name="REG_DATETIME" class="java.lang.String"/>
 	<detail>
 		<band height="157" splitType="Stretch">
 			<textField pattern="" isBlankWhenNull="true">
@@ -127,7 +127,7 @@
 					<font fontName="나눔고딕 ExtraBold" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{LINE_NO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{HAS_LINE_NO}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="32" y="46" width="81" height="18" uuid="7ef0c8ed-6b2c-46db-ac0f-2a91c14a994f"/>

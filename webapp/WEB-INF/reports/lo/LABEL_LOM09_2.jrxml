@@ -239,7 +239,7 @@
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="27" y="17" width="516" height="63" forecolor="#000000" backcolor="#FFFFFF" uuid="8d984299-7a4c-4752-93e9-408bc052e340"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
-					<font fontName="맑은 고딕" size="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<font fontName="문체부 돋음체" size="24" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PAPER_NO}]]></textFieldExpression>

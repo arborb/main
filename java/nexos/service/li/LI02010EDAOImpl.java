@@ -36,6 +36,28 @@ public class LI02010EDAOImpl implements LI02010EDAO {
   @Resource
   private NexosDAO nexosDAO;
 
+  @SuppressWarnings("rawtypes")
+  @Override
+  public Map callDelete(Map<String, Object> params) throws Exception {
+
+    final String LI_DELETE = "LI030LP_DELETE";
+
+    return nexosDAO.callSP(LI_DELETE, params);
+  }
+
+
+
+  @SuppressWarnings("rawtypes")
+  @Override
+  public Map callLi_Fw_Putaway_Proc(Map<String, Object> params) throws Exception {
+
+    // final String LO_FW_SCAN_CONFIRM_ORDER_ID = "LO_FW_SCAN_CONFIRM";
+
+    return nexosDAO.callSP("LI_FW_PUTAWAY_PROC", params);
+  }
+
+
+
   /**
    * 입고등록 마스터/디테일 저장 처리
    * @param params
@@ -49,8 +71,11 @@ public class LI02010EDAOImpl implements LI02010EDAO {
     // SQLMAP ID 세팅
     final String PRORAM_ID = "LI02010E";
     final String MASTER_TABLE_NM = "LI020NM";
+    final String PRORAM_ID_10 = "LI01010E";
+    final String MASTER_TABLE_NM_10 = "LI010NM";
     final String MASTER_INSERT_ID = PRORAM_ID + ".INSERT_" + MASTER_TABLE_NM;
     final String MASTER_UPDATE_ID = PRORAM_ID + ".UPDATE_" + MASTER_TABLE_NM;
+    final String MASTER_UPDATE_ID_10 = PRORAM_ID_10 + ".UPDATE_" + MASTER_TABLE_NM_10;
     // final String MASTER_DELETE_ID = PRORAM_ID + ".DELETE_" + MASTER_TABLE_NM;
     final String DETAIL_TABLE_NM = "LI020ND";
     final String DETAIL_INSERT_ID = PRORAM_ID + ".INSERT_" + DETAIL_TABLE_NM;
@@ -68,12 +93,14 @@ public class LI02010EDAOImpl implements LI02010EDAO {
     // A: 예정 -> 등록, B: 등록 -> 수정, N: 신규 등록
     String process_Cd = (String)params.get("P_PROCESS_CD");
     String user_Id = (String)params.get(Consts.PK_USER_ID);
+    String order_date_org = (String)masterDS.get("P_ORDER_DATE");
     String inbound_No;
     int line_No;
     int dsCnt = detailDS.size();
 
     // 등록자ID 입력
     masterDS.put(Consts.PK_USER_ID, user_Id);
+    masterDS.put("P_ORDER_DATE_ORG", order_date_org);
 
     Map<String, Object> newParams;
     // 등록 처리 -> 예정 > 등록, 신규 등록
@@ -102,6 +129,7 @@ public class LI02010EDAOImpl implements LI02010EDAO {
 
       // 마스터 생성, CRUD 체크 안함
       nexosDAO.insert(MASTER_INSERT_ID, masterDS);
+      nexosDAO.update(MASTER_UPDATE_ID_10, masterDS);
     } else {
       // 수정 처리
       // 입고순번 채번
@@ -123,6 +151,7 @@ public class LI02010EDAOImpl implements LI02010EDAO {
       // 마스터 수정, 마스터를 수정했으면
       if (Consts.DV_CRUD_U.equals(masterDS.get(Consts.PK_CRUD))) {
         nexosDAO.update(MASTER_UPDATE_ID, masterDS);
+        nexosDAO.update(MASTER_UPDATE_ID_10, masterDS);
       }
     }
 
@@ -178,89 +207,11 @@ public class LI02010EDAOImpl implements LI02010EDAO {
       oMsg = (String)mapResult2.get(Consts.PK_O_MSG);
       if (!Consts.OK.equals(oMsg)) {
         throw new RuntimeException(oMsg);
-      }
+  }
     }
   }
   
   
-
-  @Override
-  @SuppressWarnings("unchecked")
-  public void saveSub(Map<String, Object> params) throws Exception {
-
-    List<Map<String, Object>> saveDS = (List<Map<String, Object>>)params.get(Consts.PK_DS_SUB);
-    String user_Id = (String)params.get(Consts.PK_USER_ID);
-
-    final String PRORAM_ID = "LI02010E";
-    final String TABLE_NM = "LI030PL";
-    final String INSERT_ID = PRORAM_ID + ".INSERT_" + TABLE_NM;
-    //final String PROCEDURE_ID = "LI_FW_PUTAWAY_PROC";
-    // 상품그룹 소분류 처리
-    int dsCnt = saveDS.size();
-    
-    
-    
-    for (int i = 0; i < dsCnt; i++) {
-      Map<String, Object> rowData = saveDS.get(i);
-      rowData.put("P_USER_ID", user_Id);  
-
-      nexosDAO.insert(INSERT_ID, rowData);
-    }
-    
-  }
-  
-  
-  
-  /**
-   * 입고지시 - 입고지시 저장
-   * @param params
-   * @return
-   * @throws Exception
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void saveDirectionsLocId(Map<String, Object> params) throws Exception {
-
-    // SQLMAP ID 세팅
-    final String PROCEDURE_ID = "LI_FW_DIRECTIONS_LOCID";
-
-    // 파라메터 처리
-    List<Map<String, Object>> saveDS = (List<Map<String, Object>>)params.get(Consts.PK_DS_SUB);
-    String user_Id = (String)params.get(Consts.PK_USER_ID);
-
-    // INSERT/UPDATE/DELETE 처리
-    final int dsCnt = saveDS.size();
-    for (int i = 0; i < dsCnt; i++) {
-      Map<String, Object> rowData = saveDS.get(i);
-      rowData.put(Consts.PK_USER_ID, user_Id);
-
-      // 지시 업데이트
-      HashMap<String, Object> mapResult = nexosDAO.callSP(PROCEDURE_ID, rowData);
-      String oMsg = (String)mapResult.get(Consts.PK_O_MSG);
-      if (!Consts.OK.equals(oMsg)) {
-        throw new RuntimeException(oMsg);
-      }
-    }
-  }
-
-  
-  @SuppressWarnings("rawtypes")
-  @Override
-  public Map callLi_Fw_Putaway_Proc(Map<String, Object> params) throws Exception {
-
-    // final String LO_FW_SCAN_CONFIRM_ORDER_ID = "LO_FW_SCAN_CONFIRM";
-
-    return nexosDAO.callSP("LI_FW_PUTAWAY_PROC", params);
-  }
-  
-  @SuppressWarnings("rawtypes")
-  @Override
-  public Map callDelete(Map<String, Object> params) throws Exception {
-
-    final String LI_DELETE = "LI030LP_DELETE";
-
-    return nexosDAO.callSP(LI_DELETE, params);
-  }
   /**
    * 입고확정/적치 - 입고지시 저장
    * @param params
@@ -321,8 +272,64 @@ public class LI02010EDAOImpl implements LI02010EDAO {
         if (!Consts.OK.equals(oMsg)) {
           throw new RuntimeException(oMsg);
         }
+        }
       }
     }
+
+  /**
+   * 입고지시 - 입고지시 저장
+   * @param params
+   * @return
+   * @throws Exception
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public void saveDirectionsLocId(Map<String, Object> params) throws Exception {
+
+    // SQLMAP ID 세팅
+    final String PROCEDURE_ID = "LI_FW_DIRECTIONS_LOCID";
+
+    // 파라메터 처리
+    List<Map<String, Object>> saveDS = (List<Map<String, Object>>)params.get(Consts.PK_DS_SUB);
+    String user_Id = (String)params.get(Consts.PK_USER_ID);
+
+    // INSERT/UPDATE/DELETE 처리
+    final int dsCnt = saveDS.size();
+    for (int i = 0; i < dsCnt; i++) {
+      Map<String, Object> rowData = saveDS.get(i);
+      rowData.put(Consts.PK_USER_ID, user_Id);
+
+      // 지시 업데이트
+      HashMap<String, Object> mapResult = nexosDAO.callSP(PROCEDURE_ID, rowData);
+      String oMsg = (String)mapResult.get(Consts.PK_O_MSG);
+      if (!Consts.OK.equals(oMsg)) {
+        throw new RuntimeException(oMsg);
+      }
+    }
+  }
+  @Override
+  @SuppressWarnings("unchecked")
+  public void saveSub(Map<String, Object> params) throws Exception {
+
+    List<Map<String, Object>> saveDS = (List<Map<String, Object>>)params.get(Consts.PK_DS_SUB);
+    String user_Id = (String)params.get(Consts.PK_USER_ID);
+
+    final String PRORAM_ID = "LI02010E";
+    final String TABLE_NM = "LI030PL";
+    final String INSERT_ID = PRORAM_ID + ".INSERT_" + TABLE_NM;
+    //final String PROCEDURE_ID = "LI_FW_PUTAWAY_PROC";
+    // 상품그룹 소분류 처리
+    int dsCnt = saveDS.size();
+
+
+
+    for (int i = 0; i < dsCnt; i++) {
+      Map<String, Object> rowData = saveDS.get(i);
+      rowData.put("P_USER_ID", user_Id);
+
+      nexosDAO.insert(INSERT_ID, rowData);
+    }
+
   }
 
 }

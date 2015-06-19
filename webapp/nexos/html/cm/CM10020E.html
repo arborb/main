@@ -43,7 +43,6 @@
 <body>
   <div id="divTopLine" class="ui-top-line"></div>
   <div id="divConditionView" class="ui-ctnr-condition">
-    <!-- 조회 조건 -->
     <table class="ui-tbl-condition">
       <tr>
         <td>
@@ -64,8 +63,9 @@
           <div id="lblQPopup_Mall_Brand_Cd" class="ui-lbl-condition">판매사</div>
           <input class="ui-edt-normal" type="text" id="edtQMall_Brand_Cd" style="width: 60px;" />
           <input class="ui-btn-popup" type="button" id="btnQMall_Brand_Cd" />
-          <input class="ui-edt-display" type="text" id="edtQMall_Brand_Nm"  disabled="disabled" style="width: 100px;" />
+     <input class="ui-edt-display" type="text" id="edtQMall_Brand_Nm" disabled="disabled" style="width: 100px;" />
         </td>
+    <td></td>
       </tr>
       <tr>
         <td>
@@ -79,12 +79,14 @@
          <td>
             <div id="lblQEvent_Nm" class="ui-lbl-condition">이벤트명</div>
             <input class="ui-edt-normal" type="text" id="edtQEvent_Nm" style="width: 144px;" />
+    </td>
+    <td style="width: 100%; text-align: right;">
+     <input type="button" id="btnProcEventExec" value="이벤트 재적용" class="ui-btn-cmd" style="width: 160px;" />
          </td>
       </tr>
     </table>
   </div>
   <div id="divMasterView" class="ui-ctnr-normal">
-    <!-- split 상단-->
     <div>
       <table class="ui-tbl-grid">
         <tr>

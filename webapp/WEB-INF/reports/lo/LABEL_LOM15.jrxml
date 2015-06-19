@@ -13,7 +13,7 @@
          ,BU_CD
          ,HAS_DATE
          ,HAS_NO
-         ,LINE_NO
+         ,HAS_LINE_NO
          ,OUTBOUND_DATE
          ,OUTBOUND_NO
          ,ORDERER_NM
@@ -39,13 +39,13 @@
      AND BU_CD       = $P{P_BU_CD}
      AND HAS_DATE    = $P{P_HAS_DATE}
      AND HAS_NO      = $P{P_HAS_NO}
-     AND LINE_NO     = $P{P_LINE_NO}]]>
+     AND HAS_LINE_NO     = $P{P_LINE_NO}]]>
 	</queryString>
 	<field name="CENTER_CD" class="java.lang.String"/>
 	<field name="BU_CD" class="java.lang.String"/>
 	<field name="HAS_DATE" class="java.lang.String"/>
 	<field name="HAS_NO" class="java.lang.String"/>
-	<field name="LINE_NO" class="java.lang.String"/>
+	<field name="HAS_LINE_NO" class="java.math.BigDecimal"/>
 	<field name="OUTBOUND_DATE" class="java.lang.String"/>
 	<field name="OUTBOUND_NO" class="java.lang.String"/>
 	<field name="ORDERER_NM" class="java.lang.String"/>
@@ -65,7 +65,7 @@
 	<field name="REMARK1" class="java.lang.String"/>
 	<field name="REG_USER_ID" class="java.lang.String"/>
 	<field name="REG_DATETIME" class="java.lang.String"/>
-	<field name="OUT_DATE" class="java.lang.String"/>
+	<field name="OUT_DATE" class="java.sql.Timestamp"/>
 	<detail>
 		<band height="113" splitType="Stretch">
 			<textField pattern="" isBlankWhenNull="true">
@@ -128,7 +128,7 @@
 					<font fontName="나눔고딕 ExtraBold" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{LINE_NO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{HAS_LINE_NO}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="162" y="39" width="63" height="30" forecolor="#000000" backcolor="#FFFFFF" uuid="8b9aa9e6-982c-41cc-ae42-ee61d636d449"/>

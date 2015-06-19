@@ -20,8 +20,7 @@ function _Initialize() {
   // 사업부 검색 이미지 클릭
   $("#btnQBu_Cd").click(showUserBuPopup);
   $("#btnQCust").click(showQCustPopup);
-  $("#btnQOwn_Brand_Cd").click(showOwnBranPopup);
-  $("#btnQBrand_Cd").click(showCustBrandPopup);
+//  $("#btnQOwn_Brand_Cd").click(showOwnBranPopup);
 
   $("#btnT1AddBrand").click(onBtnAddBrand);
   $("#btnT2AddVendor").click(onBtnAddVendor);
@@ -50,7 +49,7 @@ function _OnLoaded() {
 function _SetResizeOffset() {
   $NC.G_OFFSET.gridT1MasterWidth = 350;
   $NC.G_OFFSET.gridT2MasterWidth = 350;
-  $NC.G_OFFSET.detailHeight = $("#divT1Button").outerHeight();
+  $NC.G_OFFSET.detailHeight = $("#divConditionViewT1").outerHeight();
   $NC.G_OFFSET.nonClientHeight = $("#divConditionView").outerHeight() + $NC.G_LAYOUT.nonClientHeight;
   $NC.G_OFFSET.tabHeaderHeight = $("#divTabView").children(".ui-tabs-nav:first").outerHeight();
 }
@@ -182,6 +181,7 @@ function _OnConditionChange(e, view, val) {
       }, onUserBuPopup, onUserBuPopup);
     }
     return;    
+    /*
   case "OWN_BRAND_CD":
     var P_QUERY_PARAMS;
     var O_RESULT_DATA = [ ];
@@ -207,6 +207,7 @@ function _OnConditionChange(e, view, val) {
       }, onOwnBrandPopup, onOwnBrandPopup);
     }
     return;
+    */
   }
 
   // 화면클리어
@@ -245,6 +246,7 @@ function _Inquiry() {
 
   var BRAND_CD = $NC.getValue("#edtQBrand_Cd", true);
   var OWN_BRAND_CD = $NC.getValue("#edtQOwn_Brand_Cd", true);
+  var OWN_BRAND_NM = $NC.getValue("#edtQOwn_Brand_Nm", true);
   var BU_CD = $NC.getValue("#edtQBu_Cd", true);
 
   if ($("#divTabView").tabs("option", "active") === 0) {
@@ -257,7 +259,8 @@ function _Inquiry() {
     // 파라메터 세팅
     G_GRDT1MASTER.queryParams = $NC.getParams({
       P_BU_CD: BU_CD,
-      P_OWN_BRAND_CD: OWN_BRAND_CD
+      P_OWN_BRAND_CD: OWN_BRAND_CD,
+      P_OWN_BRAND_NM: OWN_BRAND_NM
     });
 
     // 데이터 조회
@@ -569,6 +572,8 @@ function grdT1MasterOnAfterScroll(e, args) {
   var rowData = G_GRDT1MASTER.data.getItem(row);
   var OWN_BRAND_CD = rowData.OWN_BRAND_CD;
   var CUST_CD = rowData.CUST_CD;
+  var BRAND_CD = $NC.getValue("#edtQT1_Brand_Cd", true);
+  var BRAND_NM = $NC.getValue("#edtQT1_Brand_Nm", true);
 
   // 상품마스터 변수 초기화
   $NC.setInitGridVar(G_GRDT1DETAIL);
@@ -579,7 +584,9 @@ function grdT1MasterOnAfterScroll(e, args) {
   // 상품마스터 파라메터 세팅
   G_GRDT1DETAIL.queryParams = $NC.getParams({
     P_CUST_CD: CUST_CD,
-    P_OWN_BRAND_CD: OWN_BRAND_CD
+    P_OWN_BRAND_CD: OWN_BRAND_CD,
+    P_BRAND_CD: BRAND_CD,
+    P_BRAND_NM: BRAND_NM
   });
 
   // 데이터 조회
@@ -1712,7 +1719,7 @@ function onAddBrand(ajaxData) {
 /**
  * 검색조건의 위탁사 검색 팝업 클릭
  */
-
+/*
 function showOwnBranPopup() {
 
   var BU_CD = $NC.getValue("#edtQBu_Cd");
@@ -1726,6 +1733,7 @@ function showOwnBranPopup() {
     $NC.setFocus("#edtQOwn_Brand_Cd", true);
   });
 }
+*/
 
 /**
  * 위탁사 검색 결과
@@ -1733,6 +1741,7 @@ function showOwnBranPopup() {
  * @param seletedRowData
  */
 
+/*
 function onOwnBrandPopup(resultInfo) {
 
   if (!$NC.isNull(resultInfo)) {
@@ -1746,6 +1755,7 @@ function onOwnBrandPopup(resultInfo) {
   }
   onChangingCondition();
 }
+*/
 
 /**
  * 검색조건의 사업부 검색 이미지 클릭

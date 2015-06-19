@@ -241,7 +241,7 @@
 		<variableExpression><![CDATA[$F{ENTRY_QTY}]]></variableExpression>
 	</variable>
 	<group name="GRP_OUTBOUND_NO" isStartNewPage="true">
-		<groupExpression><![CDATA[$F{PACKING_BATCH} +$F{ZONE_CD_F}]]></groupExpression>
+		<groupExpression><![CDATA[$F{PACKING_BATCH} + $F{OUTBOUND_NO} + $F{ZONE_CD_F}]]></groupExpression>
 		<groupHeader>
 			<band splitType="Prevent"/>
 		</groupHeader>
@@ -314,13 +314,11 @@
 				<textFieldExpression><![CDATA[$F{BU_CD_F}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-30" x="170" y="5" width="227" height="29" uuid="12a7ad04-6bac-4a4d-a134-e23319d4cc5e">
-					<printWhenExpression><![CDATA[(!$F{BU_CD}.toString().equals("5000"))]]></printWhenExpression>
-				</reportElement>
+				<reportElement key="staticText-30" x="170" y="3" width="227" height="29" uuid="12a7ad04-6bac-4a4d-a134-e23319d4cc5e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="18" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfFontName="malgun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[존별오더피킹지시서]]></text>
+				<text><![CDATA[오더피킹지시서]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-7" x="392" y="84" width="66" height="14" uuid="b2f97f85-d697-41d6-90d3-a65a9a6f75aa"/>
@@ -392,16 +390,16 @@
 				<textFieldExpression><![CDATA[$F{INOUT_CD_F}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-24" x="185" y="92" width="72" height="20" uuid="7ea1a59d-6d12-4bfc-b759-0b29421c5b7e"/>
+				<reportElement key="staticText-24" x="185" y="96" width="72" height="18" uuid="7ea1a59d-6d12-4bfc-b759-0b29421c5b7e"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="굴림체" size="14" isBold="true" isUnderline="false" pdfEncoding="Identity-H"/>
+					<font fontName="굴림체" size="12" isBold="true" isUnderline="false" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[출고번호:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-8" x="257" y="92" width="132" height="20" uuid="298de771-2fba-4617-8bc8-c471c0081e16"/>
+				<reportElement key="textField-8" x="257" y="96" width="132" height="18" uuid="298de771-2fba-4617-8bc8-c471c0081e16"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="굴림체" size="14" isBold="true" pdfEncoding="Identity-H"/>
+					<font fontName="굴림체" size="12" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{OUTBOUND_NO}]]></textFieldExpression>
 			</textField>
@@ -434,41 +432,39 @@
 				<textFieldExpression><![CDATA[$F{RANK_Q}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-24" x="185" y="34" width="72" height="20" uuid="43f7e46a-0ae4-46e8-baac-8e3538ba35f9"/>
+				<reportElement key="staticText-24" x="185" y="40" width="72" height="20" uuid="43f7e46a-0ae4-46e8-baac-8e3538ba35f9"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="14" isBold="true" isUnderline="false" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[출고차수:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-8" x="257" y="34" width="130" height="20" uuid="193e7d68-1624-43be-bc12-b3c8a6c8ce6b"/>
+				<reportElement key="textField-8" x="257" y="40" width="130" height="20" uuid="193e7d68-1624-43be-bc12-b3c8a6c8ce6b"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="굴림체" size="12" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{OUTBOUND_BATCH}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-8" x="257" y="54" width="130" height="38" uuid="b5a7fc6f-8423-473e-a7d1-81e873db21b4"/>
+				<reportElement key="textField-8" x="257" y="59" width="130" height="38" uuid="b5a7fc6f-8423-473e-a7d1-81e873db21b4"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="굴림체" size="12" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ZONE_CD_F}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-24" x="185" y="54" width="72" height="38" uuid="37898fdd-88df-4cf9-9937-4cd5135e712a"/>
+				<reportElement key="staticText-24" x="185" y="59" width="72" height="38" uuid="37898fdd-88df-4cf9-9937-4cd5135e712a"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="14" isBold="true" isUnderline="false" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[존    명:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-30" x="173" y="5" width="227" height="29" uuid="0c15d9b3-ce58-464b-89fd-c9c8260ad32a">
-					<printWhenExpression><![CDATA[($F{BU_CD}.toString().equals("5000"))]]></printWhenExpression>
-				</reportElement>
+				<reportElement key="staticText-24" x="248" y="28" width="72" height="12" uuid="1d27e92b-3085-4bf1-a470-35637955f666"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="굴림체" size="18" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfFontName="malgun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="굴림체" size="8" isBold="true" isUnderline="false" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[HAS가능피킹지시서]]></text>
+				<text><![CDATA[(일반)]]></text>
 			</staticText>
 		</band>
 	</pageHeader>

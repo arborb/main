@@ -22,7 +22,7 @@
 	<queryString>
 		<![CDATA[SELECT WF.DSP_COMBO(L1.CENTER_CD    ,C1.CENTER_NM)    AS CENTER_CD_F
         ,WF.DSP_COMBO(L1.BU_CD        ,B1.BU_NM)        AS BU_CD_F
-        ,TO_CHAR(L1.OUTBOUND_DATE, 'YYYY/MM/DD')        AS OUTBOUND_DATE
+        ,L1.OUTBOUND_DATE
         ,L1.OUTBOUND_BATCH||'('||L1.DELIVERY_TYPE||')'  AS OUTBOUND_BATCH
         ,WF.DSP_COMBO(L1.ITEM_CD      ,T1.ITEM_NM)      AS ITEM_CD_F
         ,'TP' || L1.BU_CD || '-' || TO_CHAR(L1.OUTBOUND_DATE ,'YYYYMMDD') || '-' || L1.OUTBOUND_BATCH || '-' || L1.ITEM_CD AS PAPER_NO
@@ -35,15 +35,13 @@
         ,T1.ITEM_SPEC
         ,T1.ITEM_BAR_CD
         ,C3.CODE_NM                                     AS ITEM_STATE_D
+        ,L1.ITEM_STATE
         ,DECODE(L1.ITEM_LOT ,'00' ,'' ,L1.ITEM_LOT)     AS ITEM_LOT
         ,L1.ENTRY_QTY
         ,L1.VALID_DATE
         ,L1.BATCH_NO                                    AS BATCH_NO
         ,COUNT(L1.ITEM_CD) OVER (PARTITION BY L1.OUTBOUND_BATCH, L1.ITEM_CD) AS ITEM_LOC_CNT
         ,DENSE_RANK() OVER (PARTITION BY L1.OUTBOUND_BATCH, L1.ITEM_CD ORDER BY L1.LOCATION_CD, L1.ITEM_CD)   AS ITEM_CNT
-,0 AS PRINT_SEQ2
-,0 AS QTY_IN_BOX
-,0 AS BOX_QTY
     FROM (
           SELECT D1.CENTER_CD         ,D1.BU_CD           ,D1.OUTBOUND_DATE
                 ,D1.LOCATION_CD       ,D1.ZONE_CD
@@ -130,15 +128,13 @@
 	<field name="ITEM_SPEC" class="java.lang.String"/>
 	<field name="ITEM_BAR_CD" class="java.lang.String"/>
 	<field name="ITEM_STATE_D" class="java.lang.String"/>
+	<field name="ITEM_STATE" class="java.lang.String"/>
 	<field name="ITEM_LOT" class="java.lang.String"/>
 	<field name="ENTRY_QTY" class="java.math.BigDecimal"/>
-	<field name="VALID_DATE" class="java.sql.Timestamp"/>
+	<field name="VALID_DATE" class="java.lang.String"/>
 	<field name="BATCH_NO" class="java.lang.String"/>
 	<field name="ITEM_LOC_CNT" class="java.math.BigDecimal"/>
 	<field name="ITEM_CNT" class="java.math.BigDecimal"/>
-	<field name="PRINT_SEQ2" class="java.math.BigDecimal"/>
-	<field name="QTY_IN_BOX" class="java.math.BigDecimal"/>
-	<field name="BOX_QTY" class="java.math.BigDecimal"/>
 	<variable name="TOTAL_PICK_QTY" class="java.math.BigDecimal" resetType="Group" resetGroup="GRP_OUTBOUND_BATCH" calculation="Sum">
 		<variableExpression><![CDATA[$F{ENTRY_QTY}]]></variableExpression>
 	</variable>
@@ -207,7 +203,7 @@
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="114" splitType="Stretch">
+		<band height="115" splitType="Stretch">
 			<textField>
 				<reportElement x="458" y="97" width="109" height="14" uuid="792be6a5-e4d4-457e-af77-1ce46be6b26d"/>
 				<textElement verticalAlignment="Middle">
@@ -251,7 +247,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="18" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfFontName="malgun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[토탈피킹지시서]]></text>
+				<text><![CDATA[토탈피킹지시서(낱개기준)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-7" x="392" y="83" width="66" height="14" isRemoveLineWhenBlank="true" uuid="c653e904-a208-4cc7-a288-82c1869799f3"/>
@@ -293,7 +289,7 @@
 				<text><![CDATA[출고차수 :]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-2" x="458" y="83" width="109" height="14" uuid="4d71693a-a7cc-4342-afc8-1e2b1f3ef6fd"/>
+				<reportElement key="textField-2" x="458" y="83" width="109" height="12" uuid="4d71693a-a7cc-4342-afc8-1e2b1f3ef6fd"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="굴림체" size="10" isBold="false" pdfEncoding="Identity-H"/>
 				</textElement>
@@ -326,33 +322,23 @@
 			</textField>
 			<componentElement>
 				<reportElement positionType="FixRelativeToBottom" x="389" y="1" width="178" height="50" printWhenGroupChanges="GRP_OUTBOUND_BATCH" uuid="e59872f0-cdae-43e7-b561-3e1ec02364e4"/>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="0" barHeight="50">
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="0" barHeight="70">
 					<jr:codeExpression><![CDATA[$F{PAPER_NO}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="392" y="51" width="175" height="12" uuid="2d2bc917-01f6-421d-86ea-2339188a209b"/>
+				<reportElement x="392" y="62" width="175" height="12" uuid="2d2bc917-01f6-421d-86ea-2339188a209b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="굴림체" isBold="false" pdfFontName="malgun.ttf" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PAPER_NO}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement key="staticText-4" x="19" y="-6" width="95" height="29" uuid="904295ce-fa63-4242-a13e-3850002736c0"/>
-				<box leftPadding="0"/>
-				<textElement verticalAlignment="Middle" markup="none">
-					<font fontName="굴림체" size="14" isBold="true" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[지시서번호]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement key="staticText-4" x="8" y="16" width="95" height="35" uuid="a9c299c1-08b0-429b-922d-6023a6623910"/>
-				<box leftPadding="0"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="굴림체" size="24" isBold="false" pdfEncoding="Identity-H"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PRINT_SEQ2}]]></textFieldExpression>
-			</textField>
+			<componentElement>
+				<reportElement positionType="FixRelativeToBottom" x="389" y="13" width="178" height="50" printWhenGroupChanges="GRP_OUTBOUND_BATCH" uuid="c3065337-340e-4b2c-91cd-6a845200a1e3"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="0" barHeight="70">
+					<jr:codeExpression><![CDATA[$F{PAPER_NO}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -377,11 +363,11 @@
 				<text><![CDATA[상태]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-4" x="397" y="1" width="57" height="12" uuid="885fa949-6c08-4c79-83c5-8ed98b2842ec"/>
+				<reportElement key="staticText-4" x="397" y="1" width="50" height="12" uuid="885fa949-6c08-4c79-83c5-8ed98b2842ec"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[박스수량]]></text>
+				<text><![CDATA[수량]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-4" x="459" y="14" width="51" height="12" uuid="cf728c58-97ef-4c29-8a1b-24f94cefd87f"/>
@@ -392,7 +378,7 @@
 				<text><![CDATA[유통기한]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-4" x="80" y="14" width="231" height="12" uuid="8db5c4ac-5414-4d3c-b458-50c1bdaf6e50"/>
+				<reportElement key="staticText-4" x="80" y="14" width="241" height="12" uuid="8db5c4ac-5414-4d3c-b458-50c1bdaf6e50"/>
 				<box leftPadding="0"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
@@ -423,27 +409,12 @@
 				<text><![CDATA[로케이션ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-4" x="316" y="14" width="80" height="12" uuid="e34ef5bd-00e4-4391-b53f-59ad4e253438"/>
+				<reportElement key="staticText-4" x="316" y="1" width="80" height="12" uuid="e34ef5bd-00e4-4391-b53f-59ad4e253438"/>
 				<box leftPadding="0"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[상품바코드]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-4" x="316" y="1" width="80" height="12" uuid="a03be0dc-12e0-44c4-b550-03064f62f9e4"/>
-				<box leftPadding="0"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
-					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[입수]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText-4" x="397" y="14" width="57" height="12" uuid="8818c228-1cd5-4927-a357-bd69bc094da4"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
-					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
-				</textElement>
-				<text><![CDATA[수량]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -474,7 +445,9 @@
 				<textFieldExpression><![CDATA[$F{ITEM_NM}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement key="staticText-4" x="459" y="2" width="51" height="12" uuid="ab725174-0799-4e6d-aeb9-5a0269db9643"/>
+				<reportElement key="staticText-4" x="459" y="2" width="51" height="12" uuid="ab725174-0799-4e6d-aeb9-5a0269db9643">
+					<printWhenExpression><![CDATA[(!$F{ITEM_STATE}.equals("G"))]]></printWhenExpression>
+				</reportElement>
 				<box leftPadding="0"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
@@ -490,9 +463,9 @@
 				<textFieldExpression><![CDATA[$F{VALID_DATE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement key="staticText-4" x="397" y="17" width="56" height="18" uuid="813613ae-b31c-4314-9f1a-ad7cd6d25507"/>
+				<reportElement key="staticText-4" x="397" y="6" width="50" height="23" uuid="813613ae-b31c-4314-9f1a-ad7cd6d25507"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
-					<font fontName="굴림체" size="14" isBold="true" pdfEncoding="Identity-H"/>
+					<font fontName="굴림체" size="12" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ENTRY_QTY}]]></textFieldExpression>
 			</textField>
@@ -519,27 +492,22 @@
 				<textFieldExpression><![CDATA[$F{LOCATION_ID}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement key="staticText-4" x="296" y="23" width="100" height="12" uuid="a95553b1-359e-4f36-b704-01233c6c5c41"/>
+				<reportElement key="staticText-4" x="311" y="23" width="93" height="12" uuid="a95553b1-359e-4f36-b704-01233c6c5c41"/>
 				<box leftPadding="0"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ITEM_BAR_CD}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement key="staticText-4" x="316" y="2" width="80" height="12" uuid="7cf28ae3-1706-4b4b-a78c-c8d923369fb3"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
-					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
+			<textField isBlankWhenNull="true">
+				<reportElement key="staticText-4" mode="Opaque" x="459" y="3" width="51" height="12" forecolor="#FFFFFF" backcolor="#999999" uuid="7920b686-e4cd-457b-a3fb-b9f90e023498">
+					<printWhenExpression><![CDATA[($F{ITEM_STATE}.equals("G"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{QTY_IN_BOX}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0" isBlankWhenNull="true">
-				<reportElement key="staticText-4" mode="Transparent" x="397" y="2" width="56" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="36203c73-2564-4a02-9ff1-01ae8393661e"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
-					<font fontName="굴림체" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{BOX_QTY}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ITEM_STATE_D}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

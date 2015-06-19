@@ -5,15 +5,6 @@
 function _Initialize() {
 
   // 단위화면에서 사용될 일반 전역 변수 정의
-  var pageItems = 500;
-
-  $NC.setGlobalVar({
-    P_PAGE_COUNT: 0,
-    P_PAGE_ITEMS: pageItems,
-    P_CONTENT_HEIGHT:0,
-    P_LOAD_CONTENT: true
-  });
-
   $NC.setGlobalVar({
     divMasterInfoView: {
       ITEMCD: "",
@@ -68,7 +59,7 @@ function _Initialize() {
     }
   });
   
-  // 검색조건 상품구분 콤보, 상품구분 콤보
+  // 검색조건 상품구분 콤보
   $NC.setInitCombo("/WC/getDataSet.do", {
     P_QUERY_ID: "WC.POP_CMCODE",
     P_QUERY_PARAMS: $NC.getParams({
@@ -78,12 +69,28 @@ function _Initialize() {
       P_SUB_CD2: ""
     })
   }, {
-    selector: ["#cboQItem_Div", "#cboItem_Div"],
+    selector: "#cboQItem_Div",
     codeField: "CODE_CD",
     fullNameField: "CODE_CD_F",
     addAll: true,
     onComplete: function() {
       $NC.setValue("#cboQItem_Div", 0);
+    }
+  });
+  // 상품구분 콤보
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "ITEM_DIV",
+      P_CODE_CD: "%",
+      P_SUB_CD1: "",
+      P_SUB_CD2: ""
+    })
+  }, {
+    selector: "#cboItem_Div",
+    codeField: "CODE_CD",
+    fullNameField: "CODE_CD_F",
+    onComplete: function() {
       $NC.setValue("#cboItem_Div");
     }
   });
@@ -250,6 +257,27 @@ function _Initialize() {
     }
   });
 
+  
+  
+  // 합포장가능여부 콤보
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "BOXING_TYPE_DIV",
+      P_CODE_CD: "%",
+      P_SUB_CD1: "",
+      P_SUB_CD2: ""
+    })
+  }, {
+    selector: "#cboHas_Type",
+    codeField: "CODE_CD",
+    nameField: "CODE_CD",
+    fullNameField: "CODE_CD_F",
+    onComplete: function() {
+      $NC.setValue("#cboHas_Type");
+    }
+  });
+  
   $NC.setInitDatePicker("#dtpOpen_Date", null, "N");
   $NC.setInitDatePicker("#dtpClose_Date", null, "N");
 
@@ -411,7 +439,7 @@ function _OnInputChange(e, view, val) {
  */
 function _Inquiry() {
 
-  loadContents();
+  var BRAND_CD = $NC.getValue("#edtQBrand_Cd");
 
 //   if ($NC.isNull(BRAND_CD)) {
 //     alert("위탁사를 선택후 조회하십시오.");
@@ -419,14 +447,6 @@ function _Inquiry() {
 //     return;
 //   }
    
-}
-
-/**
- * 콘텐츠 읽어오기
- * @return 
- */
-function loadContents() {
-  var BRAND_CD = $NC.getValue("#edtQBrand_Cd");
   var BU_CD = $NC.getValue("#edtQBu_Cd");
   
   // var BRAND_NM = $NC.getValue("#edtQBrand_Nm");
@@ -455,13 +475,12 @@ function loadContents() {
     P_ITEM_DIV: ITEM_DIV,
     P_ITEM_BAR_CD: ITEM_BAR_CD,
     P_SAP_ITEM_CD: SAP_ITEM_CD,
-    P_USER_ID: $NC.G_USERINFO.USER_ID,
-    P_FROM: $NC.G_VAR.P_PAGE_ITEMS * $NC.G_VAR.P_PAGE_COUNT,
-    P_TOTAL: $NC.G_VAR.P_PAGE_ITEMS * ($NC.G_VAR.P_PAGE_COUNT+1)
+    P_USER_ID: $NC.G_USERINFO.USER_ID
   });
 
   // 데이터 조회
   $NC.serviceCall("/CM04020E/getDataSet.do", $NC.getGridParams(G_GRDMASTER), onGetMaster);
+
 }
 
 /**
@@ -552,6 +571,7 @@ function _New() {
     OPEN_DATE: null,
     CLOSE_DATE: null,
     REMARK1: null,
+    CAUTION: null,
     REG_USER_ID: null,
     REG_DATETIME: null,
     SET_ITEM_YN: "N",
@@ -563,8 +583,7 @@ function _New() {
     DELIVERY_TYPE1: null,
     DELIVERY_TYPE2: null,
     DELIVERY_BOX: null,  
-    IN_UNIT_QTY: null,
-    OUT_UNIT_QTY: null,
+    HAS_TYPE: null,
     id: $NC.getGridNewRowId(),
     
     CRUD: "N"
@@ -667,8 +686,8 @@ function _Save() {
         P_DELIVERY_TYPE1: rowData.DELIVERY_TYPE1,
         P_DELIVERY_TYPE2: rowData.DELIVERY_TYPE2,
         P_DELIVERY_BOX: rowData.DELIVERY_BOX,  
-        P_IN_UNIT_QTY: rowData.IN_UNIT_QTY,
-        P_OUT_UNIT_QTY: rowData.OUT_UNIT_QTY,
+        P_HAS_TYPE: rowData.HAS_TYPE,
+        P_CAUTION: rowData.CAUTION,
         P_CRUD: rowData.CRUD
       };
 
@@ -791,8 +810,6 @@ function setInputValue(grdSelector, rowData) {
 //    $NC.setValue("#edtVendor_Cd", rowData.VENDOR_CD);
     $NC.setValue("#edtVendor_Nm", rowData.VENDOR_NM);
     $NC.setValue("#cboValid_Div", rowData.VALID_DIV);
-    $NC.setValue("#edtIn_Unit_Qty", rowData.IN_UNIT_QTY);
-    $NC.setValue("#edtOut_Unit_Qty", rowData.OUT_UNIT_QTY);
 
     $NC.setValue("#cboTerm_Div", rowData.TERM_DIV);
     $NC.setValue("#edtTerm_Val", rowData.TERM_VAL);
@@ -806,6 +823,7 @@ function setInputValue(grdSelector, rowData) {
     $NC.setValue("#dtpOpen_Date", rowData.OPEN_DATE);
     $NC.setValue("#dtpClose_Date", rowData.CLOSE_DATE);
     $NC.setValue("#edtRemark1", rowData.REMARK1);
+    $NC.setValue("#edtCaution", rowData.CAUTION);
     $NC.setValue("#chkSet_Item_Yn", rowData.SET_ITEM_YN);
     $NC.setValue("#cboBoxing_Yn", rowData.BOXING_YN);
     $NC.setValue("#cboDelivery_Yn", rowData.DELIVERY_YN);
@@ -814,9 +832,19 @@ function setInputValue(grdSelector, rowData) {
     $NC.setValue("#cboDelivery_Type2", rowData.DELIVERY_TYPE2);
     $NC.setValue("#cboDelivery_Box", rowData.DELIVERY_BOX);
 
+    $NC.setValue("#cboHas_Type", rowData.HAS_TYPE);
+
     $("#divTermInfo").show();
     if (rowData.VALID_DIV != "1") {
       $("#divTermInfo").hide();
+    }
+
+    if(rowData.ITEM_DIV == "9"){
+      $NC.setEnable("#cboIn_Unit_Cd", false);
+      $NC.setEnable("#cboOut_Unit_Cd", false);
+    } else {
+      $NC.setEnable("#cboIn_Unit_Cd", true);
+      $NC.setEnable("#cboOut_Unit_Cd", true);
     }
 
     // 신규 데이터면 공급처코드 수정할 수 있게 함
@@ -943,12 +971,24 @@ function grdMasterOnBeforePost(row) {
         $NC.setGridSelectRow(G_GRDMASTER, row);
         return false;
       }
+      if ($NC.isNull(rowData.BOXING_YN)) {
+        alert("합포장대상구분를 선택하십시오.");
+        $NC.setFocus("#cboBoxing_Type_Div");
+        $NC.setGridSelectRow(G_GRDMASTER, row);
+        return false;
+      }
       if ($NC.isNull(rowData.DELIVERY_YN)) {
         alert("당일배송가능여부를 선택하십시오.");
         $NC.setFocus("#cboDelivery_Yn");
         $NC.setGridSelectRow(G_GRDMASTER, row);
         return false;
       }
+      if ($NC.isNull(rowData.HAS_TYPE)) {
+        alert("합포장가능여부를 선택하십시오.");
+        $NC.setFocus("#cboHas_Type");
+        $NC.setGridSelectRow(G_GRDMASTER, row);
+        return false;
+  }
   }
 
   if (rowData.CRUD == "N") {
@@ -1247,6 +1287,22 @@ function grdMasterOnGetColumns() {
     formatter: Slick.Formatters.CheckBox
   });
   $NC.setGridColumn(columns, {
+    id: "HAS_TYPE_F",
+    field: "HAS_TYPE_F",
+    name: "합포장대상구분",
+    minWidth: 120
+  });
+  /*
+  $NC.setGridColumn(columns, {
+    id: "HAS_TYPE",
+    field: "HAS_TYPE",
+    name: "합포장대상구분",
+    minWidth: 70,
+    cssClass: "align-center",
+    formatter: Slick.Formatters.CheckBox
+  });
+  */
+  $NC.setGridColumn(columns, {
     id: "DELIVERY_YN",
     field: "DELIVERY_YN",
     name: "당일배송불가여부",
@@ -1296,6 +1352,12 @@ function grdMasterOnGetColumns() {
     name: "비고",
     minWidth: 400
   });
+  $NC.setGridColumn(columns, {
+    id: "CAUTION",
+    field: "CAUTION",
+    name: "주의사항",
+    minWidth: 400
+  });
 
   return $NC.setGridColumnDefaultFormatter(columns);
 }
@@ -1315,25 +1377,7 @@ function grdMasterInitialize() {
   });
 
   G_GRDMASTER.view.onSelectedRowsChanged.subscribe(grdMasterOnAfterScroll);
-  G_GRDMASTER.view.onScroll.subscribe(grdMasterOnScroll);
-}
-
-/**
- * 마스터 그리드 스크롤 이벤트 처리
- * @param  {Object} e    
- * @param  {object} args 
- * @return 
- */
-function grdMasterOnScroll(e, args){
-  var screenHeight = parseInt($('#grdMaster').css('height'), 10)
-    ,contentHeight = $NC.G_VAR.P_CONTENT_HEIGHT
-    ,curScroll = args.scrollTop
-
-  if (contentHeight - screenHeight < curScroll && $NC.G_VAR.P_LOAD_CONTENT) {
-    $NC.G_VAR.P_LOAD_CONTENT = false;
-    loadContents();
   }
-}
 
 function grdMasterOnAfterScroll(e, args) {
 
@@ -1664,6 +1708,9 @@ function grdMasterOnCellChange(e, args) {
     case "REMARK1":
       rowData.REMARK1 = args.val;
       break;
+    case "CAUTION":
+      rowData.CAUTION = args.val;
+      break;  
     case "SET_ITEM_YN":
       rowData.SET_ITEM_YN = args.val;
       break;
@@ -1692,15 +1739,16 @@ function grdMasterOnCellChange(e, args) {
     case "DELIVERY_BOX":
       rowData.DELIVERY_BOX = args.val;
       break;
-
-    case "IN_UNIT_QTY":
-      rowData.IN_UNIT_QTY = args.val;
+    case "HAS_TYPE":
+      rowData.HAS_TYPE = args.val;
+      rowData.HAS_TYPE_F = $NC.getValueCombo("#cboHas_Type", "F");
       break; 
-    case "OUT_UNIT_QTY":
-      rowData.OUT_UNIT_QTY = args.val;
+      /*
+    case "HAS_TYPE":
+      rowData.HAS_TYPE = args.val;
       break;
+      */
     }
-
     if (rowData.CRUD === "R") {
       rowData.CRUD = "U";
     }
@@ -1878,29 +1926,14 @@ function setBox_Cbm() {
 
 function onGetMaster(ajaxData) {
 
-  if (G_GRDMASTER.data.getLength() === 0) {
     $NC.setInitGridData(G_GRDMASTER, ajaxData);
-  } else {
-    var resultArray = $NC.toArray(ajaxData);
-    for (var i in resultArray) {
-      resultArray[i].id = 'id_' + (parseInt(($NC.G_VAR.P_PAGE_ITEMS * $NC.G_VAR.P_PAGE_COUNT)) + parseInt(i));
-      G_GRDMASTER.data.addItem(resultArray[i]);
-    }
-  }
-  $NC.G_VAR.P_PAGE_COUNT++;
-  $NC.G_VAR.P_CONTENT_HEIGHT = ($NC.G_VAR.P_PAGE_ITEMS * $NC.G_VAR.P_PAGE_COUNT) * 25;
-  $NC.G_VAR.P_TOTAL = $NC.G_VAR.P_PAGE_ITEMS * $NC.G_VAR.P_PAGE_COUNT;
-  $NC.G_VAR.P_LOAD_CONTENT = true;
 
   if (G_GRDMASTER.data.getLength() > 0) {
     if ($NC.G_USERINFO.CERTIFY_DIV !== '4') {
       $NC.setEnableGroup("#divMasterInfoView", true);
     }
     if ($NC.isNull(G_GRDMASTER.lastKeyVal)) {
-      if ($NC.G_VAR.P_PAGE_COUNT == 1) {
         $NC.setGridSelectRow(G_GRDMASTER, 0);
-        setDepartCombo();
-      }
     } else {
       $NC.setGridSelectRow(G_GRDMASTER, {
         selectKey: new Array("BRAND_CD", "ITEM_CD"),
@@ -1909,6 +1942,7 @@ function onGetMaster(ajaxData) {
         activeCell: true
       });
     }
+    setDepartCombo();
   } else {
     $NC.setEnableGroup("#divMasterInfoView", false);
     setInputValue("#grdMaster");

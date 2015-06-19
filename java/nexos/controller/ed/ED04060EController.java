@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.penta.scpdb.ScpDbAgent;
+
 /**
  * Class: 주문/송장 내역 조회 컨트롤러<br>
  * Description: 주문/송장 내역 조회 관리 Controller<br>
@@ -87,6 +89,12 @@ public class ED04060EController extends CommonController {
       result = getResponseEntityError(request, oMsg);
       return result;
     }
+    // Scp 복호화 키 파라미터 송신
+    ScpDbAgent agt = new ScpDbAgent();
+    String iniFilePath = "/usr/scp/scpdb_agent_unix.ini";
+    String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );
+    params.put("P_SCPKEY", outKey);
+
 
     try {
       result = getResponseEntity(request, service.getDataSet(queryId, params));

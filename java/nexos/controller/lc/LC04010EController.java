@@ -113,6 +113,43 @@ public class LC04010EController extends CommonController {
 
     return result;
   }
+  
+  @RequestMapping(value = "/callLcsave.do", method = RequestMethod.POST)
+  public ResponseEntity<String> callLcsave(HttpServletRequest request, @RequestParam(Consts.PK_DS_MASTER) String masterDS,
+    @RequestParam(Consts.PK_DS_DETAIL) String detailDS, @RequestParam("P_PROCESS_CD") String P_PROCESS_CD,
+    @RequestParam(Consts.PK_USER_ID) String user_Id) {
+
+    ResponseEntity<String> result = null;
+
+    // 재고실사등록 디테일 DataSet Map에 추가
+    Map<String, Object> params = getDataSet(detailDS, Consts.PK_DS_DETAIL);
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    // 재고실사등록 마스터 DataSet Map에 추가
+    Map<String, Object> masterParams = getParameter(masterDS);
+    oMsg = getResultMessage(masterParams);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
+    }
+
+    params.put(Consts.PK_DS_MASTER, masterParams);
+    params.put(Consts.PK_USER_ID, user_Id);
+    params.put("P_PROCESS_CD", P_PROCESS_CD);
+
+    try {
+      result = getResponseEntity(request, service.callLcsave(params));
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+  }
+
 
   /**
    * 삭제 처리
@@ -174,6 +211,7 @@ public class LC04010EController extends CommonController {
    * @param queryParams
    * @return
    */
+  
   @RequestMapping(value = "/callSP.do", method = RequestMethod.POST)
   public ResponseEntity<String> callSP(HttpServletRequest request, @RequestParam(Consts.PK_QUERY_ID) String queryId,
     @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {

@@ -74,8 +74,7 @@
                    ,B2.BRAND_NM
          ) L1
    ORDER BY OUTBOUND_NO
-           ,SHELF_NO
-]]>
+           ,SHELF_NO]]>
 	</queryString>
 	<field name="OUTBOUND_BATCH" class="java.lang.String"/>
 	<field name="SHELF_NO_CHKDIGIT" class="java.lang.String"/>

@@ -24,8 +24,7 @@ function _Initialize() {
   // $("#btnManager").click(showManagerPopup);
   $("#btnSalesman").click(showSalesmanPopup);
   $("#btnZip_Cd").click(showPostPopup);
-//  $("#btnQBrand_Cd").click(showOwnBranPopup);
-  $("#btnQBrand_Cd").click(showBrandPopup);
+//  $("#btnQBrand_Cd").click(showBrandPopup);
   $("#btnCreateOwnBrand").click(onBtnCreateOwnBrandClick);
 
   $NC.setInitDatePicker("#dtpOpen_Date", null, "N");
@@ -64,38 +63,10 @@ function _OnResize(parent) {
  * 조회조건 Change Event - Input, Select Change 시 호출 됨
  */
 function _OnConditionChange(e, view, val) {
-
+/*
   var id = view.prop("id").substr(4).toUpperCase();
 
   switch (id) {
-  /*
-  case "BRAND_CD":
-    var P_QUERY_PARAMS;
-    var O_RESULT_DATA = [ ];
-    if (!$NC.isNull(val)) {
-      
-      var CUST_CD = $NC.G_USERINFO.CUST_CD;
-      var BU_CD = $NC.G_USERINFO.BU_CD;
-      P_QUERY_PARAMS = {
-        P_CUST_CD: CUST_CD,
-        P_BU_CD: BU_CD,
-        P_OWN_BRAND_CD: val
-      };
-      O_RESULT_DATA = $NP.getOwnBrandInfo({
-        queryParams: P_QUERY_PARAMS,
-        queryData: O_RESULT_DATA
-      });
-    }
-    if (O_RESULT_DATA.length <= 1) {
-      onOwnBrandPopup(O_RESULT_DATA[0]);
-    } else {
-      $NP.showOwnBranPopup({
-        queryParams: P_QUERY_PARAMS,
-        queryData: O_RESULT_DATA
-      }, onOwnBrandPopup, onOwnBrandPopup);
-    }
-    return;
-    */
   case "BRAND_CD":
     var P_QUERY_PARAMS;
     var O_RESULT_DATA = [ ];
@@ -120,6 +91,7 @@ function _OnConditionChange(e, view, val) {
     }
     return;
   }
+  */
 
   onChangingCondition();
 }
@@ -159,6 +131,7 @@ function _OnInputChange(e, view, val) {
 function _Inquiry() {
 
   var BRAND_CD = $NC.getValue("#edtQBrand_Cd", true);
+  var BRAND_NM = $NC.getValue("#edtQBrand_Nm", true);
   var DEAL_DIV1 = $NC.getValue("#chkQDeal_Div1");
   var DEAL_DIV2 = $NC.getValue("#chkQDeal_Div2");
   var DEAL_DIV3 = $NC.getValue("#chkQDeal_Div3");
@@ -169,6 +142,7 @@ function _Inquiry() {
   G_GRDMASTER.queryParams = $NC.getParams({
     P_CUST_CD: $NC.G_USERINFO.CUST_CD,
     P_BRAND_CD: BRAND_CD,
+    P_BRAND_NM: BRAND_NM,
     P_DEAL_DIV1: DEAL_DIV1,
     P_DEAL_DIV2: DEAL_DIV2,
     P_DEAL_DIV3: DEAL_DIV3,
@@ -951,41 +925,6 @@ function showPostPopup() {
 }
 
 /**
- * 검색조건의 위탁사 검색 팝업 클릭
- */
-function showOwnBranPopup() {
-
-  var BU_CD = $NC.G_USERINFO.BU_CD;
-  var CUST_CD = $NC.G_USERINFO.CUST_CD;
-
-  $NP.showOwnBranPopup({
-    P_CUST_CD:  CUST_CD,   
-    P_BU_CD: BU_CD,
-    P_OWN_BRAND_CD: '%'
-  }, onOwnBrandPopup, function() {
-    $NC.setFocus("#edtQBrand_Cd", true);
-  });
-}
-
-/**
- * 위탁사 검색 결과
- * 
- * @param seletedRowData
- */
-function onOwnBrandPopup(resultInfo) {
-
-  if (!$NC.isNull(resultInfo)) {
-    $NC.setValue("#edtQBrand_Cd", resultInfo.OWN_BRAND_CD);
-    $NC.setValue("#edtQBrand_Nm", resultInfo.OWN_BRAND_NM);
-  } else {
-    $NC.setValue("#edtQBrand_Cd");
-    $NC.setValue("#edtQBrand_Nm");
-    $NC.setFocus("#edtQBrand_Cd", true);
-  }
-  onChangingCondition();
-}
-
-/**
  * 검색조건의 사업구분 검색 이미지 클릭
  */
 function showUserBuPopup() {
@@ -1017,6 +956,7 @@ function onUserBuPopup(resultInfo) {
 /**
  * 검색조건의 브랜드 검색 팝업 클릭
  */
+
 function showBrandPopup() {
   $NP.showBrandPopup({
     P_BRAND_CD: '%',

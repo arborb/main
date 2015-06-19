@@ -148,7 +148,8 @@ public class LI01010EService {
 
     if (!Consts.PROCESS_ENTRY_NEW.equals(process_Cd)) {
       Map<String, Object> checkParams = new HashMap<String, Object>();
-      checkParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
+      // checkParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
+      checkParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD_ORG"));
       checkParams.put("P_BU_CD", masterDS.get("P_BU_CD"));
       checkParams.put("P_INBOUND_DATE", masterDS.get("P_ORDER_DATE_ORG"));
       checkParams.put("P_INBOUND_NO", masterDS.get("P_ORDER_NO"));

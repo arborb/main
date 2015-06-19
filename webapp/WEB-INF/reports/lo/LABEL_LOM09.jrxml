@@ -233,6 +233,14 @@
 	<field name="TODAY_TIME" class="java.lang.String"/>
 	<detail>
 		<band height="300" splitType="Stretch">
+			<componentElement>
+				<reportElement x="428" y="158" width="161" height="60" uuid="e88ca727-6d39-4ead-8c0f-b0cf314567f8">
+					<printWhenExpression><![CDATA[$F{DELIVERY_TYPE}.toString().equals("1")]]></printWhenExpression>
+				</reportElement>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128A" drawText="false" checksumRequired="false" barWidth="4" barHeight="270">
+					<jr:codeExpression><![CDATA[$F{WB_NO}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement mode="Transparent" x="55" y="7" width="129" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="a6f36307-b769-459d-af67-72fdcdf12c55"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
@@ -545,10 +553,10 @@
 				</jr:barbecue>
 			</componentElement>
 			<componentElement>
-				<reportElement x="443" y="157" width="128" height="63" uuid="3d16a974-0bab-4f69-b8bd-de708bcfdb03">
+				<reportElement x="439" y="157" width="148" height="63" uuid="3d16a974-0bab-4f69-b8bd-de708bcfdb03">
 					<printWhenExpression><![CDATA[$F{DELIVERY_TYPE}.toString().equals("2")]]></printWhenExpression>
 				</reportElement>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128C" drawText="false" checksumRequired="false" barWidth="3" barHeight="190">
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128C" drawText="false" checksumRequired="false" barWidth="3" barHeight="160">
 					<jr:codeExpression><![CDATA[$F{WB_NO}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
@@ -565,14 +573,6 @@
 					<printWhenExpression><![CDATA[($F{DELIVERY_TYPE}.toString().equals("1") && $F{SHIP_DIV}.toString().equals("1"))]]></printWhenExpression>
 				</reportElement>
 				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128A" drawText="false" checksumRequired="false" barWidth="5" barHeight="230">
-					<jr:codeExpression><![CDATA[$F{WB_NO}]]></jr:codeExpression>
-				</jr:barbecue>
-			</componentElement>
-			<componentElement>
-				<reportElement x="442" y="158" width="150" height="60" uuid="e88ca727-6d39-4ead-8c0f-b0cf314567f8">
-					<printWhenExpression><![CDATA[$F{DELIVERY_TYPE}.toString().equals("1")]]></printWhenExpression>
-				</reportElement>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128A" drawText="false" checksumRequired="false" barWidth="4" barHeight="300">
 					<jr:codeExpression><![CDATA[$F{WB_NO}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>

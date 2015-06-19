@@ -110,14 +110,14 @@ public class LOM7110EController extends CommonController {
    * @param user_Id 사용자ID
    * @return
    */
+  @SuppressWarnings("rawtypes")
   @RequestMapping(value = "/callFWScanConfirm.do", method = RequestMethod.POST)
   public ResponseEntity<String> callFWScanConfirm(HttpServletRequest request,
-      @RequestParam(Consts.PK_DS_MASTER) String masterDS) {
+    @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
     
-    // DataSet Map에 추가
-    Map<String, Object> params = getDataSet(masterDS, Consts.PK_DS_MASTER);
+    Map<String, Object> params = getParameter(queryParams);
     String oMsg = getResultMessage(params);
     if (!Consts.OK.equals(oMsg)) {
       result = getResponseEntityError(request, oMsg);
@@ -125,7 +125,8 @@ public class LOM7110EController extends CommonController {
     }
     
     try {
-      result = getResponseEntity(request, service.callFWScanConfirm(params));
+      Map mapResult = service.callFWScanConfirm(params);
+      result = getResponseEntity(request, mapResult);
     } catch (Exception e) {
       result = getResponseEntityError(request, e);
     }
@@ -187,36 +188,6 @@ public class LOM7110EController extends CommonController {
 
     try {
       result = getResponseEntity(request, service.getDataSet(queryId, params));
-    } catch (Exception e) {
-      result = getResponseEntityError(request, e);
-    }
-
-    return result;
-  }
-
-  /**
-   * 출고스캔검수-박스 통합(팝업화면에서)
-   * 
-   * @param request HttpServletRequest
-   * @param subDS DataSet
-   * @param user_Id 사용자ID
-   * @return
-   */
-  @RequestMapping(value = "/callScanBoxMerge.do", method = RequestMethod.POST)
-  public ResponseEntity<String> callScanBoxMerge(HttpServletRequest request,
-      @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
-
-    ResponseEntity<String> result = null;
-
-    Map<String, Object> params = getParameter(queryParams);
-    String oMsg = getResultMessage(params);
-    if (!Consts.OK.equals(oMsg)) {
-      result = getResponseEntityError(request, oMsg);
-      return result;
-    }
-
-    try {
-      result = getResponseEntity(request, service.callScanBoxMerge(params));
     } catch (Exception e) {
       result = getResponseEntityError(request, e);
     }

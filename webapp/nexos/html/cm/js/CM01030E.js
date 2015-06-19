@@ -3,7 +3,6 @@
  */
 function _Initialize() {
 
-  
   // 단위화면에서 사용될 일반 전역 변수 정의
   $NC.setGlobalVar({
     // 체크할 정책 값
@@ -274,7 +273,6 @@ function _New() {
       CRUD: "N"
     };
     
-
     G_GRDSUB.data.addItem(newRowData);
     $NC.setGridSelectRow(G_GRDSUB, rowCount);
     // 수정 상태로 변경
@@ -440,6 +438,7 @@ function _Delete() {
       return;
     }
 
+    if ($NC.G_USERINFO.USER_ID == 'WMS7') {
     messageAnswer = confirm("로케이션을 삭제 하시겠습니까?");
     if (messageAnswer) {
       var rowData = G_GRDSUB.data.getItem(G_GRDSUB.lastRow);
@@ -461,6 +460,10 @@ function _Delete() {
         G_GRDSUB.data.updateItem(rowData.id, rowData);
         _Save();
       }
+      }
+    } else {
+      alert("로케이션 관리자 외에 삭제불가 합니다.");
+      return;
     }
   }
 }

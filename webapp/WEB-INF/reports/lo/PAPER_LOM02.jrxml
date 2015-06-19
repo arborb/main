@@ -34,6 +34,7 @@
       ,T1.ITEM_NM || ' ' || T1.ITEM_SPEC              AS ITEM_NM
       ,T1.ITEM_SPEC
       ,C3.CODE_NM                                     AS ITEM_STATE_D
+      ,L1.ITEM_STATE
       ,L1.ITEM_LOT
       ,T1.QTY_IN_BOX
       ,L1.ENTRY_QTY
@@ -106,6 +107,7 @@
 	<field name="ITEM_NM" class="java.lang.String"/>
 	<field name="ITEM_SPEC" class="java.lang.String"/>
 	<field name="ITEM_STATE_D" class="java.lang.String"/>
+	<field name="ITEM_STATE" class="java.lang.String"/>
 	<field name="ITEM_LOT" class="java.lang.String"/>
 	<field name="QTY_IN_BOX" class="java.math.BigDecimal"/>
 	<field name="ENTRY_QTY" class="java.math.BigDecimal"/>
@@ -194,11 +196,11 @@
 				<textFieldExpression><![CDATA[$F{BU_CD_F}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-30" x="144" y="4" width="278" height="29" isRemoveLineWhenBlank="true" uuid="5e8bf356-0e82-4562-8a8f-846fe9b99754"/>
+				<reportElement key="staticText-30" x="133" y="4" width="278" height="29" isRemoveLineWhenBlank="true" uuid="5e8bf356-0e82-4562-8a8f-846fe9b99754"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="18" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfFontName="malgun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[토탈피킹지시서]]></text>
+				<text><![CDATA[토탈피킹지시서(입수기준)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-7" x="392" y="83" width="66" height="14" isRemoveLineWhenBlank="true" uuid="c653e904-a208-4cc7-a288-82c1869799f3"/>
@@ -412,7 +414,9 @@
 				<textFieldExpression><![CDATA[$F{ITEM_NM}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement key="staticText-4" x="459" y="2" width="51" height="12" uuid="ab725174-0799-4e6d-aeb9-5a0269db9643"/>
+				<reportElement key="staticText-4" x="459" y="2" width="51" height="12" uuid="ab725174-0799-4e6d-aeb9-5a0269db9643">
+					<printWhenExpression><![CDATA[(!$F{ITEM_STATE}.equals("G"))]]></printWhenExpression>
+				</reportElement>
 				<box leftPadding="0"/>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
@@ -486,6 +490,16 @@
 					<jr:codeExpression><![CDATA[$F{ITEM_BAR_CD}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
+			<textField isBlankWhenNull="true">
+				<reportElement key="staticText-4" mode="Opaque" x="459" y="2" width="51" height="12" forecolor="#FFFFFF" backcolor="#999999" uuid="50357c47-eba6-4514-93ec-36787c7c827c">
+					<printWhenExpression><![CDATA[($F{ITEM_STATE}.equals("G"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_STATE_D}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

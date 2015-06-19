@@ -36,6 +36,7 @@
         ,T1.ITEM_SPEC
         ,T1.ITEM_BAR_CD
         ,C3.CODE_NM                                     AS ITEM_STATE_D
+        ,L1.ITEM_STATE
        -- ,DECODE(L1.ITEM_LOT ,'00' ,'' ,L1.ITEM_LOT)     AS ITEM_LOT
         ,L1.ENTRY_QTY
         ,L1.DEAL_ID
@@ -227,6 +228,7 @@
 	<field name="ITEM_SPEC" class="java.lang.String"/>
 	<field name="ITEM_BAR_CD" class="java.lang.String"/>
 	<field name="ITEM_STATE_D" class="java.lang.String"/>
+	<field name="ITEM_STATE" class="java.lang.String"/>
 	<field name="ENTRY_QTY" class="java.math.BigDecimal"/>
 	<field name="DEAL_ID" class="java.lang.String"/>
 	<field name="DEAL_NM" class="java.lang.String"/>
@@ -567,7 +569,9 @@
 				<textFieldExpression><![CDATA[$F{DEAL_ID}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement key="staticText-4" x="515" y="2" width="51" height="12" uuid="291df779-15a7-44b5-bcd2-8e0219c9adb6"/>
+				<reportElement key="staticText-4" x="515" y="2" width="51" height="12" uuid="291df779-15a7-44b5-bcd2-8e0219c9adb6">
+					<printWhenExpression><![CDATA[(!$F{ITEM_STATE}.equals("G"))]]></printWhenExpression>
+				</reportElement>
 				<box leftPadding="0"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
@@ -625,6 +629,16 @@
 					<font fontName="굴림체" size="9" isBold="false" pdfEncoding="Identity-H"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{BU_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="staticText-4" mode="Opaque" x="515" y="2" width="51" height="12" forecolor="#FFFFFF" backcolor="#999999" uuid="9a4e1072-4333-4c69-9b87-3b124b5e4cee">
+					<printWhenExpression><![CDATA[($F{ITEM_STATE}.equals("G"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="굴림체" size="9" isBold="true" pdfEncoding="Identity-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_STATE_D}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
