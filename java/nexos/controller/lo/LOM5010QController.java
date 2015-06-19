@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.penta.scpdb.ScpDbAgent;
+
 /**
  * Class: 배송완료처리 컨트롤러<br>
  * Description: 배송완료처리 Controller<br>
@@ -36,36 +38,46 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/LOM5010Q")
 public class LOM5010QController extends CommonController {
 
-    @Resource
-    private LOM5010QService service;
+  @Resource
+  private LOM5010QService service;
 
-    /**
-     * 데이터 조회
-     * @param request     HttpServletRequest
-     * @param queryId     쿼리ID
-     * @param queryParams 쿼리 호출 파라메터
-     * @return
-     */
-    @RequestMapping(value = "/getDataSet.do", method = RequestMethod.POST)
-    public ResponseEntity<String> getDataSet(HttpServletRequest request,
-            @RequestParam(Consts.PK_QUERY_ID) String queryId, @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
+  /**
+   * 데이터 조회
+   * @param request     HttpServletRequest
+   * @param queryId     쿼리ID
+   * @param queryParams 쿼리 호출 파라메터
+   * @return
+   */
+  @RequestMapping(value = "/getDataSet.do", method = RequestMethod.POST)
+  public ResponseEntity<String> getDataSet(HttpServletRequest request,
+      @RequestParam(Consts.PK_QUERY_ID) String queryId, @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
-        ResponseEntity<String> result = null;
+    ResponseEntity<String> result = null;
 
-        Map<String, Object> params = getParameter(queryParams);
-        String oMsg = getResultMessage(params);
-        if (!Consts.OK.equals(oMsg)) {
-            result = getResponseEntityError(request, oMsg);
-            return result;
-        }
+    Map<String, Object> params = getParameter(queryParams);
 
-        try {
-            result = getResponseEntity(request, service.getDataSet(queryId, params));
-        } catch (Exception e) {
-            result = getResponseEntityError(request, e);
-        }
-
-        return result;
+    String oMsg = getResultMessage(params);
+    if (!Consts.OK.equals(oMsg)) {
+      result = getResponseEntityError(request, oMsg);
+      return result;
     }
+    
+    // Scp 복호화 키 파라미터 송신
+    ScpDbAgent agt = new ScpDbAgent();
+    String iniFilePath = "/usr/scp/scpdb_agent_unix.ini";
+    String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );
+    params.put("P_SCPKEY", outKey);
+
+    
+
+    
+    try {
+      result = getResponseEntity(request, service.getDataSet(queryId, params));
+    } catch (Exception e) {
+      result = getResponseEntityError(request, e);
+    }
+
+    return result;
+  }
 
 }

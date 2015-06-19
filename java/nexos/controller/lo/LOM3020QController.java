@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.penta.scpdb.ScpDbAgent;
+
 /**
  * Class: 출고내역 컨트롤러<br>
  * Description: 출고내역 관리 Controller<br>
@@ -53,12 +55,20 @@ public class LOM3020QController extends CommonController {
         ResponseEntity<String> result = null;
 
         Map<String, Object> params = getParameter(queryParams);
+        
+        
         String oMsg = getResultMessage(params);
         if (!Consts.OK.equals(oMsg)) {
             result = getResponseEntityError(request, oMsg);
             return result;
         }
 
+        // Scp 복호화 키 파라미터 송신
+        ScpDbAgent agt = new ScpDbAgent();
+        String iniFilePath = "/usr/scp/scpdb_agent_unix.ini";
+        String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );
+        params.put("P_SCPKEY", outKey);
+       
         try {
             result = getResponseEntity(request, service.getDataSet(queryId, params));
         } catch (Exception e) {
