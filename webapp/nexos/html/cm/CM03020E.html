@@ -43,125 +43,131 @@
 <script src="js/CM03020E.js"></script>
 </head>
 <body>
- <div id="divTopLine" class="ui-top-line"></div>
- <div id="divConditionView" class="ui-ctnr-condition">
-  <table class="ui-tbl-condition">
-   <tr>
-    <td>
-     <div id="lblQBrand_Cd1" class="ui-lbl-condition">판매사코드</div>
-     <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 188px;" />
-    </td>
-    <td>
-     <div id="lblQBrand_Nm1" class="ui-lbl-condition">판매사명</div>
-     <input class="ui-edt-normal" type="text" id="edtQBrand_Nm" style="width: 227px;" />
-    </td>
-    <td>
-     <div id="lblQDeal_Div" class="ui-lbl-condition">거래구분</div>
-     <div class="ui-gbox-normal">
-      <input class="ui-chk-normal" type="checkbox" name="chkQDeal_Div" id="chkQDeal_Div1" value="1" />
-      거래진행
-      <input class="ui-chk-normal" type="checkbox" name="chkQDeal_Div" id="chkQDeal_Div2" value="2" />
-      거래종료
-      <input class="ui-chk-normal" type="checkbox" name="chkQDeal_Div" id="chkQDeal_Div3" value="3" />
-      조회종료
-     </div>
-    </td>
-   </tr>
-  </table>
- </div>
- <div id="divLeftView" class="ui-ctnr-left">
-  <table class="ui-tbl-grid">
-   <tr>
-    <td id="divTitle_grdMaster" class="ui-grd-title">판매사</td>
-    <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
-   </tr>
-  </table>
-  <div id="grdMaster"></div>
- </div>
- <div id="divRightView" class="ui-ctnr-right">
-  <div class="ui-gbox-header">
-   <div class="ui-lbl-header">기본정보</div>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+
+        <td>
+          <div id="lblQPopup_Brand_Cd1" class="ui-lbl-condition">판매사</div> 
+          <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 60px;" /> 
+          <input class="ui-btn-popup" type="button" id="btnQBrand_Cd" /> 
+          <input class="ui-edt-display" type="text" id="edtQBrand_Nm" disabled="disabled" style="width: 118px;" /> 
+          <input type="hidden" id="edtQCust_Cd" />
+        </td>
+        <td>
+          <div id="lblQDeal_Div" class="ui-lbl-condition">거래구분</div>
+          <div class="ui-gbox-normal">
+            <input class="ui-chk-normal" type="checkbox" name="chkQDeal_Div" id="chkQDeal_Div1" value="1" />
+            거래진행
+            <input class="ui-chk-normal" type="checkbox" name="chkQDeal_Div" id="chkQDeal_Div2" value="2" />
+            거래종료
+            <input class="ui-chk-normal" type="checkbox" name="chkQDeal_Div" id="chkQDeal_Div3" value="3" />
+            조회종료
+          </div>
+        </td>
+      </tr>
+    </table>
   </div>
-  <div id="divMasterInfoView" class="ui-gbox-content ui-noborder">
-   <div class="ui-ctnr-row">
-    <div id="lblBrand_Cd1" class="ui-lbl-key">판매사코드</div>
-    <input class="ui-edt-key" type="text" id="edtBrand_Cd" maxlength="10" style="width: 100px; margin-left: 6px;" />
-   </div>
-   <div class="ui-ctnr-row">
-    <div id="lblBrand_Nm1" class="ui-lbl-key">판매사명</div>
-    <input class="ui-edt-key" type="text" id="edtBrand_Nm" maxlength="100" style="width: 319px; margin-left: 6px;" />
-   </div>
-   <div class="ui-ctnr-row">
-    <div id="lblBrand_Full_Nm" class="ui-lbl-normal">정식명칭</div>
-    <input class="ui-edt-normal" type="text" id="edtBrand_Full_Nm" maxlength="100" style="width: 319px; margin-left: 6px;" />
-   </div>
-   <div class="ui-gbox-title">관리정보</div>
-   <div class="ui-gbox-content" style="margin-top: 0;">
-    <div class="ui-ctnr-row">
-     <div id="lblBusiness_no" class="ui-lbl-normal">사업자번호</div>
-     <input class="ui-edt-normal" type="text" id="edtManager_Id" style="width: 100px;" />
-    </div>
-    <div class="ui-ctnr-row">
-     <div id="lblPopup_Salesman_Id" class="ui-lbl-normal">영업당담자</div>
-     <input class="ui-edt-normal" type="text" id="edtSalesman_Id" style="width: 100px;" />
-     <input class="ui-btn-popup" type="button" id="btnSalesman" />
-     <input class="ui-edt-display" type="text" id="edtSalesman_Nm" style="width: 173px;" disabled="disabled" />
-    </div>
-    <div class="ui-ctnr-row">
-     <div id="lblDeal_Div" class="ui-lbl-key">거래구분</div>
-     <div class="ui-gbox-normal" style="width: 305px;">
-      <input class="ui-rgb-normal" type="radio" name="DEAL_DIV" id="rgbDeal_Div1" value="1" style="width: 20px;" />
-      거래진행
-      <input class="ui-rgb-normal" type="radio" name="DEAL_DIV" id="rgbDeal_Div2" value="2" style="width: 20px;" />
-      거래종료
-      <input class="ui-rgb-normal" type="radio" name="DEAL_DIV" id="rgbDeal_Div3" value="3" style="width: 20px;" />
-      조회종료
-     </div>
-    </div>
-    <div class="ui-ctnr-row">
-     <div id="lblOpen_Date" class="ui-lbl-normal">거래일자</div>
-     <input class="ui-dtp-normal" type="text" id="dtpOpen_Date" style="width: 80px;" />
-     <div id="lblClose_Date" class="ui-lbl-normal" style="margin-left: 12px;">종료일자</div>
-     <input class="ui-dtp-normal" type="text" id="dtpClose_Date" style="width: 80px;" />
-    </div>
-   </div>
-   <div class="ui-gbox-title">주소정보</div>
-   <div class="ui-gbox-content" style="margin-top: 0;">
-    <div class="ui-ctnr-row">
-     <div id="lblPopup_Zip_Cd" class="ui-lbl-normal">우편번호</div>
-     <input class="ui-edt-display" type="text" id="edtZip_Cd" disabled="disabled" style="width: 100px;" />
-     <input class="ui-btn-popup" type="button" id="btnZip_Cd" />
-    </div>
-    <div class="ui-ctnr-row">
-     <div id="lblAddr_Basic" class="ui-lbl-normal">기본주소</div>
-     <input class="ui-edt-display" type="text" id="edtAddr_Basic" disabled="disabled" style="width: 312px;" />
-    </div>
-    <div class="ui-ctnr-row">
-     <div id="lblAddr_Detail" class="ui-lbl-normal">상세주소</div>
-     <input class="ui-edt-normal" type="text" id="edtAddr_Detail" style="width: 312px;" />
-    </div>
-    <div class="ui-ctnr-row">
-     <div id="lblCharge_Nm" class="ui-lbl-normal">담당자명</div>
-     <input class="ui-edt-normal" type="text" id="edtCharge_Nm" style="width: 100px;" />
-     <div id="lblTel_No" class="ui-lbl-normal">전화번호</div>
-     <input class="ui-edt-normal" type="text" id="edtTel_No" style="width: 100px;" />
-    </div>
-   </div>
-   <div class="ui-ctnr-row">
-    <div id="lblRemark1" class="ui-lbl-normal">비고</div>
-    <input class="ui-edt-normal" type="text" id="edtRemark1" style="width: 319px; margin-left: 6px;" />
-   </div>
-   <div class="ui-ctnr-row">
-    <div class="ui-gbox-normal" style="width: 418px; padding: 3px 0 3px 3px;">
-     <div id="lblQPopup_Bu_Cd1" class="ui-lbl-key">사업구분</div>
-     <input class="ui-edt-key" type="text" id="edtBu_Cd" style="width: 60px;" />
-     <input class="ui-btn-popup" type="button" id="btnBu_Cd" />
-     <input class="ui-edt-display" type="text" id="edtBu_Nm" disabled="disabled" style="width: 118px;" />
-     <input type="hidden" id="edtCust_Cd" />
-     <input type="button" id="btnCreateOwnBrand" value="위탁사 생성" class="ui-btn-cmd" style="width: 90px;" />
-    </div>
-   </div>
+  <div id="divLeftView" class="ui-ctnr-left">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdMaster" class="ui-grd-title">판매사</td>
+        <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdMaster"></div>
   </div>
- </div>
+  <div id="divRightView" class="ui-ctnr-right">
+    <div class="ui-gbox-header">
+      <div class="ui-lbl-header">기본정보</div>
+    </div>
+    <div id="divMasterInfoView" class="ui-gbox-content ui-noborder">
+      <div class="ui-ctnr-row">
+        <div id="lblBrand_Cd1" class="ui-lbl-key">판매사코드</div>
+        <input class="ui-edt-key" type="text" id="edtBrand_Cd" maxlength="10" style="width: 100px; margin-left: 6px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblBrand_Nm1" class="ui-lbl-key">판매사명</div>
+        <input class="ui-edt-key" type="text" id="edtBrand_Nm" maxlength="100" style="width: 319px; margin-left: 6px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblBrand_Full_Nm" class="ui-lbl-normal">정식명칭</div>
+        <input class="ui-edt-normal" type="text" id="edtBrand_Full_Nm" maxlength="100" style="width: 319px; margin-left: 6px;" />
+      </div>
+      <!-- 
+      <div id="divchan" class="ui-ctnr-row">
+        <div id="divchan" class="ui-lbl-key">판매사구분</div>
+        <select id="cboBrand_Div" class="ui-cbo-key" style="width: 152px; margin-left: 6px;"></select>
+      </div>
+      -->
+      <div class="ui-gbox-title">관리정보</div>
+      <div class="ui-gbox-content" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <div id="lblBusiness_no" class="ui-lbl-normal">사업자번호</div>
+          <input class="ui-edt-normal" type="text" id="edtManager_Id" style="width: 100px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblPopup_Salesman_Id" class="ui-lbl-normal">영업당담자</div>
+          <input class="ui-edt-normal" type="text" id="edtSalesman_Id" style="width: 100px;" />
+          <input class="ui-btn-popup" type="button" id="btnSalesman" />
+          <input class="ui-edt-display" type="text" id="edtSalesman_Nm" style="width: 173px;" disabled="disabled" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblDeal_Div" class="ui-lbl-key">거래구분</div>
+          <div class="ui-gbox-normal" style="width: 305px;">
+            <input class="ui-rgb-normal" type="radio" name="DEAL_DIV" id="rgbDeal_Div1" value="1" style="width: 20px;" />
+            거래진행
+            <input class="ui-rgb-normal" type="radio" name="DEAL_DIV" id="rgbDeal_Div2" value="2" style="width: 20px;" />
+            거래종료
+            <input class="ui-rgb-normal" type="radio" name="DEAL_DIV" id="rgbDeal_Div3" value="3" style="width: 20px;" />
+            조회종료
+          </div>
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblOpen_Date" class="ui-lbl-normal">거래일자</div>
+          <input class="ui-dtp-normal" type="text" id="dtpOpen_Date" style="width: 80px;" />
+          <div id="lblClose_Date" class="ui-lbl-normal" style="margin-left: 12px;">종료일자</div>
+          <input class="ui-dtp-normal" type="text" id="dtpClose_Date" style="width: 80px;" />
+        </div>
+      </div>
+      <div class="ui-gbox-title">주소정보</div>
+      <div class="ui-gbox-content" style="margin-top: 0;">
+        <div class="ui-ctnr-row">
+          <div id="lblPopup_Zip_Cd" class="ui-lbl-normal">우편번호</div>
+          <input class="ui-edt-display" type="text" id="edtZip_Cd" disabled="disabled" style="width: 100px;" />
+          <input class="ui-btn-popup" type="button" id="btnZip_Cd" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblAddr_Basic" class="ui-lbl-normal">기본주소</div>
+          <input class="ui-edt-display" type="text" id="edtAddr_Basic" disabled="disabled" style="width: 312px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblAddr_Detail" class="ui-lbl-normal">상세주소</div>
+          <input class="ui-edt-normal" type="text" id="edtAddr_Detail" style="width: 312px;" />
+        </div>
+        <div class="ui-ctnr-row">
+          <div id="lblCharge_Nm" class="ui-lbl-normal">담당자명</div>
+          <input class="ui-edt-normal" type="text" id="edtCharge_Nm" style="width: 100px;" />
+          <div id="lblTel_No" class="ui-lbl-normal">전화번호</div>
+          <input class="ui-edt-normal" type="text" id="edtTel_No" style="width: 100px;" />
+        </div>
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblRemark1" class="ui-lbl-normal">비고</div>
+        <input class="ui-edt-normal" type="text" id="edtRemark1" style="width: 319px; margin-left: 6px;" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div class="ui-gbox-normal" style="width: 418px; padding: 3px 0 3px 3px;">
+          <div id="lblQPopup_Bu_Cd1" class="ui-lbl-key">사업구분</div>
+          <input class="ui-edt-key" type="text" id="edtBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtBu_Nm" disabled="disabled" style="width: 118px;" />
+          <input type="hidden" id="edtCust_Cd" />
+          <input type="button" id="btnCreateOwnBrand" value="위탁사 생성" class="ui-btn-cmd" style="width: 90px;" />
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

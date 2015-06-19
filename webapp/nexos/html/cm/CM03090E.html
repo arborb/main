@@ -41,104 +41,107 @@
 <script src="js/CM03090E.js"></script>
 </head>
 <body>
- <div id="divTopLine" class="ui-top-line"></div>
- <div id="divConditionView" class="ui-ctnr-condition">
-  <table class="ui-tbl-condition">
-   <tr>
-    <td>
-     <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">작업구분</div>
-     <input class="ui-edt-key" type="text" id="edtQBu_Cd" style="width: 60px;" />
-     <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
-     <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
-     <input type="hidden" id="edtQCust_Cd" />
-    </td>
-    <td>
-     <div id="lblQPopup_Own_Brand_Cd" class="ui-lbl-condition">위탁사코드</div>
-     <input class="ui-edt-normal" type="text" id="edtQOwn_Brand_Cd" tabindex="7" style="width: 60px;" />
-    </td>
-    <td>
-     <div id="lblQPopup_Own_Brand_Nm" class="ui-lbl-condition">위탁사명</div>
-     <input class="ui-edt-normal" type="text" id="edtQOwn_Brand_Nm" style="width: 100px;" />
-    </td>
-   </tr>
-  </table>
- </div>
- <div id="divTabView" style="padding: 1px;">
-  <ul>
-   <li id="divTab1"><a href="#divT1TabSheetView">대표위탁사기준판매사관리</a></li>
-  </ul>
-  <div id="divT1TabSheetView" style="padding: 0; border-width: 1px; border-style: solid;">
-   <div id="divT1Splitter">
-    <div id="divT1Master" class="ui-ctnr-left" style="border-width: 0 1px 0 0;">
-     <table class="ui-tbl-grid">
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 조회 조건 -->
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
       <tr>
-       <td id="divTitle_grdT1Master" class="ui-grd-title">대표위탁사마스터</td>
-       <td id="divRowCount_grdT1Master" class="ui-grd-rowcount">0/0 Rows</td>
+        <td>
+          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">작업구분</div>
+          <input class="ui-edt-key" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
+          <input type="hidden" id="edtQCust_Cd" />
+        </td>
+        <td>
+          <div id="lblQPopup_Own_Brand_Cd" class="ui-lbl-condition">위탁사</div>
+          <input class="ui-edt-normal" type="text" id="edtQOwn_Brand_Cd" tabindex="7" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQOwn_Brand_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQOwn_Brand_Nm"  disabled="disabled" style="width: 100px;" />
+        </td>
       </tr>
-     </table>
-     <div id="grdT1Master"></div>
-    </div>
-    <div id="divT1Detail" class="ui-ctnr-right" style="border-width: 0 0 0 1px;">
-     <div id="divConditionViewT1" style="padding: 5px;">
-      <div id="lblQT1_Brand_Cd1" class="ui-lbl-condition">판매사코드</div>
-      <input class="ui-edt-normal" type="text" id="edtQT1_Brand_Cd" style="width: 80px;" />
-      <div id="lblQT1_Brand_Nm1" class="ui-lbl-condition" style="margin-left: 10px;">판매사명</div>
-      <input class="ui-edt-normal" type="text" id="edtQT1_Brand_Nm" style="width: 150px;" />
-      <input class="ui-btn-cmd" type="button" id="btnT1AddBrand" value="대표위탁사매칭" style="width: 110px;" />
-     </div>
-     <table class="ui-tbl-grid">
-      <tr>
-       <td id="divTitle_grdT1Detail" class="ui-grd-title">판매사마스터</td>
-       <td id="divRowCount_grdT1Detail" class="ui-grd-rowcount">0/0 Rows</td>
-      </tr>
-     </table>
-     <div id="grdT1Detail"></div>
-    </div>
-   </div>
-   <div id="divT1Sub">
-    <table class="ui-tbl-grid">
-     <tr>
-      <td id="divTitle_grdT1Sub" class="ui-grd-title">대표위탁사별 판매사 매칭</td>
-      <td id="divRowCount_grdT1Sub" class="ui-grd-rowcount">0/0 Rows</td>
-     </tr>
     </table>
-    <div id="grdT1Sub"></div>
-   </div>
   </div>
-  <div id="divT2TabSheetView" style="padding: 0; border-width: 1px; border-style: solid;">
-   <div id="divT2Splitter">
-    <div id="divT2Master" class="ui-ctnr-left" style="border-width: 0 1px 0 0;">
-     <table class="ui-tbl-grid">
-      <tr>
-       <td id="divTitle_grdT2Master" class="ui-grd-title">판매사마스터</td>
-       <td id="divRowCount_grdT2Master" class="ui-grd-rowcount">0/0 Rows</td>
-      </tr>
-     </table>
-     <div id="grdT2Master"></div>
+  <div id="divTabView" style="padding: 1px;">
+    <!-- Tab Handler -->
+    <ul>
+      <li id="divTab1"><a href="#divT1TabSheetView">대표위탁사기준판매사관리</a></li>
+      <!-- <li id="divTab2"><a href="#divT2TabSheetView">화주기준대표위탁사관리</a></li> -->
+    </ul>
+    <!-- 대표위탁사기준화주관리 -->
+    <div id="divT1TabSheetView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <!-- split 상단-->
+      <div id="divT1Splitter">
+        <div id="divT1Master" class="ui-ctnr-left" style="border-width: 0 1px 0 0;">
+          <table class="ui-tbl-grid">
+            <tr>
+              <td id="divTitle_grdT1Master" class="ui-grd-title">대표위탁사마스터</td>
+              <td id="divRowCount_grdT1Master" class="ui-grd-rowcount">0/0 Rows</td>
+            </tr>
+          </table>
+          <div id="grdT1Master"></div>
+        </div>
+        <div id="divT1Detail" class="ui-ctnr-right" style="border-width: 0 0 0 1px;">
+          <table class="ui-tbl-grid">
+            <tr>
+              <td id="divTitle_grdT1Detail" class="ui-grd-title">판매사마스터</td>
+              <td id="divRowCount_grdT1Detail" class="ui-grd-rowcount">0/0 Rows</td>
+            </tr>
+          </table>
+          <div id="grdT1Detail"></div>
+          <div id="divT1Button" style="padding: 5px;">
+            <input class="ui-btn-cmd" type="button" id="btnT1AddBrand" value="대표위탁사매칭"  style="width: 110px;" />
+          </div>
+        </div>
+      </div>
+      <!-- split 하단-->
+      <div id="divT1Sub">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT1Sub" class="ui-grd-title">대표위탁사별 판매사 매칭</td>
+            <td id="divRowCount_grdT1Sub" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT1Sub"></div>
+      </div>
     </div>
-    <div id="divT2Detail" class="ui-ctnr-right" style="border-width: 0 0 0 1px;">
-     <table class="ui-tbl-grid">
-      <tr>
-       <td id="divTitle_grdT2Detail" class="ui-grd-title">대표위탁사마스터</td>
-       <td id="divRowCount_grdT2Detail" class="ui-grd-rowcount">0/0 Rows</td>
-      </tr>
-     </table>
-     <div id="grdT2Detail"></div>
-     <div id="divT2Button" style="padding: 5px;">
-      <input class="ui-btn-cmd" type="button" id="btnT2AddVendor" value="공급처추가" style="width: 110px;" />
-     </div>
+    <!-- 화주기준대표위탁사관리 -->
+    <div id="divT2TabSheetView" style="padding: 0; border-width: 1px; border-style: solid;">
+      <!-- split 상단-->
+      <div id="divT2Splitter">
+        <div id="divT2Master" class="ui-ctnr-left" style="border-width: 0 1px 0 0;">
+          <table class="ui-tbl-grid">
+            <tr>
+              <td id="divTitle_grdT2Master" class="ui-grd-title">판매사마스터</td>
+              <td id="divRowCount_grdT2Master" class="ui-grd-rowcount">0/0 Rows</td>
+            </tr>
+          </table>
+          <div id="grdT2Master"></div>
+        </div>
+        <div id="divT2Detail" class="ui-ctnr-right" style="border-width: 0 0 0 1px;">
+          <table class="ui-tbl-grid">
+            <tr>
+              <td id="divTitle_grdT2Detail" class="ui-grd-title">대표위탁사마스터</td>
+              <td id="divRowCount_grdT2Detail" class="ui-grd-rowcount">0/0 Rows</td>
+            </tr>
+          </table>
+          <div id="grdT2Detail"></div>
+          <div id="divT2Button" style="padding: 5px;">
+            <input class="ui-btn-cmd" type="button" id="btnT2AddVendor" value="공급처추가"  style="width: 110px;" />
+          </div>
+        </div>
+      </div>
+      <!-- split 하단-->
+      <div id="divT2Sub">
+        <table class="ui-tbl-grid">
+          <tr>
+            <td id="divTitle_grdT2Sub" class="ui-grd-title">화주별 대표위탁사 매칭</td>
+            <td id="divRowCount_grdT2Sub" class="ui-grd-rowcount">0/0 Rows</td>
+          </tr>
+        </table>
+        <div id="grdT2Sub"></div>
+      </div>
     </div>
-   </div>
-   <div id="divT2Sub">
-    <table class="ui-tbl-grid">
-     <tr>
-      <td id="divTitle_grdT2Sub" class="ui-grd-title">화주별 대표위탁사 매칭</td>
-      <td id="divRowCount_grdT2Sub" class="ui-grd-rowcount">0/0 Rows</td>
-     </tr>
-    </table>
-    <div id="grdT2Sub"></div>
-   </div>
   </div>
- </div>
 </body>
 </html>
