@@ -41,69 +41,79 @@
 <script src="js/CM03070E.js"></script>
 </head>
 <body>
-  <div id="divTopLine" class="ui-top-line"></div>
-  <div id="divMasterView" class="ui-ctnr-left">
-    <table class="ui-tbl-grid">
-      <tr>
-        <td id="divTitle_grdMaster" class="ui-grd-title">위탁사</td>
-        <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
-      </tr>
-    </table>
-    <div id="grdMaster"></div>
-    <div class="ui-gbox-header">
-      <div class="ui-lbl-header">위탁사로고</div>
-    </div>
-    <div class="ui-gbox-content ui-noborder">
-      <div class="ui-border ui-padding" style="height: 185px; overflow: auto; text-align: center; line-height: 185px;">
-        <img id="imgBICust" src="" style="vertical-align: middle;">
-      </div>
-      <div style="margin-top: 5px; text-align: right;">
-        <input type="button" id="btnBICustUpload" value="파일업로드" class="ui-btn-cmd" style="width: 75px;" />
-        <input type="button" id="btnBICustRemove" value="파일삭제" class="ui-btn-cmd" style="width: 75px;" />
-      </div>
-    </div>
+ <div id="divTopLine" class="ui-top-line"></div>
+ <div id="divMasterView" class="ui-ctnr-left">
+  <table class="ui-tbl-grid">
+   <tr>
+    <td id="divTitle_grdMaster" class="ui-grd-title">위탁사</td>
+    <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+   </tr>
+  </table>
+  <div id="grdMaster"></div>
+  <div class="ui-gbox-header">
+   <div class="ui-lbl-header">위탁사로고</div>
   </div>
-  <div id="divDetailView" class="ui-ctnr-left" style="margin-left: 5px;">
-    <table class="ui-tbl-grid">
-      <tr>
-        <td id="divTitle_grdDetail" class="ui-grd-title">사업부</td>
-        <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
-      </tr>
-    </table>
-    <div id="grdDetail"></div>
-    <div class="ui-gbox-header">
-      <div class="ui-lbl-header">사업부로고</div>
-    </div>
-    <div class="ui-gbox-content ui-noborder">
-      <div class="ui-border ui-padding" style="height: 185px; overflow: auto; text-align: center; line-height: 185px;">
-        <img id="imgBIBu" src="" style="vertical-align: middle;">
-      </div>
-      <div style="margin-top: 5px; text-align: right;">
-        <input type="button" id="btnBIBuUpload" value="파일업로드" class="ui-btn-cmd" style="width: 75px;" />
-        <input type="button" id="btnBIBuRemove" value="파일삭제" class="ui-btn-cmd" style="width: 75px;" />
-      </div>
-    </div>
+  <div class="ui-gbox-content ui-noborder">
+   <div class="ui-border ui-padding" style="height: 185px; overflow: auto; text-align: center; line-height: 185px;">
+    <img id="imgBICust" src="" style="vertical-align: middle;">
+   </div>
+   <div style="margin-top: 5px; text-align: right;">
+    <input type="button" id="btnBICustUpload" value="파일업로드" class="ui-btn-cmd" style="width: 75px;" />
+    <input type="button" id="btnBICustRemove" value="파일삭제" class="ui-btn-cmd" style="width: 75px;" />
+   </div>
   </div>
-  <div id="divSubView" class="ui-ctnr-right">
-    <table class="ui-tbl-grid">
-      <tr>
-        <td id="divTitle_grdSub" class="ui-grd-title">판매사</td>
-        <td id="divRowCount_grdSub" class="ui-grd-rowcount">0/0 Rows</td>
-      </tr>
-    </table>
-    <div id="grdSub"></div>
-    <div class="ui-gbox-header">
-      <div class="ui-lbl-header">판매사로고</div>
-    </div>
-    <div class="ui-gbox-content ui-noborder">
-      <div class="ui-border ui-padding" style="height: 185px; overflow: auto; text-align: center; line-height: 185px;">
-        <img id="imgBIBrand" src="" style="vertical-align: middle;">
-      </div>
-      <div style="margin-top: 5px; text-align: right;">
-        <input type="button" id="btnBIBrandUpload" value="파일업로드" class="ui-btn-cmd" style="width: 75px;" />
-        <input type="button" id="btnBIBrandRemove" value="파일삭제" class="ui-btn-cmd" style="width: 75px;" />
-      </div>
-    </div>
+ </div>
+ <div id="divDetailView" class="ui-ctnr-left" style="margin-left: 5px;">
+  <table class="ui-tbl-grid">
+   <tr>
+    <td id="divTitle_grdDetail" class="ui-grd-title">사업부</td>
+    <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
+   </tr>
+  </table>
+  <div id="grdDetail"></div>
+  <div class="ui-gbox-header">
+   <div class="ui-lbl-header">사업부로고</div>
   </div>
+  <div class="ui-gbox-content ui-noborder">
+   <div class="ui-border ui-padding" style="height: 185px; overflow: auto; text-align: center; line-height: 185px;">
+    <img id="imgBIBu" src="" style="vertical-align: middle;">
+   </div>
+   <div style="margin-top: 5px; text-align: right;">
+    <input type="button" id="btnBIBuUpload" value="파일업로드" class="ui-btn-cmd" style="width: 75px;" />
+    <input type="button" id="btnBIBuRemove" value="파일삭제" class="ui-btn-cmd" style="width: 75px;" />
+   </div>
+  </div>
+ </div>
+ <div id="divSubView" class="ui-ctnr-right">
+  <table class="ui-tbl-grid">
+   <tr>
+    <td id="divTitle_grdSub" class="ui-grd-title">판매사</td>
+    <td id="divRowCount_grdSub" class="ui-grd-rowcount">0/0 Rows</td>
+   </tr>
+  </table>
+  <div id="grdSub"></div>
+  <div class="ui-gbox-header">
+   <div class="ui-lbl-header">판매사로고</div>
+  </div>
+  <div class="ui-gbox-content ui-noborder">
+   <div class="ui-border ui-padding" style="height: 185px; overflow: auto; text-align: center; line-height: 185px;">
+    <img id="imgBIBrand" src="" style="vertical-align: middle;">
+   </div>
+   <div style="margin-top: 5px; text-align: right;">
+    <input type="button" id="btnBIBrandUpload" value="파일업로드" class="ui-btn-cmd" style="width: 75px;" />
+    <input type="button" id="btnBIBrandRemove" value="파일삭제" class="ui-btn-cmd" style="width: 75px;" />
+   </div>
+  </div>
+ </div>
+</body>
+</html>
+   </div>
+   <div class="ui-ctnr-row">
+    <div id="lblRemark1" class="ui-lbl-normal">비고</div>
+    <input class="ui-edt-normal" type="text" id="edtRemark1" style="width: 365px;" />
+   </div>
+  </div>
+  <div id="divGrdView"></div>
+ </div>
 </body>
 </html>
