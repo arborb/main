@@ -190,6 +190,8 @@ function _Inquiry() {
     $NC.setFocus("#dtpQInbound_Date1");
     return;
   }
+
+  var BU_NO = $NC.getValue("#edtQBu_No", true);
   var INOUT_CD = $NC.getValue("#cboQInout_Cd");
   var BRAND_CD = $NC.getValue("#edtQOwn_Brand_Cd", true);
   var BRAND_NM = $NC.getValue("#edtOwn_Brand_Nm");
@@ -207,6 +209,7 @@ function _Inquiry() {
       P_INOUT_CD: INOUT_CD,
       P_BRAND_CD: BRAND_CD,
       P_BRAND_NM: BRAND_NM,
+      P_BU_NO: BU_NO,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 
@@ -226,6 +229,7 @@ function _Inquiry() {
       P_INOUT_CD: INOUT_CD,
       P_BRAND_CD: BRAND_CD,
       P_BRAND_NM: BRAND_NM,
+      P_BU_NO: BU_NO,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 

@@ -15,13 +15,13 @@ function _Initialize() {
   // 그리드 초기화
   grdMasterT1Initialize();
   grdDetailT1Initialize();
-
+/*
   grdMasterT2Initialize();
   grdDetailT2Initialize();
 
   grdMasterT3Initialize();
   grdDetailT3Initialize();
-
+*/
   // 버튼 클릭 이벤트 연결
   $("#btnCancel").click(onCancel); // 닫기 버튼
   $("#btnBoxDelete").click(onBtnBoxDelete); // 박스삭제 버튼 클릭
@@ -30,7 +30,7 @@ function _Initialize() {
   $("#btnSaveT3").click(_Save);
 
   $("#btnPrintBoxLabel").click(onBtnPrintBoxLabel); // 박스라벨출력 버튼 클릭
-  $("#btnPrintBoxBill").click(onBtnPrintBoxBill); // 박스내역서출력 버튼 클릭
+//  $("#btnPrintBoxBill").click(onBtnPrintBoxBill); // 박스내역서출력 버튼 클릭
 
   $NC.setEnable("#btnBoxDelete", $NC.G_VAR.userData.P_INSPECT_YN);
   $NC.setEnable("#btnBoxMerge", $NC.G_VAR.userData.P_INSPECT_YN);
@@ -85,7 +85,7 @@ function _OnResize(parent) {
     return;
 
   }
-
+/*
   if (tabIndex === 1) {
 
     $NC.G_OFFSET.leftViewWidth = 510;
@@ -107,7 +107,7 @@ function _OnResize(parent) {
   // Grid 사이즈 조정
   $NC.resizeGrid("#grdMasterT3", $NC.G_OFFSET.leftViewWidth, clientHeight - $NC.G_LAYOUT.header);
   $NC.resizeGrid("#grdDetailT3", clientWidth, clientHeight - $NC.G_LAYOUT.header);
-
+*/
 }
 
 /**
@@ -140,6 +140,7 @@ function _Inquiry() {
   // 데이터 조회
   $NC.serviceCall("/LO07010E/getDataSet.do", $NC.getGridParams(G_GRDDETAILT1), onGetDetailT1);
 
+  /*
   $NC.setInitGridVar(G_GRDMASTERT2);
   // 파라메터 세팅
   G_GRDMASTERT2.queryParams = queryParams;
@@ -163,6 +164,7 @@ function _Inquiry() {
   G_GRDDETAILT3.queryParams = queryParams;
   // 데이터 조회
   $NC.serviceCall("/LO07010E/getDataSet.do", $NC.getGridParams(G_GRDDETAILT3), onGetDetailT3);
+  */
 }
 
 /**
@@ -1290,17 +1292,34 @@ function onBtnPrintBoxLabel() {
   var BU_CD = $NC.G_VAR.userData.P_BU_CD;
   var OUTBOUND_DATE = $NC.G_VAR.userData.P_OUTBOUND_DATE;
   var OUTBOUND_NO = $NC.G_VAR.userData.P_OUTBOUND_NO;
+  var CARRIER_CD = $NC.G_VAR.userData.P_CARRIER_CD;
 
   var checkedValueDS = [ ];
+  var rowCount = G_GRDMASTERT1.data.getLength();
+  for (var row = 0; row < rowCount; row++) {
+    var rowData = G_GRDMASTERT1.data.getItem(row);
+    if (rowData.CHECK_YN == "Y") {
+      checkedValueDS.push(rowData.BOX_NO);
+    }
+  }
+  if (checkedValueDS.length == 0) {
+    alert("출력할 데이터를 선택하십시오.");
+    return;
+  }
 
-  checkedValueDS.push(OUTBOUND_NO);
-
-  var reportDoc = "lo/PAPER_LO01";
-  var queryId = "WR.RS_PAPER_LO01";
+  if (CARRIER_CD == '0020') {
+    reportDoc = "lo/LABEL_LO01";
+    queryId = "WR.RS_LABEL_LO02";    
+  } else {
+    reportDoc = "lo/LABEL_LO01";
+    queryId = "WR.RS_LABEL_LO01"; 
+  }
   var queryParams = {
     P_CENTER_CD: CENTER_CD,
     P_BU_CD: BU_CD,
-    P_OUTBOUND_DATE: OUTBOUND_DATE
+    P_OUTBOUND_DATE: OUTBOUND_DATE,
+    P_OUTBOUND_NO: OUTBOUND_NO,
+    P_PRINT_YN: "(재)"
   };
 
   // 출력 호출
@@ -1308,7 +1327,8 @@ function onBtnPrintBoxLabel() {
     reportDoc: reportDoc,
     queryId: queryId,
     queryParams: queryParams,
-    checkedValue: checkedValueDS.toString()
+    checkedValue: checkedValueDS.toString(),
+    internalQueryYn: "N"
   });
 
 }

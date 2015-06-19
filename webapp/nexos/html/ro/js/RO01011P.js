@@ -253,6 +253,40 @@ function _OnPopupOpen() {
       CRUD: CRUD
     };
 
+
+    
+    if ( $NC.isNull(masterDS.SHIPPER_NM) ){
+      masterDS.SHIPPER_NM = ' ';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_TEL) ){
+      masterDS.SHIPPER_TEL = ' ';
+    }    
+    if ( $NC.isNull(masterDS.SHIPPER_HP) ){
+      masterDS.SHIPPER_HP = ' ';
+    }    
+    if ( $NC.isNull(masterDS.SHIPPER_TEL1) ){
+      masterDS.SHIPPER_TEL1 = ' ';
+    }    
+    if ( $NC.isNull(masterDS.SHIPPER_HP1) ){
+      masterDS.SHIPPER_HP1 = ' ';
+    }    
+    if ( $NC.isNull(masterDS.SHIPPER_ADDR_BASIC1) ){
+      masterDS.SHIPPER_ADDR_BASIC1 = ' ';
+    }    
+
+    if ( $NC.isNull(masterDS.SHIPPER_ADDR_DETAIL1) ){
+      masterDS.SHIPPER_ADDR_DETAIL1 = ' ';
+    }    
+
+    if ( $NC.isNull(masterDS.SHIPPER_ADDR_BASIC) ){
+      masterDS.SHIPPER_ADDR_BASIC = ' ';
+    }    
+
+    if ( $NC.isNull(masterDS.SHIPPER_ADDR_DETAIL) ){
+      masterDS.SHIPPER_ADDR_DETAIL = ' ';
+    }    
+
+    
     var ORDER_DATE = masterDS.OUTBOUND_DATE;
     var ORDER_NO = masterDS.OUTBOUND_NO;
     // 온라인 데이터 세팅
@@ -833,10 +867,27 @@ function _Save() {
     }
   }
   var detailDS = d_DS.concat(cu_DS);
-  if ($NC.G_VAR.masterData.CRUD === "R" && detailDS.length === 0) {
-    alert("수정 후 저장하십시오.");
-    return;
+
+  if ( $NC.isNull($NC.G_VAR.subData.DELIVERY_NM) ){
+    $NC.G_VAR.subData.DELIVERY_NM = ' ';
+  }    
+  if ( $NC.isNull($NC.G_VAR.subData.DELIVERY_TEL1) ){
+    $NC.G_VAR.subData.DELIVERY_TEL1 = ' ';
+  }    
+
+  if ( $NC.isNull($NC.G_VAR.subData.DELIVERY_HP1) ){
+    $NC.G_VAR.subData.DELIVERY_HP1 = ' ';
+  }    
+
+  if ( $NC.isNull($NC.G_VAR.subData.DELIVERY_ADDR_BASIC) ){
+    $NC.G_VAR.subData.DELIVERY_ADDR_BASIC = ' ';
   }
+
+  if ( $NC.isNull($NC.G_VAR.subData.DELIVERY_ADDR_DETAIL) ){
+    $NC.G_VAR.subData.DELIVERY_ADDR_DETAIL = ' ';
+  }    
+  
+
 
   $NC.serviceCall("/RO01010E/save.do", {
     P_DS_MASTER: $NC.toJson({

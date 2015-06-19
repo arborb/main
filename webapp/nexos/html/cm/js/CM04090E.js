@@ -300,7 +300,8 @@ function _OnConditionChange(e, view, val) {
     if (!$NC.isNull(val)) {
       P_QUERY_PARAMS = {
         P_USER_ID: $NC.G_USERINFO.USER_ID,
-        P_BU_CD: val
+        P_BU_CD: val,
+        P_CUST_CD: '0000'
       };
       O_RESULT_DATA = $NP.getUserBuInfo({
         queryParams: P_QUERY_PARAMS

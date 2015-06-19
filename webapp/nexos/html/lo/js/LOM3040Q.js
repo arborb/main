@@ -206,6 +206,8 @@ function _SetResizeOffset() {
       + $NC.G_LAYOUT.border1;
   $NC.G_OFFSET.gridHeightOffset = $NC.G_OFFSET.nonClientHeight + $NC.G_LAYOUT.header + $NC.G_LAYOUT.tabHeader
       + $("#divConditionViewT1").outerHeight() + ($NC.G_LAYOUT.border1 * 3);
+  $NC.G_OFFSET.gridHeightOffset2 = $NC.G_OFFSET.nonClientHeight + $NC.G_LAYOUT.header + $NC.G_LAYOUT.tabHeader
+      + $("#divConditionViewT2").outerHeight() + ($NC.G_LAYOUT.border1 * 3);
 }
 
 /**
@@ -227,7 +229,7 @@ function _OnResize(parent) {
     $NC.resizeGrid("#grdT1Master", clientWidth, clientHeight);
 
   } else {
-    clientHeight = parent.height() - $NC.G_OFFSET.gridHeightOffset;
+    clientHeight = parent.height() - $NC.G_OFFSET.gridHeightOffset2;
 
     // Grid 사이즈 조정
     $NC.resizeGrid("#grdT2Master", clientWidth, clientHeight);
@@ -410,6 +412,7 @@ function _Inquiry() {
 //  var SHIPPER_NM = $NC.getValue("#edtQT2_Shipper_Nm", true);
   var BRAND_CD = $NC.getValue("#edtQBrand_Cd", true);
   var DEAL_ID = $NC.getValue("#edtQDeal_Id", true);
+  var BU_NO = $NC.getValue("#edtQBu_No", true);
   var MALL_CD = $NC.getValue("#cboQMall_Cd");
   var INORDER_TYPE = $NC.getValue("#cboQInorder_Type");
   var SHIP_TYPE = $NC.getValue("#cboQShip_Type");
@@ -444,6 +447,7 @@ function _Inquiry() {
       P_DEPART_CD: DEPART_CD,
       P_LINE_CD: LINE_CD,
       P_CLASS_CD: CLASS_CD,
+      P_BU_NO: BU_NO,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 
@@ -475,6 +479,7 @@ function _Inquiry() {
       P_DEPART_CD: DEPART_CD,
       P_LINE_CD: LINE_CD,
       P_CLASS_CD: CLASS_CD,
+      P_BU_NO: BU_NO,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 
@@ -582,6 +587,30 @@ function grdT1MasterOnGetColumns() {
     field: "ITEM_SPEC",
     name: "규격",
     minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "INOUT_CD_D",
+    field: "INOUT_CD_D",
+    name: "출고구분",
+    minWidth: 70
+  });
+  $NC.setGridColumn(columns, {
+    id: "CONFIRM_DATETIME1",
+    field: "CONFIRM_DATETIME",
+    name: "출고일시",
+    minWidth: 150
+  });
+  $NC.setGridColumn(columns, {
+    id: "BU_NO",
+    field: "BU_NO",
+    name: "주문번호",
+    minWidth: 100
+  });
+  $NC.setGridColumn(columns, {
+    id: "BU_DATETIME",
+    field: "BU_DATETIME",
+    name: "주문일시",
+    minWidth: 150
   });
   $NC.setGridColumn(columns, {
     id: "DEPART_NM",
@@ -848,6 +877,30 @@ function grdT2MasterOnGetColumns() {
     field: "ITEM_SPEC",
     name: "규격",
     minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "INOUT_CD_D",
+    field: "INOUT_CD_D",
+    name: "출고구분",
+    minWidth: 70
+  });
+  $NC.setGridColumn(columns, {
+    id: "CONFIRM_DATETIME1",
+    field: "CONFIRM_DATETIME",
+    name: "출고일시",
+    minWidth: 150
+  });
+  $NC.setGridColumn(columns, {
+    id: "BU_NO",
+    field: "BU_NO",
+    name: "주문번호",
+    minWidth: 100
+  });
+  $NC.setGridColumn(columns, {
+    id: "BU_DATETIME",
+    field: "BU_DATETIME",
+    name: "주문일시",
+    minWidth: 150
   });
   $NC.setGridColumn(columns, {
     id: "DEPART_NM",

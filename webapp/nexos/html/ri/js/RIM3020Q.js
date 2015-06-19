@@ -275,8 +275,8 @@ function _Inquiry() {
   var ITEM_CD = $NC.getValue("#edtQT1_Item_Cd");
   var ITEM_NM = $NC.getValue("#edtQT1_Item_Nm");
   var WB_NO = $NC.getValue("#edtQWb_No");
-  var ORDERER_NM = $NC.getValue("#edtQT2_Orderer_Nm");
-  var SHIPPER_NM = $NC.getValue("#edtQT2_Shipper_Nm");
+  var ORDERER_NM = $NC.getValue("#edtQT2_Orderer_Nm", true);
+  var SHIPPER_NM = $NC.getValue("#edtQT2_Shipper_Nm", true);
   var BRAND_CD = $NC.getValue("#edtQBrand_Cd", true);
   var OWN_BRAND_CD = $NC.getValue("#edtQOwn_Brand_Cd", true);
 //  var DELIVERY_CD = $NC.getValue("#edtQDelivery_Cd", true);
@@ -638,10 +638,16 @@ function grdMasterT1OnGetColumns() {
     minWidth: 120
   });
   $NC.setGridColumn(columns, {
-    id: "SHIPPER_ADDR",
-    field: "SHIPPER_ADDR",
-    name: "수령자주소",
-    minWidth: 200
+    id: "SHIPPER_ADDR_BASIC",
+    field: "SHIPPER_ADDR_BASIC",
+    name: "수령자기본주소",
+    minWidth: 160
+  });
+  $NC.setGridColumn(columns, {
+    id: "SHIPPER_ADDR_DETAIL",
+    field: "SHIPPER_ADDR_DETAIL",
+    name: "수령자상세주소",
+    minWidth: 160
   });
   $NC.setGridColumn(columns, {
     id: "ORDERER_MSG",
@@ -681,8 +687,6 @@ function grdMasterT1Initialize() {
   });
 
   G_GRDMASTERT1.view.onSelectedRowsChanged.subscribe(grdMasterT1OnAfterScroll);
-
-  G_GRDMASTERT1.view.onDblClick.subscribe(onGridMasterDblClick);
 }
 
 function grdMasterT2OnGetColumns() {
@@ -984,8 +988,6 @@ function grdMasterT2Initialize() {
   });
 
   G_GRDMASTERT2.view.onSelectedRowsChanged.subscribe(grdMasterT2OnAfterScroll);
-
-  G_GRDMASTERT2.view.onDblClick.subscribe(onGridMasterDblClick);
 }
 
 /**
@@ -1252,76 +1254,4 @@ function onDeliveryPopup(resultInfo) {
     $NC.setFocus("#edtQDelivery_Cd", true);
   }
   onChangingCondition();
-}
-
-
-
-function onGridMasterDblClick(e, args) {
-
-  var row = args.row;
-  var rowData;
-
-  // 입출고 수불내역 조회
-  if ($("#divMasterView").tabs("option", "active") === 0) {
-
-    rowData = G_GRDMASTERT1.data.getItem(row);
-  } else  {
-
-    rowData = G_GRDMASTERT2.data.getItem(row);
-  } 
-
-  var isGroup = false;
-  if (rowData.__group) {
-    rowData = rowData.rows[0];
-    isGroup = true;
-  }
-
-  var ITEM_CD = rowData.ITEM_CD;
-  var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
-  var BU_CD = $NC.getValue("#edtQBu_Cd");
-
-  var INOUT_DATE = "";
-  if (!isGroup) {
-    INOUT_DATE = $NC.nullToDefault(rowData.INOUT_DATE, "");
-  }
-
-  var INOUT_DATE1 = rowData.INOUT_DATE1;
-  var INOUT_DATE2 = rowData.INOUT_DATE2;
-  
-  var BRAND_CD = rowData.BRAND_CD;
-
-  var ITEM_STATE = rowData.ITEM_STATE;
-  if ($NC.isNull(ITEM_STATE)) {
-    ITEM_STATE = "%";
-  }
-
-  var ITEM_LOT = rowData.ITEM_LOT;
-  if ($NC.isNull(ITEM_LOT)) {
-    ITEM_LOT = "%";
-  }
-
-  var INOUT_CD = rowData.INOUT_CD;
-  if ($NC.isNull(INOUT_CD) || isGroup) {
-    INOUT_CD = "%";
-  }
-
-  $NC.G_MAIN.showProgramSubPopup({
-    PROGRAM_ID: "RIM3021P",
-    PROGRAM_NM: "고객반품상세내역",
-    url: "ri/RIM3021P.html",
-    width: 600,
-    height: 500,
-    userData: {
-      P_CENTER_CD: CENTER_CD,
-      P_BU_CD: BU_CD,
-      P_INOUT_DATE: INOUT_DATE,
-      P_INOUT_DATE1: INOUT_DATE1,
-      P_INOUT_DATE2: INOUT_DATE2,
-      P_BRAND_CD: BRAND_CD,
-      P_ITEM_CD: ITEM_CD,
-      P_ITEM_STATE: ITEM_STATE,
-      P_ITEM_LOT: ITEM_LOT,
-      P_INOUT_CD: INOUT_CD
-    }
-  });
 }

@@ -304,8 +304,8 @@ function _Inquiry() {
 
   var VIEW_DIV = $(':radio[name="rgbQView_Div"]:checked').val();
   // var DELIVERY_CD = $NC.getValue("#edtQRef_Cust_Cd", true);
-  var ORDERER_NM = $NC.getValue("#edtQOrderer_Nm");
-  var SHIPPER_NM = $NC.getValue("#edtQShipper_Nm");
+  var ORDERER_NM = $NC.getValue("#edtQOrderer_Nm", true);
+  var SHIPPER_NM = $NC.getValue("#edtQShipper_Nm", true);
   var DEAL_ID = $NC.getValue("#edtQDeal_Id", true);
   var MALL_CD = $NC.getValue("#cboQMall_Cd");
   var INORDER_TYPE = $NC.getValue("#cboQInorder_Type");
@@ -749,10 +749,16 @@ function grdMasterT1OnGetColumns() {
     minWidth: 120
   });
   $NC.setGridColumn(columns, {
-    id: "SHIPPER_ADDR",
-    field: "SHIPPER_ADDR",
-    name: "주소",
-    minWidth: 200
+    id: "SHIPPER_ADDR_BASIC",
+    field: "SHIPPER_ADDR_BASIC",
+    name: "기본주소",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "SHIPPER_ADDR_DETAIL",
+    field: "SHIPPER_ADDR_DETAIL",
+    name: "상세주소",
+    minWidth: 100
   });
   $NC.setGridColumn(columns, {
     id: "REMARK1",

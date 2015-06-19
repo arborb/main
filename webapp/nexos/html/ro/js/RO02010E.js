@@ -715,7 +715,7 @@ function _Print(printIndex, printName) {
     break;
   // 거래명세서(삼우)
   case 6:
-    reportDoc = "common/RECEIPT_COMMON";
+    reportDoc = "common/RECEIPT_COMMON_RO";
     queryId = "WR.RS_RECEIPT_LO02";
     queryParams = {
       P_CENTER_CD: CENTER_CD,

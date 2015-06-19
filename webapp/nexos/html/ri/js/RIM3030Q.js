@@ -547,8 +547,6 @@ function grdMasterT1Initialize() {
   });
 
   G_GRDMASTERT1.view.onSelectedRowsChanged.subscribe(grdMasterT1OnAfterScroll);
-
-  G_GRDMASTERT1.view.onDblClick.subscribe(onGridMasterDblClick);
 }
 
 function grdMasterT2OnGetColumns() {
@@ -707,7 +705,6 @@ function grdMasterT2Initialize() {
   });
 
   G_GRDMASTERT2.view.onSelectedRowsChanged.subscribe(grdMasterT2OnAfterScroll);  
-  G_GRDMASTERT2.view.onDblClick.subscribe(onGridMasterDblClick);
 }
 
 /**
@@ -974,77 +971,4 @@ function onDeliveryPopup(resultInfo) {
     $NC.setFocus("#edtQDelivery_Cd", true);
   }
   onChangingCondition();
-}
-
-
-function onGridMasterDblClick(e, args) {
-
-  var row = args.row;
-  var rowData;
-
-  // 입출고 수불내역 조회
-  if ($("#divMasterView").tabs("option", "active") === 0) {
-
-    rowData = G_GRDMASTERT1.data.getItem(row);
-    // 일자별 수불내역 조회
-  } else {
-
-    rowData = G_GRDMASTERT2.data.getItem(row);
-    // 기간별 수불내역 조회
-  }
-
-  var isGroup = false;
-  if (rowData.__group) {
-    rowData = rowData.rows[0];
-    isGroup = true;
-  }
-
-  var ITEM_CD = rowData.ITEM_CD;
-  var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
-  var BU_CD = $NC.getValue("#edtQBu_Cd");
-
-  var INOUT_DATE = "";
-  if (!isGroup) {
-    INOUT_DATE = $NC.nullToDefault(rowData.INOUT_DATE, "");
-  }
-
-  var INOUT_DATE1 = rowData.INOUT_DATE1;
-  var INOUT_DATE2 = rowData.INOUT_DATE2;
-
-  var ITEM_STATE = rowData.ITEM_STATE;
-  if ($NC.isNull(ITEM_STATE)) {
-    ITEM_STATE = "%";
-  }
-
-  var ITEM_LOT = rowData.ITEM_LOT;
-  if ($NC.isNull(ITEM_LOT)) {
-    ITEM_LOT = "%";
-  }
-
-  var INOUT_CD = rowData.INOUT_CD;
-  if ($NC.isNull(INOUT_CD) || isGroup) {
-    INOUT_CD = "%";
-  }
-  
-  var BRAND_CD = rowData.BRAND_CD;
-
-  $NC.G_MAIN.showProgramSubPopup({
-    PROGRAM_ID: "RIM3031P",
-    PROGRAM_NM: "고객반품상세내역",
-    url: "ri/RIM3031P.html",
-    width: 900,
-    height: 500,
-    userData: {
-      P_CENTER_CD: CENTER_CD,
-      P_BU_CD: BU_CD,
-      P_INOUT_DATE: INOUT_DATE,
-      P_INOUT_DATE1: INOUT_DATE1,
-      P_INOUT_DATE2: INOUT_DATE2,
-      P_BRAND_CD: BRAND_CD,
-      P_ITEM_CD: ITEM_CD,
-      P_ITEM_STATE: ITEM_STATE,
-      P_ITEM_LOT: ITEM_LOT,
-      P_INOUT_CD: INOUT_CD
-    }
-  });
 }

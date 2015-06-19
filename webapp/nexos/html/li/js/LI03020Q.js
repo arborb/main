@@ -278,6 +278,7 @@ function _Inquiry() {
     $NC.setFocus("#dtpQInbound_Date1");
     return;
   }
+  var BU_NO = $NC.getValue("#edtQBu_No", true);
   var INOUT_CD = $NC.getValue("#cboQInout_Cd");
   var ITEM_CD = $NC.getValue("#edtQT1_Item_Cd");
   var ITEM_NM = $NC.getValue("#edtQT1_Item_Nm");
@@ -306,6 +307,7 @@ function _Inquiry() {
       P_DEPART_CD: DEPART_CD,
       P_LINE_CD: LINE_CD,
       P_CLASS_CD: CLASS_CD,
+      P_BU_NO: BU_NO,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 
@@ -329,6 +331,7 @@ function _Inquiry() {
       P_DEPART_CD: DEPART_CD,
       P_LINE_CD: LINE_CD,
       P_CLASS_CD: CLASS_CD,
+      P_BU_NO: BU_NO,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 

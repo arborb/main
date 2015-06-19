@@ -295,10 +295,16 @@ function grdMasterEOnGetColumns() {
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
-    id: "SHIPPER_ADDR",
-    field: "SHIPPER_ADDR",
-    name: "주소",
-    minWidth: 200
+    id: "SHIPPER_ADDR_BASIC",
+    field: "SHIPPER_ADDR_BASIC",
+    name: "기본주소",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "SHIPPER_ADDR_DETAIL",
+    field: "SHIPPER_ADDR_DETAIL",
+    name: "상세주소",
+    minWidth: 100
   });
   $NC.setGridColumn(columns, {
     id: "PLANED_DATETIME",

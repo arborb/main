@@ -377,7 +377,7 @@ function _Inquiry() {
     $NC.setFocus("#cboQInout_Cd");
     return;
   }
-
+  var BU_NO = $NC.getValue("#edtQBu_No", true);
   var BRAND_CD = $NC.getValue("#edtQOwn_Brand_Cd", true);
   var DEPART_CD = $NC.getValue("#edtQDepart_Cd", true);
   var LINE_CD = $NC.getValue("#edtQLine_Cd", true);
@@ -385,6 +385,7 @@ function _Inquiry() {
 
   // 입고진행현황 화면
   if ($("#divMasterView").tabs("option", "active") === 0) {
+
 
     // 조회시 전역 변수 값 초기화
     $NC.setInitGridVar(G_GRDT1MASTER);
@@ -400,7 +401,8 @@ function _Inquiry() {
       P_INOUT_CD: INOUT_CD,
       P_DEPART_CD: DEPART_CD,
       P_LINE_CD: LINE_CD,
-      P_CLASS_CD: CLASS_CD
+      P_CLASS_CD: CLASS_CD,
+      P_BU_NO: BU_NO
 
     });
 
@@ -424,7 +426,8 @@ function _Inquiry() {
       P_INOUT_CD: INOUT_CD,
       P_DEPART_CD: DEPART_CD,
       P_LINE_CD: LINE_CD,
-      P_CLASS_CD: CLASS_CD
+      P_CLASS_CD: CLASS_CD,
+      P_BU_NO: BU_NO
     });
     // 데이터 조회
     $NC.serviceCall("/LI03010Q/getDataSet.do", $NC.getGridParams($NC.G_VAR.activeView.grdMaster), onGetT2Master);
@@ -2434,6 +2437,7 @@ function setSubSummaryInfo() {
   var DEPART_CD = $NC.getValue("#edtQDepart_Cd", true);
   var LINE_CD = $NC.getValue("#edtQLine_Cd", true);
   var CLASS_CD = $NC.getValue("#edtQClass_Cd", true);
+  var BU_NO = $NC.getValue("#edtQBu_No", true);
 
   // 데이터 조회
   $NC.serviceCall("/LI03010Q/getDataSet.do", {
@@ -2448,7 +2452,8 @@ function setSubSummaryInfo() {
       P_INOUT_CD: INOUT_CD,
       P_DEPART_CD: DEPART_CD,
       P_LINE_CD: LINE_CD,
-      P_CLASS_CD: CLASS_CD
+      P_CLASS_CD: CLASS_CD,
+      P_BU_NO : BU_NO
     })
   }, onGetT2Sub);
 }

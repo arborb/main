@@ -515,6 +515,7 @@ function _Inquiry() {
     return;
   }
   var BRAND_CD = $NC.getValue("#edtQOwnBrand_Cd", true);
+  var BU_NO = $NC.getValue("#edtQBu_No", true);
 
   var STATE_PRE_YN = $NC.getValue("#chkQState_Pre_Yn");
   var STATE_CUR_YN = $NC.getValue("#chkQState_Cur_Yn");
@@ -543,6 +544,7 @@ function _Inquiry() {
       P_ITEM_NM: ITEM_NM,
       P_STATE_PRE_YN: STATE_PRE_YN,
       P_STATE_CUR_YN: STATE_CUR_YN,
+      P_BU_NO: BU_NO,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
     // 데이터 조회
@@ -567,6 +569,7 @@ function _Inquiry() {
       P_ITEM_NM: ITEM_NM,
       P_STATE_PRE_YN: STATE_PRE_YN,
       P_STATE_CUR_YN: STATE_CUR_YN,
+      P_BU_NO: BU_NO,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
     // 데이터 조회
@@ -591,6 +594,7 @@ function _Inquiry() {
       P_ITEM_NM: ITEM_NM,
       P_STATE_PRE_YN: STATE_PRE_YN,
       P_STATE_CUR_YN: STATE_CUR_YN,
+      P_BU_NO: BU_NO,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
     // 데이터 조회
@@ -615,6 +619,7 @@ function _Inquiry() {
       P_ITEM_NM: ITEM_NM,
       P_STATE_PRE_YN: STATE_PRE_YN,
       P_STATE_CUR_YN: STATE_CUR_YN,
+      P_BU_NO: BU_NO,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
     // 데이터 조회
@@ -1458,6 +1463,7 @@ function setMasterSummaryInfo() {
   var VENDOR_CD = $NC.getValue("#edtQVendor_Cd", true);
   var ITEM_CD = $NC.getValue("#edtQItem_Cd", true);
   var ITEM_NM = $NC.getValue("#edtQItem_Nm", true);
+  var BU_NO = $NC.getValue("#edtQBu_No",true);
 
   // 데이터 조회
   $NC.serviceCall("/LI02010E/getDataSet.do", {
@@ -1473,7 +1479,7 @@ function setMasterSummaryInfo() {
       P_VENDOR_CD: VENDOR_CD,
       P_ITEM_CD: ITEM_CD,
       P_ITEM_NM: ITEM_NM,
-      P_USER_ID: ITEM_NM,
+      P_BU_NO: BU_NO,
       P_USER_ID: $NC.G_USERINFO.USER_ID
 
     })

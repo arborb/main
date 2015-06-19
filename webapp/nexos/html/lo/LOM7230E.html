@@ -76,14 +76,14 @@
         <td colspan="5">
           <div id="lblQPaper_No" class="ui-lbl-normal">지시서번호</div>
           <input class="ui-edt-display large" type="text" id="edtQPaper_No" disabled="disabled" size="20px" style="width: 330px; font-weight: bold;" />
-          <!--div id="lblQEntry_Qty1" class="ui-lbl-normal">피킹수량</div>
+          <div id="lblQEntry_Qty1" class="ui-lbl-normal">피킹수량</div>
           <input class="ui-edt-display large" type="text" id="edtQEntry_Qty" disabled="disabled" size="20px" style="width: 95px; font-weight: bold; text-align: right;" />
           <div id="lblQInspect_Qty" class="ui-lbl-normal">검수수량</div>
           <input class="ui-edt-display large" type="text" id="edtQInspect_Qty" disabled="disabled" size="20px" style="width: 95px; font-weight: bold; text-align: right;" />
           <div id="lblQNonInspect_Qty" class="ui-lbl-normal">미검수수량</div>
           <input class="ui-edt-display large" type="text" id="edtQNonInspect_Qty" disabled="disabled" size="20px" style="width: 95px; font-weight: bold; text-align: right;" />
           <div id="lblQCancel_Qty" class="ui-lbl-normal">취소수량</div>
-          <input class="ui-edt-display large" type="text" id="edtQCancel_Qty" disabled="disabled" size="20px" style="width: 95px; font-weight: bold; text-align: right;" /-->
+          <input class="ui-edt-display large" type="text" id="edtQCancel_Qty" disabled="disabled" size="20px" style="width: 95px; font-weight: bold; text-align: right;" />
           <input type="hidden" id="cboQOutbound_Batch" />
         </td> 
       </tr>
@@ -182,10 +182,10 @@
               <input class="ui-edt-display normal" type="text" id="edtOutbound_No" disabled="disabled" />
             </td>
             <td>
-              <div id="lblPacking_Batch" class="ui-lbl-normal large">주문유형</div>
+              <div id="lblPacking_Batch" class="ui-lbl-normal large">합포장차수</div>
             </td>
             <td>
-              <input class="ui-edt-display normal" type="text" id="edtOrder_Div" disabled="disabled" />
+              <input class="ui-edt-display normal" type="text" id="edtPacking_Batch" disabled="disabled" />
             </td>
           </tr>
           <tr>
@@ -236,14 +236,8 @@
             <td>
               <div id="lblItem_Cd" class="ui-lbl-normal large">상품코드</div>
             </td>
-            <td >
-              <input class="ui-edt-display normal" type="text" id="edtItem_Cd" disabled="disabled" />
-            </td>
-            <td>
-              <div id="lblQty_In_Box" class="ui-lbl-normal large">상태</div>
-            </td>
-            <td style="padding-right: 2px;">
-              <input class="ui-edt-display normal" type="text" id="edtItem_State" disabled="disabled" />
+            <td colspan="3" style="padding-right: 2px;">
+              <input class="ui-edt-display large" type="text" id="edtItem_Cd" disabled="disabled" />
             </td>
           </tr>
           <tr>

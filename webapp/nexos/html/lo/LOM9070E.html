@@ -33,6 +33,7 @@
 <script src="../common/js/slickgrid/slick.dataview.js"></script>
 <script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
 <script src="../common/js/slickgrid/slick.editors.js"></script>
+
 <!-- Common JS -->
 <script src="../common/js/common.js"></script>
 <!--  Popup JS -->
@@ -88,7 +89,7 @@
              
             </td>
             <td>
-              <div id="lblQScan" class="ui-lbl-condition">SCAN정보</div>
+              <div id="lblQScan" class="ui-lbl-condition">지시서바코드</div>
               <input class="ui-edt-key" type="text" id="edtQScan" style="width: 200px;" disabled="disabled"/>
              </td>
             <td style="width: 100%; text-align: right; padding-right: 20px;">
@@ -103,9 +104,7 @@
         <table class="ui-tbl-grid">
           <tr>
             <td id="divTitle_grdMaster1" class="ui-grd-title1">합포장분류작업</td>
-            <td id="test12" style="width: 100px; min-width: 100px;">
-              <input type="button" id="btnGoHap" value="합포장관리" class="ui-btn-cmd" style="width: 130px;float:right">
-            </td>
+            <td id="test12" style="width: 100px; min-width: 100px;"></td>
           </tr>
         </table>
         <div id="grdMaster"></div>
@@ -157,33 +156,33 @@
        </tr>
        <tr>
           <td>
-            <div id="lblHas_No" class="ui-lbl-normal large1 " style="width: 145px;">합포장번호</div>
+           <div id="lblShipper_Tel" class="ui-lbl-normal large1" style="width: 143px;" >전화번호</div>
           </td>
           <td style="padding-left: 52px;">
-            <input class="ui-edt-display normal1" type="text" id="edtHas_No" disabled="disabled" />
+           <input class="ui-edt-display normal1" type="text" id="edtShipper_Tel" disabled="disabled" style="color: blue; font-size: 18px;"/>
           </td>       
        </tr>
           <tr>  
             <td>
-              <div id="lblShipper_Hp" class="ui-lbl-normal large1" style="width: 145px;visibility:hidden;">휴대폰번호</div>
+              <div id="lblShipper_Hp" class="ui-lbl-normal large1" style="width: 145px;">휴대폰번호</div>
             </td>
-            <td style="padding-left: 52px;visibility:hidden;">
-              <input class="ui-edt-display normal1" type="text" id="edtShipper_Hp" disabled="disabled" style="color: blue; font-size: 18px;visibility:hidden;"/>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div id="lblShipper_Tel" class="ui-lbl-normal large1" style="width: 143px;visibility:hidden;" >전화번호</div>
-            </td>
-            <td style="padding-left: 52px;visibility:hidden;">
-              <input class="ui-edt-display normal1" type="text" id="edtShipper_Tel" disabled="disabled" style="color: blue; font-size: 18px;visibility:hidden;"/>
+            <td style="padding-left: 52px;">
+              <input class="ui-edt-display normal1" type="text" id="edtShipper_Hp" disabled="disabled" style="color: blue; font-size: 18px;"/>
             </td>
           </tr>
           <tr>
             <td>
-              <div id="lblShipper_Addr" class="ui-lbl-normal large1" style="width: 143px; visibility:hidden;">주소</div>
+              <div id="lblHas_No" class="ui-lbl-normal large1 " style="width: 145px;">합포장번호</div>
             </td>
-            <td style="padding-left: 52px;visibility:hidden;">
+            <td style="padding-left: 52px;">
+              <input class="ui-edt-display normal1" type="text" id="edtHas_No" disabled="disabled" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="lblShipper_Addr" class="ui-lbl-normal large1" style="width: 143px;">주소</div>
+            </td>
+            <td style="padding-left: 52px;">
               <input class="ui-edt-display normal1" type="text" id="edtShipper_Addr" disabled="disabled" />
             </td>
       </tr>

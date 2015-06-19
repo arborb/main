@@ -109,6 +109,7 @@ function _OnPopupOpen() {
       DELIVERY_TYPE2: "",
       BU_DATE: BU_DATE,
       BU_NO: "",
+      BU_KEY: "",
       REMARK1: "",
       CRUD: "C"
     };
@@ -147,6 +148,13 @@ function _OnPopupOpen() {
     var CRUD = "R";
     var masterDS = $NC.G_VAR.userData.P_MASTER_DS;
 
+    if ((masterDS.ORDER_USER_ID === "WMS_JOB" || masterDS.ORDER_USER_ID === "INTERFACE")
+      && masterDS.INOUT_CD === "DM0") {
+      $NC.setEnable("#btnEntryNew", false);
+      $NC.setEnable("#btnEntryDelete", false);
+      $NC.setEnable("#btnEntrySave", false);
+    }
+
     $NC.G_VAR.masterData = {
       CENTER_CD: masterDS.CENTER_CD,
       BU_CD: masterDS.BU_CD,
@@ -171,10 +179,66 @@ function _OnPopupOpen() {
       DELIVERY_TYPE2: masterDS.DELIVERY_TYPE2,
       BU_DATE: masterDS.BU_DATE,
       BU_NO: masterDS.BU_NO,
+      BU_KEY: masterDS.BU_KEY,
       REMARK1: masterDS.REMARK1,
       CRUD: CRUD
     };
 
+   
+    if ( $NC.isNull(masterDS.MALL_MSG) ){
+      masterDS.MALL_MSG = ' ';
+    }
+    if ( $NC.isNull(masterDS.ORDERER_CD) ){
+      masterDS.ORDERER_CD = ' ';
+    }    
+    if ( $NC.isNull(masterDS.ORDERER_NM) ){
+      masterDS.ORDERER_NM = ' ';
+    }    
+    if ( $NC.isNull(masterDS.ORDERER_TEL) ){
+      masterDS.ORDERER_TEL = ' ';
+    }
+    if ( $NC.isNull(masterDS.ORDERER_HP) ){
+      masterDS.ORDERER_HP = ' ';
+    }    
+    if ( $NC.isNull(masterDS.ORDERER_EMAIL) ){
+      masterDS.ORDERER_EMAIL = ' ';
+    }
+    if ( $NC.isNull(masterDS.ORDERER_EMAIL) ){
+      masterDS.ORDERER_EMAIL = ' ';
+    }
+    if ( $NC.isNull(masterDS.ORDERER_MSG) ){
+      masterDS.ORDERER_MSG = ' ';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_NM) ){
+      masterDS.SHIPPER_NM = ' ';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_TEL) ){
+      masterDS.SHIPPER_TEL = ' ';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_HP) ){
+      masterDS.SHIPPER_HP = ' ';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_ZIP_CD) ){
+      masterDS.ORDERER_MSG = ' ';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_ZIP_CD) ){
+      masterDS.ORDERER_MSG = ' ';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_ADDR_BASIC) ){
+      masterDS.SHIPPER_ADDR_BASIC = ' ';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_ADDR_DETAIL) ){
+      masterDS.SHIPPER_ADDR_DETAIL = ' ';
+    }    
+    if ( $NC.isNull(masterDS.CARD_MSG) ){
+      masterDS.CARD_MSG = ' ';
+    }
+    if ( $NC.isNull(masterDS.CARD_FROM) ){
+      masterDS.CARD_FROM = ' ';
+    }
+    if ( $NC.isNull(masterDS.CARD_TO) ){
+      masterDS.CARD_TO = ' ';
+    }
     // 온라인 데이터 세팅
     $NC.G_VAR.subData = {
       CENTER_CD: masterDS.CENTER_CD,
@@ -272,7 +336,7 @@ function _OnPopupOpen() {
     // $NC.setValue("#cboInout_Cd", $NC.G_VAR.masterData.INOUT_CD);
     // $NC.setValue("#cboOrder_Div", $NC.G_VAR.masterData.ORDER_DIV);
     $NC.setValue("#edtRemark1", $NC.G_VAR.masterData.REMARK1);
-//    $NC.setValue("#edtBu_Date", $NC.G_VAR.masterData.BU_DATE);
+    $NC.setValue("#edtBu_Key", $NC.G_VAR.masterData.BU_KEY);
     $NC.setValue("#dtpBu_Date", $NC.G_VAR.masterData.BU_DATE);
     $NC.setValue("#edtBu_No", $NC.G_VAR.masterData.BU_NO);
     $NC.setValue("#edtMall_Brand_Cd", $NC.G_VAR.masterData.MALL_BRAND_CD);
@@ -316,6 +380,7 @@ function _OnPopupOpen() {
     $NC.setEnable("#edtShipper_Tel", true);
     $NC.setEnable("#edtShipper_Hp", true);
     $NC.setEnable("#edtShipper_Addr_Detail", true);
+    $NC.setEnable("#edtShipper_Addr_Basic", true);
     $NC.setEnable("#edtOrderer_Msg", true);
     $NC.setEnable("#edtMall_Msg", true);
     $NC.setEnable("#edtCard_From", true);
@@ -479,8 +544,7 @@ function _OnPopupOpen() {
  */
 function _SetResizeOffset() {
   $NC.G_OFFSET.stockSelMasterViewWidth = 1010;
-  // $NC.G_OFFSET.masterViewHeight = 325;
-  $NC.G_OFFSET.masterViewHeight = 355;
+  $NC.G_OFFSET.masterViewHeight = 370;
   $NC.G_OFFSET.nonClientHeight = $("#divBottomView").outerHeight() + $NC.G_LAYOUT.nonClientHeight;
   $NC.G_OFFSET.stockViewHeight = $("#divDspStock").outerHeight();
 }
@@ -678,17 +742,6 @@ function _New() {
     return;
   }
   
-  if ($NC.isNull($NC.G_VAR.subData.ORDERER_NM)) {
-    alert("먼저 주문자명을 입력하십시오.");
-    $NC.setFocus("#edtOrderer_Nm");
-    return;
-  }
-
-  if ($NC.isNull($NC.G_VAR.subData.ORDERER_HP)) {
-    alert("먼저 주문자 휴대폰번호를 입력하십시오.");
-    $NC.setFocus("#edtOrderer_Hp");
-    return;
-  }
 
   if ($NC.isNull($NC.G_VAR.subData.SHIPPER_NM)) {
     alert("먼저 수령자명을 입력하십시오.");
@@ -775,7 +828,8 @@ function _New() {
       dataFullNameField: "CODE_CD_F"
     }),
     BU_LINE_NO: "",
-    BU_KEY: "",
+    BU_KEY: $NC.G_VAR.masterData.BU_KEY,
+//    BU_KEY: "",
     DEAL_ID: "",
     DEAL_NM: "",
     OPTION_ID: "",
@@ -928,7 +982,8 @@ function _Save() {
         P_TOTAL_AMT: rowData.TOTAL_AMT,
         P_ITEM_ORDER_DIV: rowData.ITEM_ORDER_DIV,
         P_BU_LINE_NO: rowData.BU_LINE_NO,
-        P_BU_KEY: rowData.BU_KEY,
+        P_BU_KEY: $NC.G_VAR.masterData.BU_KEY,
+//        P_BU_KEY: rowData.BU_KEY,
         P_DEAL_ID: rowData.DEAL_ID,
         P_OPTION_ID: rowData.OPTION_ID,
         P_OPTION_QTY: rowData.OPTION_QTY,
@@ -947,6 +1002,35 @@ function _Save() {
     alert("수정 후 저장하십시오.");
     return;
   }
+
+  
+  if ( $NC.isNull($NC.G_VAR.subData.ORDERER_NM) ){
+    $NC.G_VAR.subData.ORDERER_NM = ' ';
+  }    
+  if ( $NC.isNull($NC.G_VAR.subData.ORDERER_TEL) ){
+    $NC.G_VAR.subData.ORDERER_TEL = ' ';
+  }
+  if ( $NC.isNull($NC.G_VAR.subData.ORDERER_HP) ){
+    $NC.G_VAR.subData.ORDERER_HP = ' ';
+  }    
+  if ( $NC.isNull($NC.G_VAR.subData.ORDERER_EMAIL) ){
+    $NC.G_VAR.subData.ORDERER_EMAIL = ' ';
+  }
+  if ( $NC.isNull($NC.G_VAR.subData.SHIPPER_TEL) ){
+    $NC.G_VAR.subData.SHIPPER_TEL = ' ';
+  }    
+  if ( $NC.isNull($NC.G_VAR.subData.SHIPPER_HP) ){
+    $NC.G_VAR.subData.SHIPPER_TEL = ' ';
+  }
+  if ( $NC.isNull($NC.G_VAR.subData.SHIPPER_NM) ){
+    $NC.G_VAR.subData.SHIPPER_NM = ' ';
+  }
+  if ( $NC.isNull($NC.G_VAR.subData.SHIPPER_ADDR_BASIC) ){
+    $NC.G_VAR.subData.SHIPPER_ADDR_BASIC = ' ';
+  }
+  if ( $NC.isNull($NC.G_VAR.subData.SHIPPER_ADDR_DETAIL) ){
+    $NC.G_VAR.subData.SHIPPER_ADDR_DETAIL = ' ';
+  }    
 
   $NC.serviceCall("/LOM1010E/save.do", {
     P_DS_MASTER: $NC.toJson({
@@ -975,6 +1059,10 @@ function _Save() {
       P_CRUD: $NC.G_VAR.masterData.CRUD
     }),
     P_DS_DETAIL: $NC.toJson(detailDS),
+    
+    
+
+
     P_DS_SUB: $NC.toJson({
       P_CENTER_CD: $NC.G_VAR.subData.CENTER_CD,
       P_BU_CD: $NC.G_VAR.subData.BU_CD,
@@ -982,22 +1070,23 @@ function _Save() {
       P_ORDER_NO: $NC.G_VAR.subData.ORDER_NO,
       P_MALL_MSG: $NC.G_VAR.subData.MALL_MSG,
       P_ORDERER_CD: $NC.G_VAR.subData.ORDERER_CD,
-      P_ORDERER_NM: $NC.G_VAR.subData.ORDERER_NM,
-      P_ORDERER_TEL: $NC.G_VAR.subData.ORDERER_TEL,
-      P_ORDERER_HP: $NC.G_VAR.subData.ORDERER_HP,
-      P_ORDERER_EMAIL: $NC.G_VAR.subData.ORDERER_EMAIL,
+      P_ORDERER_NM: $NC.G_VAR.subData.ORDERER_NM, //
+      P_ORDERER_TEL: $NC.G_VAR.subData.ORDERER_TEL, //
+      P_ORDERER_HP: $NC.G_VAR.subData.ORDERER_HP, //
+      P_ORDERER_EMAIL: $NC.G_VAR.subData.ORDERER_EMAIL, //
       P_ORDERER_MSG: $NC.G_VAR.subData.ORDERER_MSG,
-      P_SHIPPER_NM: $NC.G_VAR.subData.SHIPPER_NM,
-      P_SHIPPER_TEL: $NC.G_VAR.subData.SHIPPER_TEL,
-      P_SHIPPER_HP: $NC.G_VAR.subData.SHIPPER_HP,
+      P_SHIPPER_NM: $NC.G_VAR.subData.SHIPPER_NM, //
+      P_SHIPPER_TEL: $NC.G_VAR.subData.SHIPPER_TEL, //
+      P_SHIPPER_HP: $NC.G_VAR.subData.SHIPPER_HP, //
       P_SHIPPER_ZIP_CD: $NC.G_VAR.subData.SHIPPER_ZIP_CD,
-      P_SHIPPER_ADDR_BASIC: $NC.G_VAR.subData.SHIPPER_ADDR_BASIC,
-      P_SHIPPER_ADDR_DETAIL: $NC.G_VAR.subData.SHIPPER_ADDR_DETAIL,
-      P_GIFT_WRAP_YN: $NC.G_VAR.subData.GIFT_WRAP_YN,
+      P_SHIPPER_ADDR_BASIC: $NC.G_VAR.subData.SHIPPER_ADDR_BASIC, //
+      P_SHIPPER_ADDR_DETAIL: $NC.G_VAR.subData.SHIPPER_ADDR_DETAIL, //
+      P_GIFT_WRAP_YN: 'N',
       P_CARD_MSG: $NC.G_VAR.subData.CARD_MSG,
       P_CARD_FROM: $NC.G_VAR.subData.CARD_FROM,
       P_CARD_TO: $NC.G_VAR.subData.CARD_TO,
       P_REMARK1: "",
+      P_USER_ID: $NC.G_USERINFO.USER_ID,
       P_CRUD: $NC.G_VAR.subData.CRUD
     }),
     P_PROCESS_CD: $NC.G_VAR.userData.P_PROCESS_CD,
@@ -1160,6 +1249,18 @@ function masterDataOnChange(e, args) {
     break;
   case "BU_NO":
     $NC.G_VAR.masterData.BU_NO = args.val;
+    break;
+  case "BU_KEY":
+    $NC.G_VAR.masterData.BU_KEY = args.val;
+    var rows = G_GRDDETAIL.data.getItems();
+    var rowCount = rows.length;
+    for (var row = 0; row < rowCount; row++) {
+      var rowData = rows[row];
+      if (rowData.CRUD === "R") {
+        rowData.CRUD = "U";
+      }
+      G_GRDDETAIL.data.updateItem(rowData.id, rowData);
+    }
     break;
   case "ORDER_DATE":
     $NC.setValueDatePicker(args.view, args.val, "예정일자를 정확히 입력하십시오.");

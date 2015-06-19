@@ -219,10 +219,10 @@ function _Inquiry() {
     return;
   }
 
-  var INOUT_CD = $NC.getValue("#cboQInout_Cd")
+  var INOUT_CD = $NC.getValue("#cboQInout_Cd");
   var ITEM_CD = $NC.getValue("#edtQItem_Cd");
   var ITEM_NM = $NC.getValue("#edtQItem_Nm");
-  var SHIPPER_NM = $NC.getValue("#edtQShipper_Nm");
+  var SHIPPER_NM = $NC.getValue("#edtQShipper_Nm", true);
   var WB_NO = $NC.getValue("#edtQWb_No");
   var BRAND_CD = $NC.getValue("#edtQBrand_Cd", true);
 
@@ -440,10 +440,16 @@ function grdMasterOnGetColumns() {
     minWidth: 120
   });
   $NC.setGridColumn(columns, {
-    id: "SHIPPER_ADDR",
-    field: "SHIPPER_ADDR",
-    name: "주소",
-    minWidth: 200
+    id: "SHIPPER_ADDR_BASIC",
+    field: "SHIPPER_ADDR_BASIC",
+    name: "수령자기본주소",
+    minWidth: 160
+  });
+  $NC.setGridColumn(columns, {
+    id: "SHIPPER_ADDR_DETAIL",
+    field: "SHIPPER_ADDR_DETAIL",
+    name: "수령자상세주소",
+    minWidth: 160
   });
   $NC.setGridColumn(columns, {
     id: "CARRIER_CD",

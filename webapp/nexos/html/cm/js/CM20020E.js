@@ -101,6 +101,8 @@ function _Inquiry() {
   $NC.setInitGridVar(G_GRDMASTER);
   // 데이터 조회
   $NC.serviceCall("/CM01010E/getDataSet.do", $NC.getGridParams(G_GRDMASTER), onGetMaster);
+  $NC.serviceCall("/CM01010E/getDataSet.do", $NC.getGridParams(G_GRDMASTER), onGetMaster);
+
 }
 
 /**

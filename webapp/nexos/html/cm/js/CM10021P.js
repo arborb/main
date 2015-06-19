@@ -75,6 +75,7 @@ function _OnPopupOpen() {
     // 마스터 데이터 세팅
     $NC.G_VAR.masterData = {
       BU_CD: $NC.G_VAR.userData.P_BU_CD,
+      OWN_BRAND_CD: $NC.G_VAR.userData.P_OWN_BRAND_CD,
       BRAND_CD: $NC.G_VAR.userData.P_BRAND_CD,
       // EVENT_CD: "",
       EVENT_NM: "",
@@ -101,6 +102,7 @@ function _OnPopupOpen() {
 
     $NC.G_VAR.masterData = {
       BU_CD: masterDS.BU_CD,
+      OWN_BRAND_CD: masterDS.BRAND_CD,
       BRAND_CD: masterDS.SELLER_CD,
       // EVENT_CD: masterDS.EVENT_CD,
       EVENT_NM: masterDS.EVENT_NM,
@@ -207,6 +209,13 @@ function _OnPopupOpen() {
         $NC.G_VAR.masterData.EVENT_DIV = $NC.getValue("#cboQEvent_Div");
       } else {
         $NC.setValue("#cboQEvent_Div", $NC.G_VAR.masterData.EVENT_DIV);
+      }
+      
+      var inoutCombo = document.getElementById('cboQEvent_Div');
+      for (var i = 0; i < inoutCombo.length;  i++) {
+        if (inoutCombo.options[i].value == "6") {
+          inoutCombo.remove(i);
+    }
       }
     }
   });
@@ -349,6 +358,7 @@ function _New() {
   var newRowData = {
     BU_CD: $NC.G_VAR.masterData.BU_CD,
     BRAND_CD: $NC.G_VAR.masterData.BRAND_CD,
+    OWN_BRAND_CD: $NC.G_VAR.masterData.OWN_BRAND_CD,
     // EVENT_CD: $NC.G_VAR.masterData.EVENT_CD,
     LINE_NO: "",
     OPTION_CD: "",
@@ -914,7 +924,7 @@ function grdDetailOnCellChange(e, args) {
       if (!$NC.isNull(rowData.ITEM_CD)) {
         P_QUERY_PARAMS = {
           P_BU_CD: rowData.BU_CD,
-          P_BRAND_CD: rowData.BRAND_CD,
+          P_BRAND_CD: rowData.OWN_BRAND_CD,
           P_ITEM_CD: rowData.ITEM_CD,
           P_VIEW_DIV: "1",
           P_DEPART_CD: "%",
@@ -1105,7 +1115,7 @@ function grdDetailOnPopup(e, args) {
       $NP.showDealItemPopup({
         P_BU_CD: rowData.BU_CD,
         P_MALL_CD: $NC.getValue("#cboQMall_Cd"),
-        P_BRAND_CD: rowData.BRAND_CD,
+        P_BRAND_CD: rowData.OWN_BRAND_CD,
         P_DEAL_ID: $NC.getValue("#edtQDeal_Cd"),
         P_OPTION_ID: rowData.OPTION_CD,
         P_ITEM_CD: rowData.ITEM_CD,
@@ -1116,7 +1126,7 @@ function grdDetailOnPopup(e, args) {
     } else {
       $NP.showItemPopup({
         P_BU_CD: rowData.BU_CD,
-        P_BRAND_CD: rowData.BRAND_CD,
+        P_BRAND_CD: rowData.OWN_BRAND_CD,
         P_ITEM_CD: "%",
         P_VIEW_DIV: "1",
         P_DEPART_CD: "%",
@@ -1138,8 +1148,8 @@ function onItemPopup(resultInfo) {
   }
   var focusCol;
   if (!$NC.isNull(resultInfo)) {
-    rowData.BRAND_CD = resultInfo.BRAND_CD;
-    rowData.BRAND_NM = resultInfo.BRAND_NM;
+    rowData.OWN_BRAND_CD = resultInfo.BRAND_CD;
+//    rowData.BRAND_NM = resultInfo.BRAND_NM;
     rowData.ITEM_CD = resultInfo.ITEM_CD;
     rowData.ITEM_NM = resultInfo.ITEM_NM;
     focusCol = G_GRDDETAIL.view.getColumnIndex("EVENT_QTY");
@@ -1225,6 +1235,7 @@ function onBrandDealPopup(resultInfo) {
     $NC.setValue("#edtMall_Brand_Nm", resultInfo.SELLER_NM);
 
     $NC.G_VAR.masterData.DEAL_ID  = resultInfo.DEAL_ID;
+    $NC.G_VAR.masterData.OWN_BRAND_CD = resultInfo.OWN_BRAND_CD;
     $NC.G_VAR.masterData.BRAND_CD = resultInfo.SELLER_CD;
   } else {
     $NC.setValue("#edtQDeal_Cd");
@@ -1235,6 +1246,7 @@ function onBrandDealPopup(resultInfo) {
     $NC.setValue("#edtMall_Brand_Nm");
     
     $NC.G_VAR.masterData.DEAL_ID  = "";
+    $NC.G_VAR.masterData.OWN_BRAND_CD = "";
     $NC.G_VAR.masterData.BRAND_CD = "";
     $NC.setFocus("#edtQDeal_Cd", true);
   }

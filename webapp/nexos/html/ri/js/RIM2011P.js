@@ -180,6 +180,54 @@ function _OnPopupOpen() {
       CRUD: CRUD
     };
 
+    
+    if ( $NC.isNull(masterDS.ORDERER_CD) ){
+      masterDS.ORDERER_CD = '';
+    }    
+    if ( $NC.isNull(masterDS.ORDERER_NM) ){
+      masterDS.ORDERER_NM = '';
+    }    
+    if ( $NC.isNull(masterDS.ORDERER_TEL) ){
+      masterDS.ORDERER_TEL = '';
+    }
+    if ( $NC.isNull(masterDS.ORDERER_HP) ){
+      masterDS.ORDERER_HP = '';
+    }    
+    if ( $NC.isNull(masterDS.ORDERER_ZIP_CD) ){
+      masterDS.ORDERER_ZIP_CD = '';
+    }    
+    if ( $NC.isNull(masterDS.ORDERER_ADDR_BASIC) ){
+      masterDS.ORDERER_ADDR_BASIC = '';
+    }    
+    if ( $NC.isNull(masterDS.ORDERER_ADDR_DETAIL) ){
+      masterDS.ORDERER_ADDR_DETAIL = '';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_NM) ){
+      masterDS.SHIPPER_NM = '';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_TEL) ){
+      masterDS.SHIPPER_TEL = '';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_HP) ){
+      masterDS.SHIPPER_HP = '';
+    }
+    if ( $NC.isNull(masterDS.ORDERER_MSG) ){
+      masterDS.ORDERER_MSG = '';
+    }
+    if ( $NC.isNull(masterDS.ORDERER_EMAIL) ){
+      masterDS.ORDERER_EMAIL = '';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_ZIP_CD) ){
+      masterDS.ORDERER_MSG = '';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_ADDR_BASIC) ){
+      masterDS.SHIPPER_ADDR_BASIC = ' ';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_ADDR_DETAIL) ){
+      masterDS.SHIPPER_ADDR_DETAIL = ' ';
+    }    
+    
+    
     $NC.G_VAR.subData = {
       CENTER_CD: masterDS.CENTER_CD,
       BU_CD: masterDS.BU_CD,

@@ -544,20 +544,6 @@ function grdDetailEOnGetColumns() {
     cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
-    id: "DC_PRICE",
-    field: "DC_PRICE",
-    name: "할인단가",
-    minWidth: 70,
-    cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
-    id: "APPLY_PRICE",
-    field: "APPLY_PRICE",
-    name: "적용단가",
-    minWidth: 70,
-    cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
     id: "BUY_AMT",
     field: "BUY_AMT",
     name: "매입금액",
@@ -568,13 +554,6 @@ function grdDetailEOnGetColumns() {
     id: "VAT_AMT",
     field: "VAT_AMT",
     name: "부가세액",
-    minWidth: 70,
-    cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
-    id: "DC_AMT",
-    field: "DC_AMT",
-    name: "할인금액",
     minWidth: 70,
     cssClass: "align-right"
   });

@@ -226,13 +226,6 @@ function grdMasterBOnGetColumns() {
     minWidth: 100
   });
   $NC.setGridColumn(columns, {
-    id: "OUTBOUND_STATE_D",
-    field: "OUTBOUND_STATE_D",
-    name: "전표번호",
-    minWidth: 100
-  });
-
-  $NC.setGridColumn(columns, {
     id: "SHIP_TYPE_D",
     field: "SHIP_TYPE_D",
     name: "운송구분",

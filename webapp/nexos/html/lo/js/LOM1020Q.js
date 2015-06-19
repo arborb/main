@@ -882,6 +882,7 @@ function grdMasterOnGetColumns() {
     minWidth: 80,
     cssClass: "align-right"
   });
+  /*
   $NC.setGridColumn(columns, {
     id: "DELIVERY_TYPE_D",
     field: "DELIVERY_TYPE_D",
@@ -889,6 +890,7 @@ function grdMasterOnGetColumns() {
     minWidth: 80,
     cssClass: "align-right"
   });
+  */
   return $NC.setGridColumnDefaultFormatter(columns);
 
 }
@@ -903,9 +905,11 @@ function grdMasterInitialize() {
       compareOperator: "==",
       cssClass: "specialrow4"
     },
+ /*   
     summaryRow: {
       visible: true
     }
+    */
   };
 
   // Grid Object, DataView 생성 및 초기화

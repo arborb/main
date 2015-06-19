@@ -22,11 +22,26 @@ function _Initialize() {
       P_CENTER_CD: "%"
     })
   }, {
-    selector: ["#cboQCenter_Cd", "#cboQCenter_Cd_To"],
+    selector: "#cboQCenter_Cd",
     codeField: "CENTER_CD",
     nameField: "CENTER_NM",
     onComplete: function() {
       $NC.setValue("#cboQCenter_Cd", $NC.G_USERINFO.CENTER_CD);
+    }
+  });
+  
+  // 조회조건 - 물류센터 세팅
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CSUSERCENTER",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_USER_ID: $NC.G_USERINFO.USER_ID,
+      P_CENTER_CD: "%"
+    })
+  }, {
+    selector: "#cboQCenter_Cd_To",
+    codeField: "CENTER_CD",
+    nameField: "CENTER_NM",
+    onComplete: function() {
       $NC.setValue("#cboQCenter_Cd_To", $NC.G_USERINFO.CENTER_CD);
     }
   });
@@ -596,10 +611,16 @@ function grdMasterOnGetColumns() {
     minWidth: 100
   });
   $NC.setGridColumn(columns, {
-    id: "SHIPPER_ADDR",
-    field: "SHIPPER_ADDR",
-    name: "주소",
-    minWidth: 150
+    id: "SHIPPER_ADDR_BASIC",
+    field: "SHIPPER_ADDR_BASIC",
+    name: "수령자기본주소",
+    minWidth: 160
+  });
+  $NC.setGridColumn(columns, {
+    id: "SHIPPER_ADDR_DETAIL",
+    field: "SHIPPER_ADDR_DETAIL",
+    name: "수령자상세주소",
+    minWidth: 160
   });
   $NC.setGridColumn(columns, {
     id: "ORDERER_MSG",

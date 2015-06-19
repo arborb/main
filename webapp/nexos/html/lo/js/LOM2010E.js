@@ -1621,7 +1621,7 @@ function _Print(printIndex, printName) {
     }
 
     // 프린터 출력 여부/저장
-    cksave(saveDS);
+    //cksave(saveDS);
   }
 
   // 출력 데이터 Array 담기
@@ -2532,6 +2532,7 @@ function onGetProcessState(ajaxData) {
  * 물류센터/사업부/출고일자 값 변경시 출고차수 콤보 재설정
  */
 function setOutboundBatchCombo(comboId, isAddAll, setPos) {
+
   var position;
   if ($NC.isNull(setPos)) {
     position = "first";
@@ -2546,8 +2547,7 @@ function setOutboundBatchCombo(comboId, isAddAll, setPos) {
       P_BU_CD: $NC.getValue("#edtQBu_Cd"),
       P_OUTBOUND_DATE: $NC.getValue("#dtpQOutbound_Date"),
       P_OUTBOUND_DIV: "2" // --출고작업구분(1:기본출고, 2:온라인출고)
-    }),
-    arrowPolling:true
+    })
   }, {
     selector: comboId,
     codeField: "OUTBOUND_BATCH",
@@ -2618,8 +2618,7 @@ function setDeliveryTypeCombo(comboId, isAddAll, setPos) {
       P_CODE_CD: "%",
       P_SUB_CD1: "",
       P_SUB_CD2: ""
-    }),
-    arrowPolling: true
+    })
   }, {
     selector: comboId,
     codeField: "CODE_CD",
@@ -2686,8 +2685,7 @@ function setDeliveryBatchCombo(processCd) {
     P_QUERY_PARAMS: $NC.getParams({
       P_CENTER_CD: $NC.getValue("#cboQCenter_Cd"),
       P_OUTBOUND_DATE: $NC.getValue("#dtpOutbound_Date" + processCd)
-    }),
-    arrowPolling: true
+    })
   }, {
     selector: cboSelector,
     codeField: "DELIVERY_BATCH",

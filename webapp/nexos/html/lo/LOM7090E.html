@@ -185,12 +185,6 @@
           <select id="cboQShip_Price_Type" class="ui-cbo-normal" style="width: 219px;"></select>
         </td>
       </tr>
-      <tr>
-        <td id="tdQHold_Yn" style="display: none;">
-          <div id="lblQHold_Yn" class="ui-lbl-condition">보류여부</div>
-          <select id="cboQHold_Yn" class="ui-cbo-normal" style="width: 219px;"></select>
-        </td>
-      </tr>
     </table>
   </div>
 
@@ -200,7 +194,6 @@
       <li id="divTab1"><a href="#divT1DetailView">예정</a></li>
       <li id="divTab2"><a href="#divT2DetailView">등록</a></li>
       <li id="divTab3"><a href="#divT3DetailView">지시</a></li>
-      <li id="divTab4"><a href="#divT4DetailView">확정</a></li>
     </ul>
     
     <!-- Tab1 -->
@@ -213,12 +206,6 @@
         <table class="ui-tbl-grid">
           <tr>
             <td id="divTitle_grdT1Master" class="ui-grd-title">출고예정</td>
-            <td>
-              <div id="lblLo_Cnt_A" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">전표수 :</div>
-            </td>
-            <td>
-              <div id="lblLo_Qty_A" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">수량 :</div>
-            </td>
             <td>
               <input type="button" id="btnProcessNxtAM" class="ui-grd-btnnext" style="width: 30px; height: 20px;" />
             </td>
@@ -268,12 +255,6 @@
         <table class="ui-tbl-grid">
           <tr>
             <td id="divTitle_grdT2Master" class="ui-grd-title">출고등록</td>
-            <td>
-              <div id="lblLo_Cnt_B" class="ui-lbl-key" style="margin-left: 40px; min-width: 100px;">전표수 :</div>
-            </td>
-            <td>
-              <div id="lblLo_Qty_B" class="ui-lbl-key" style="margin-left: 40px; min-width: 100px;">수량 :</div>
-            </td>
             <td>
               <input type="button" id="btnProcessPreBM" class="ui-grd-btnprior" style="width: 30px; height: 20px;" />
               <input type="button" id="btnProcessNxtBM" class="ui-grd-btnnext" style="width: 30px; height: 20px;" />
@@ -326,13 +307,6 @@
           <tr>
             <td id="divTitle_grdT3Master" class="ui-grd-title">출고지시</td>
             <td>
-              <div id="lblLo_Cnt_C" class="ui-lbl-key" style="margin-left: 10px">전표수 :</div>
-            </td>
-            <td>
-              <div id="lblLo_Qty_C" class="ui-lbl-key" style="margin-left: 10px">수량 :</div>
-            </td>
-            <td>
-              <input type="button" id="btnPrintPaper" value="지시서출력" class="ui-btn-cmd" style="width: 90px" />
               <input type="button" id="btnPrintLabel" value="라벨출력" class="ui-btn-cmd" style="width: 90px" />
               <input type="button" id="btnProcessPreCM" class="ui-grd-btnprior" style="width: 30px; height: 20px;" />
             </td>
@@ -369,49 +343,9 @@
             </tr>
           </table>
           <div id="grdT3Sub"></div>
-        </div>
-      </div>  
-    </div>
-
-    <!-- Tab4 -->
-    <div id="divT4DetailView" style="padding: 0; border-width: 1px; border-style: solid;">
-      <div>
-        <table class="ui-tbl-grid">
-          <tr>
-            <td id="divTitle_grdT4Master" class="ui-grd-title">출고확정</td>
-            <td>
-              <div id="lblLo_Cnt_D" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">전표수 :</div>
-            </td>
-            <td>
-              <div id="lblLo_Qty_D" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">수량 :</div>
-            </td>
-            <td id="divRowCount_grdT4Master" class="ui-grd-rowcount">0/0 Rows</td>
-          </tr>
-        </table>
-        <div id="grdT4Master"></div>
       </div>
-      <div id="divT4SplitArea" style="padding: 0; border-width: 0px; border-style: solid;">
-        <div>
-          <table class="ui-tbl-grid">
-            <tr>
-              <td id="divTitle_grdT4Detail" class="ui-grd-title">출고확정 정보</td>
-              <td id="divRowCount_grdT4Detail" class="ui-grd-rowcount">0/0 Rows</td>
-            </tr>
-          </table>
-          <div id="grdT4Detail"></div>
-        </div>
-        <div>
-          <table class="ui-tbl-grid">
-            <tr>
-              <td id="divTitle_grdT4Sub" class="ui-grd-title">출고확정 상세정보</td>
-              <td id="divRowCount_grdT4Sub" class="ui-grd-rowcount">0/0 Rows</td>
-            </tr>
-          </table>
-          <div id="grdT4Sub"></div>
-        </div>
       </div>  
     </div>
-
   </div>
 </body>
 </html>

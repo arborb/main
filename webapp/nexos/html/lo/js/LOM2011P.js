@@ -210,6 +210,61 @@ function _OnPopupOpen() {
       CRUD: CRUD
     };
 
+    
+    
+    if ( $NC.isNull(masterDS.MALL_MSG) ){
+      masterDS.MALL_MSG = '';
+    }
+    if ( $NC.isNull(masterDS.ORDERER_CD) ){
+      masterDS.ORDERER_CD = ' ';
+    }    
+    if ( $NC.isNull(masterDS.ORDERER_NM) ){
+      masterDS.ORDERER_NM = ' ';
+    }    
+    if ( $NC.isNull(masterDS.ORDERER_TEL) ){
+      masterDS.ORDERER_TEL = ' ';
+    }
+    if ( $NC.isNull(masterDS.ORDERER_HP) ){
+      masterDS.ORDERER_HP = ' ';
+    }    
+    if ( $NC.isNull(masterDS.ORDERER_EMAIL) ){
+      masterDS.ORDERER_EMAIL = '';
+    }
+    if ( $NC.isNull(masterDS.ORDERER_MSG) ){
+      masterDS.ORDERER_MSG = '';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_NM) ){
+      masterDS.SHIPPER_NM = ' ';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_TEL) ){
+      masterDS.SHIPPER_TEL = ' ';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_HP) ){
+      masterDS.SHIPPER_HP = ' ';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_ZIP_CD) ){
+      masterDS.ORDERER_MSG = '';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_ZIP_CD) ){
+      masterDS.ORDERER_MSG = '';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_ADDR_BASIC) ){
+      masterDS.SHIPPER_ADDR_BASIC = ' ';
+    }
+    if ( $NC.isNull(masterDS.SHIPPER_ADDR_DETAIL) ){
+      masterDS.SHIPPER_ADDR_DETAIL = ' ';
+    }    
+    if ( $NC.isNull(masterDS.CARD_MSG) ){
+      masterDS.CARD_MSG = '';
+    }
+    if ( $NC.isNull(masterDS.CARD_FROM) ){
+      masterDS.CARD_FROM = '';
+    }
+    if ( $NC.isNull(masterDS.CARD_TO) ){
+      masterDS.CARD_TO = '';
+    }
+    
+    
     // 온라인 데이터 세팅
     $NC.G_VAR.subData = {
       CENTER_CD: masterDS.CENTER_CD,
@@ -1185,6 +1240,35 @@ function _Save() {
     return;
   }
 
+  if ( $NC.isNull($NC.G_VAR.subData.ORDERER_NM) ){
+    $NC.G_VAR.subData.ORDERER_NM = ' ';
+  }    
+  if ( $NC.isNull($NC.G_VAR.subData.ORDERER_TEL) ){
+    $NC.G_VAR.subData.ORDERER_TEL = ' ';
+  }
+  if ( $NC.isNull($NC.G_VAR.subData.ORDERER_HP) ){
+    $NC.G_VAR.subData.ORDERER_HP = ' ';
+  }    
+  if ( $NC.isNull($NC.G_VAR.subData.ORDERER_EMAIL) ){
+    $NC.G_VAR.subData.ORDERER_EMAIL = ' ';
+  }
+  if ( $NC.isNull($NC.G_VAR.subData.SHIPPER_TEL) ){
+    $NC.G_VAR.subData.SHIPPER_TEL = ' ';
+  }    
+  if ( $NC.isNull($NC.G_VAR.subData.SHIPPER_HP) ){
+    $NC.G_VAR.subData.SHIPPER_TEL = ' ';
+  }
+  if ( $NC.isNull($NC.G_VAR.subData.SHIPPER_NM) ){
+    $NC.G_VAR.subData.SHIPPER_NM = ' ';
+  }
+  if ( $NC.isNull($NC.G_VAR.subData.SHIPPER_ADDR_BASIC) ){
+    $NC.G_VAR.subData.SHIPPER_ADDR_BASIC = ' ';
+  }
+  if ( $NC.isNull($NC.G_VAR.subData.SHIPPER_ADDR_DETAIL) ){
+    $NC.G_VAR.subData.SHIPPER_ADDR_DETAIL = ' ';
+  }    
+
+  
   $NC.serviceCall("/LOM2010E/save.do", {
     P_DS_MASTER: $NC.toJson({
       P_CENTER_CD: $NC.G_VAR.masterData.CENTER_CD,
@@ -1239,6 +1323,7 @@ function _Save() {
       P_CARD_FROM: $NC.G_VAR.subData.CARD_FROM,
       P_CARD_TO: $NC.G_VAR.subData.CARD_TO,
       P_REMARK1: "",
+      P_USER_ID: $NC.G_USERINFO.USER_ID,
       P_CRUD: $NC.G_VAR.subData.CRUD
     }),
     P_PROCESS_CD: $NC.G_VAR.userData.P_PROCESS_CD,

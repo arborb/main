@@ -395,7 +395,7 @@ function grdMasterOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "BOX_TYPE_F",
     field: "BOX_TYPE_F",
-    name: "존구분",
+    name: "용기구분",
     minWidth: 120,
     editor: Slick.Editors.ComboBox,
     editorOptions: $NC.getGridComboEditorOptions("/WC/getDataSet.do", {

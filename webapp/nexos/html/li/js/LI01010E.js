@@ -29,6 +29,12 @@ function _Initialize() {
   $NC.setValue("#edtQBu_Nm", $NC.G_USERINFO.BU_NM);
   $NC.setValue("#edtQCust_Cd", $NC.G_USERINFO.CUST_CD);
 
+  if($NC.G_USERINFO.CERTIFY_DIV === "1"){
+    $NC.setEnable("#btnProcClose", true);
+  } else {
+    $NC.setEnable("#btnProcClose", false);
+  }
+
   $("#btnQBu_Cd").click(showUserBuPopup);
   $("#btnQOwnBrand_Cd").click(showOwnBranPopup);
   $("#btnQVendor_Cd").click(showVendorBrandPopup);
@@ -261,6 +267,8 @@ function _Inquiry() {
     return;
   }
 
+
+  var BU_NO = $NC.getValue("#edtQBu_No", true);
   var BRAND_CD = $NC.getValue("#edtQOwnBrand_Cd", true);
   var ITEM_CD = $NC.getValue("#edtQItem_Cd", true);
   var ITEM_NM = $NC.getValue("#edtQItem_Nm", true);
@@ -288,6 +296,7 @@ function _Inquiry() {
     P_ITEM_CD: ITEM_CD,
     P_ITEM_NM: ITEM_NM,
     P_INBOUND_STATE: INBOUND_STATE,
+    P_BU_NO:  BU_NO,
     P_USER_ID: $NC.G_USERINFO.USER_ID
   });
 
@@ -804,20 +813,6 @@ function grdDetailOnGetColumns(policyLI420) {
     cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
-    id: "DC_PRICE",
-    field: "DC_PRICE",
-    name: "할인단가",
-    minWidth: 80,
-    cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
-    id: "APPLY_PRICE",
-    field: "APPLY_PRICE",
-    name: "적용단가",
-    minWidth: 80,
-    cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
     id: "BUY_AMT",
     field: "BUY_AMT",
     name: "매입금액",
@@ -828,13 +823,6 @@ function grdDetailOnGetColumns(policyLI420) {
     id: "VAT_AMT",
     field: "VAT_AMT",
     name: "부가세액",
-    minWidth: 80,
-    cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
-    id: "DC_AMT",
-    field: "DC_AMT",
-    name: "할인금액",
     minWidth: 80,
     cssClass: "align-right"
   });
@@ -942,10 +930,10 @@ function grdMasterOnDblClick(e, args) {
       return;
     }
     
-    if (masterRowData.ORDER_USER_ID === "WMS_JOB" || masterRowData.ORDER_USER_ID === "INTERFACE") {
-      alert("인터페이스로 수신된 예정전표는 수정하실 수 없습니다.");
-      return;
-    }
+//    if (masterRowData.ORDER_USER_ID === "WMS_JOB" || masterRowData.ORDER_USER_ID === "INTERFACE") {
+//      alert("인터페이스로 수신된 예정전표는 수정하실 수 없습니다.");
+//      return;
+//    }
 
     if (masterRowData) {
       // 조회후 상태가 바뀌었는지 한번더 상태 체크
@@ -1065,7 +1053,7 @@ function onGetMaster(ajaxData) {
   $NC.G_VAR.buttons._new = "1";
   $NC.G_VAR.buttons._save = "0";
   $NC.G_VAR.buttons._cancel = "0";
-  $NC.G_VAR.buttons._delete = "1";
+  $NC.G_VAR.buttons._delete = "0";
   $NC.G_VAR.buttons._print = "0";
 
   $NC.setInitTopButtons($NC.G_VAR.buttons);

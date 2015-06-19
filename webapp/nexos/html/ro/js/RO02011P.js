@@ -290,7 +290,7 @@ function _OnPopupOpen() {
               // 예정데이터에는 전표일자,전표번호 없으므로 마스터 취득
               BU_DATE: masterDS.BU_DATE,
               BU_NO: masterDS.BU_NO,
-
+              CHK: "Y",
               SUM_ENTRY_QTY: 0,
               BU_LINE_NO: rowData.BU_LINE_NO,
               BU_KEY: rowData.BU_KEY,

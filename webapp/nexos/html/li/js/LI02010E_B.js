@@ -462,10 +462,10 @@ function grdMasterBOnDblClick(e, args) {
       return;
     }
 
-    if (masterRowData.ENTRY_USER_ID === "WMS_JOB" || masterRowData.ENTRY_USER_ID === "INTERFACE") {
-      alert("인터페이스로 수신된 예정전표는 수정하실 수 없습니다.");
-      return;
-    }
+//    if (masterRowData.ENTRY_USER_ID === "WMS_JOB" || masterRowData.ENTRY_USER_ID === "INTERFACE") {
+//      alert("인터페이스로 수신된 예정전표는 수정하실 수 없습니다.");
+//      return;
+//    }
     
     var PROCESS_CD, INBOUND_DATE, INBOUND_NO;
     // 예정일 경우
@@ -683,20 +683,6 @@ function grdDetailBOnGetColumns(policyLI420) {
     cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
-    id: "DC_PRICE",
-    field: "DC_PRICE",
-    name: "할인단가",
-    minWidth: 70,
-    cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
-    id: "APPLY_PRICE",
-    field: "APPLY_PRICE",
-    name: "적용단가",
-    minWidth: 70,
-    cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
     id: "BUY_AMT",
     field: "BUY_AMT",
     name: "매입금액",
@@ -707,13 +693,6 @@ function grdDetailBOnGetColumns(policyLI420) {
     id: "VAT_AMT",
     field: "VAT_AMT",
     name: "부가세액",
-    minWidth: 70,
-    cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
-    id: "DC_AMT",
-    field: "DC_AMT",
-    name: "할인금액",
     minWidth: 70,
     cssClass: "align-right"
   });

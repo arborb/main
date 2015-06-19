@@ -47,11 +47,10 @@ function _Initialize() {
       P_CENTER_CD: "%"
     })
   }, {
-    selector: ["#cboQCenter_Cd", "#cboQCenter_Cd"],
+    selector: "#cboQCenter_Cd",
     codeField: "CENTER_CD",
     nameField: "CENTER_NM",
     onComplete: function() {
-      $NC.setValue("#cboQCenter_Cd", $NC.G_USERINFO.CENTER_CD);
       $NC.setValue("#cboQCenter_Cd", $NC.G_USERINFO.CENTER_CD);
     }
   });
@@ -98,12 +97,29 @@ function _Initialize() {
       P_SUB_CD2: ""
     })
   }, {
-    selector: ["#cboQDelivery_Type", "#cboQDelivery_Type"],
+    selector: "#cboQDelivery_Type",
     codeField: "CODE_CD",
     nameField: "CODE_NM",
     fullNameField: "CODE_CD_F",
     addAll: true
   });
+
+
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CSUSERCENTER",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_USER_ID: $NC.G_USERINFO.USER_ID,
+      P_CENTER_CD: "%"
+    })
+  }, {
+    selector: "#cboQCenter_Cd",
+    codeField: "CENTER_CD",
+    nameField: "CENTER_NM",
+    onComplete: function() {
+      $NC.setValue("#cboQCenter_Cd", $NC.G_USERINFO.CENTER_CD);
+    }
+  });
+  
 
   $NC.setInitCombo("/WC/getDataSet.do", {
     P_QUERY_ID: "WC.POP_CMCARRIER",
@@ -205,6 +221,23 @@ function _Initialize() {
     })
   }, {
     selector: "#cboQShip_Price_Type",
+    codeField: "CODE_CD",
+    nameField: "CODE_NM",
+    fullNameField: "CODE_CD_F",
+    addAll: true
+  });
+
+  // 조회조건 - 배송유형 세팅
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "DELIVERY_TYPE",
+      P_CODE_CD: "%",
+      P_SUB_CD1: "",
+      P_SUB_CD2: ""
+    })
+  }, {
+    selector: "#cboQDelivery_Type",
     codeField: "CODE_CD",
     nameField: "CODE_NM",
     fullNameField: "CODE_CD_F",

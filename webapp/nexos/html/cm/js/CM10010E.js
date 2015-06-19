@@ -344,6 +344,9 @@ function _Save() {
         P_BU_CD: rowData.BU_CD,
         P_DEAL_ID: rowData.DEAL_ID,
         P_DEAL_DIV: rowData.DEAL_DIV,
+        P_RESALE_DEAL_YN: rowData.RESALE_DEAL_YN,
+//        P_CIRCULATION_ID: rowData.CIRCULATION_ID,
+        P_OUT_CENTER_CD: rowData.OUT_CENTER_CD,
         P_MALL_CD: rowData.MALL_CD,
         P_CRUD: rowData.CRUD
       };
@@ -461,6 +464,27 @@ function grdMasterOnGetColumns() {
     minWidth: 100
   });
   $NC.setGridColumn(columns, {
+    id: "RESALE_DEAL_YN_F",
+    field: "RESALE_DEAL_YN_F",
+    name: "재판매여부",
+    minWidth: 90,
+    editor: Slick.Editors.ComboBox,
+    editorOptions: $NC.getGridComboEditorOptions("/WC/getDataSet.do", {
+      P_QUERY_ID: "WC.POP_CMCODE",
+      P_QUERY_PARAMS: $NC.getParams({
+        P_CODE_GRP: "RESALE_DEAL_YN",
+        P_CODE_CD: "%",
+        P_SUB_CD1: "",
+        P_SUB_CD2: ""
+      })
+    }, {
+      codeField: "RESALE_DEAL_YN",
+      dataCodeField: "CODE_CD",
+      dataFullNameField: "CODE_CD_F",
+      isKeyField: true
+    })
+  });
+  $NC.setGridColumn(columns, {
     id: "DEAL_DIV_F",
     field: "DEAL_DIV_F",
     name: "거래구분",
@@ -480,7 +504,29 @@ function grdMasterOnGetColumns() {
       dataFullNameField: "CODE_CD_F",
       isKeyField: true
     })
+  });  
+  $NC.setGridColumn(columns, {
+    id: "CENTER_DIV_F",
+    field: "CENTER_DIV_F",
+    name: "담당물류센터",
+    minWidth: 150,
+    editor: Slick.Editors.ComboBox,
+    editorOptions: $NC.getGridComboEditorOptions("/WC/getDataSet.do", {
+      P_QUERY_ID: "WC.POP_CMCODE",
+      P_QUERY_PARAMS: $NC.getParams({
+        P_CODE_GRP: "CENTER_DIV",
+        P_CODE_CD: "%",
+        P_SUB_CD1: "",
+        P_SUB_CD2: ""
+      })
+    }, {
+      codeField: "OUT_CENTER_CD",
+      dataCodeField: "CODE_CD",
+      dataFullNameField: "CODE_CD_F",
+      isKeyField: true
+    })
   });
+  
   $NC.setGridColumn(columns, {
     id: "SALE_NM",
     field: "SALE_NM",
@@ -567,12 +613,6 @@ function grdMasterOnGetColumns() {
     minWidth: 90
   });
   $NC.setGridColumn(columns, {
-    id: "CIRCULATION_ID",
-    field: "CIRCULATION_ID",
-    name: "담당물류센터",
-    minWidth: 100
-  });
-  $NC.setGridColumn(columns, {
     id: "REFUND_PRICE_TYPE",
     field: "REFUND_PRICE_TYPE",
     name: "반품배송비타입",
@@ -632,7 +672,21 @@ function grdMasterInitialize() {
   var options = {
     editable: true,
     autoEdit: true,
-    frozenColumn: 3
+    frozenColumn: 3,  
+    specialRow: {
+      compareFn: function(specialRow, rowData) {
+
+        if (rowData.RESALE_DEAL_YN_F == '0 - 미지정') {
+          return "specialrow3";
+        } 
+        
+        if ($NC.isNull(rowData.CENTER_DIV_F)) {
+          return "specialrow3";
+        } 
+        
+      }
+    }
+    
   };
 
   // Grid Object, DataView 생성 및 초기화

@@ -35,6 +35,7 @@ function _Initialize() {
   $("#btnQBu_Cd").click(showUserBuPopup);
   $("#btnQOwn_Brand_Cd").click(showOwnBranPopup);
   $("#btnQBrand_Cd").click(showBrandPopup);
+  $("#btnProcClose").click(onBtnProcCloseClick);
 //  $("#btnQBrand_Cd").click(showBuBrandPopup);
 //  $("#btnQDelivery_Cd").click(showDeliveryPopup);
 
@@ -302,8 +303,8 @@ function _Inquiry() {
   var WB_NO = $NC.getValue("#edtQWb_No");
   var ITEM_CD = $NC.getValue("#edtQItem_Cd");
   var ITEM_NM = $NC.getValue("#edtQItem_Nm");
-  var ORDERER_NM = $NC.getValue("#edtQOrderer_Nm");
-  var SHIPPER_NM = $NC.getValue("#edtQShipper_Nm");
+  var ORDERER_NM = $NC.getValue("#edtQOrderer_Nm", true);
+  var SHIPPER_NM = $NC.getValue("#edtQShipper_Nm", true);
   var OWN_BRAND_CD = $NC.getValue("#edtQOwn_Brand_Cd", true);
   var BRAND_CD = $NC.getValue("#edtQBrand_Cd", true);
 //  var BRAND_CD = $NC.getValue("#edtQBrand_Cd", true);
@@ -642,10 +643,16 @@ function grdMasterOnGetColumns() {
     minWidth: 120
   });
   $NC.setGridColumn(columns, {
-    id: "ORDERER_ADDR",
-    field: "ORDERER_ADDR",
+    id: "ORDERER_ADDR_BASIC",
+    field: "ORDERER_ADDR_BASIC",
     name: "주문자주소",
-    minWidth: 200
+    minWidth: 90
+  });
+  $NC.setGridColumn(columns, {
+    id: "ORDERER_ADDR_DETAIL",
+    field: "ORDERER_ADDR_DETAIL",
+    name: "주문자주소",
+    minWidth: 120
   });
   $NC.setGridColumn(columns, {
     id: "SHIPPER_TEL",
@@ -660,10 +667,16 @@ function grdMasterOnGetColumns() {
     minWidth: 120
   });
   $NC.setGridColumn(columns, {
-    id: "SHIPPER_ADDR",
-    field: "SHIPPER_ADDR",
-    name: "주소",
-    minWidth: 200
+    id: "SHIPPER_ADDR_BASIC",
+    field: "SHIPPER_ADDR_BASIC",
+    name: "수령자기본주소",
+    minWidth: 120
+  });
+  $NC.setGridColumn(columns, {
+    id: "SHIPPER_ADDR_DETAIL",
+    field: "SHIPPER_ADDR_DETAIL",
+    name: "수령자상세주소",
+    minWidth: 160
   });
   $NC.setGridColumn(columns, {
     id: "ORDERER_MSG",
@@ -1143,7 +1156,7 @@ function onGetMaster(ajaxData) {
   $NC.G_VAR.buttons._new = "1";
   $NC.G_VAR.buttons._save = "0";
   $NC.G_VAR.buttons._cancel = "0";
-  $NC.G_VAR.buttons._delete = "1";
+  $NC.G_VAR.buttons._delete = "0";
   $NC.G_VAR.buttons._print = "0";
 
   $NC.setInitTopButtons($NC.G_VAR.buttons);
@@ -1186,6 +1199,57 @@ function onChangingCondition() {
   $NC.G_VAR.buttons._print = "0";
   $NC.setInitTopButtons($NC.G_VAR.buttons);
 }
+
+
+/**
+ *  종결처리 버튼
+ */
+function onBtnProcCloseClick(e) {
+
+  if (G_GRDMASTER.data.getLength() == 0) {
+    alert("삭제할 데이터가 없습니다.");
+    return;
+  }
+  
+  var rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
+  
+  var result = confirm("[예정일자 : " + rowData.ORDER_DATE +"] [예정번호 : " + rowData.ORDER_NO + "]\n해당 전표를 종결처리하시겠습니까?");
+  if (!result) {
+    return;
+  }
+
+  $NC.serviceCall("/RIM1010E/callSP.do", {
+    P_QUERY_ID: "RI_BW_ORDER_CLOSE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CENTER_CD: rowData.CENTER_CD,
+      P_BU_CD: rowData.BU_CD,
+      P_ORDER_DATE: rowData.ORDER_DATE,
+      P_ORDER_NO: rowData.ORDER_NO,
+      P_USER_ID: $NC.G_USERINFO.USER_ID
+    })
+  }, onCloseSuccess);
+}
+
+function onCloseSuccess(ajaxData) {
+
+  var resultData = $NC.toArray(ajaxData);
+  if (!$NC.isNull(resultData)) {
+    if (resultData.O_MSG !== "OK") {
+      alert(resultData.O_MSG);
+    } else {
+      alert("종결처리가 완료되었습니다.");
+    }
+  }
+
+  var lastKeyVal = $NC.getGridLastKeyVal(G_GRDMASTER, {
+    selectKey: new Array("ORDER_DATE", "ORDER_NO")
+  });
+
+  _Inquiry();
+  G_GRDMASTER.lastKeyVal = lastKeyVal;
+
+}
+
 
 /**
  * 검색조건의 사업부 검색 팝업 클릭

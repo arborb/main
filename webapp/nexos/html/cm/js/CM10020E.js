@@ -25,7 +25,13 @@ function _Initialize() {
   $("#btnQBrand_Cd").click(showOwnBranPopup);
   $("#btnQMall_Brand_Cd").click(showSellerPopup);
 
+  $("#btnProcEventExec").click(onBtnProcEventExecClick);
   // $("#btnQBrand_Cd").click(showOwnBranPopup);
+  if($NC.G_USERINFO.CERTIFY_DIV === "1"){
+    $("#btnProcEventExec").show();
+  } else {
+    $("#btnProcEventExec").hide();
+  }
 
 }
 /**
@@ -750,6 +756,49 @@ function setMallCodeCombo(setBu_Cd) {
       addAll: true
     });
   }
+}
+
+function onBtnProcEventExecClick() {
+
+  if (G_GRDMASTER.data.getLength() == 0) {
+    alert("처리할 데이터가 없습니다.");
+    return;
+  }
+  
+  var result = confirm("이벤트 재적용 처리를 하시겠습니까?");
+  if (!result) {
+    return;
+  }
+  
+  var lastRowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
+
+  var CENTER_CD = $NC.G_USERINFO.CENTER_CD;
+  var BU_CD = lastRowData.BU_CD;
+  var DEAL_ID = lastRowData.DEAL_CD;
+
+  $NC.serviceCall("/CM10020E/callProcEventExec.do", {
+    P_QUERY_ID: "LO_ORDER_EVENT_REAL",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CENTER_CD: CENTER_CD,
+      P_BU_CD: BU_CD,
+      P_DEAL_ID: DEAL_ID,
+      P_USER_ID: $NC.G_USERINFO.USER_ID
+    })
+  }, onExecSP, onSaveError);
+}
+
+function onExecSP(ajaxData) {
+
+  var resultData = $NC.toArray(ajaxData);
+  if (!$NC.isNull(resultData)) {
+    if (resultData.RESULT_DATA !== "OK") {
+      alert(resultData.RESULT_DATA);
+      return;
+    }
+  }
+  alert("이벤트 재적용 처리되었습니다.\n\n해당 출고예정정보를 확인해 주시기 바랍니다.");
+  _Inquiry();
+
 }
 
 /**

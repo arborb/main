@@ -235,6 +235,7 @@ function _Save() {
         P_SHIPPER_ADDR_DETAIL: rowData.SHIPPER_ADDR_DETAIL,
         P_SHIPPER_HP: rowData.SHIPPER_HP,
         P_SHIPPER_NM: rowData.SHIPPER_NM,
+        P_USER_ID:  $NC.G_USERINFO.USER_ID,
         P_CRUD: rowData.CRUD
       };
       saveDS.push(saveData);
@@ -244,7 +245,7 @@ function _Save() {
 
 
   if (saveDS.length > 0) {
-    $NC.serviceCall("/LOM3060E/AddrChang.do", {
+    $NC.serviceCall("/LOM3060E/save.do", {
       P_DS_MASTER: $NC.getParams(saveDS),
       P_USER_ID: $NC.G_USERINFO.USER_ID
     }, onSave, onSaveError);

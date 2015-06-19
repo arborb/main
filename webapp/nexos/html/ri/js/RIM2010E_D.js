@@ -294,11 +294,18 @@ function grdMasterDOnGetColumns() {
     name: "주문자휴대폰번호",
     minWidth: 120
   });
+
   $NC.setGridColumn(columns, {
-    id: "ORDERER_ADDR",
-    field: "ORDERER_ADDR",
-    name: "주문자주소",
-    minWidth: 200
+    id: "ORDERER_ADDR_BASIC",
+    field: "ORDERER_ADDR_BASIC",
+    name: "주문자기본주소",
+    minWidth: 90
+  });
+  $NC.setGridColumn(columns, {
+    id: "ORDERER_ADDR_DETAIL",
+    field: "ORDERER_ADDR_DETAIL",
+    name: "주문자상세주소",
+    minWidth: 120
   });
   $NC.setGridColumn(columns, {
     id: "SHIPPER_TEL",
@@ -313,10 +320,16 @@ function grdMasterDOnGetColumns() {
     minWidth: 120
   });
   $NC.setGridColumn(columns, {
-    id: "SHIPPER_ADDR",
-    field: "SHIPPER_ADDR",
-    name: "주소",
-    minWidth: 200
+    id: "SHIPPER_ADDR_BASIC",
+    field: "SHIPPER_ADDR_BASIC",
+    name: "수령자기본주소",
+    minWidth: 160
+  });
+  $NC.setGridColumn(columns, {
+    id: "SHIPPER_ADDR_DETAIL",
+    field: "SHIPPER_ADDR_DETAIL",
+    name: "수령자상세주소",
+    minWidth: 160
   });
   $NC.setGridColumn(columns, {
     id: "ORDERER_MSG",

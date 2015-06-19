@@ -8,6 +8,10 @@ function _Initialize() {
     CLIENT1: ""
   });
 
+
+
+  
+
   // 합포장가능여부 콤보
   $NC.setInitCombo("/WC/getDataSet.do", {
     P_QUERY_ID: "WC.POP_CMCODE",
@@ -43,9 +47,13 @@ function _Initialize() {
     fullNameField: "CODE_CD_F",
     onComplete: function() {
       $NC.setValue("#cboSession_item_Reference");
+      
+      
       _Inquiry();
+      
     }
   });
+
 
   // 버튼 활성화 처리
   $NC.G_VAR.buttons._inquiry = "1";
@@ -138,16 +146,14 @@ function _New() {
  * Save Button Event - 메인 상단 저장 버튼 클릭시 호출 됨
  */
 function _Save() {
+
+  
+  
   var CLIENT1_CRUD;
 
   if ($NC.isNull($NC.G_VAR.CLIENT1.PASS_ITEM_REFERENCE)) {
-    alert("비밀번호 변경 기간을 숫자로 입력하세요.");
+    alert("숫자를 입력하세요.");
     $NC.setFocus("#edtPass_Item_Reference");
-    return;
-  }
-  if ($NC.isNull($NC.G_VAR.CLIENT1.SESSION_ITEM_REFERENCE)) {
-    alert("세션유지 시간을 분 단위로 입력하세요.");
-    $NC.setFocus("#edtSession_item_Reference");
     return;
   }
   
@@ -172,9 +178,10 @@ function _Save() {
   }
 
   saveData = {
+    
     P_PASS_DIV: $NC.getValue("#cboPass_Div"),
     P_PASS_ITEM_REFERENCE: $NC.getValue("#edtPass_Item_Reference"),
-    P_SESSION_ITEM_REFERENCE: $NC.getValue("#edtSession_item_Reference"),
+    P_SESSION_ITEM_REFERENCE: $NC.getValue("#cboSession_item_Reference"),
     P_USER_ID: $NC.G_USERINFO.USER_ID,
     P_CRUD: CLIENT1_CRUD
   };
@@ -212,23 +219,32 @@ function _Print(printIndex, printName) {
 }
 
 function onGetClientIp(ajaxData) {
+
   var resultData = $NC.toArray(ajaxData);
   if (!$NC.isNull(resultData)) {
     $NC.G_VAR.CLIENT1 = resultData[0];
+    //$NC.G_VAR.CLIENT1 = resultData[1];
+
     if ($NC.G_VAR.CLIENT1) {
       $NC.setValue("#cboPass_Div", $NC.G_VAR.CLIENT1.PASS_DIV);
       $NC.setValue("#edtPass_Item_Reference", $NC.G_VAR.CLIENT1.PASS_ITEM_REFERENCE);
-      $NC.setValue("#edtSession_item_Reference", $NC.G_VAR.CLIENT1.SESSION_ITEM_REFERENCE);
+      $NC.setValue("#cboSession_item_Reference", $NC.G_VAR.CLIENT1.SESSION_ITEM_REFERENCE);
     }
+
   }
 }
 
 function onSave(ajaxData) {
+
   _Inquiry();
 }
 
+
+
+
 function onlyNumber(event) {
     var key = window.event ? event.keyCode : event.which;    
+
     if ((event.shiftKey == false) && ((key  > 47 && key  < 58) || (key  > 95 && key  < 106)
     || key  == 35 || key  == 36 || key  == 37 || key  == 39  // 방향키 좌우,home,end  
     || key  == 8  || key  == 46 ) 

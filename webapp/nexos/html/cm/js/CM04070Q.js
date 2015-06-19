@@ -2,7 +2,7 @@
  * 화면 초기화 - 화면 로드시 자동 호출 됨
  */
 function _Initialize() {
- 
+
   // 단위화면에서 사용될 일반 전역 변수 정의
   $NC.setGlobalVar({
     TEST: 0,
@@ -11,7 +11,7 @@ function _Initialize() {
       PRINT_COMMENT: "상품라벨 출력"
     }]
   });
-  
+
   // 그리드 초기화
   grdMasterInitialize();
 
@@ -131,7 +131,7 @@ function _Inquiry() {
   var BRAND_NM = $NC.getValue("#edtQBrand_Nm");
   var ITEM_CD = $NC.getValue("#edtQItem_Cd");
   var ITEM_NM = $NC.getValue("#edtQItem_Nm");
-  
+
   // 데이터 조회
   G_GRDMASTER.queryParams = $NC.getParams({
     P_BU_CD: BU_CD,
@@ -177,7 +177,7 @@ function _Cancel() {
  *          선택한 출력물 Index
  */
 function _Print(printIndex, printName) {
-  $NC.G_VAR.TEST = $NC.getValue("#edtQQty");  
+  $NC.G_VAR.TEST = $NC.getValue("#edtQQty");
   var BRAND_CD = "%";
 
   if (G_GRDMASTER.view.getEditorLock().isActive()) {
@@ -269,7 +269,7 @@ function grdMasterOnGetColumns() {
     cssClass: "align-right",
     editor: Slick.Editors.Number
   });
-  
+
   $NC.setGridColumn(columns, {
     id: "ITEM_CD",
     field: "ITEM_CD",
@@ -429,7 +429,7 @@ function grdMasterOnHeaderClick(e, args) {
       var rowCount = G_GRDMASTER.data.getLength();
       var rowData;
       G_GRDMASTER.data.beginUpdate();
-      for (var row = 0; row < rowCount; row++) {
+      for ( var row = 0; row < rowCount; row++) {
         rowData = G_GRDMASTER.data.getItem(row);
         if (rowData.CHECK_YN !== checkVal) {
           rowData.CHECK_YN = checkVal;
@@ -512,7 +512,6 @@ function onGetMaster(ajaxData) {
   $NC.setInitTopButtons($NC.G_VAR.buttons, $NC.G_VAR.printOptions);
 }
 
-
 /**
  * 검색조건의 브랜드 검색 이미지 클릭
  */
@@ -544,7 +543,6 @@ function onUserBrandPopup(resultInfo) {
   // 브랜드 값 변경시 대분류 재 설정
   setDepartCombo();
 }
-
 
 /**
  * 검색조건의 사업부 검색 팝업 클릭

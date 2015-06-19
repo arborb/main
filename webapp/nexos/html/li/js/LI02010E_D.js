@@ -590,20 +590,6 @@ function grdDetailDOnGetColumns() {
     cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
-    id: "DC_PRICE",
-    field: "DC_PRICE",
-    name: "할인단가",
-    minWidth: 70,
-    cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
-    id: "APPLY_PRICE",
-    field: "APPLY_PRICE",
-    name: "적용단가",
-    minWidth: 70,
-    cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
     id: "BUY_AMT",
     field: "BUY_AMT",
     name: "매입금액",
@@ -614,13 +600,6 @@ function grdDetailDOnGetColumns() {
     id: "VAT_AMT",
     field: "VAT_AMT",
     name: "부가세액",
-    minWidth: 70,
-    cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
-    id: "DC_AMT",
-    field: "DC_AMT",
-    name: "할인금액",
     minWidth: 70,
     cssClass: "align-right"
   });
@@ -741,8 +720,8 @@ function grdSubDOnGetColumns(policyLI420) {
     field: "CONFIRM_QTY",
     name: "확정수량",
     minWidth: 70,
-    cssClass: "align-right",
-    editor: Slick.Editors.Number
+    cssClass: "align-right"
+//    editor: Slick.Editors.Number
   });
   $NC.setGridColumn(columns, {
     id: "CONFIRM_BOX",
@@ -763,15 +742,15 @@ function grdSubDOnGetColumns(policyLI420) {
       id: "VALID_DATE",
       field: "VALID_DATE",
       name: "유통기한",
-      minWidth: 100,
-      editor: Slick.Editors.Date
+      minWidth: 100
+//      editor: Slick.Editors.Date
     });
     $NC.setGridColumn(columns, {
       id: "BATCH_NO",
       field: "BATCH_NO",
       name: "제조배치번호",
-      minWidth: 100,
-      editor: Slick.Editors.Text
+      minWidth: 100
+//      editor: Slick.Editors.Text
     });
   }
   $NC.setGridColumn(columns, {
@@ -825,8 +804,8 @@ function grdSubDOnGetColumns(policyLI420) {
 function grdSubDInitialize() {
 
   var options = {
-    editable: true,
-    autoEdit: true,
+//    editable: true,
+//    autoEdit: true,
     frozenColumn: 3,
     specialRow: {
       compareKey: "ENTRY_QTY",
@@ -964,6 +943,7 @@ function grdSubDOnBeforePost(row) {
 function grdSubDOnBeforeEditCell(e, args) {
 
   // 수정할 수 없는 컬럼일 경우 수정 모드로 변경하지 않도록 처리
+  /*
   if (args.column.field === "CONFIRM_QTY") {
     return $NC.G_VAR.policyVal.LI410 === "Y";
   }
@@ -975,6 +955,7 @@ function grdSubDOnBeforeEditCell(e, args) {
   if (args.column.field === "BATCH_NO") {
     return $NC.G_VAR.policyVal.LI420 === "2";
   }
+  */
   return false;
 }
 

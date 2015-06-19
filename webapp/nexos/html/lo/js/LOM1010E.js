@@ -853,10 +853,16 @@ function grdMasterOnGetColumns() {
     minWidth: 100
   });
   $NC.setGridColumn(columns, {
-    id: "SHIPPER_ADDR",
-    field: "SHIPPER_ADDR",
-    name: "주소",
-    minWidth: 150
+    id: "SHIPPER_ADDR_BASIC",
+    field: "SHIPPER_ADDR_BASIC",
+    name: "기본주소",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "SHIPPER_ADDR_DETAIL",
+    field: "SHIPPER_ADDR_DETAIL",
+    name: "상세주소",
+    minWidth: 100
   });
   $NC.setGridColumn(columns, {
     id: "ORDERER_MSG",
@@ -1349,10 +1355,10 @@ function grdMasterOnDblClick(e, args) {
 
   var masterRowData = G_GRDMASTER.data.getItem(args.row);
   
-  if (masterRowData.ORDER_USER_ID === "WMS_JOB" || masterRowData.ORDER_USER_ID === "INTERFACE") {
-    alert("인터페이스로 수신된 예정전표는 수정하실 수 없습니다.");
-    return;
-  }
+//  if (masterRowData.ORDER_USER_ID === "WMS_JOB" || masterRowData.ORDER_USER_ID === "INTERFACE") {
+//    alert("인터페이스로 수신된 예정전표는 수정하실 수 없습니다.");
+//    return;
+//  }
   
   if (masterRowData) {
     // 조회후 상태가 바뀌었는지 한번더 상태 체크

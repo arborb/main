@@ -2001,8 +2001,7 @@ function setOutboundBatchCombo(comboId, isAddAll, setPos) {
       P_BU_CD: $NC.getValue("#edtQBu_Cd"),
       P_OUTBOUND_DATE: $NC.getValue("#dtpQOutbound_Date"),
       P_OUTBOUND_DIV: "1" // --출고작업구분(1:기본출고, 2:온라인출고)
-    }),
-    arrowPolling: true
+    })
   }, {
     selector: comboId,
     codeField: "OUTBOUND_BATCH",
@@ -2037,8 +2036,7 @@ function setDeliveryBatchCombo(processCd) {
     P_QUERY_PARAMS: $NC.getParams({
       P_CENTER_CD: $NC.getValue("#cboQCenter_Cd"),
       P_OUTBOUND_DATE: $NC.getValue("#dtpOutbound_Date" + processCd)
-    }),
-    arrowPolling: true
+    })
   }, {
     selector: cboSelector,
     codeField: "DELIVERY_BATCH",

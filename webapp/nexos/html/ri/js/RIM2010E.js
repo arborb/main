@@ -561,11 +561,12 @@ function _Inquiry() {
   var STATE_PRE_YN = "Y";
   var STATE_CUR_YN = "Y";
 
+
   var OWN_BRAND_CD = $NC.getValue("#edtQOwn_Brand_Cd", true);
   var BRAND_CD = $NC.getValue("#edtQBrand_Cd", true);
 //  var DELIVERY_CD = $NC.getValue("#edtQDelivery_Cd", true);
-  var ORDERER_NM = $NC.getValue("#edtQOrderer_Nm");
-  var SHIPPER_NM = $NC.getValue("#edtQShipper_Nm");
+  var ORDERER_NM = $NC.getValue("#edtQOrderer_Nm", true);
+  var SHIPPER_NM = $NC.getValue("#edtQShipper_Nm", true);
 
   // 반입등록
   if ($NC.G_VAR.activeView.PROCESS_CD === "B") {

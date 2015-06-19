@@ -5,10 +5,7 @@ function _Initialize() {
 
   // 단위화면에서 사용될 일반 전역 변수 정의
   // $NC.setGlobalVar({ });
-  var ua = navigator.userAgent;
-  if (ua.indexOf('Trident') != -1) {
-    $('.print').css('position', 'static');
-  }
+
 }
 
 /**
@@ -53,8 +50,7 @@ function _OnPopupOpen() {
     P_PRINT_COPY: 1,
     P_CHECKED_VALUE: "",
     P_OTHER_TEMPO: "",
-    P_SILENT_PRINT_YN: "N",
-    PRINT_DIV: $NC.G_VAR.userData.PRINT_DIV
+    P_SILENT_PRINT_YN: "N"
   };
 
   if (!$NC.isNull($NC.G_VAR.userData.checkedValue)) {
@@ -169,12 +165,6 @@ function _OnPopupOpen() {
         });
   }
 
-  // 라벨출력시 출력버튼 표시
-  if ($NC.G_VAR.userData.print_div == '2') {
-    $('#btnPrint').parent().show().on('click', function(){
-      $NC.G_VAR.userData.printFn();
-    })
-  }
 }
 
 /**
