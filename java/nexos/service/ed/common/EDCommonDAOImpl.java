@@ -31,6 +31,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import nexos.common.Consts;
 import nexos.common.Util;
 import nexos.common.ibatis.NexosDAO;
+import nexos.common.spring.security.Encryption;
 
 import org.apache.axis.message.MessageElement;
 import org.apache.axis.utils.XMLUtils;
@@ -118,6 +119,7 @@ public class EDCommonDAOImpl implements EDCommonDAO, Comparator<Vector<Object>> 
       bufferedInput = new BufferedInputStream(new FileInputStream(f));
       CharsetDecoder decoder = charset.newDecoder();
       decoder.reset();
+      logger.info("bufferedInput : " + bufferedInput);
 
       byte[ ] tempBuffer = new byte[8192];
       byte[ ] buffer = null;
@@ -155,6 +157,7 @@ public class EDCommonDAOImpl implements EDCommonDAO, Comparator<Vector<Object>> 
 
   private Charset detectCharset(File f, String[ ] charsets) {
     Charset charset = null;
+    //logger.error("");
     for (String charsetName : charsets) {
       charset = detectCharset(f, Charset.forName(charsetName));
       if (charset != null) {
@@ -2663,27 +2666,47 @@ public class EDCommonDAOImpl implements EDCommonDAO, Comparator<Vector<Object>> 
           }
           txtFileWriter.write(sbWriteBuffer.toString());
           txtFileWriter.write(Consts.CRLF);
+          logger.error("\n sbWriteBuffer.toString() : " + sbWriteBuffer.toString());
+          logger.error("\n txtFileOutputWriter : " + Consts.CRLF);
+          
         }
       } else {
         // 위치/길이로 처리
         for (int row = 0; row < listCnt; row++) {
           rowData = (HashMap<String, Object>)list.get(row);
           sbWriteBuffer.setLength(0);
+          
+          logger.error("\n ELSE rowData 1: " + rowData.get("SHIPPER_NM"));
+          String EnStr = rowData.get("SHIPPER_NM").toString();
+          logger.error("\n ELSE EnStr 1: " + EnStr);
+          Encryption enc = new Encryption();
+          //enc.aesEncode(EnStr);
+          String EnTT = null;
+          if (EnStr != null ){
+            EnTT = "TEST" + EnStr;
+          }
+          logger.error("\n ELSE Enc 1: " + EnTT);
+          rowData.put("SHIPPER_NM", EnTT);
+           
+        //  logger.error("\n ELSE Enc 1: " + enc.aesEncode(EnStr));
+          logger.error("\n ELSE rowData.values() 1: " + rowData.values());
+          
           for (int col = 0; col < columnCount; col++) {
             vtColumn = columns.get(col);
-
+           
             COLUMN_NM = (String)vtColumn.get(0);
             txtPosition = (Integer)vtColumn.get(1);
             txtLength = (Integer)vtColumn.get(2);
 
             COLUMN_VAL = (String)rowData.get(COLUMN_NM);
+            
 
             if (COLUMN_VAL == null) {
               txtLineBytes = new byte[1];
               txtLineBytes[0] = 32;
             } else {
               txtLineBytes = COLUMN_VAL.getBytes(KR_CHARSET);
-            }
+            } 
             if (txtLineBytes.length > txtLength) {
               sbWriteBuffer.append(new String(txtLineBytes, 0, txtLength, KR_CHARSET));
             } else {
@@ -2697,6 +2720,8 @@ public class EDCommonDAOImpl implements EDCommonDAO, Comparator<Vector<Object>> 
           }
           txtFileWriter.write(sbWriteBuffer.toString());
           txtFileWriter.write(Consts.CRLF);
+          logger.error("\n sbWriteBuffer.toString() 1: " + sbWriteBuffer.toString());
+          
         }
       }
 

@@ -290,7 +290,7 @@ public class LOM7090EService {
 		String entry_Date = (String) params.get("P_ENTRY_DATE");
 		String process_State_BW = (String) params.get("P_PROCESS_STATE_BW");
 		String process_State_FW = (String) params.get("P_PROCESS_STATE_FW");
-    
+
 		String user_Id = (String) params.get(Consts.PK_USER_ID);
 		String outbound_batch = null; // 출고차수
 		String outbound_batch_nm = null; // 출고차수명
@@ -327,7 +327,6 @@ public class LOM7090EService {
 			Map<String, Object> callParams = saveDS.get(i);
 			callParams.put("P_PROCESS_CD", process_Cd);
 			callParams.put("P_DIRECTION", direction);
-			
 			callParams.put(Consts.PK_USER_ID, user_Id);
 			String outbound_No = (String) callParams.get("P_OUTBOUND_NO");
 
@@ -515,28 +514,10 @@ public class LOM7090EService {
 	  String direction         = (String) params.get("P_DIRECTION");
 	  String process_State_BW  = (String) params.get("P_PROCESS_STATE_BW");
 	  String process_State_FW  = (String) params.get("P_PROCESS_STATE_FW");
-      
-    String inout_Cd = (String) params.get("P_INOUT_CD");
-    String bu_No = (String) params.get("P_BU_NO");
-    String brand_Cd = (String) params.get("P_BRAND_CD");
-    String item_Cd = (String) params.get("P_ITEM_CD");
-    String item_Nm = (String) params.get("P_ITEM_NM");
-    String orderer_Nm = (String) params.get("P_ORDERER_NM");
-    String shipper_Nm = (String) params.get("P_SHIPPER_NM");
-    String mall_Cd = (String) params.get("P_MALL_CD");
-    String inorder_Type = (String) params.get("P_INORDER_TYPE");
-    String ship_Type = (String) params.get("P_SHIP_TYPE");
-    String ship_Price_Type = (String) params.get("P_SHIP_PRICE_TYPE");
-    String deal_Id = (String) params.get("P_DEAL_ID");
-    String delivery_Type = (String) params.get("P_DELIVERY_TYPE");
-    String bu_Time = (String) params.get("P_BU_TIME");
-    String delivery_Type2 = (String) params.get("P_DELIVERY_TYPE2");
-    String own_Brand_Cd = (String) params.get("P_OWN_BRAND_CD");
-    String hold_Yn = (String) params.get("P_HOLD_YN");
 
 	  String user_Id = (String) params.get(Consts.PK_USER_ID);
 	  String outbound_batch    = "000"; // 출고차수
-	  //String outbound_batch_nm = null; // 출고차수명
+	  String outbound_batch_nm = null; // 출고차수명
 
 	  // 처리할 수 있는 진행상태
 	  String CHECK_STATE = "";
@@ -570,25 +551,7 @@ public class LOM7090EService {
 	    Map<String, Object> callParams = saveDS.get(i);
 	    callParams.put("P_PROCESS_CD", process_Cd);
 	    callParams.put("P_DIRECTION", direction);
-
-	    callParams.put("P_INOUT_CD", inout_Cd); 
-	    callParams.put("P_BU_NO", bu_No); 
-	    callParams.put("P_BRAND_CD", brand_Cd);
-	    callParams.put("P_ITEM_CD", item_Cd); 
-	    callParams.put("P_ITEM_NM", item_Nm); 
-	    callParams.put("P_ORDERER_NM", orderer_Nm);
-	    callParams.put("P_SHIPPER_NM", shipper_Nm);
-	    callParams.put("P_MALL_CD", mall_Cd); 
-	    callParams.put("P_INORDER_TYPE", inorder_Type);
-	    callParams.put("P_SHIP_TYPE", ship_Type); 
-	    callParams.put("P_SHIP_PRICE_TYPE", ship_Price_Type);
-	    callParams.put("P_DEAL_ID", deal_Id); 
-	    callParams.put("P_DELIVERY_TYPE", delivery_Type);
-	    callParams.put("P_BU_TIME", bu_Time); 
-	    callParams.put("P_DELIVERY_TYPE2", delivery_Type2);
-	    callParams.put("P_OWN_BRAND_CD", own_Brand_Cd); 
-	    callParams.put("P_HOLD_YN", hold_Yn); 
-	    
+	    //callParams.put("P_OUTBOUND_BATCH", outbound_batch);
 	    callParams.put(Consts.PK_USER_ID, user_Id);
 	    
       checkParams.put("P_CENTER_CD", callParams.get("P_CENTER_CD"));
@@ -857,33 +820,4 @@ public class LOM7090EService {
 		return result;
 	}
 
-	/*
-	  * 지시취소 체크 Update
-	  * 
-	  * @param params
-	  * @return
-	  * @throws Exception
-	  */
-	 @SuppressWarnings("rawtypes")
-	 public Map callUpdate(Map<String, Object> params) throws Exception {
-
-	   Map result;
-
-	   TransactionStatus ts = transactionManager.getTransaction(new DefaultTransactionDefinition());
-	   try {
-	     result = (Map)dao.callUpdate(params);
-	     String oMsg = (String)result.get(Consts.PK_O_MSG);
-	     // 오류면 Rollback
-	     if (!Consts.OK.equals(oMsg)) {
-	       transactionManager.rollback(ts);
-	     }
-	     transactionManager.commit(ts);
-	   } catch (Exception e) {
-	     transactionManager.rollback(ts);
-	     throw new RuntimeException(e.getMessage());
-	   }
-
-	   return result;
-	 }
-	 
 }

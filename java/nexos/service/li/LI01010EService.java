@@ -20,10 +20,10 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
  * Description: 입고예정작업(LI01010E) 서비스를 담당하는 Class(트랜잭션처리 담당)<br>
  * Copyright: Copyright (c) 2013 ASETEC Corporation. All rights reserved.<br>
  * Company : ASETEC<br>
- * 
+ *
  * @author ASETEC
  * @version 1.0
- * 
+ *
  * <pre style="font-family: NanumGothicCoding, GulimChe">
  * ---------------------------------------------------------------------------------------------------------------------
  *  Version    Date          Author           Description
@@ -51,7 +51,7 @@ public class LI01010EService {
 
   /**
    * SP 호출 후 OUTPUT 값을 Map 형태로 Return
-   * 
+   *
    * @param queryId
    * @param params
    * @return
@@ -63,7 +63,7 @@ public class LI01010EService {
 
   /**
    * 저장/삭제시 상태를 체크해서 "10"이 아닐경우 저장/삭제 불가
-   * 
+   *
    * @param params
    * @param checkState
    * @return
@@ -91,7 +91,7 @@ public class LI01010EService {
 
   /**
    * 입고예정작업 삭제 처리
-   * 
+   *
    * @param params 신규, 수정된 데이터
    */
   @SuppressWarnings("unchecked")
@@ -136,7 +136,7 @@ public class LI01010EService {
 
   /**
    * 입고예정작업 팝업 화면 저장 처리
-   * 
+   *
    * @param params 신규, 수정된 데이터
    */
   @SuppressWarnings("unchecked")
@@ -148,7 +148,8 @@ public class LI01010EService {
 
     if (!Consts.PROCESS_ENTRY_NEW.equals(process_Cd)) {
       Map<String, Object> checkParams = new HashMap<String, Object>();
-      checkParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
+      // checkParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
+      checkParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD_ORG"));
       checkParams.put("P_BU_CD", masterDS.get("P_BU_CD"));
       checkParams.put("P_INBOUND_DATE", masterDS.get("P_ORDER_DATE_ORG"));
       checkParams.put("P_INBOUND_NO", masterDS.get("P_ORDER_NO"));

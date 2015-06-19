@@ -86,6 +86,7 @@ public class LI01010EDAOImpl implements LI01010EDAO {
     String process_Cd = (String)params.get("P_PROCESS_CD");
     String user_Id = (String)params.get(Consts.PK_USER_ID);
     String order_No;
+    String sp_Chk_Flag;
     int line_No;
     int dsCnt = detailDS.size();
 
@@ -102,7 +103,8 @@ public class LI01010EDAOImpl implements LI01010EDAO {
 
       // 입고번호 채번
       newParams = new HashMap<String, Object>();
-      newParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
+      // newParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
+      newParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD_ORG"));
       newParams.put("P_BU_CD", masterDS.get("P_BU_CD"));
       newParams.put("P_ORDER_DATE", masterDS.get("P_ORDER_DATE_ORG"));
 
@@ -124,7 +126,8 @@ public class LI01010EDAOImpl implements LI01010EDAO {
       // 입고순번 채번
       order_No = (String)masterDS.get("P_ORDER_NO");
       newParams = new HashMap<String, Object>();
-      newParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
+      // newParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
+      newParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD_ORG"));
       newParams.put("P_BU_CD", masterDS.get("P_BU_CD"));
       newParams.put("P_ORDER_DATE", masterDS.get("P_ORDER_DATE_ORG"));
       newParams.put("P_ORDER_NO", order_No);
@@ -167,7 +170,8 @@ public class LI01010EDAOImpl implements LI01010EDAO {
       }
 
       newParams.clear();
-      newParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
+      // newParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
+      newParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD_ORG"));
       newParams.put("P_BU_CD", masterDS.get("P_BU_CD"));
       newParams.put("P_INBOUND_DATE", masterDS.get("P_ORDER_DATE_ORG"));
       newParams.put("P_INBOUND_NO", order_No);
@@ -182,18 +186,22 @@ public class LI01010EDAOImpl implements LI01010EDAO {
       }
     }
 
-    newParams.clear();
-    newParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
-    newParams.put("P_BU_CD", masterDS.get("P_BU_CD"));
-    newParams.put("P_ORDER_DATE", masterDS.get("P_ORDER_DATE"));
-    newParams.put("P_ORDER_NO", order_No);
-    newParams.put("P_ORDER_DATE_ORG", masterDS.get("P_ORDER_DATE_ORG"));
-    newParams.put("P_USER_ID", user_Id);
+    sp_Chk_Flag = (String)masterDS.get("P_SP_CHK_FLAG");
+    if (Consts.YES.equals(sp_Chk_Flag)) {
+      newParams.clear();
+      newParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
+      newParams.put("P_CENTER_CD_ORG", masterDS.get("P_CENTER_CD"));
+      newParams.put("P_BU_CD", masterDS.get("P_BU_CD"));
+      newParams.put("P_ORDER_DATE", masterDS.get("P_ORDER_DATE"));
+      newParams.put("P_ORDER_NO", order_No);
+      newParams.put("P_ORDER_DATE_ORG", masterDS.get("P_ORDER_DATE"));
+      newParams.put("P_USER_ID", user_Id);
 
-    HashMap<String, Object> mapResult3 = nexosDAO.callSP(LI_ORDER_UPD_PROC_ID, newParams);
-    String oMsg = (String)mapResult3.get(Consts.PK_O_MSG);
-    if (!Consts.OK.equals(oMsg)) {
-      throw new RuntimeException(oMsg);
+      HashMap<String, Object> mapResult3 = nexosDAO.callSP(LI_ORDER_UPD_PROC_ID, newParams);
+      String oMsg = (String)mapResult3.get(Consts.PK_O_MSG);
+      if (!Consts.OK.equals(oMsg)) {
+        throw new RuntimeException(oMsg);
+      }
     }
   }
 }

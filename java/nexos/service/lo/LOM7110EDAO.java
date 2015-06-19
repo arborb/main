@@ -20,15 +20,6 @@ public interface LOM7110EDAO {
    * @return
    * @throws Exception
    */
-  String callFWScanConfirm(Map<String, Object> params) throws Exception;
-
-  /**
-   * 출고스캔검수-박스 통합(팝업화면에서)
-   * 
-   * @param params
-   * @return
-   * @throws Exception
-   */
   @SuppressWarnings("rawtypes")
-  Map callScanBoxMerge(Map<String, Object> params) throws Exception;
+  Map callFWScanConfirm(Map<String, Object> params) throws Exception;
 }

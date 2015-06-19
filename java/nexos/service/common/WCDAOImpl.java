@@ -337,10 +337,10 @@ public class WCDAOImpl implements WCDAO {
       String iniFilePath = "/usr/scp/scpdb_agent_unix.ini";
       String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );
         //
-      
-
-        System.out.println("\n outKey : " +outKey );
+        //System.out.println("\n outKey : " +outKey );
+        
         queryParams.put("P_SCPKEY", outKey);
+      
       int listCount = nexosDAO.listToExcel(queryId, queryParams, xlsWorkbook, columnInfo, xlsExportType, xlsTitle);
       if (listCount == 0) {
         resultMap.put(Consts.PK_O_MSG, "EXCEL 파일을 생성할 데이터가 존재하지 않습니다.");

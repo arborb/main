@@ -69,15 +69,4 @@ public interface LOM7090EDAO {
 	 * @throws Exception
 	 */
 	String saveDirections(Map<String, Object> params) throws Exception;
-	
-  /**
-   * 지시취소 체크 Update 프로시저 호출
-   * 
-   * @param params
-   * @return
-   * @throws Exception
-   */
-  @SuppressWarnings("rawtypes")
-  Map callUpdate(Map<String, Object> params) throws Exception;
-  
 }

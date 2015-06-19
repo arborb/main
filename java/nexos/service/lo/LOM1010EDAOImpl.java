@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import nexos.common.Consts;
 import nexos.common.ibatis.NexosDAO;
+import nexos.common.spring.security.Encryption;
 
 import org.springframework.stereotype.Repository;
 
@@ -40,7 +41,7 @@ public class LOM1010EDAOImpl implements LOM1010EDAO {
 
         // SQLMAP ID 세팅
         final String PRORAM_ID = "LO01010E";
-        final String LOM_PRORAM_ID = "LOM1010E";
+        //final String LOM_PRORAM_ID = "LOM1010E";
         
         final String MASTER_TABLE_NM = "LO010NM";
         final String MASTER_INSERT_ID = PRORAM_ID + ".INSERT_" + MASTER_TABLE_NM;
@@ -49,9 +50,13 @@ public class LOM1010EDAOImpl implements LOM1010EDAO {
         final String DETAIL_INSERT_ID = PRORAM_ID + ".INSERT_" + DETAIL_TABLE_NM;
         final String DETAIL_UPDATE_ID = PRORAM_ID + ".UPDATE_" + DETAIL_TABLE_NM;
         final String DETAIL_DELETE_ID = PRORAM_ID + ".DELETE_" + DETAIL_TABLE_NM;
-        final String LOM_TABLE_NM = "LO010PM";
-        final String LOM_INSERT_ID = LOM_PRORAM_ID + ".INSERT_" + LOM_TABLE_NM;
-        final String LOM_UPDATE_ID = LOM_PRORAM_ID + ".UPDATE_" + LOM_TABLE_NM;
+        //final String LOM_TABLE_NM = "LO010PM";
+        //final String LOM_INSERT_ID = LOM_PRORAM_ID + ".INSERT_" + LOM_TABLE_NM;
+        //final String LOM_UPDATE_ID = LOM_PRORAM_ID + ".UPDATE_" + LOM_TABLE_NM;
+        
+
+        final String LOM_INSERT_ID1 = "LO_1010PM_INSERT";
+        final String LOM_UPDATE_ID1 = "LO_1010PM_UPDATE";
 
         final String LO010NM_GETNO_ID = "WT.LO_010NM_GETNO";
         final String LO010ND_GETNO_ID = "WT.LO_010ND_GETNO";
@@ -67,10 +72,14 @@ public class LOM1010EDAOImpl implements LOM1010EDAO {
         String order_No;
         int line_No;
         int dsCnt = detailDS.size();
+        
+
+    
+    
 
         // 등록자ID 입력
         masterDS.put(Consts.PK_USER_ID, user_Id);
-        subDS.put(Consts.PK_USER_ID, user_Id);
+        //subDS.put(Consts.PK_USER_ID, user_Id);
 
         Map<String, Object> newParams;
         // 신규 등록
@@ -97,10 +106,38 @@ public class LOM1010EDAOImpl implements LOM1010EDAO {
           order_No = (String)mapResult.get("O_ORDER_NO");
           masterDS.put("P_ORDER_NO", order_No);
           subDS.put("P_ORDER_NO", order_No);
+          
 
+          String ScpMasterEncStr1 =  (String)subDS.get(Consts.DK_SCP_DATA_11); //P_ORDERER_TEL
+          String ScpMasterEncStr2 =  (String)subDS.get(Consts.DK_SCP_DATA_7);  //P_ORDERER_HP
+          String ScpMasterEncStr3 =  (String)subDS.get(Consts.DK_SCP_DATA_6);  //P_ORDERER_EMAIL
+          String ScpMasterEncStr6 =  (String)subDS.get(Consts.DK_SCP_DATA_4);  //P_SHIPPER_TEL
+          String ScpMasterEncStr7 =  (String)subDS.get(Consts.DK_SCP_DATA_3);  //P_SHIPPER_HP
+          String ScpMasterEncStr8 =  (String)subDS.get(Consts.DK_SCP_DATA_1);  //P_SHIPPER_ADDR_BASIC
+          String ScpMasterEncStr9 =  (String)subDS.get(Consts.DK_SCP_DATA_2);  //P_SHIPPER_ADDR_DETAIL
+          String ScpMasterEncStr10 =  (String)subDS.get(Consts.DK_SCP_DATA_5);  //P_ORDERER_NM
+          String ScpMasterEncStr11 =  (String)subDS.get(Consts.DK_SCP_DATA_8);  //P_SHIPPER_NM
+          
+
+          
+          Encryption EncStr = new Encryption();
+
+          
+          subDS.put(Consts.DK_SCP_DATA_11, EncStr.aesEncode(ScpMasterEncStr1));
+          subDS.put(Consts.DK_SCP_DATA_7, EncStr.aesEncode(ScpMasterEncStr2));
+          subDS.put(Consts.DK_SCP_DATA_6, EncStr.aesEncode(ScpMasterEncStr3));
+          subDS.put(Consts.DK_SCP_DATA_4, EncStr.aesEncode(ScpMasterEncStr6));
+          subDS.put(Consts.DK_SCP_DATA_3, EncStr.aesEncode(ScpMasterEncStr7));
+          subDS.put(Consts.DK_SCP_DATA_1, EncStr.aesEncode(ScpMasterEncStr8));
+          subDS.put(Consts.DK_SCP_DATA_2, EncStr.aesEncode(ScpMasterEncStr9));
+          subDS.put(Consts.DK_SCP_DATA_5, EncStr.aesEncode(ScpMasterEncStr10));
+          subDS.put(Consts.DK_SCP_DATA_8, EncStr.aesEncode(ScpMasterEncStr11));
+          
+          
           // 마스터 생성, CRUD 체크 안함
           nexosDAO.insert(MASTER_INSERT_ID, masterDS);
-          nexosDAO.insert(LOM_INSERT_ID, subDS);
+         // nexosDAO.insert(LOM_INSERT_ID, subDS);
+          nexosDAO.callSP(LOM_INSERT_ID1, subDS);
         } else {
           // 수정 처리
           // 출고순번 채번
@@ -111,6 +148,32 @@ public class LOM1010EDAOImpl implements LOM1010EDAO {
           newParams.put("P_ORDER_DATE", masterDS.get("P_ORDER_DATE"));
           newParams.put("P_ORDER_NO", order_No);
 
+          String ScpMasterEncStr1 =  (String)subDS.get(Consts.DK_SCP_DATA_11); //P_ORDERER_TEL
+          String ScpMasterEncStr2 =  (String)subDS.get(Consts.DK_SCP_DATA_7);  //P_ORDERER_HP
+          String ScpMasterEncStr3 =  (String)subDS.get(Consts.DK_SCP_DATA_6);  //P_ORDERER_EMAIL
+          String ScpMasterEncStr6 =  (String)subDS.get(Consts.DK_SCP_DATA_4);  //P_SHIPPER_TEL
+          String ScpMasterEncStr7 =  (String)subDS.get(Consts.DK_SCP_DATA_3);  //P_SHIPPER_HP
+          String ScpMasterEncStr8 =  (String)subDS.get(Consts.DK_SCP_DATA_1);  //P_SHIPPER_ADDR_BASIC
+          String ScpMasterEncStr9 =  (String)subDS.get(Consts.DK_SCP_DATA_2);  //P_SHIPPER_ADDR_DETAIL
+          String ScpMasterEncStr10 =  (String)subDS.get(Consts.DK_SCP_DATA_5);  //P_ORDERER_NM
+          String ScpMasterEncStr11 =  (String)subDS.get(Consts.DK_SCP_DATA_8);  //P_SHIPPER_NM
+          
+
+          
+          Encryption EncStr = new Encryption();
+
+          
+          subDS.put(Consts.DK_SCP_DATA_11, EncStr.aesEncode(ScpMasterEncStr1));
+          subDS.put(Consts.DK_SCP_DATA_7, EncStr.aesEncode(ScpMasterEncStr2));
+          subDS.put(Consts.DK_SCP_DATA_6, EncStr.aesEncode(ScpMasterEncStr3));
+          subDS.put(Consts.DK_SCP_DATA_4, EncStr.aesEncode(ScpMasterEncStr6));
+          subDS.put(Consts.DK_SCP_DATA_3, EncStr.aesEncode(ScpMasterEncStr7));
+          subDS.put(Consts.DK_SCP_DATA_1, EncStr.aesEncode(ScpMasterEncStr8));
+          subDS.put(Consts.DK_SCP_DATA_2, EncStr.aesEncode(ScpMasterEncStr9));
+          subDS.put(Consts.DK_SCP_DATA_5, EncStr.aesEncode(ScpMasterEncStr10));
+          subDS.put(Consts.DK_SCP_DATA_8, EncStr.aesEncode(ScpMasterEncStr11));
+          
+          
           HashMap<String, Object> mapResult = nexosDAO.callSP(LO010ND_GETNO_ID, newParams);
           String oMsg = (String)mapResult.get(Consts.PK_O_MSG);
           if (!Consts.OK.equals(oMsg)) {
@@ -125,7 +188,9 @@ public class LOM1010EDAOImpl implements LOM1010EDAO {
           }
           //온라인 부가정보 마스터를 수정했을때 업데이트
           if (Consts.DV_CRUD_U.equals(subDS.get(Consts.PK_CRUD))) {
-            nexosDAO.update(LOM_UPDATE_ID, subDS);
+           // nexosDAO.update(LOM_UPDATE_ID, subDS);
+
+            nexosDAO.callSP(LOM_UPDATE_ID1, subDS);
           }
         }
 

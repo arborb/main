@@ -291,13 +291,4 @@ public class LOM7090EDAOImpl implements LOM7090EDAO {
 		return outbound_Batch_save;
 	}
 
-  @SuppressWarnings("rawtypes")
-  @Override
-  public Map callUpdate(Map<String, Object> params) throws Exception {
-
-    final String LO_UDATE = "TEMP_LOCNT_30_UPDATE";
-
-    return nexosDAO.callSP(LO_UDATE, params);
-  }
-  
 }

@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import nexos.common.Consts;
 import nexos.common.ibatis.NexosDAO;
+import nexos.common.spring.security.Encryption;
 
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Repository;
  * 
  * @author ASETEC
  * @version 1.0
+ * 
  * 
  * <pre style="font-family: NanumGothicCoding, GulimChe">
  * ---------------------------------------------------------------------------------------------------------------------
@@ -47,11 +49,16 @@ public class RO01010EDAOImpl implements RO01010EDAO {
     final String DETAIL_INSERT_ID = PRORAM_ID + ".INSERT_" + DETAIL_TABLE_NM;
     final String DETAIL_UPDATE_ID = PRORAM_ID + ".UPDATE_" + DETAIL_TABLE_NM;
     final String DETAIL_DELETE_ID = PRORAM_ID + ".DELETE_" + DETAIL_TABLE_NM;
-   
+   /*
     final String RO_TABLE_NM = "RO010PM";
     final String RO_INSERT_ID = PRORAM_ID + ".INSERT_" + RO_TABLE_NM;
     final String RO_UPDATE_ID = PRORAM_ID + ".UPDATE_" + RO_TABLE_NM;
-
+   */
+    // 보안 관련 으로 인하여 고개정보테이블 INSERT/UPDATE 변경 
+    final String RO_INSERT_ID1 = "RO_1010PM_INSERT";
+    final String RO_UPDATE_ID1 = "RO_1010PM_UPDATE";
+    
+    
     final String RO010NM_GETNO_ID = "WT.RO_010NM_GETNO";
     final String RO010ND_GETNO_ID = "WT.RO_010ND_GETNO";
     final String RO_PROCESSING_ID = "RO_PROCESSING";
@@ -97,10 +104,31 @@ public class RO01010EDAOImpl implements RO01010EDAO {
       order_No = (String)mapResult.get("O_ORDER_NO");
       masterDS.put("P_ORDER_NO", order_No);
       subDS.put("P_ORDER_NO", order_No);
+      
+      String ScpMasterEncStr6 =  (String)subDS.get(Consts.DK_SCP_DATA_4);  //P_SHIPPER_TEL
+      String ScpMasterEncStr7 =  (String)subDS.get(Consts.DK_SCP_DATA_3);  //P_SHIPPER_HP
+      String ScpMasterEncStr8 =  (String)subDS.get(Consts.DK_SCP_DATA_1);  //P_SHIPPER_ADDR_BASIC
+      String ScpMasterEncStr9 =  (String)subDS.get(Consts.DK_SCP_DATA_2);  //P_SHIPPER_ADDR_DETAIL
+      String ScpMasterEncStr11 =  (String)subDS.get(Consts.DK_SCP_DATA_8);  //P_SHIPPER_NM
+      
 
+      
+      Encryption EncStr = new Encryption();
+
+      
+      subDS.put(Consts.DK_SCP_DATA_4, EncStr.aesEncode(ScpMasterEncStr6));
+      subDS.put(Consts.DK_SCP_DATA_3, EncStr.aesEncode(ScpMasterEncStr7));
+      subDS.put(Consts.DK_SCP_DATA_1, EncStr.aesEncode(ScpMasterEncStr8));
+      subDS.put(Consts.DK_SCP_DATA_2, EncStr.aesEncode(ScpMasterEncStr9));
+      subDS.put(Consts.DK_SCP_DATA_8, EncStr.aesEncode(ScpMasterEncStr11));
+      
+      
+
+      
       // 마스터 생성, CRUD 체크 안함
       nexosDAO.insert(MASTER_INSERT_ID, masterDS);
-      nexosDAO.insert(RO_INSERT_ID, subDS);
+  //    nexosDAO.insert(RO_INSERT_ID, subDS);
+      nexosDAO.callSP(RO_INSERT_ID1, subDS);
     } else {
       // 수정전 상태 체크
       newParams = new HashMap<String, Object>();
@@ -140,13 +168,33 @@ public class RO01010EDAOImpl implements RO01010EDAO {
 
       line_No = ((Number)mapResult.get("O_LINE_NO")).intValue();
 
+      String ScpMasterEncStr6 =  (String)subDS.get(Consts.DK_SCP_DATA_4);  //P_SHIPPER_TEL
+      String ScpMasterEncStr7 =  (String)subDS.get(Consts.DK_SCP_DATA_3);  //P_SHIPPER_HP
+      String ScpMasterEncStr8 =  (String)subDS.get(Consts.DK_SCP_DATA_1);  //P_SHIPPER_ADDR_BASIC
+      String ScpMasterEncStr9 =  (String)subDS.get(Consts.DK_SCP_DATA_2);  //P_SHIPPER_ADDR_DETAIL
+      String ScpMasterEncStr11 =  (String)subDS.get(Consts.DK_SCP_DATA_8);  //P_SHIPPER_NM
+      
+
+      
+      Encryption EncStr = new Encryption();
+
+      
+      subDS.put(Consts.DK_SCP_DATA_4, EncStr.aesEncode(ScpMasterEncStr6));
+      subDS.put(Consts.DK_SCP_DATA_3, EncStr.aesEncode(ScpMasterEncStr7));
+      subDS.put(Consts.DK_SCP_DATA_1, EncStr.aesEncode(ScpMasterEncStr8));
+      subDS.put(Consts.DK_SCP_DATA_2, EncStr.aesEncode(ScpMasterEncStr9));
+      subDS.put(Consts.DK_SCP_DATA_8, EncStr.aesEncode(ScpMasterEncStr11));
+      
+      
+
       // 마스터 수정, 마스터를 수정했으면
       if (Consts.DV_CRUD_U.equals(masterDS.get(Consts.PK_CRUD))) {
         nexosDAO.update(MASTER_UPDATE_ID, masterDS);
       }
       //온라인 부가정보 마스터를 수정했을때 업데이트
       if (Consts.DV_CRUD_U.equals(subDS.get(Consts.PK_CRUD))) {
-        nexosDAO.update(RO_UPDATE_ID, subDS);
+      //  nexosDAO.update(RO_UPDATE_ID, subDS);
+          nexosDAO.callSP(RO_UPDATE_ID1, subDS);
       }
     }
 

@@ -155,28 +155,20 @@ public class CS01010EDAOImpl implements CS01010EDAO {
 										.get("P_USER_PWD")));
 					}
 					nexosDAO.insert(USER_INSERT_ID, rowData);
-					
-					// 사용자 비밀번호 내역에 저장한다.
-					rowData.put("P_CLIENT_IP", getMachineInfo()
-							.getHostAddress());
-					rowData.put("P_CLIENT_NAME", getMachineInfo().getHostName());
-					nexosDAO.insert("WC.INSERT_CSUSERPASSINFO", rowData);
 				} else if (Consts.DV_CRUD_U.equals(crud)) {
 					if (rowData.containsKey("P_USER_PWD")) {
 						rowData.put("P_USER_PWD",
 								getEncryptUserPwd((String) rowData
 										.get("P_USER_PWD")));
 					}
-					String pwChanged = (String) rowData.get("P_PW_CHANGED");
-					if (pwChanged == "Y") {
-						// 1년이내 같은 같은 비밀번호가 있는지 조회
-						Map<String, String> resultMap = null;
-						List listResult = nexosDAO.list("WC.GET_PASSHISTORY",
-								masterDS.get(0));
-						resultMap = (Map<String, String>) listResult.get(0);
-						if (!String.valueOf(resultMap.get("PWD_COUNT")).equals("0")) {
-							throw new RuntimeException("1년내 사용한 비밀번호는 재사용이 불가합니다.");
-						}
+
+					// 1년이내 같은 같은 비밀번호가 있는지 조회
+					Map<String, String> resultMap = null;
+					List listResult = nexosDAO.list("WC.GET_PASSHISTORY",
+							masterDS.get(0));
+					resultMap = (Map<String, String>) listResult.get(0);
+					if (!String.valueOf(resultMap.get("PWD_COUNT")).equals("0")) {
+						throw new RuntimeException("1년내 사용한 비밀번호는 재사용이 불가합니다.");
 					}
 
 					nexosDAO.update(USER_UPDATE_ID, rowData);

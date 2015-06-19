@@ -85,6 +85,7 @@ public class LC04010EDAOImpl implements LC04010EDAO {
 
       // 마스터 생성, CRUD 체크 안함
       nexosDAO.insert(MASTER_INSERT_ID, masterDS);
+
     } else {
 
       HashMap<String, Object> mapResult = null;
