@@ -144,31 +144,6 @@ function _Inquiry() {
   G_GRDDETAILT1.queryParams = queryParams;
   // 데이터 조회
   $NC.serviceCall("/LOM7230E/getDataSet.do", $NC.getGridParams(G_GRDDETAILT1), onGetDetailT1);
-  /*
-  $NC.setInitGridVar(G_GRDMASTERT2);
-  // 파라메터 세팅
-  G_GRDMASTERT2.queryParams = queryParams;
-  // 데이터 조회
-  $NC.serviceCall("/LOM7230E/getDataSet.do", $NC.getGridParams(G_GRDMASTERT2), onGetMasterT2);
-
-  $NC.setInitGridVar(G_GRDDETAILT2);
-  // 파라메터 세팅
-  G_GRDDETAILT2.queryParams = queryParams;
-  // 데이터 조회
-  $NC.serviceCall("/LOM7230E/getDataSet.do", $NC.getGridParams(G_GRDDETAILT2), onGetDetailT2);
-
-  $NC.setInitGridVar(G_GRDMASTERT3);
-  // 파라메터 세팅
-  G_GRDMASTERT3.queryParams = queryParams;
-  // 데이터 조회
-  $NC.serviceCall("/LOM7230E/getDataSet.do", $NC.getGridParams(G_GRDMASTERT3), onGetMasterT3);
-
-  $NC.setInitGridVar(G_GRDDETAILT3);
-  // 파라메터 세팅
-  G_GRDDETAILT3.queryParams = queryParams;
-  // 데이터 조회
-  $NC.serviceCall("/LOM7230E/getDataSet.do", $NC.getGridParams(G_GRDDETAILT3), onGetDetailT3);
-  */
 }
 
 /**
@@ -1305,7 +1280,7 @@ function onBtnPrintInvoice() {
   var OUTBOUND_DATE = $NC.G_VAR.userData.P_OUTBOUND_DATE;
   var OUTBOUND_NO = $NC.G_VAR.userData.P_OUTBOUND_NO;
   var CARRIER_CD = $NC.G_VAR.userData.P_CARRIER_CD;
-  var ITEM_CD = $NC.G_VAR.userData.P_ITEM_CD;
+  var PICK_SEQ = $NC.G_VAR.userData.P_ITEM_CD;
 
   var checkedValueDS = [ ];
   var rowCount = G_GRDMASTERT1.data.getLength();
@@ -1320,21 +1295,25 @@ function onBtnPrintInvoice() {
     return;
   }
   
-  if (CARRIER_CD == '0020') {
-    reportDoc = "lo/LABEL_LOM09_1";
-    queryId = "WR.RS_LABEL_LOM03_1";    
+  if (CARRIER_CD == '1') {
+    //reportDoc = "lo/LABEL_LOM09_1";
+    //queryId = "WR.RS_LABEL_LOM03_1";
+    reportDoc = "lo/LABEL_LOM08_NEW";
+    queryId = "WR.RS_LABEL_LOM03_A_BOX";
   } else {
-    reportDoc = "lo/LABEL_LOM09_1";
-    queryId = "WR.RS_LABEL_LOM02_1"; 
+    //reportDoc = "lo/LABEL_LOM09_1";
+    //queryId = "WR.RS_LABEL_LOM02_1";
+    reportDoc = "lo/LABEL_LOM08_NEW";
+    queryId = "WR.RS_LABEL_LOM02_A_BOX";
   }
 
   var queryParams = {
       P_CENTER_CD: CENTER_CD,
       P_BU_CD: BU_CD,
       P_OUTBOUND_DATE: OUTBOUND_DATE,
-      P_OUTBOUND_NO: OUTBOUND_NO,
-      P_ITEM_CD: ITEM_CD,
-      P_PRINT_YN: "(재)"
+      //P_OUTBOUND_NO: OUTBOUND_NO,
+      P_PICK_SEQ: PICK_SEQ
+      //P_PRINT_YN: "(재)"
     };
 
     // 출력 호출

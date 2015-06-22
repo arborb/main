@@ -57,6 +57,10 @@ function _Initialize() {
   $("#dtpQHas_Date1").hide();
   // 사업부 검색 이미지 클릭
   $("#btnQBu_Cd").click(showUserBuPopup);
+  $('#btnGoHap').click(function(){
+    var rowData = parent.G_GRDPROGRAMMENU.data.getItems();
+    parent.showProgramPopup(rowData[112]);
+  });
 
   // $("#btnShip").click(onBtnShip);
 
@@ -298,13 +302,10 @@ function onChangingCondition() {
   // Row 데이터로 에디터 세팅
   $NC.setValue("#edtOrderer_Nm");
   $NC.setValue("#edtShipper_Nm");
-  $NC.setValue("#edtShipper_Tel");
-  $NC.setValue("#edtShipper_Hp");
   // $NC.setValue("#edtWb_No", rowData.WB_NO);
   // $NC.setValue("#edtWb_Chk_Yn", rowData.WB_CHK_YN);
   $NC.setValue("#edtHas_No");
   $NC.setValue("#edtLocation_Cd");
-  $NC.setValue("#edtShipper_Addr");
   $NC.setValue("#edtShip_Type");
 }
 
@@ -519,13 +520,10 @@ function setItemInfoValue(rowData) {
   // Row 데이터로 에디터 세팅
   $NC.setValue("#edtOrderer_Nm", rowData.ORDERER_NM);
   $NC.setValue("#edtShipper_Nm", rowData.SHIPPER_NM);
-  $NC.setValue("#edtShipper_Tel", rowData.SHIPPER_TEL);
-  $NC.setValue("#edtShipper_Hp", rowData.SHIPPER_HP);
   // $NC.setValue("#edtWb_No", rowData.WB_NO);
   // $NC.setValue("#edtWb_Chk_Yn", rowData.WB_CHK_YN);
   $NC.setValue("#edtHas_No", rowData.HAS_NO);
   $NC.setValue("#edtLocation_Cd", rowData.LOCATION_CD);
-  $NC.setValue("#edtShipper_Addr", rowData.SHIPPER_ADDR);
   $NC.setValue("#edtShip_Type", rowData.SHIP_TYPE_D);
   $NC.setValue("#edtQScan", $NC.G_VAR.SCAN_CD);
 
@@ -673,7 +671,7 @@ function onExecSP1(ajaxData) {
   var cl2 = TTTT.substr(0, 1);
   if (cl2 == 2) {
     $NC.setValue("#edtMessage", '비대상');
-    $("#edtMessage").css("color", "red").text();
+    $("#edtMessage").css("font-size", "80px").css("color", "red").text();
 
     $NC.G_VAR.INQUIRY_DIV = '3';
 
@@ -701,7 +699,7 @@ function onExecSP1(ajaxData) {
 
   } else if (cl2 == 1) {
     $NC.setValue("#edtMessage", '대상');
-    $("#edtMessage").css("color", "black").text();
+    $("#edtMessage").css("font-size", "80px").css("color", "black").text();
     if (!$NC.isNull(cl2)) {
       if (cl2 !== "1" && cl2 !== "2" && cl2 !== "3") {
         onChangingCondition();
@@ -729,9 +727,10 @@ function onExecSP2(ajaxData) {
   var TTTT = resultData.RESULT_DATA;
 
   var cl2 = TTTT.substr(0, 1);
+  $("#edtMessage").css("font-size", "")
   if (cl2 == 2) {
     $NC.setValue("#edtMessage", '비대상');
-    $("#edtMessage").css("color", "red").text();
+    $("#edtMessage").css("font-size", "80px").css("color", "red").text();
 
     $NC.G_VAR.INQUIRY_DIV = '4';
 
@@ -760,7 +759,7 @@ function onExecSP2(ajaxData) {
 
   } else if (cl2 == 1) {
     $NC.setValue("#edtMessage", '대상');
-    $("#edtMessage").css("color", "black").text();
+    $("#edtMessage").css("font-size", "80px").css("color", "black").text();
     
     if (!$NC.isNull(cl2)) {
       if (cl2 !== "1" && cl2 !== "2" && cl2 !== "3") {
@@ -862,19 +861,24 @@ function doPrint1() {
     $NC.G_MAIN.silentPrint({
 
       printParams: [{
-        reportDoc: "lo/LABEL_LOM12_1",
-        queryId: "WR.RS_LABEL_LOM12_1",
+        //reportDoc: "lo/LABEL_LOM12_1",
+        //queryId: "WR.RS_LABEL_LOM12_1",
+        reportDoc: "lo/LABEL_LOM12",
+        queryId: "WR.RS_LABEL_LOM13_NEW",
         queryParams: {
           P_CENTER_CD: rowData.CENTER_CD,
           P_BU_CD: rowData.BU_CD,
           P_HAS_DATE: rowData.HAS_DATE,
           P_HAS_NO: rowData.HAS_NO,
           P_LINE_NO: rowData.LINE_NO,
-          P_PICK_SEQ: rowData.PICK_SEQ
+          P_PICK_SEQ: rowData.PICK_SEQ,
+          P_PICK_BOX_NO: "",
+          P_INQUERY_DIV: "2"
         },
         iFrameNo: 1,
         silentPrinterName: $NC.G_USERINFO.PRINT_CARD,
-        internalQueryYn: "Y"
+        //internalQueryYn: "Y"
+        internalQueryYn: "N"
       }],
       onAfterPrint: function() {
         setFocusScan();
@@ -887,19 +891,24 @@ function doPrint1() {
     $NC.G_MAIN.silentPrint({
 
       printParams: [{
+        //reportDoc: "lo/LABEL_LOM12",
+        //queryId: "WR.RS_LABEL_LOM12",
         reportDoc: "lo/LABEL_LOM12",
-        queryId: "WR.RS_LABEL_LOM12",
+        queryId: "WR.RS_LABEL_LOM13_NEW",
         queryParams: {
           P_CENTER_CD: rowData.CENTER_CD,
           P_BU_CD: rowData.BU_CD,
           P_HAS_DATE: rowData.HAS_DATE,
           P_HAS_NO: rowData.HAS_NO,
           P_LINE_NO: rowData.LINE_NO,
-          P_PICK_BOX_NO: rowData.PICK_BOX_NO
+          P_PICK_SEQ: "",
+          P_PICK_BOX_NO: rowData.PICK_BOX_NO,
+          P_INQUERY_DIV: "3"
         },
         iFrameNo: 1,
         silentPrinterName: $NC.G_USERINFO.PRINT_CARD,
-        internalQueryYn: "Y"
+        //internalQueryYn: "Y"
+        internalQueryYn: "N"
       }],
       onAfterPrint: function() {
         setFocusScan();

@@ -33,6 +33,7 @@
 <script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
 <script src="../common/js/slickgrid/slick.editors.js"></script>
 <!-- Common JS -->
+<script src="../common/js/service-response-mock.js"></script>
 <script src="../common/js/common.js"></script>
 <!--  Popup JS -->
 <script src="../popup/js/popup.js"></script>
@@ -76,6 +77,22 @@
   <div id="divCenterView" class="ui-ctnr-normal" style="border-width: 1px 1px 0 1px;">
     <div id="divDetailView" class="ui-ctnr-left" style="border-width: 0 1px 1px 0;">
       <div id="divGridBox">
+
+        <!--div class="ui-gbox-title large" style="display: inline-block;">출고전표 정보</div>
+        <div id="divMasterInfoExpender" class="ui-gbox-title large" style="display: inline-block; margin-left: -6px; cursor: pointer; text-align: center; width: 25px;">▼</div>
+        <div class="ui-gbox-content">
+          <table id="tblMasterInfoView" class="ui-tbl-normal" style="table-layout: fixed;">
+            <col style="width: 95px;">
+            <col style="width: 40%;">
+            <col style="width: 95px;">
+            <col style="width: 40%;">
+            <tr>
+              <td><div id="" class="ui-lbl-normal large">전표총합</div></td>
+              <td><input class="ui-edt-display normal" type="text" id="edtQTOTAL_QTY" disabled="disabled" style="color: blue; font-size: 18px;"/></td>
+            </tr>
+          </table>
+        </div-->
+
         <table class="ui-tbl-grid">
           <tr>
             <td id="divTitle_grdMaster" class="ui-grd-title">출고 상품내역</td>
@@ -83,56 +100,6 @@
           </tr>
         </table>
         <div id="grdMaster"></div>
-        
-        <div class="ui-gbox-title large" style="display: inline-block;">출고전표 정보</div>
-      <div id="divMasterInfoExpender" class="ui-gbox-title large" style="display: inline-block; margin-left: -6px; cursor: pointer; text-align: center; width: 25px;">▼</div>
-      <div class="ui-gbox-content">
-        <table id="tblMasterInfoView" class="ui-tbl-normal" style="table-layout: fixed;">
-          <col style="width: 95px;">
-          <col style="width: 40%;">
-          <col style="width: 95px;">
-          <col style="width: 40%;">
-          <tr>
-            <td>
-              <div id="lblShipper_Nm44" class="ui-lbl-normal large">주문자명</div>
-            </td>
-            <td>
-              <input class="ui-edt-display normal" type="text" id="edtShipper_Nm" disabled="disabled" />
-            </td>
-            <td>
-              <div id="lblBu_No" class="ui-lbl-normal large">주문번호</div>
-            </td>
-            <td>
-              <input class="ui-edt-display normal" type="text" id="edtBu_No" disabled="disabled" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div id="lblOutbound_No" class="ui-lbl-normal large">출고번호</div>
-            </td>
-            <td>
-              <input class="ui-edt-display normal" type="text" id="edtOutbound_No" disabled="disabled" />
-            </td>
-            <td>
-              <div id="lblPacking_Batch" class="ui-lbl-normal large">주문유형</div>
-            </td>
-            <td>
-              <input class="ui-edt-display normal" type="text" id="edtOrder_Div" disabled="disabled" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div id="lblDelivery_Type" class="ui-lbl-normal large">출고차수</div>
-            </td>
-            <td>
-              <input class="ui-edt-display normal" type="text" id="edtOutbound_Batch" disabled="disabled" style="color: blue; font-size: 18px;"/>
-            </td>
-            <td></td>
-            <td></td>
-          </tr>
-        </table>
-      </div>
-
       </div>
     </div>
     <div id="divMasterView" class="ui-ctnr-right" style="border-width: 0 0 1px 1px;">
@@ -156,6 +123,9 @@
       <div class="ui-gbox-title large">용기번호</div>
       <div class="ui-gbox-content">
         <input class="ui-edt-display boxno" type="text" id="edtBox_No" disabled="disabled" />
+      </div>
+      <div class="ui-gbox-content">
+        <input class="ui-edt-display boxno" type="text" id="edtLabel_No" disabled="disabled" />
       </div>
 
       <div class="ui-gbox-title large">검수상품 정보</div>
@@ -190,14 +160,14 @@
             </td>
           </tr>
           <tr>
-            <td colspan="2" style="padding-left: 2px;">
-              <div style="display: inline-block; width: 76%;">
+            <td colspan="4" style="padding-left: 2px;">
+              <div style="display: inline-block; width: 50%;">
                 <div id="lblEntry_Qty" class="ui-gbox-title inner">피킹수량</div>
                 <div style="margin-right: 4px; border-width: 1px; border-style: solid; padding-right: 4px;">
                   <input class="ui-edt-display full" type="text" id="edtEntry_Qty" disabled="disabled" />
                 </div>
               </div>
-              <div style="display: inline-block; width: 76%;">
+              <div style="display: inline-block; width: 50%;">
                 <div id="lblConfirm_Qty" class="ui-gbox-title inner">검수수량</div>
                 <div style="margin-right: 4px; border-width: 1px; border-style: solid; padding-right: 4px;">
                   <input class="ui-edt-display full" type="text" id="edtConfirm_Qty" disabled="disabled" />
@@ -207,24 +177,38 @@
           </tr>
         </table>
       </div> 
-
     </div>
   </div>
   <div id="divBottomView" class="ui-ctnr-bottom">
     <div style="display: inline-block; width: 66%; margin: 0 -5px; vertical-align: middle;">
-      <div class="ui-lbl-wrapper">
+      <!--div class="ui-lbl-wrapper">
         <div id="lblConfirm_Rate" class="ui-lbl-normal large">진행율</div>
       </div>
       <div class="ui-ctnr-wrapper" style="padding: 0;">
         <div id="divProgressbar" class="ui-progressbar">
           <div id="divProgressVal" class="ui-lbl-progress">0 / 0 [ 0%]</div>
         </div>
-      </div>
+      </div-->
+      <table id="tblMasterInfoView" class="ui-tbl-normal" style="table-layout: fixed;">
+        <col style="width: 95px;">
+        <col style="width: 150px;">
+        <col style="width: 95px;">
+        <tr>
+          <td><div id="" class="ui-lbl-normal large">용기총합</div></td>
+          <td style="text-align:left">
+            <input class="ui-edt-display normal" type="text" id="edtTOTAL" disabled="disabled" style="color: blue; font-size: 18px; width:150px"/>
+          </td>
+          <td><div id="" class="ui-lbl-normal large">용기번호</div></td>
+          <td style="text-align:left">
+            <input class="ui-edt-display normal" type="text" id="edtNumber" disabled="disabled" style="color: blue; font-size: 18px; width:300px"/>
+          </td>
+        </tr>
+      </table>
     </div>
     <div style="display: inline-block; width: 34%; line-height: 28px;">
       <div id="btnDeliveryChange" class="ui-btn-wrapper" style="width: 110px;">용기추가</div>
-      <div id="btnBoxComplete" class="ui-btn-wrapper" style="width: 110px;">검수완료</div>
-      <div id="btnBoxCancel" class="ui-btn-wrapper" style="width: 110px;">검수취소</div>
+      <div id="btnBoxComplete" class="ui-btn-wrapper" style="width: 110px;">담기완료</div>
+      <div id="btnBoxCancel" class="ui-btn-wrapper" style="width: 110px;">담기취소</div>
     </div>
   </div>
 </body>

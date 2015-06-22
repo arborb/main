@@ -43,48 +43,61 @@
 <body>
   <div id="divTopLine" class="ui-top-line"></div>
   <!-- 조회 조건 -->
-
   <div id="divTopLine" class="ui-top-line"></div>
   <!-- 조회 조건 -->
   <div id="divConditionView" class="ui-ctnr-condition">
     <table class="ui-tbl-condition">
       <tr>
         <td>
-          <div id="lblQScan_Date" class="ui-lbl-condition">출고예정일자</div>
-          <input class="ui-dtp-key" type="text" id="dtpQScan_Date1" style="width: 80px;" />
-          <span class="ui-span-normal">▶</span>
-          <input class="ui-dtp-key" type="text" id="dtpQScan_Date2" style="width: 80px;" />
+          <div id="lblQScan_Date" class="ui-lbl-condition">스캔일자</div> 
+          <input class="ui-dtp-key" type="text" id="dtpQScan_Date1" style="width: 80px;" /> 
+          <span class="ui-span-normal">▶</span> 
+          <input class="ui-dtp-key" type="text" id="dtpQScan_Date2" style="width: 80px;"
+          />
         </td>
         <td>
-          <div id="lblQCENTER_CD" class="ui-lbl-condition">물류센터</div>
-          <select class="ui-cbo-key" id="cboQCenter_Cd" style="width: 150px;"></select>
+          <div id="lblQProc_Yn" class="ui-lbl-condition">처리여부</div> 
+          <select class="ui-cbo-normal" id="cboQProc_Yn" style="width: 150px;"></select>
         </td>
         <td>
-          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업구분</div>
-          <input class="ui-edt-normal" type="text" id="edtQBu_Cd" style="width: 60px;" />
-          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
-          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
-          <input type="hidden" id="edtQCust_Cd" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div id="lblQOutbound_Date" class="ui-lbl-condition">출고예정일자</div>
-          <input class="ui-dtp-key" type="text" id="dtpQOutbound_Date1" style="width: 80px;" />
-          <span class="ui-span-normal">▶</span>
-          <input class="ui-dtp-key" type="text" id="dtpQOutbound_Date2" style="width: 80px;" />
         </td>
       </tr>
     </table>
   </div>
-  <div id="divMasterView" class="ui-ctnr-normal">
-    <table class="ui-tbl-grid">
-      <tr>
-        <td id="divTitle_grdMaster" class="ui-grd-title">합포장불가상품내역</td>
-        <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
-      </tr>
-    </table>
-    <div id="grdMaster"></div>
+  <div id="divMasterView" style="padding: 1px;">
+    <!-- Tab Handler -->
+    <ul>
+      <li id="divTab1"><a href="#divDetailViewT1">켄베어 스캔내역</a></li>
+      <li id="divTab2"><a href="#divDetailViewT2">켄베어 스캔내역1</a></li>
+      <li id="divTab3"><a href="#divDetailViewT3">켄베어 스캔내역2</a></li>
+    </ul>
+    <div id="divDetailViewT1" style="padding: 0; border-width: 1px; border-style: solid;">
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdT1Master" class="ui-grd-title">켄베어 스캔내역</td>
+          <td id="divRowCount_grdT1Master" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdT1Master"></div>
+    </div>
+    <div id="divDetailViewT2" style="padding: 0; border-width: 1px; border-style: solid;">
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdT2Master" class="ui-grd-title">켄베어 스캔내역1</td>
+          <td id="divRowCount_grdT2Master" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdT2Master"></div>
+    </div>
+    <div id="divDetailViewT3" style="padding: 0; border-width: 1px; border-style: solid;">
+      <table class="ui-tbl-grid">
+        <tr>
+          <td id="divTitle_grdT3Master" class="ui-grd-title">켄베어 스캔내역2</td>
+          <td id="divRowCount_grdT3Master" class="ui-grd-rowcount">0/0 Rows</td>
+        </tr>
+      </table>
+      <div id="grdT3Master"></div>
+    </div>
   </div>
 </body>
 </html>
