@@ -12,8 +12,8 @@ import nexos.common.ibatis.NexosDAO;
 import org.springframework.stereotype.Repository;
 
 /**
- * Class: LOM711EDAOImpl<br>
- * Description: LOM711E DAO (Data Access Object)<br>
+ * Class: LOM7210EDAOImpl<br>
+ * Description: LOM7210E DAO (Data Access Object)<br>
  * Copyright: Copyright (c) 2013 ASETEC Corporation. All rights reserved.<br>
  * Company : ASETEC<br>
  *
@@ -28,78 +28,62 @@ import org.springframework.stereotype.Repository;
  * ---------------------------------------------------------------------------------------------------------------------
  * </pre>
  */
-@Repository("LOM7110EDAO")
-public class LOM7110EDAOImpl implements LOM7110EDAO {
+@Repository("LOM7210EDAO")
+public class LOM7210EDAOImpl implements LOM7210EDAO {
 
   @Resource
   private NexosDAO nexosDAO;
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   @Override
-  public String callBoxDelete(Map<String, Object> params) throws Exception {
-    
-    // SQLMAP ID 세팅
-    final String LO_PICK_SCAN_BOX_DEL = "LO_PICK_SCAN_BOX_DEL";
-    
-    String result = Consts.OK;
-    //String user_Id = (String)params.get(Consts.PK_USER_ID);
-    
-    HashMap<String, Object> mapResult = null;
-    String oMsg;
-    
-    // 파라메터 처리
-    List<Map<String, Object>> masterDS = (List<Map<String, Object>>)params.get(Consts.PK_DS_MASTER);
-    
-    int dsCnt = masterDS.size();
-    if (dsCnt > 0) {
-      // 디테일 처리
-      for (int i = 0; i < dsCnt; i++) {
-        Map<String, Object> rowData = masterDS.get(i);
-        
-        //rowData.put(Consts.PK_USER_ID, user_Id);
-        mapResult = nexosDAO.callSP(LO_PICK_SCAN_BOX_DEL, rowData);
-        
-        oMsg = (String)mapResult.get(Consts.PK_O_MSG);
-        if (!Consts.OK.equals(oMsg)) {
-          throw new RuntimeException(oMsg);
-        }
-      }
-    }
-    
-    return result;
+  public Map callBWScanConfirm(Map<String, Object> params) throws Exception {
+
+    // final String LO_BW_SCAN_CONFIRM_ORDER_ID = "LO_BW_SCAN_CONFIRM";
+
+    return nexosDAO.callSP("LO_BW_CONFIRM_TOTAL", params);
+  }
+
+  @SuppressWarnings("rawtypes")
+  @Override
+  public Map callFWScanConfirm(Map<String, Object> params) throws Exception {
+
+    // final String LO_FW_SCAN_CONFIRM_ORDER_ID = "LO_FW_SCAN_CONFIRM";
+
+    return nexosDAO.callSP("LO_FW_SCAN_CONFIRM_BATCH", params);
   }
 
   @SuppressWarnings("unchecked")
   @Override
-  public String callFWScanConfirm(Map<String, Object> params) throws Exception {
+  public String callScanBoxDelete(Map<String, Object> params) throws Exception {
 
-    final String LO_FW_SCAN_CONFIRM_ORDER_ID = "LO_FW_SCAN_PICK_PROC";
-    
+    // SQLMAP ID 세팅
+    final String LO_SCAN_BOX_DELETE_ID = "LO_SCAN_BOX_DELETE";
+
     String result = Consts.OK;
-    //String user_Id = (String)params.get(Consts.PK_USER_ID);
-    
+    String user_Id = (String)params.get(Consts.PK_USER_ID);
+
     HashMap<String, Object> mapResult = null;
     String oMsg;
-    
+
     // 파라메터 처리
     List<Map<String, Object>> masterDS = (List<Map<String, Object>>)params.get(Consts.PK_DS_MASTER);
-    
+
     int dsCnt = masterDS.size();
     if (dsCnt > 0) {
       // 디테일 처리
       for (int i = 0; i < dsCnt; i++) {
         Map<String, Object> rowData = masterDS.get(i);
-        
-        //rowData.put(Consts.PK_USER_ID, user_Id);
-        mapResult = nexosDAO.callSP(LO_FW_SCAN_CONFIRM_ORDER_ID, rowData);
-        
+
+        rowData.put(Consts.PK_USER_ID, user_Id);
+        mapResult = nexosDAO.callSP(LO_SCAN_BOX_DELETE_ID, rowData);
+
         oMsg = (String)mapResult.get(Consts.PK_O_MSG);
         if (!Consts.OK.equals(oMsg)) {
           throw new RuntimeException(oMsg);
         }
       }
     }
-    
+
     return result;
   }
 
@@ -107,9 +91,26 @@ public class LOM7110EDAOImpl implements LOM7110EDAO {
   @Override
   public Map callScanBoxMerge(Map<String, Object> params) throws Exception {
 
-    final String LO_SCAN_BOX_MERGE_ID = "LO_PICK_SCAN_BOX_MERGE";
+    final String LO_SCAN_BOX_MERGE_ID = "LO_SCAN_BOX_MERGE";
 
     return nexosDAO.callSP(LO_SCAN_BOX_MERGE_ID, params);
   }
-  
+
+  @SuppressWarnings("rawtypes")
+  @Override
+  public Map callScanBoxSave(Map<String, Object> params) throws Exception {
+
+    final String LO_SCAN_BOX_SAVE = "LO_SCAN_BOX_SAVE_PROC";
+
+    return nexosDAO.callSP(LO_SCAN_BOX_SAVE, params);
+  }
+
+  @SuppressWarnings("rawtypes")
+  @Override
+  public Map callScanBoxComplete(Map<String, Object> params) throws Exception {
+
+    final String LO_SCAN_BOX_COMPLETE = "LO_SCAN_BOX_COMPLETE_PROC";
+
+    return nexosDAO.callSP(LO_SCAN_BOX_COMPLETE, params);
+  }
 }
