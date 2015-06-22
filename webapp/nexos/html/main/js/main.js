@@ -20,6 +20,8 @@ function _Initialize() {
     // 실행 단위 화면 리사이즈 처리 Timeout Event
     onResizeTimeout: null,
     onProgramListTimeout: null,
+
+    onProgramBookMarkTimeout: null,
     onPrintListTimeout: null,
     // 오류 메시지 전체 표시 여부
     isFullErrorMessage: false,
@@ -42,16 +44,22 @@ function _Initialize() {
   grdProgramMenuInitialize();
   grdProgramListInitialize();
   grdPrintListInitialize();
+  grdProgramBookMarkInitialize();
 
   programListOverlayInitialize();
   printListOverlayInitialize();
   copyGridDataOverlayInitialize();
+  ProgramBookMarkOverlayInitialize();
 
   // 로그인 팝업
   loginPopupInitialize();
-  showLoginPopup(0);
+  //showLoginPopup(0);
 
   showMenu(false);
+  loadSessionUserInfo();
+  setTimeout(function(){
+    hashLoad();
+  }, 500)
 }
 
 /**
@@ -179,6 +187,8 @@ function buttonsInitalize() {
   $("#btnProgramList").prop("title", "실행된 단위화면 목록");
 
   $("#btnTopUserName").click(onBtnChangeUserPassword);
+  $("#btnProgramBookMark").prop("title", "실행된 단위화면 목록");
+
   $("#btnTopClose").click(onBtnClose).prop("title", "활성화된 화면 종료\n[Ctrl+클릭]실행된 화면 전체 종료");
   $("#btnTopLogout").click(onBtnLogout).prop("title", "로그인한 사용자 로그아웃");
   $("#btnReloadMenu").click(loadUserProgramMenu).prop("title", "메뉴 새로고침");
@@ -197,7 +207,7 @@ function buttonsInitalize() {
 
   $("#divTopLogo").click(
       function(e) {
-        if (e.ctrlKey == true) {
+        if (e.ctrlKey == true || e.metaKey == true) {
           if (e.altKey == false) {
             if (e.shiftKey == true) {
               reloadSqlMap(e);
@@ -209,7 +219,7 @@ function buttonsInitalize() {
             if (result) {
               var resultArray = result.split(";");
               var requestParams = {};
-              for (var i = 0, count = resultArray.length; i < count; i++) {
+              for ( var i = 0, count = resultArray.length; i < count; i++) {
                 requestParams["P_ENCRYPT_" + (i + 1)] = resultArray[i];
               }
               $NC.serviceCall("/WC/getEncryptString.do", {
@@ -402,7 +412,7 @@ function onBtnClose(e) {
     return;
   }
 
-  if (e.ctrlKey === true) {
+  if (e.ctrlKey === true || e.metaKey === true) {
     removeAllChildWindow();
   } else {
     removeChildWindow(activeWindow);
@@ -467,7 +477,7 @@ function onBtnChangeUserPassword(e) {
     return;
   }
 
-  if (e.ctrlKey && e.shiftKey) {
+  if (e.ctrlKey && e.shiftKey || e.metaKey && e.shiftKey) {
 
     $NC.serviceCall("/WC/getDataSet.do", {
       P_QUERY_ID: "WC.GET_CSMSG",
@@ -510,6 +520,18 @@ function reloadSqlMap(e) {
 }
 
 /**
+ * 사용자 정보 Load
+ */
+function loadSessionUserInfo() {
+
+  // 데이터 조회
+  $("#divLoginView").removeData("loginType");
+  $NC.serviceCallAndWait("/WC/getSessionUserInfo.do", null, onGetLogin, function(a, b, c, d) {
+    showLoginPopup(0);
+  });
+}
+
+/**
  * 사용자 프로그램 메뉴 Load
  */
 function loadUserProgramMenu() {
@@ -519,9 +541,20 @@ function loadUserProgramMenu() {
   $NC.setInitGridVar(G_GRDPROGRAMLIST);
 
   // 데이터 조회
-  $NC.serviceCall("/WC/getUserProgramMenu.do", {
+  $NC.serviceCallAndWait("/WC/getUserProgramMenu.do", {
     P_USER_ID: $NC.G_USERINFO.USER_ID
   }, onGetUserProgramMenu);
+}
+
+/**
+ * 사용자 즐겨찾기 메뉴
+ */
+function loadUserProgramBookMark() {
+  
+  // 데이터 조회
+  $NC.serviceCall("/WC/getUserProgramBookMark.do", {
+    P_USER_ID: $NC.G_USERINFO.USER_ID
+  }, onGetUserProgramBookMark);
 }
 
 /**
@@ -554,6 +587,114 @@ function topButtonsInitialize(disabled) {
   $NC.setEnable("#btnTopCancel", false);
   $NC.setEnable("#btnTopDelete", false);
   $NC.hideView("#btnTopPrintList");
+}
+
+
+function ProgramBookMarkOverlayInitialize() {
+  // 즐겨찾기 창열기
+  $("#btnProgramBookMark").click(function(e) {
+    clearTimeout($NC.G_VAR.onProgramListTimeout);
+    if ($("#divProgramBookMark").css("display") == "none") {
+      var offset = 27;
+      var clientHeight = Math.min($(window).height() - 100, Math.max(G_GRDPROGRAMBOOKMARK.data.getLength() * 25
+          + offset, 150));
+      $("#divProgramBookMark").css({
+        "left": $("#btnProgramBookMark").offset().left,
+        "width": 328,
+        "height": clientHeight
+      });
+      $NC.resizeGrid("#grdProgramBookMark", 328, clientHeight - offset);
+      // 컬럼 헤더 숨김으로 사이즈 재조정...
+      $("#grdProgramBookMark .slick-viewport").css({
+        "height": clientHeight - offset
+      });
+      $("#grdProgramBookMark .slick-pane-top").css({
+        "height": clientHeight - offset
+      });
+
+      try {
+        G_GRDPROGRAMBOOKMARK.view.autosizeColumns();
+      } catch (e) {
+      }
+      G_GRDPROGRAMBOOKMARK.view.resetActiveCell();
+      G_GRDPROGRAMBOOKMARK.view.setSelectedRows([ ]);
+      $NC.showView("#divProgramBookMark", {}, function() {
+        // 실행프로그램 목록에서 Active 화면 선택
+        //loadUserProgramBookMark();
+        if (!$NC.isNull($NC.G_VAR.activeWindow)) {
+          var PROGRAM_ID = $NC.G_VAR.activeWindow.get("userData").PROGRAM_ID;
+          $NC.setGridSelectRow(G_GRDPROGRAMBOOKMARK, {
+            selectKey: "PROGRAM_ID",
+            selectVal: PROGRAM_ID
+          });
+        }
+        G_GRDPROGRAMBOOKMARK.view.invalidate();
+        G_GRDPROGRAMBOOKMARK.view.focus();
+      });
+    }
+  });
+  
+  // 즐겨찾기 추가
+  $("#btnMenuAdd").click(function(e) {
+    var programId = $NC.getValue('#edtMenuAdd')
+      ,bookmarkItems = G_GRDPROGRAMBOOKMARK.data.getItems()
+    for (var i in bookmarkItems) {
+      if (bookmarkItems[i]['PROGRAM_ID'] == programId) {
+        alert('이미 즐겨찾기에 등록된 프로그램입니다.');
+        return false; 
+      }
+    }
+    var programIndex = $NC.getGridSearchRow(G_GRDPROGRAMMENU, {
+        searchKey: "PROGRAM_ID",
+        searchVal: programId,
+        isAllData: true
+      })
+      ,rowData = G_GRDPROGRAMMENU.data.getItemByIdx(programIndex)
+    rowData["PROGRAM_NM_F"] = rowData["PROGRAM_NM"] + " (" + rowData["PROGRAM_ID"] + ")";
+    G_GRDPROGRAMBOOKMARK.data.addItem(rowData);
+    $NC.serviceCall("/WC/saveUserBookMark.do", {
+      P_USER_ID: $NC.G_USERINFO['USER_ID'],
+      P_PROGRAM_ID: programId,
+      P_EXE_LEVEL1: 'Y',
+      P_EXE_LEVEL2: 'Y',
+      P_EXE_LEVEL3: 'Y',
+      P_EXE_LEVEL4: 'Y',
+      P_FAVORITE_YN: 'N',
+      P_REG_USER_ID: $NC.G_USERINFO['USER_ID']
+    }, onSaveBookMark);
+  })
+  var divProgramBookMark = $("#divProgramBookMark");
+  divProgramBookMark.children("div:first").click(function(e) {
+    if (e.target && e.target.tagName == "DIV") {
+      G_GRDPROGRAMBOOKMARK.view.focus();
+    }
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+  }).children("div").click(function(e) {
+    if (e.target && e.target.tagName == "DIV") {
+      G_GRDPROGRAMBOOKMARK.view.focus();
+    }
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+  });
+  var grdProgramBookMark = $("#grdProgramBookMark");
+  grdProgramBookMark.find("div.grid-focus,div.grid-canvas,div.slick-viewport").blur(function(e) {
+    clearTimeout($NC.G_VAR.onProgramBookMarkTimeout);
+    $NC.G_VAR.onProgramBookMarkTimeout = setTimeout(function() {
+      $NC.hideView(divProgramBookMark);
+    }, 1000);
+  }).focus(function(e) {
+    clearTimeout($NC.G_VAR.onProgramBookMarkTimeout);
+  });
+  var cboProgramBookMarkSortDir = $("#cboProgramBookMarkSortDir");
+  cboProgramBookMarkSortDir.focus(function(e) {
+    clearTimeout($NC.G_VAR.onProgramBookMarkTimeout);
+  });
+  // 정렬
+  cboProgramBookMarkSortDir.change(function(e) {
+    sortProgramBookMarkList();
+    G_GRDPROGRAMBOOKMARK.view.focus();
+  });
 }
 
 /**
@@ -602,6 +743,7 @@ function programListOverlayInitialize() {
         } else {
           $NC.hideView(divProgramList);
         }
+        loadUserProgramBookMark();
       });
   var divProgramList = $("#divProgramList");
   divProgramList.children("div:first").click(function(e) {
@@ -680,11 +822,28 @@ function printListOverlayInitialize() {
 }
 
 /**
+ * 즐겨찾기 저장후 응답
+ */
+function onSaveBookMark(ajaxData) {
+  //console.log(ajaxData);
+}
+
+/**
+ * 즐겨찾기 삭제후 응답
+ */
+function onDeleteBookMark(ajaxData) {
+  //alert('삭제되었습니다.');
+  //clearTimeout($NC.G_VAR.onProgramBookMarkTimeout);
+  //$NC.hideView(divProgramBookMark);
+}
+
+/**
  * 메뉴 보임/숨김
  */
 function showMenu(show, duration, userData) {
 
   G_GRDPROGRAMMENU.view.resetActiveCell();
+
   if (show) {
     $NC.G_OFFSET.currentMenuWidth = $NC.G_OFFSET.defaultMenuWidth;
     $NC.showView("#divMenuView", {}, null, $NC.isNull(duration) ? 0 : duration);
@@ -766,6 +925,7 @@ function showProgramPopup(programInfo) {
     $NC.G_VAR.windows.splice(winIndex, 1);
     $NC.G_VAR.windows.push(view);
     view.focus();
+    window.location.hash = $NC.G_VAR.activeWindow.get('userData').WEB_URL;
     return;
   }
 
@@ -866,6 +1026,9 @@ function showProgramPopup(programInfo) {
   if ($("#divCommonButtons").css("display") == "none") {
     $NC.showView("#divCommonButtons");
   }
+
+  // 해시태그 변경
+  window.location.hash = programInfo.WEB_URL;
 }
 
 /**
@@ -1274,6 +1437,161 @@ function showProgramSubPopup(options) {
   });
 }
 
+function showProgramtestpopup(options) {
+
+  if ($NC.isNull(options.containerId)) {
+    options.containerId = "div" + options.PROGRAM_ID;
+  }
+  if ($NC.isNull(options.title)) {
+    options.title = options.PROGRAM_NM + " (" + options.PROGRAM_ID + ")";
+  }
+
+  if (options.userData) {
+    options.userData["CLOSE_ACTION"] = "CANCEL";
+    options.userData["PROGRAM_ID"] = options.PROGRAM_ID;
+    options.userData["PROGRAM_NM"] = options.PROGRAM_NM;
+  } else {
+    options.userData = {
+      CLOSE_ACTION: "CANCEL",
+      PROGRAM_ID: options.PROGRAM_ID,
+      PROGRAM_NM: options.PROGRAM_NM
+    };
+  }
+
+  var parentElement = "#divProgramView";
+  var parent = $(parentElement);
+  var parentOffset = parent.offset();
+  var viewWidth = $NC.isNull(options.width) ? 800 : options.width;
+  var viewHeight = $NC.isNull(options.height) ? 500 : options.height;
+  var viewLeft = (parent.outerWidth() - viewWidth) / 2 + parentOffset.left;
+  if (viewLeft < parentOffset.left) {
+    viewLeft = parentOffset.left;
+  }
+  var viewTop = (parent.outerHeight() - viewHeight) / 2 + parentOffset.top;
+  if (viewTop < parentOffset.top) {
+    viewTop = parentOffset.top;
+  }
+
+  var isWide = true;
+  $NC.hideLoadingMessage(true);
+  $NC.showLoadingMessage(isWide);
+  var childRect = getChildWindowRect(isWide);
+
+  var viewWindow = $.jWindow({
+    parentElement: parentElement,
+    id: options.containerId,
+    title: options.title,
+    userData: options.userData,
+    // popupWindow: true,
+    animationDuration: 200,
+    posx: childRect.left,
+    posy: childRect.top,
+    minWidth: childRect.minWidth,
+    minHeight: childRect.minHeight,
+    width: childRect.width,
+    height: childRect.height,
+    windowType: 1,
+    type: "iframe",
+    url: $.browser.urlPrefix + "/nexos/html/" + options.url,
+    refreshButton: false,
+    minimiseButton: false,
+    maximiseButton: false,
+    containment: true,
+    // resizeable: false,
+    // draggable: true,
+    // modal: true,
+    onClose: function(jWin) {
+      var closeAction = "CANCEL";
+      if (jWin) {
+        // X 버튼으로 Close시 onCancel 호출
+        var userData = jWin.get("userData");
+        var resultInfo;
+        if (userData) {
+          if (userData["CLOSE_ACTION"]) {
+            closeAction = userData["CLOSE_ACTION"];
+          }
+
+          if (userData["RESULT_INFO"]) {
+            var tmp = userData["RESULT_INFO"];
+            if (typeof tmp == "object") {
+              if (Array.isArray(tmp)) {
+                resultInfo = $.extend(true, [ ], tmp);
+              } else {
+                resultInfo = $.extend(true, {}, tmp);
+}
+            } else {
+              resultInfo = tmp;
+            }
+          }
+        }
+
+        if (closeAction == "OK") {
+          if (options.onOk) {
+            options.onOk(resultInfo);
+          }
+        } else {
+          if (options.onCancel) {
+            options.onCancel(resultInfo);
+          }
+        }
+
+        // 팝업 제거
+        removePopupWindow(jWin);
+      }
+      setTimeout(setFocusActiveWindow, 100);
+    },
+
+    onFocus: function(jWin) {
+
+      $NC.G_VAR.activeSubWindow = jWin;
+      $NC.G_VAR.lastWindow = jWin;
+      var userData = $NC.G_VAR.activeWindow.get("userData");
+
+      if (!$("#btnPinMenu").is(".ui-clr-selected")) {
+        if (userData.WIDE_YN === "Y") {
+          showMenu(false);
+        } else {
+          showMenu(true, null, userData);
+        }
+      } else {
+        _OnResize($(window));
+
+        var activeCell = G_GRDPROGRAMMENU.view.getActiveCell();
+        if (!$NC.isNull(activeCell)) {
+          if (userData.PROGRAM_ID != G_GRDPROGRAMMENU.data.getItem(activeCell.row).PROGRAM_ID) {
+            setActiveProgramMenu(userData.PROGRAM_ID);
+          }
+        } else {
+          setActiveProgramMenu(userData.PROGRAM_ID);
+        }
+      }
+
+      scrollViewToTop();
+      setInitTopButtons();
+    }
+  });
+  $NC.G_VAR.activeSubWindow = viewWindow;
+  $NC.G_VAR.lastWindow = viewWindow;
+  viewWindow.update();
+  viewWindow.show({
+    duration: 200
+  });
+  // 해당 화면 목록에 추가
+  $NC.G_VAR.windows.push(viewWindow);
+  $NC.G_VAR.activeWindow = viewWindow;
+  $NC.G_VAR.lastWindow = viewWindow;
+  viewWindow.update();
+  viewWindow.show({
+    duration: 200
+  });
+
+  // 실행프로그램 목록에 보이기
+  showProgramListMenu(programInfo.id, "Y");
+  if ($("#divCommonButtons").css("display") == "none") {
+    $NC.showView("#divCommonButtons");
+  }
+}
+
 /**
  * 출력 미리보기 표시
  * 
@@ -1402,7 +1720,7 @@ function resizeChildWindows() {
   // 실행 중인 단위 화면 사이즈 조정
   var childRect = getChildWindowRect($NC.G_OFFSET.currentMenuWidth == 0);
 
-  for (var idx = 0, winCount = $NC.G_VAR.windows.length; idx < winCount; idx++) {
+  for ( var idx = 0, winCount = $NC.G_VAR.windows.length; idx < winCount; idx++) {
     $NC.G_VAR.windows[idx].set({
       posx: childRect.left,
       posy: childRect.top,
@@ -1471,7 +1789,7 @@ function removeChildWindow(view) {
 
   var removeId = view.get("id");
   var removeProgramId;
-  for (var idx = 0, winCount = $NC.G_VAR.windows.length; idx < winCount; idx++) {
+  for ( var idx = 0, winCount = $NC.G_VAR.windows.length; idx < winCount; idx++) {
     if (removeId == $NC.G_VAR.windows[idx].get("id")) {
 
       // 실행프로그램 목록에 숨기기
@@ -1493,6 +1811,7 @@ function removeChildWindow(view) {
   if (viewCount > 0) {
     $NC.G_VAR.activeWindow = $NC.G_VAR.windows[viewCount - 1];
     $NC.G_VAR.activeWindow.focus();
+    window.location.hash = $NC.G_VAR.activeWindow.get("userData").WEB_URL;
 
     if ($("#divProgramList").css("display") != "none") {
       G_GRDPROGRAMLIST.view.resetActiveCell();
@@ -1512,6 +1831,7 @@ function removeChildWindow(view) {
     clearTimeout($NC.G_VAR.onProgramListTimeout);
     $NC.hideView("#divProgramList");
     $NC.hideView("#divCommonButtons");
+    window.location.hash = '';
 
     topButtonsInitialize(true);
     scrollViewToTop();
@@ -1536,7 +1856,7 @@ function removeAllChildWindow() {
 
   var removeId;
   var viewCount = $NC.G_VAR.windows.length;
-  for (var idx = viewCount - 1; idx > -1; idx--) {
+  for ( var idx = viewCount - 1; idx > -1; idx--) {
 
     var view = $NC.G_VAR.windows[idx];
     removeId = view.get("id");
@@ -1571,7 +1891,7 @@ function getWindowIndex(program_Id) {
   var result = -1;
   var divProgram_Id = program_Id.indexOf("div") == 0 ? program_Id : "div" + program_Id;
   var view;
-  for (var i = 0, winCount = $NC.G_VAR.windows.length; i < winCount; i++) {
+  for ( var i = 0, winCount = $NC.G_VAR.windows.length; i < winCount; i++) {
     view = $NC.G_VAR.windows[i];
     if (divProgram_Id == view.get("id")) {
       result = i;
@@ -1670,6 +1990,13 @@ function loginPopupInitialize() {
  */
 function showLoginPopup(loginType) {
   $("#divLoginView").data("loginType", loginType).dialog("open");
+  setTimeout(function(){
+    if ($('#edtUser_Id').val() === '') {
+      $('#edtUser_Id').focus();
+    } else {
+      $('#edtUser_Pwd').focus();
+    }
+  }, 500);
 }
 
 /**
@@ -1678,7 +2005,7 @@ function showLoginPopup(loginType) {
 function setPrintList(data) {
 
   var newRows = $.extend(true, [ ], data);
-  for (var row = 0, rowCount = newRows.length; row < rowCount; row++) {
+  for ( var row = 0, rowCount = newRows.length; row < rowCount; row++) {
     newRows[row]["id"] = $NC.getGridNewRowId();
   }
 
@@ -1733,7 +2060,7 @@ function setActiveProgramMenu(program_Id) {
   // 해당 프로그램 선택 - 선택할 수 있을 경우만
   var rowCnt = G_GRDPROGRAMMENU.data.getLength();
   var rowData;
-  for (var i = 0; i < rowCnt; i++) {
+  for ( var i = 0; i < rowCnt; i++) {
     rowData = G_GRDPROGRAMMENU.data.getItem(i);
     if (program_Id === rowData.PROGRAM_ID) {
       G_GRDPROGRAMMENU.view.setActiveCell(i, 0);
@@ -2036,13 +2363,15 @@ function grdProgramMenuOnClick(e, args) {
         return;
       }
     }
+    $NC.setValue("#edtMenuAdd", rowData.PROGRAM_ID);
     showProgramPopup(rowData);
   }
 }
 
 function grdProgramMenuOnDblClick(e, args) {
-
+  $NC.setValue("#edtMenuAdd");
   var rowData = G_GRDPROGRAMMENU.data.getItem(args.row);
+  
   if (rowData) {
     if ($(e.target).hasClass("slick-cell")) {
       // 메뉴
@@ -2059,6 +2388,7 @@ function grdProgramMenuOnDblClick(e, args) {
         return;
       }
     }
+    $NC.setValue("#edtMenuAdd", rowData.PROGRAM_ID);
   }
 }
 
@@ -2087,9 +2417,7 @@ function grdProgramMenuOnFilter(item) {
  * grdProgramList 초기화
  */
 function grdProgramListInitialize() {
-
-  var columns = [
-      {
+  var columns = [{
         id: "PROGRAM_NM_F",
         field: "PROGRAM_NM_F",
         name: "프로그램명",
@@ -2146,6 +2474,87 @@ function grdProgramListInitialize() {
   $NC.hideGridHorzScroller("#grdProgramList");
 }
 
+
+/**
+ * grdProgramList 초기화
+ */
+function grdProgramBookMarkInitialize() {
+  var columns = [{
+      id: "PROGRAM_NM_F",
+      field: "PROGRAM_NM_F",
+      name: "프로그램명",
+      width: $NC.G_OFFSET.defaultMenuWidth - 25,
+      formatter: function(row, cell, value, columnDef, dataContext) {
+        if (dataContext.PROGRAM_DIV === "M") {
+          if (dataContext._collapsed) {
+            return "<span class='slick-group-toggle collapsed'></span>&nbsp;" + value;
+          } else {
+            return "<span class='slick-group-toggle expanded'></span>&nbsp;" + value;
+          }
+        } else {
+          return "<span class='slick-group-toggle" + " ui-icon-" + dataContext.PROGRAM_DIV.toLowerCase()
+              + "'></span>&nbsp;" + value;
+        }
+      }
+    },
+    {
+      id: "PROGRAM_CLOSE",
+      field: "PROGRAM_CLOSE",
+      maxWidth: 30,
+      minWidth: 30,
+      
+      formatter: function(row, cell, value, columnDef, dataContext) {
+        return "<span style='min-width: 22px; min-height: 20px; cursor: pointer; text-align: center; font-size: 10px; text-shadow: 0 1px 1px rgba(0, 0, 0, .2); font-weight: bold; display: block;'>X</span>";
+      }
+    }
+   /*
+    {
+      id: "CHECK_YN",
+      field: "CHECK_YN",
+      maxWidth: 30,
+      minWidth: 30,
+      sortable: false,
+      cssClass: "align-center",
+      formatter: Slick.Formatters.CheckBox,
+      editor: Slick.Editors.CheckBox,
+      editorOptions: {
+        valueChecked: "Y",
+        valueUnChecked: "N"
+      }
+    }
+    */
+    ];
+
+  var options = {
+    specialRow: {
+      compareFn: "return 'hover';"
+    }
+  };
+  // Grid Object, DataView 생성 및 초기화
+  $NC.setInitGridObject("#grdProgramBookMark", {
+    columns: columns,
+    queryId: null,
+    sortCol: "PROGRAM_ID",
+    gridOptions: options,
+    canCopyData: false,
+    onSortCompare: function(item1, item2) {
+      var x = item1[G_GRDPROGRAMBOOKMARK.sortCol], y = item2[G_GRDPROGRAMBOOKMARK.sortCol];
+      return (x == y ? 0 : (x > y ? 1 : -1));
+}
+  });
+
+  // Grid 클릭 이벤트
+  // cell, grid, row
+  G_GRDPROGRAMBOOKMARK.view.onClick.subscribe(grdProgramBookMarkOnClick);
+
+  // Grid 컬럼 헤더 숨김
+  $NC.hideGridColumnHeader("#grdProgramBookMark");
+  // Grid 가로 스크롤바 숨김
+  $NC.hideGridHorzScroller("#grdProgramBookMark");
+}
+
+
+
 function grdProgramListOnClick(e, args) {
 
   var rowData = G_GRDPROGRAMLIST.data.getItem(args.row);
@@ -2163,10 +2572,30 @@ function grdProgramListOnClick(e, args) {
 }
 
 /**
+ * 즐겨찾기 이벤트 리스너
+ */
+function grdProgramBookMarkOnClick(e, args) {
+  var rowData = G_GRDPROGRAMBOOKMARK.data.getItem(args.row);
+  if (args.cell == 0) {
+    $NC.hideView("#divProgramBookMark", null, 300);
+    $NC.setValue("#edtMenuAdd", rowData.PROGRAM_ID);
+    showProgramPopup(rowData);
+  } else {
+    // 삭제
+    if (confirm('즐겨찾기에서 삭제하겠습니까?')) {
+      G_GRDPROGRAMBOOKMARK.data.deleteItem(rowData.id)
+      $NC.serviceCall("/WC/deleteUserBookMark.do", {
+        P_USER_ID: $NC.G_USERINFO['USER_ID'],
+        P_PROGRAM_ID: rowData['PROGRAM_ID']
+      }, onDeleteBookMark);
+    }
+  }
+}
+
+/**
  * grdProgramList 데이터 필터링 이벤트
  */
 function grdProgramListOnFilter(item) {
-
   if (item.MENU_SHOW_YN === "N") {
     return false;
   }
@@ -2233,6 +2662,10 @@ function onGetLogin(ajaxData) {
 
   $NC.G_USERINFO = $NC.toArray(ajaxData);
 
+  if ($NC.G_USERINFO['RESULT_DATA'] == '') {
+    showLoginPopup(0);
+    return false;
+  }
   $("#btnTopUserName").val(
       $NC.G_USERINFO.USER_NM.length < 5 ? $NC.G_USERINFO.USER_NM : $NC.G_USERINFO.USER_NM.substr(0, 3) + "...").prop(
       "title",
@@ -2242,12 +2675,33 @@ function onGetLogin(ajaxData) {
   var loginDialog = $("#divLoginView");
   var loginType = loginDialog.data("loginType");
 
-  if (loginType != 1) {
-    showMenu(true);
-  }
-
   if ($NC.getLocalStorage("_PIN_MENU") == "Y") {
     $("#btnPinMenu").addClass("ui-clr-selected");
+  }
+
+  loginDialog.removeData("loginType");
+  loginDialog.dialog("close");
+
+  // 비밀번호 변경 3개월 초과시 비밀번호 변경 팝업 호출
+  var passDiv = $NC.G_USERINFO['PASS_DIV']
+    ,pass_reference = $NC.G_USERINFO['PASS_ITEM_REFERENCE'] * -1
+    ,diffMonth = $NC.getDiffDate($NC.G_USERINFO['PASS_CHANGED'], passDiv);
+
+  if ($NC.G_USERINFO['DEFAULT_PW'] === 'Y') {
+    var msg = '초기 부여된 비밀번호는 사용할수 없습니다. 변경해주세요.';
+    alert(msg);
+    changePwPopup();
+    return false;
+  }
+  if (diffMonth < pass_reference) {
+    var msg = '비밀번호를 변경해 주세요.(마지막 비밀번호 변경이 ' + Math.abs(pass_reference) + $NC.getPassDivString(passDiv) + ' 초과됨)';
+    alert(msg);
+    changePwPopup();
+    return false;
+  }
+
+  if (loginType != 1) {
+    showMenu(true);
   }
 
   loadUserProgramMenu();
@@ -2260,8 +2714,6 @@ function onGetLogin(ajaxData) {
     $NC.setLocalStorage("_USER_ID", null);
   }
 
-  loginDialog.removeData("loginType");
-  loginDialog.dialog("close");
   if (loginType == 1) {
     setFocusActiveWindow();
   } else {
@@ -2281,6 +2733,25 @@ function onGetLogin(ajaxData) {
       }, onGetNotice);
     });
   }
+  loadUserProgramBookMark();
+  sessionInit();
+}
+
+function changePwPopup() {
+  showProgramSubPopup({
+    PROGRAM_ID: "CS01030P",
+    PROGRAM_NM: "사용자 비밀번호 변경",
+    url: "cs/CS01030P.html",
+    width: 320,
+    height: 210,
+    onOk: function() {
+      alert('비밀번호가 변경되었습니다. 다시 로그인해주세요.')
+      location.reload();
+    },
+    onCancel: function() {
+      location.reload();
+    }
+  });
 }
 
 /**
@@ -2307,6 +2778,110 @@ function onGetLogout(ajaxData) {
 }
 
 /**
+ * 세션처리
+ * 창 새로고침, 자동 로그아웃 처리
+ */
+function sessionInit() {
+  /**
+   * 창닫기, 새로고침시 로그아웃 처리함
+   */
+  /*$(window).bind('beforeunload', function(e) { 
+    if($NC.G_USERINFO) {
+      setTimeout(function(){
+        if($NC.G_USERINFO) {
+           $NC.G_USERINFO = null;
+          location.reload();
+        }
+      }, 100)
+      $NC.serviceCall("/WC/getLogout.do", {
+        P_USER_ID: $NC.G_USERINFO.USER_ID
+      });
+      return "로그아웃 되었습니다.";
+}
+  });*/
+
+/**
+   * 일정기간 이벤트가 없을시 로그아웃 처리
+   */
+  var keepLoginWindow = [
+      'LOM9070E',
+      'LOM7010E',
+      'LOM7020E',
+      'LOM7030E',
+      'LOM7040E',
+      'LOM7050E',
+      'LOM0930E',
+      'RO04050E'
+      ]
+    //,ssTime = $NC.G_CONSTS.SCREENSAVER_TIME
+    ,ssTime = $NC.G_USERINFO['SESSION_ITEM_REFERENCE'] * 60
+    ,limitTime = $NC.G_CONSTS.SCREENSAVER_ALERT
+    ,g = $NC.G_VAR
+    ,keepLogin = false;
+
+  g.screenSaverTime = ssTime;
+  clearInterval(g.onScreenSaverInterval);
+  g.onScreenSaverInterval = setInterval(function(){
+    if ($NC.G_VAR.activeWindow) {
+      var windowId = $NC.G_VAR.activeWindow.get("userData").PROGRAM_ID;
+      for (var i in keepLoginWindow) {
+        if (windowId == keepLoginWindow[i]) {
+          keepLogin = true;
+          break;
+        }
+        keepLogin = false;
+      }
+    }
+    if (keepLogin) {
+      return false;
+    }
+    if($NC.G_USERINFO) {
+      var ssTime = g.screenSaverTime;
+      //$('#divMessagePopupView').text(ssTime + "초 뒤에 로그아웃 됩니다.");
+      //console.log(ssTime + "초 뒤에 로그아웃 됩니다.");
+      ssTime--;
+      if (ssTime === limitTime) {
+        $NC.showMessage({
+          title: "곧 로그아웃 됩니다.",
+          message: limitTime + '초 뒤에 로그아웃 됩니다.',
+          buttons: {
+            '로그인 연장': function(){
+              $(window).on('mousemove', resetScreenSaver);
+              $(window).on('keyup', resetScreenSaver);
+              ssTime = $NC.G_CONSTS.SCREENSAVER_TIME;
+            },
+            '로그아웃': function(){
+              logout();
+            }
+          }
+        });
+        $(window).off('mousemove', resetScreenSaver);
+        $(window).off('keyup', resetScreenSaver);
+      }
+      if (ssTime === 0) {
+        logout();
+      }
+      g.screenSaverTime = ssTime;
+    }
+  
+  }, 1000)
+
+  $(window).on('mousemove', resetScreenSaver);
+  $(window).on('keyup', resetScreenSaver);
+  function resetScreenSaver() {
+    g.screenSaverTime = ssTime;
+  }
+  function logout() {
+    clearInterval(g.onScreenSaverInterval);
+    $NC.serviceCall("/WC/getLogout.do", {
+      P_USER_ID: $NC.G_USERINFO.USER_ID
+    }, onGetLogout);
+    $NC.G_USERINFO = null;
+    alert('자동로그 아웃 되었습니다.\n다시 로그인 해주세요.');
+  }
+}
+
+/**
  * 사용자 메뉴 가져오기 성공시 호출되는 이벤트
  * 
  * @param ajaxData
@@ -2317,11 +2892,11 @@ function onGetUserProgramMenu(ajaxData) {
 
   // 실행프로그램 목록 초기화
   var programMenuRows = $NC.toArray(ajaxData);
-  for (var row = 0, rowCount = programMenuRows.length; row < rowCount; row++) {
+  for ( var row = 0, rowCount = programMenuRows.length; row < rowCount; row++) {
     programMenuRows[row].MENU_SHOW_YN = "N";
     programMenuRows[row]["PROGRAM_NM_F"] = programMenuRows[row].PROGRAM_NM + " (" + programMenuRows[row].PROGRAM_ID
         + ")";
-    for (var idx = 0, winCount = $NC.G_VAR.windows.length; idx < winCount; idx++) {
+    for ( var idx = 0, winCount = $NC.G_VAR.windows.length; idx < winCount; idx++) {
       if ("div" + programMenuRows[row].PROGRAM_ID == $NC.G_VAR.windows[idx].get("id")) {
         programMenuRows[row].MENU_SHOW_YN = "Y";
         programMenuRows[row]["SORT_ID"] = "id_new_" + new Date().getTime() + (10000 + idx + 1);
@@ -2333,6 +2908,33 @@ function onGetUserProgramMenu(ajaxData) {
   if (programMenuRows.length > 0) {
     sortProgramList();
   }
+}
+
+/**
+ * 사용자 메뉴 가져오기 성공시 호출되는 이벤트
+ * 
+ * @param ajaxData
+ */
+function onGetUserProgramBookMark(ajaxData) {
+  $NC.setInitGridData(G_GRDPROGRAMBOOKMARK, ajaxData);
+  // 실행프로그램 목록 초기화
+  var programBookMarkRows = $NC.toArray(ajaxData);
+  for ( var row = 0, rowCount = programBookMarkRows.length; row < rowCount; row++) {
+    var programIndex = $NC.getGridSearchRow(G_GRDPROGRAMMENU, {
+      searchKey: "PROGRAM_ID",
+      searchVal: programBookMarkRows[row].PROGRAM_ID,
+      isAllData: true
+    });
+    
+    G_GRDPROGRAMMENU.data.getItemByIdx(programIndex).FAVORITE_YN = 'Y';
+    programBookMarkRows[row].id = G_GRDPROGRAMMENU.data.getItemByIdx(programIndex).id;
+    programBookMarkRows[row].FAVORITE_YN = "N";
+    programBookMarkRows[row]["PROGRAM_NM_F"] = programBookMarkRows[row].PROGRAM_NM + " ("
+        + programBookMarkRows[row].PROGRAM_ID + ")";
+    programBookMarkRows[row].FAVORITE_YN = "Y";
+    programBookMarkRows[row]["SORT_ID"] = "id_new_" + new Date().getTime() + (10000 + row + 1);
+  }
+  $NC.setInitGridData(G_GRDPROGRAMBOOKMARK, programBookMarkRows);
 }
 
 /**
@@ -2350,7 +2952,7 @@ function onGetMsg(ajaxData) {
   delete $NC.G_MSG;
   $NC.G_MSG = {};
   var resultData = null;
-  for (var i = 0, count = resultRows.length; i < count; i++) {
+  for ( var i = 0, count = resultRows.length; i < count; i++) {
     resultData = resultRows[i];
     var PARENT_MSG = $NC.G_MSG[resultData.MSG_ID];
     if ($NC.isNull(PARENT_MSG)) {
@@ -2405,6 +3007,31 @@ function sortProgramList() {
   }
   if (rowData) {
     $NC.setGridSelectRow(G_GRDPROGRAMLIST, {
+      selectKey: "PROGRAM_ID",
+      selectVal: rowData.PROGRAM_ID
+    });
+  }
+}
+
+/**
+ * 즐겨찾기 목록 정렬
+ */
+function sortProgramBookMarkList() {
+  var activeCell = G_GRDPROGRAMBOOKMARK.view.getActiveCell();
+  var rowData;
+  if (activeCell) {
+    rowData = G_GRDPROGRAMBOOKMARK.data.getItem(activeCell.row);
+  }
+  var sort = $NC.getValue("#cboProgramBookMarkSortDir");
+  if (sort == "1") {
+    G_GRDPROGRAMBOOKMARK.sortCol = "PROGRAM_ID";
+    G_GRDPROGRAMBOOKMARK.data.sort(G_GRDPROGRAMBOOKMARK.onSortCompare, true);
+  } else {
+    G_GRDPROGRAMBOOKMARK.sortCol = "SORT_ID";
+    G_GRDPROGRAMBOOKMARK.data.sort(G_GRDPROGRAMBOOKMARK.onSortCompare, sort == "2");
+  }
+  if (rowData) {
+    $NC.setGridSelectRow(G_GRDPROGRAMBOOKMARK, {
       selectKey: "PROGRAM_ID",
       selectVal: rowData.PROGRAM_ID
     });
@@ -2577,6 +3204,25 @@ function hideCopyGridData() {
 
   $NC.hideView("#divCopyGridDataView");
 };
+
+/**
+ * hash를 읽어와서 마지막 페이지를 로드한다.
+ */
+function hashLoad() {
+  if (typeof G_GRDPROGRAMLIST !== 'object') {
+    return false;
+  }
+  var hash = window.location.hash.replace('#', '')
+    ,programs = G_GRDPROGRAMLIST.data.getItems()
+  for (var i in programs) {
+    if (hash === programs[i].WEB_URL) {
+      $NC.setValue("#edtMenuAdd", programs[i].PROGRAM_ID);
+      showProgramPopup(programs[i]);
+      return false;
+    }
+  }
+  window.location.hash = '';
+}
 
 /**
  * 자동 출력
@@ -2802,7 +3448,7 @@ function silentPrint(options) {
       }
 
       settings.printCount = options.printParams.length;
-      for (var i = 0; i < settings.printCount; i++) {
+      for ( var i = 0; i < settings.printCount; i++) {
         settings.printParams.push(getPrintParams(options.printParams[i]));
       }
 
