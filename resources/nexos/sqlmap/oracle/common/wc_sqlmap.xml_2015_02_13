@@ -1,0 +1,1177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // WMS Common 관련 SqlMap
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  // WMS Common 쿼리맵
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap namespace="WC">
+
+
+  <!--
+    //==================================================================================================================
+    // SELECT SQLMAP
+    //==================================================================================================================
+  -->
+  <!-- [S] - GET_CSMSG -->
+  <parameterMap id="paramGET_CSMSG" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_SYS_LANG"                mode="IN" />
+  </parameterMap>
+  <procedure id="GET_CSMSG" parameterMap="paramGET_CSMSG" resultClass="java.util.HashMap">
+    { ? = call WC.GET_CSMSG(?) }
+  </procedure>
+  <!-- [E] - GET_CSMSG -->
+
+
+  <!-- [S] - GET_CSPROGRAM -->
+  <parameterMap id="paramGET_CSPROGRAM" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+  </parameterMap>
+  <procedure id="GET_CSPROGRAM" parameterMap="paramGET_CSPROGRAM" resultClass="java.util.HashMap">
+    { ? = call WC.GET_CSPROGRAM }
+  </procedure>
+  <!-- [E] - GET_CSPROGRAM -->
+
+
+  <!-- [S] - GET_CSUSERPROGRAM -->
+  <parameterMap id="paramGET_CSUSERPROGRAM" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="GET_CSUSERPROGRAM" parameterMap="paramGET_CSUSERPROGRAM" resultClass="java.util.HashMap">
+    { ? = call WC.GET_CSUSERPROGRAM(?) }
+  </procedure>
+  <!-- [E] - GET_CSUSERPROGRAM -->
+
+
+  <!-- [S] - GET_CSUSERPROGRAMLAYOUT -->
+  <parameterMap id="paramGET_CSUSERPROGRAMLAYOUT" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_PROGRAM_ID"              mode="IN" />
+    <parameter property="P_GRID_ID"                 mode="IN" />
+    <parameter property="P_GRID_DIV"                mode="IN" />
+  </parameterMap>
+  <procedure id="GET_CSUSERPROGRAMLAYOUT" parameterMap="paramGET_CSUSERPROGRAMLAYOUT" resultClass="java.util.HashMap">
+    { ? = call WC.GET_CSUSERPROGRAMLAYOUT(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - GET_CSUSERPROGRAMLAYOUT -->
+
+
+  <!-- [S] - POP_OWNBRAND_CD -->
+  <parameterMap id="paramPOP_OWNBRAND_CD" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OWN_BRAND_CD"            mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_OWNBRAND_CD" parameterMap="paramPOP_OWNBRAND_CD" resultClass="java.util.HashMap">
+    { ? = call WC.POP_OWNBRAND_CD(?, ?, ?, ? ) }
+  </procedure>
+  <!-- [E] - POP_OWNBRAND_CD -->
+  
+  
+  <!-- [S] - POP_CMMALL -->
+  <parameterMap id="paramPOP_CMMALL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_MALL_CD"               mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMMALL" parameterMap="paramPOP_CMMALL" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMMALL(? ) }
+  </procedure>
+  <!-- [E] - POP_CMMALL -->
+  
+  <!-- [S] - GET_CSUSERSYSINFO -->
+  <parameterMap id="paramGET_CSUSERSYSINFO" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_CLIENT_IP"               mode="IN" />
+  </parameterMap>
+  <procedure id="GET_CSUSERSYSINFO" parameterMap="paramGET_CSUSERSYSINFO" resultClass="java.util.HashMap">
+    { ? = call WC.GET_CSUSERSYSINFO(?, ?) }
+  </procedure>
+  <!-- [E] - GET_CSUSERSYSINFO -->
+
+
+  <!-- [S] - GET_LOGIN -->
+  <parameterMap id="paramGET_LOGIN" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="GET_LOGIN" parameterMap="paramGET_LOGIN" resultClass="java.util.HashMap">
+    { ? = call WC.GET_LOGIN(?) }
+  </procedure>
+  <!-- [E] - GET_LOGIN -->
+  
+  <!-- [S] - GET_PASSHISTORY -->
+  <parameterMap id="paramGET_LOGIN" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_USER_PWD"                mode="IN" />
+  </parameterMap>
+  <procedure id="GET_PASSHISTORY" parameterMap="paramGET_LOGIN" resultClass="java.util.HashMap">
+    { ? = call WC.GET_PASSHISTORY(?, ?) }
+  </procedure>
+  <!-- [E] - GET_PASSHISTORY -->
+
+  <!-- [S] - GET_PROCESS_INFO -->
+  <parameterMap id="paramGET_PROCESS_INFO" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_PROCESS_GRP"             mode="IN" />
+  </parameterMap>
+  <procedure id="GET_PROCESS_INFO" parameterMap="paramGET_PROCESS_INFO" resultClass="java.util.HashMap">
+    { ? = call WC.GET_PROCESS_INFO(?, ?, ?) }
+  </procedure>
+  <!-- [E] - GET_PROCESS_INFO -->
+
+
+  <!-- [S] - GET_PROCESS_STATE_FWBW -->
+  <parameterMap id="paramGET_PROCESS_STATE_FWBW" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_PROCESS_GRP"             mode="IN" />
+  </parameterMap>
+  <procedure id="GET_PROCESS_STATE_FWBW" parameterMap="paramGET_PROCESS_STATE_FWBW" resultClass="java.util.HashMap">
+    { ? = call WC.GET_PROCESS_STATE_FWBW(?, ?, ?) }
+  </procedure>
+  <!-- [E] - GET_PROCESS_STATE_FWBW -->
+
+
+  <!-- [S] - GET_PROTECT -->
+  <parameterMap id="paramGET_PROTECT" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_PROTECT_DATE"            mode="IN" />
+  </parameterMap>
+  <procedure id="GET_PROTECT" parameterMap="paramGET_PROTECT" resultClass="java.util.HashMap">
+    { ? = call WC.GET_PROTECT(?, ?, ?) }
+  </procedure>
+  <!-- [E] - GET_PROTECT -->
+
+
+  <!-- [S] - GET_PSTOCK_QTY -->
+  <parameterMap id="paramGET_PSTOCK_QTY" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_POLICY_LO310"            mode="IN" />
+    <parameter property="P_POLICY_LO320"            mode="IN" />
+  </parameterMap>
+  <procedure id="GET_PSTOCK_QTY" parameterMap="paramGET_PSTOCK_QTY" resultClass="java.util.HashMap">
+    { ? = call WC.GET_PSTOCK_QTY(?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - GET_PSTOCK_QTY -->
+
+
+  <!-- [S] - GET_SYSDATE -->
+  <parameterMap id="paramGET_SYSDATE" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+  </parameterMap>
+  <procedure id="GET_SYSDATE" parameterMap="paramGET_SYSDATE" resultClass="java.util.HashMap">
+    { ? = call WC.GET_SYSDATE }
+  </procedure>
+  <!-- [E] - GET_SYSDATE -->
+
+
+  <!-- [S] - POP_CMBRAND -->
+  <parameterMap id="paramPOP_CMBRAND" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMBRAND" parameterMap="paramPOP_CMBRAND" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMBRAND(?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMBRAND -->
+
+
+  <!-- [S] - POP_CMBU -->
+  <parameterMap id="paramPOP_CMBU" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMBU" parameterMap="paramPOP_CMBU" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMBU(?) }
+  </procedure>
+  <!-- [E] - POP_CMBU -->
+
+
+  <!-- [S] - POP_CMBUBRAND -->
+  <parameterMap id="paramPOP_CMBUBRAND" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMBUBRAND" parameterMap="paramPOP_CMBUBRAND" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMBUBRAND(?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMBUBRAND -->
+  
+  
+  <!-- [S] - POP_CMMALLBRAND -->
+  <parameterMap id="paramPOP_CMMALLBRAND" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MALL_CD"                 mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMMALLBRAND" parameterMap="paramPOP_CMMALLBRAND" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMMALLBRAND(?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMMALLBRAND -->
+
+
+
+  <!-- [S] - POP_CMCAR -->
+  <parameterMap id="paramPOP_CMCAR" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_CAR_CD"                  mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMCAR" parameterMap="paramPOP_CMCAR" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMCAR(?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMCAR -->
+
+
+  <!-- [S] - POP_CMCENTER -->
+  <parameterMap id="paramPOP_CMCENTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMCENTER" parameterMap="paramPOP_CMCENTER" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMCENTER(?) }
+  </procedure>
+  <!-- [E] - POP_CMCENTER -->
+
+
+  <!-- [S] - POP_CMCODE -->
+  <parameterMap id="paramPOP_CMCODE" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CODE_GRP"                mode="IN" />
+    <parameter property="P_CODE_CD"                 mode="IN" />
+    <parameter property="P_SUB_CD1"                 mode="IN" />
+    <parameter property="P_SUB_CD2"                 mode="IN" />
+    <parameter property="P_SUB_CD3"                 mode="IN" javaType="java.lang.String"  jdbcType="VARCHAR" />
+    <parameter property="P_SUB_CD4"                 mode="IN" javaType="java.lang.String"  jdbcType="VARCHAR" />
+  </parameterMap>
+  <procedure id="POP_CMCODE" parameterMap="paramPOP_CMCODE" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMCODE(?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMCODE -->
+
+
+  <!-- [S] - POP_CMCUST -->
+  <parameterMap id="paramPOP_CMCUST" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMCUST" parameterMap="paramPOP_CMCUST" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMCUST(?) }
+  </procedure>
+  <!-- [E] - POP_CMCUST -->
+  
+  
+ <!-- [S] - POP_CMUSERCUST -->
+  <parameterMap id="paramPOP_CMUSERCUST" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMUSERCUST" parameterMap="paramPOP_CMUSERCUST" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMUSERCUST(?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMUSERCUST-->
+
+
+  <!-- [S] - POP_CMCUSTBRAND -->
+  <parameterMap id="paramPOP_CMCUSTBRAND" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMCUSTBRAND" parameterMap="paramPOP_CMCUSTBRAND" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMCUSTBRAND(?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMCUSTBRAND -->
+
+
+  <!-- [S] - POP_CMDELIVERY -->
+  <parameterMap id="paramPOP_CMDELIVERY" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_DELIVERY_CD"             mode="IN" />
+    <parameter property="P_DELIVERY_DIV"            mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMDELIVERY" parameterMap="paramPOP_CMDELIVERY" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMDELIVERY(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMDELIVERY -->
+
+
+  <!-- [S] - POP_CMDELIVERYAREA -->
+  <parameterMap id="paramPOP_CMDELIVERYAREA" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_AREA_CD"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMDELIVERYAREA" parameterMap="paramPOP_CMDELIVERYAREA" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMDELIVERYAREA(?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMDELIVERYAREA -->
+
+
+  <!-- [S] - POP_CMITEM -->
+  <parameterMap id="paramPOP_CMITEM" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" javaType="java.lang.String"  jdbcType="VARCHAR" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+    <parameter property="P_DEPART_CD"               mode="IN" />
+    <parameter property="P_LINE_CD"                 mode="IN" />
+    <parameter property="P_CLASS_CD"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMITEM" parameterMap="paramPOP_CMITEM" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMITEM(?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMITEM -->
+  
+  
+  <!-- [S] - POP_CMITEM_ADDING_VENDOR -->
+  <parameterMap id="paramPOP_CMITEM_ADDING_VENDOR" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" javaType="java.lang.String"  jdbcType="VARCHAR" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+    <parameter property="P_DEPART_CD"               mode="IN" />
+    <parameter property="P_LINE_CD"                 mode="IN" />
+    <parameter property="P_CLASS_CD"                mode="IN" />
+    <parameter property="P_VENDOR_CD"               mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMITEM_ADDING_VENDOR" parameterMap="paramPOP_CMITEM_ADDING_VENDOR" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMITEM_ADDING_VENDOR(?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMITEM_ADDING_VENDOR -->
+  
+  
+  <!-- [S] - POP_CMDEALITEM -->
+  <parameterMap id="paramPOP_CMDEALITEM" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MALL_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" javaType="java.lang.String"  jdbcType="VARCHAR" />
+    <parameter property="P_DEAL_ID"                 mode="IN" />
+    <parameter property="P_OPTION_ID"               mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMDEALITEM" parameterMap="paramPOP_CMDEALITEM" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMDEALITEM(?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMDEALITEM -->
+  
+  
+  <!-- [S] - POP_CMDEAL -->
+  <parameterMap id="paramPOP_CMDEAL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MALL_CD"                 mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_DEAL_ID"                 mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMDEAL" parameterMap="paramPOP_CMDEAL" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMDEAL(?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMDEAL -->
+  
+  
+    <!-- [S] - POP_CMDEALOPTION -->
+  <parameterMap id="paramPOP_CMDEALOPTION" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MALL_CD"                 mode="IN" />
+    <parameter property="P_DEAL_ID"                 mode="IN" />
+    <parameter property="P_OPTION_ID"               mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMDEALOPTION" parameterMap="paramPOP_CMDEALOPTION" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMDEALOPTION(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMDEALOPTION -->
+  
+  
+  <!-- [S] - POP_CMVENDORITEM -->
+  <parameterMap id="paramPOP_CMVENDORITEM" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" javaType="java.lang.String"  jdbcType="VARCHAR" />
+    <parameter property="P_VENDOR_CD"               mode="IN" javaType="java.lang.String"  jdbcType="VARCHAR" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+    <parameter property="P_DEPART_CD"               mode="IN" />
+    <parameter property="P_LINE_CD"                 mode="IN" />
+    <parameter property="P_CLASS_CD"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMVENDORITEM" parameterMap="paramPOP_CMVENDORITEM" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMVENDORITEM(?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMVENDORITEM -->
+
+<!-- [S] - POP_CMBRANDITEM -->
+  <parameterMap id="paramPOP_CMBRANDITEM" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BRAND_CD"                mode="IN" javaType="java.lang.String"  jdbcType="VARCHAR" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+    <parameter property="P_DEPART_CD"               mode="IN" />
+    <parameter property="P_LINE_CD"                 mode="IN" />
+    <parameter property="P_CLASS_CD"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMBRANDITEM" parameterMap="paramPOP_CMBRANDITEM" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMBRANDITEM(?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMBRANDITEM -->
+
+
+  <!-- [S] - POP_CMITEMGROUP -->
+  <parameterMap id="paramPOP_CMITEMGROUP" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMITEMGROUP" parameterMap="paramPOP_CMITEMGROUP" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMITEMGROUP(?) }
+  </procedure>
+  <!-- [E] - POP_CMITEMGROUP -->
+
+
+  <!-- [S] - POP_CMLOCATION -->
+  <parameterMap id="paramPOP_CMLOCATION" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_ZONE_CD"                 mode="IN" />
+    <parameter property="P_BANK_CD"                 mode="IN" />
+    <parameter property="P_BAY_CD"                  mode="IN" />
+    <parameter property="P_LEV_CD"                  mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMLOCATION" parameterMap="paramPOP_CMLOCATION" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMLOCATION(?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMLOCATION -->
+
+
+
+  <!-- [S] - POP_CMLOCATION01 -->
+  <parameterMap id="paramPOP_CMLOCATION01" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_ZONE_CD"                 mode="IN" />
+    <parameter property="P_BANK_CD"                 mode="IN" />
+    <parameter property="P_BAY_CD"                  mode="IN" />
+    <parameter property="P_LEV_CD"                  mode="IN" />
+    <parameter property="P_LOCATION_CD"             mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMLOCATION01" parameterMap="paramPOP_CMLOCATION01" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMLOCATION01(?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMLOCATION01 -->
+
+
+  <!-- [S] - POP_CMPOST -->
+  <parameterMap id="paramPOP_CMPOST" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_ADDR_NM"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMPOST" parameterMap="paramPOP_CMPOST" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMPOST(?) }
+  </procedure>
+  <!-- [E] - POP_CMPOST -->
+
+
+  <!-- [S] - POP_CMREFERENCE -->
+  <parameterMap id="paramPOP_CMREFERENCE" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_REF_CUST_CD"             mode="IN" />
+    <parameter property="P_REF_CUST_DIV"            mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMREFERENCE" parameterMap="paramPOP_CMREFERENCE" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMREFERENCE(?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMREFERENCE -->
+
+
+  <!-- [S] - POP_CMCARRIER -->
+  <parameterMap id="paramPOP_CMCARRIER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CARRIER_CD"              mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMCARRIER" parameterMap="paramPOP_CMCARRIER" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMCARRIER(?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMCARRIER -->
+
+
+  <!-- [S] - POP_CMVENDOR -->
+  <parameterMap id="paramPOP_CMVENDOR" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_VENDOR_CD"               mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMVENDOR" parameterMap="paramPOP_CMVENDOR" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMVENDOR(?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMVENDOR -->
+
+
+  <parameterMap id="paramPOP_CMVENBRAND" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_VENDOR_CD"               mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMVENBRAND" parameterMap="paramPOP_CMVENBRAND" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMVENBRAND(?, ?, ?, ?) }
+  </procedure>
+  
+  <!-- [E] - POP_CMVENBRAND -->
+
+  <!-- [S] - POP_CMZONE -->
+  <parameterMap id="paramPOP_CMZONE" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_ZONE_CD"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMZONE" parameterMap="paramPOP_CMZONE" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMZONE(?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMZONE -->
+
+
+  <!-- [S] - POP_CSNOTICE -->
+  <parameterMap id="paramPOP_CSNOTICE" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CSNOTICE" parameterMap="paramPOP_CSNOTICE" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CSNOTICE(?) }
+  </procedure>
+  <!-- [E] - POP_CSNOTICE -->
+
+
+  <!-- [S] - POP_CSUSER -->
+  <parameterMap id="paramPOP_CSUSER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_CERTIFY_DIV"             mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CSUSER" parameterMap="paramPOP_CSUSER" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CSUSER(?, ?) }
+  </procedure>
+  <!-- [E] - POP_CSUSER -->
+
+
+  <!-- [S] - POP_CSUSERBRAND -->
+  <parameterMap id="paramPOP_CSUSERBRAND" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CSUSERBRAND" parameterMap="paramPOP_CSUSERBRAND" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CSUSERBRAND(?, ?) }
+  </procedure>
+  <!-- [E] - POP_CSUSERBRAND -->
+
+
+  <!-- [S] - POP_SELLER_CD -->
+  <parameterMap id="paramPOP_SELLER_CD" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OWN_BRAND_CD"            mode="IN" />
+    <parameter property="P_SELLER_CD"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_SELLER_CD" parameterMap="paramPOP_SELLER_CD" resultClass="java.util.HashMap">
+    { ? = call WC.POP_SELLER_CD(?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_SELLER_CD -->
+  
+
+
+  <!-- [S] - POP_CSUSERBU -->
+  <parameterMap id="paramPOP_CSUSERBU" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CUST_CD"                 mode="IN"  javaType="java.lang.String"   jdbcType="VARCHAR" />
+  </parameterMap>
+  <procedure id="POP_CSUSERBU" parameterMap="paramPOP_CSUSERBU" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CSUSERBU(?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CSUSERBU -->
+
+
+  <!-- [S] - POP_CSUSERCENTER -->
+  <parameterMap id="paramPOP_CSUSERCENTER" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CSUSERCENTER" parameterMap="paramPOP_CSUSERCENTER" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CSUSERCENTER(?, ?) }
+  </procedure>
+  <!-- [E] - POP_CSUSERCENTER -->
+
+
+  <!-- [S] - POP_DELIVERY_BATCH -->
+  <parameterMap id="paramPOP_DELIVERY_BATCH" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+  </parameterMap>
+  <procedure id="POP_DELIVERY_BATCH" parameterMap="paramPOP_DELIVERY_BATCH" resultClass="java.util.HashMap">
+    { ? = call WC.POP_DELIVERY_BATCH(?, ?) }
+  </procedure>
+  <!-- [E] - POP_DELIVERY_BATCH -->
+
+
+  <!-- [S] - POP_ITEMGROUP_CLASS -->
+  <parameterMap id="paramPOP_ITEMGROUP_CLASS" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_DEPART_CD"               mode="IN" />
+    <parameter property="P_LINE_CD"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_ITEMGROUP_CLASS" parameterMap="paramPOP_ITEMGROUP_CLASS" resultClass="java.util.HashMap">
+    { ? = call WC.POP_ITEMGROUP_CLASS(?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_ITEMGROUP_CLASS -->
+
+
+  <!-- [S] - POP_ITEMGROUP_DEPART -->
+  <parameterMap id="paramPOP_ITEMGROUP_DEPART" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_ITEMGROUP_DEPART" parameterMap="paramPOP_ITEMGROUP_DEPART" resultClass="java.util.HashMap">
+    { ? = call WC.POP_ITEMGROUP_DEPART(?) }
+  </procedure>
+  <!-- [E] - POP_ITEMGROUP_DEPART -->
+
+
+  <!-- [S] - POP_ITEMGROUP_LINE -->
+  <parameterMap id="paramPOP_ITEMGROUP_LINE" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_DEPART_CD"               mode="IN" />
+  </parameterMap>
+  <procedure id="POP_ITEMGROUP_LINE" parameterMap="paramPOP_ITEMGROUP_LINE" resultClass="java.util.HashMap">
+    { ? = call WC.POP_ITEMGROUP_LINE(?, ?) }
+  </procedure>
+  <!-- [E] - POP_ITEMGROUP_LINE -->
+
+
+  <!-- [S] - POP_ITEM_LOT -->
+  <parameterMap id="paramPOP_ITEM_LOT" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_ITEM_LOT" parameterMap="paramPOP_ITEM_LOT" resultClass="java.util.HashMap">
+    { ? = call WC.POP_ITEM_LOT(?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_ITEM_LOT -->
+
+
+  <!-- [S] - POP_LS010NM -->
+  <parameterMap id="paramPOP_LS010NM" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_POLICY_VAL"              mode="IN" />
+  </parameterMap>
+  <procedure id="POP_LS010NM" parameterMap="paramPOP_LS010NM" resultClass="java.util.HashMap">
+    { ? = call WC.POP_LS010NM(?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_LS010NM -->
+
+
+
+  <!-- [S] - POP_RO_LS010NM -->
+  <parameterMap id="paramPOP_RO_LS010NM" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_RO_LS010NM" parameterMap="paramPOP_RO_LS010NM" resultClass="java.util.HashMap">
+    { ? = call WC.POP_RO_LS010NM(?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_RO_LS010NM -->
+
+
+
+  <!-- [S] - POP_OUTBOUND_BATCH -->
+  <parameterMap id="paramPOP_OUTBOUND_BATCH" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_DIV"            mode="IN" />
+  </parameterMap>
+  <procedure id="POP_OUTBOUND_BATCH" parameterMap="paramPOP_OUTBOUND_BATCH" resultClass="java.util.HashMap">
+    { ? = call WC.POP_OUTBOUND_BATCH(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_OUTBOUND_BATCH -->
+  
+  <!-- [S] - POP_OUTBOUND_BATCH_LO -->
+  <procedure id="POP_OUTBOUND_BATCH_LO" parameterMap="paramPOP_OUTBOUND_BATCH" resultClass="java.util.HashMap">
+    { ? = call WC.POP_OUTBOUND_BATCH_LO(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_OUTBOUND_BATCH_LO -->
+
+
+  <!-- [S] - POP_CMITEMBU -->
+  <parameterMap id="paramPOP_CMITEMBU" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_ITEMBU_CD"               mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMITEMBU" parameterMap="paramPOP_CMITEMBU" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMITEMBU(?) }
+  </procedure>
+  <!-- [E] - POP_CMITEMBU -->
+  
+  
+    <!-- [S] - POP_BRANDDEAL_ID -->
+  <parameterMap id="paramPOP_BRANDDEAL_ID" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OWN_BRAND_CD"            mode="IN" />
+    <parameter property="P_SELLER_CD"               mode="IN" />
+    <parameter property="P_DEAL_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_BRANDDEAL_ID" parameterMap="paramPOP_BRANDDEAL_ID" resultClass="java.util.HashMap">
+    { ? = call WC.POP_BRANDDEAL_ID(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_BRANDDEAL_ID -->
+  
+  
+  <select id="WC.DYNAMIC_SELECT" remapResults="true" resultClass="java.util.LinkedHashMap" parameterClass="java.util.Map">
+    <dynamic>
+      <isNotEmpty property="P_QUERY_TEXT">
+        $P_QUERY_TEXT$
+      </isNotEmpty>
+    </dynamic>
+  </select>
+
+
+  <!--
+    //==================================================================================================================
+    // INSERT/UPDATE/DELETE SQLMAP
+    //==================================================================================================================
+  -->
+  <!-- [S] - INSERT_CSUSERPROGRAMLAYOUT [사용자별 화면레이아웃] -->
+  <insert id="INSERT_CSUSERPROGRAMLAYOUT" parameterClass="java.util.Map">
+    INSERT INTO CSUSERPROGRAMLAYOUT
+               (
+                USER_ID
+               ,PROGRAM_ID
+               ,GRID_ID
+               <isNotEmpty prepend = "," property= "P_COLUMN_POSITION"         >COLUMN_POSITION            </isNotEmpty>
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                #P_USER_ID#
+               ,#P_PROGRAM_ID#
+               ,#P_GRID_ID#
+               <isNotEmpty prepend = "," property= "P_COLUMN_POSITION"         >#P_COLUMN_POSITION#        </isNotEmpty>
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_CSUSERPROGRAMLAYOUT [사용자별 화면레이아웃] -->
+
+
+  <!-- [S] - UPDATE_CSUSERPROGRAMLAYOUT [사용자별 화면레이아웃] -->
+  <update id="UPDATE_CSUSERPROGRAMLAYOUT" parameterClass="java.util.Map">
+    UPDATE CSUSERPROGRAMLAYOUT
+       SET COLUMN_POSITION          = #P_COLUMN_POSITION#
+          ,REG_USER_ID              = #P_REG_USER_ID#
+          ,REG_DATETIME             = SYSDATE
+     WHERE USER_ID                  = #P_USER_ID#
+       AND PROGRAM_ID               = #P_PROGRAM_ID#
+       AND GRID_ID                  = #P_GRID_ID#
+  </update>
+  <!-- [E] - UPDATE_CSUSERPROGRAMLAYOUT [사용자별 화면레이아웃] -->
+
+
+  <!-- [S] - INSERT_CSUSERSYSINFO -->
+  <insert id="INSERT_CSUSERPASSINFO" parameterClass="java.util.Map">
+    /*  비밀번호 변경 기록 */
+    INSERT INTO CSUSERPASSINFO
+               (
+                JOB_SEQ
+               ,USER_ID
+               ,USER_PASS
+               ,CLIENT_IP
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                JOB_SEQ.NEXTVAL
+               ,#P_USER_ID#
+               ,#P_USER_PWD#
+               ,#P_CLIENT_IP#
+               ,#P_REG_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_CSUSERPASSINFO -->
+  
+  <!-- [S] - INSERT_CSUSERINFO -->
+  <insert id="INSERT_CSUSERINFO" parameterClass="java.util.Map">
+    /*  로그인 기록 */
+    INSERT INTO CSUSERINFO
+               (
+                USER_SEQ
+               ,USER_ID
+               ,CLIENT_IP
+               ,PROCESS_FLAG
+               ,REG_USER_ID
+               ,REG_DATETIME
+               )
+        VALUES (
+                USER_SEQ.NEXTVAL
+               ,#P_USER_ID#
+               ,#P_CLIENT_IP#
+               ,#P_PROCESS_FLAG#
+               ,#P_USER_ID#
+               ,SYSDATE
+               )
+  </insert>
+  <!-- [E] - INSERT_CSUSERINFO -->
+  
+  <!-- [S] - UPDATE_CSUSERDISABLE [비밀번호 5회 실패시 계정잠금] -->
+  <update id="UPDATE_CSUSERDISABLE" parameterClass="java.util.Map">
+    UPDATE CSUSER
+       SET ENABLE          = #P_USER_ENABLE#
+     WHERE USER_ID         = #P_USER_ID#
+  </update>
+  <!-- [E] - UPDATE_CSUSERDISABLE [비밀번호 5회 실패시 계정잠금] -->
+
+  <!-- [S] - UPDATE_CSUSERSYSINFO_LOGIN -->
+  <update id="UPDATE_CSUSERSYSINFO_LOGIN" parameterClass="java.util.Map">
+    UPDATE CSUSERSYSINFO
+       SET LOGIN_LAST_DATETIME   = LOGIN_FINAL_DATETIME   /* 로그인한 지난일시는 현재 마지막일시로 수정 */
+          ,LOGIN_FINAL_DATETIME  = SYSDATE                /* 현재일시로 수정 */
+          ,REG_USER_ID           = #P_REG_USER_ID#
+          ,REG_DATETIME          = SYSDATE
+     WHERE USER_ID               = #P_USER_ID#
+       AND CLIENT_IP             = #P_CLIENT_IP#
+  </update>
+  <!-- [E] - UPDATE_CSUSERSYSINFO_LOGIN -->
+
+
+  <!-- [S] - UPDATE_CSUSER_PASSWORD -->
+  <update id="UPDATE_CSUSER_PASSWORD" parameterClass="java.util.Map">
+    UPDATE CSUSER
+       SET USER_PWD              = #P_USER_PWD#
+          ,REG_USER_ID           = #P_USER_ID#
+          ,REG_DATETIME          = SYSDATE
+     WHERE USER_ID               = #P_USER_ID#
+  </update>
+  <!-- [E] - UPDATE_CSUSER_PASSWORD -->
+  
+  
+  <!-- [S] - POP_CMVENDOR_RO -->
+  <parameterMap id="paramPOP_CMVENDOR_RO" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_VENDOR_CD"               mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMVENDOR_RO" parameterMap="paramPOP_CMVENDOR_RO" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMVENDOR_RO(?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMVENDOR_RO -->
+
+
+  <!-- [S] - POP_OWNBRAND_CD_RO -->
+  <parameterMap id="paramPOP_OWNBRAND_CD_RO" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OWN_BRAND_CD"            mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_OWNBRAND_CD_RO" parameterMap="paramPOP_OWNBRAND_CD_RO" resultClass="java.util.HashMap">
+    { ? = call WC.POP_OWNBRAND_CD_RO(?, ?, ?, ? ) }
+  </procedure>
+  <!-- [E] - POP_OWNBRAND_CD -->
+  
+
+  <!-- [S] - POP_CMMALLBRAND_RI -->
+  <parameterMap id="paramPOP_CMMALLBRAND_RI" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MALL_CD"                 mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMMALLBRAND_RI" parameterMap="paramPOP_CMMALLBRAND_RI" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMMALLBRAND_RI(?, ?, ? ) }
+  </procedure>
+  <!-- [E] - POP_CMMALLBRAND_RI -->
+  
+  
+  <!-- [S] - POP_OWNBRAND_CD_ALL -->
+  <parameterMap id="paramPOP_OWNBRAND_CD_ALL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OWN_BRAND_CD"            mode="IN" />
+  </parameterMap>
+  <procedure id="POP_OWNBRAND_CD_ALL" parameterMap="paramPOP_OWNBRAND_CD_ALL" resultClass="java.util.HashMap">
+    { ? = call WC.POP_OWNBRAND_CD_ALL(?, ?, ?) }
+  </procedure>
+  
+  <!-- [E] - POP_OWNBRAND_CD_ALL -->
+  
+  
+    <!-- [S] - POP_CMDEAL_SEARCH -->
+  <parameterMap id="paramPOP_CMDEAL_SEARCH" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_MALL_CD"                 mode="IN" />
+    <parameter property="P_DEAL_ID"                 mode="IN" />
+    <parameter property="P_VIEW_DIV"                mode="IN" />
+  </parameterMap>
+  <procedure id="POP_CMDEAL_SEARCH" parameterMap="paramPOP_CMDEAL_SEARCH" resultClass="java.util.HashMap">
+    { ? = call WC.POP_CMDEAL_SEARCH(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_CMDEAL_SEARCH -->
+  
+  <!-- [S] - POP_OWNBRAND_CD_LF -->
+  <parameterMap id="paramPOP_OWNBRAND_CD_LF" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CUST_CD"                 mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OWN_BRAND_CD"            mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_OWNBRAND_CD_LF" parameterMap="paramPOP_OWNBRAND_CD_LF" resultClass="java.util.HashMap">
+    { ? = call WC.POP_OWNBRAND_CD_LF(?, ?, ?, ? ) }
+  </procedure>
+  <!-- [E] - POP_OWNBRAND_CD_LF -->
+  
+    
+    <!-- [S] - POP_LFHEAD -->
+  <parameterMap id="paramPOP_LFHEAD" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_CENTER_FUNC_DIV"         mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+  </parameterMap>
+  <procedure id="POP_LFHEAD" parameterMap="paramPOP_LFHEAD" resultClass="java.util.HashMap">
+    { ? = call WC.POP_LFHEAD(?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_LFHEAD -->
+  
+    
+    <!-- [S] - POP_LFBASE -->
+  <parameterMap id="paramPOP_LFBASE" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+  </parameterMap>
+  <procedure id="POP_LFBASE" parameterMap="paramPOP_LFBASE" resultClass="java.util.HashMap">
+    { ? = call WC.POP_LFBASE(?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_LFBASE -->
+  
+  <!-- [S] - GET_CSUSERPROGRAMBOOKMARK -->
+  <parameterMap id="paramGET_CSUSERPROGRAMBOOKMARK" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="GET_CSUSERPROGRAMBOOKMARK" parameterMap="paramGET_CSUSERPROGRAMBOOKMARK" resultClass="java.util.HashMap">
+    { ? = call WC.GET_CSUSERPROGRAMBOOKMARK(?) }
+  </procedure>
+  <!-- [E] - GET_CSUSERPROGRAMBOOKMARK -->
+  
+  <!-- [S] - INSERT_CSUSERPROGRAMBOOKMARK [즐겨찾기 저장] -->
+  <insert id="INSERT_CSUSERPROGRAMBOOKMARK" parameterClass="java.util.Map">
+    INSERT INTO CSUSERPROGRAMBOOKMARK
+            (
+             USER_ID
+            ,PROGRAM_ID
+            ,EXE_LEVEL1
+            ,EXE_LEVEL2
+            ,EXE_LEVEL3
+            ,EXE_LEVEL4
+            ,FAVORITE_YN
+            ,REG_USER_ID
+            ,REG_DATETIME
+            ) 
+       VALUES (
+             #P_USER_ID#
+            ,#P_PROGRAM_ID#
+            ,#P_EXE_LEVEL1#
+            ,#P_EXE_LEVEL2#
+            ,#P_EXE_LEVEL3#
+            ,#P_EXE_LEVEL4#
+            ,#P_FAVORITE_YN#
+            ,#P_REG_USER_ID#
+            ,SYSDATE
+            )
+  </insert>
+  
+  <!-- [S] - DELETE_CSUSERPROGRAMBOOKMARK [즐겨찾기 삭제] -->
+  <delete id="DELETE_CSUSERPROGRAMBOOKMARK" parameterClass="java.util.Map">
+    DELETE 
+      FROM CSUSERPROGRAMBOOKMARK
+     WHERE USER_ID                = #P_USER_ID#
+       AND PROGRAM_ID             = #P_PROGRAM_ID#
+  </delete>
+  
+  <!-- [S] - POP_ADJUST_PRICE_CD -->
+  <parameterMap id="paramPOP_ADJUST_PRICE_CD" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OWN_BRAND_CD"            mode="IN" />
+    <parameter property="P_FEE_HEAD_CD"             mode="IN" />
+    <parameter property="P_FEE_BASE_CD"             mode="IN" />
+    <parameter property="P_CODE_CD"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+  </parameterMap>
+  <procedure id="POP_ADJUST_PRICE_CD" parameterMap="paramPOP_ADJUST_PRICE_CD" resultClass="java.util.HashMap">
+    { ? = call WC.POP_ADJUST_PRICE_CD(?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - POP_ADJUST_PRICE_CD -->
+  
+  
+  <!-- [S] - INSERT_CTCHECKVALUE -->
+  <insert id="INSERT_CTCHECKVALUE" parameterClass="java.util.Map">
+    /*  체크값 기록 */
+    INSERT
+      INTO CTCHECKVALUE
+          (
+           CHECK_VALUE
+          ) 
+   VALUES (
+           #P_CHECK_VALUE#
+           
+          )
+  </insert>
+  <!-- [E] - INSERT_CTCHECKVALUE -->
+  
+  <!-- [S] - INSERT_CTCHECKVALUE_01 -->
+  <insert id="INSERT_CTCHECKVALUE_01" parameterClass="java.util.Map">
+    /*  체크값 기록 */
+    INSERT
+      INTO CTCHECKVALUE_01
+          (
+           CHECK_VALUE
+          ) 
+   VALUES (
+           #P_CHECK_VALUE#
+          )
+  </insert>
+  <!-- [E] - INSERT_CTCHECKVALUE_01 -->
+    
+  <!-- [S] - INSERT_CTCHECKVALUE_02 -->
+  <insert id="INSERT_CTCHECKVALUE_02" parameterClass="java.util.Map">
+    /*  체크값 기록 */
+    INSERT
+      INTO CTCHECKVALUE_02
+          (
+           CHECK_VALUE
+          ) 
+   VALUES (
+           #P_CHECK_VALUE#
+          )
+  </insert>
+  <!-- [E] - INSERT_CTCHECKVALUE_02 -->
+    
+  <!-- [S] - INSERT_CTCHECKVALUE_03 -->
+  <insert id="INSERT_CTCHECKVALUE_03" parameterClass="java.util.Map">
+    /*  체크값 기록 */
+    INSERT
+      INTO CTCHECKVALUE_03
+          (
+           CHECK_VALUE
+          ) 
+   VALUES (
+           #P_CHECK_VALUE#
+          )
+  </insert>
+  <!-- [E] - INSERT_CTCHECKVALUE_03 -->
+    
+  <!-- [S] - INSERT_CTCHECKVALUE_04 -->
+  <insert id="INSERT_CTCHECKVALUE_04" parameterClass="java.util.Map">
+    /*  체크값 기록 */
+    INSERT
+      INTO CTCHECKVALUE_04
+          (
+           CHECK_VALUE
+          ) 
+   VALUES (
+           #P_CHECK_VALUE#
+          )
+  </insert>
+  <!-- [E] - INSERT_CTCHECKVALUE_04 -->
+  
+    <!-- [S] - CTCHECKVALUE_TEST -->
+  <insert id="CTCHECKVALUE_TEST" parameterClass="java.util.Map">
+    /*  체크값 기록 */
+    INSERT
+      INTO CTCHECKVALUE_TEST
+          (
+           TEST
+          ) 
+   VALUES (
+           #P_CHECK_VALUE#
+          )
+  </insert>
+  <!-- [E] - CTCHECKVALUE_TEST -->
+</sqlMap>

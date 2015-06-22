@@ -162,13 +162,13 @@ public class CS01010EDAOImpl implements CS01010EDAO {
 										.get("P_USER_PWD")));
 					}
 
-						// 1년이내 같은 같은 비밀번호가 있는지 조회
-						Map<String, String> resultMap = null;
-						List listResult = nexosDAO.list("WC.GET_PASSHISTORY",
-								masterDS.get(0));
-						resultMap = (Map<String, String>) listResult.get(0);
-						if (!String.valueOf(resultMap.get("PWD_COUNT")).equals("0")) {
-							throw new RuntimeException("1년내 사용한 비밀번호는 재사용이 불가합니다.");
+					// 1년이내 같은 같은 비밀번호가 있는지 조회
+					Map<String, String> resultMap = null;
+					List listResult = nexosDAO.list("WC.GET_PASSHISTORY",
+							masterDS.get(0));
+					resultMap = (Map<String, String>) listResult.get(0);
+					if (!String.valueOf(resultMap.get("PWD_COUNT")).equals("0")) {
+						throw new RuntimeException("1년내 사용한 비밀번호는 재사용이 불가합니다.");
 					}
 
 					nexosDAO.update(USER_UPDATE_ID, rowData);

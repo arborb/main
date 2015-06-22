@@ -75,6 +75,25 @@ function _Initialize() {
       $NC.setValue("#cboQItem_State", 0);
     }
   });
+  
+  // 검색조건 상품구분 콤보
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "ITEM_DIV",
+      P_CODE_CD: "%",
+      P_SUB_CD1: "",
+      P_SUB_CD2: ""
+    })
+  }, {
+    selector: "#cboQItem_Div",
+    codeField: "CODE_CD",
+    fullNameField: "CODE_CD_F",
+    addAll: true,
+    onComplete: function() {
+      $NC.setValue("#cboQItem_Div", 0);
+    }
+  });
 
   // 버튼 활성화 처리
   $NC.G_VAR.buttons._inquiry = "1";
@@ -316,6 +335,9 @@ function _Inquiry() {
   var ITEM_NM = $NC.getValue("#edtQItem_Nm");
   var ITEM_STATE = $NC.getValue("#cboQItem_State");
   var VIEW_DIV = $NC.getValue("#cboQView_Div");
+  var ITEM_DIV = $NC.getValueCombo("cboQItem_Div");
+  var SAP_ITEM_CD = $NC.getValue("#edtQSap_Item_Cd");
+  
   if ($NC.isNull(VIEW_DIV)) {
     alert("수불발생상품여부를 선택하십시오.");
     $NC.setFocus("#cboQView_Div");
@@ -338,6 +360,8 @@ function _Inquiry() {
       P_ITEM_NM: ITEM_NM,
       P_ITEM_STATE: ITEM_STATE,
       P_VIEW_DIV: VIEW_DIV,
+      P_ITEM_DIV: ITEM_DIV,
+      P_SAP_ITEM_CD: SAP_ITEM_CD,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 
@@ -361,6 +385,8 @@ function _Inquiry() {
       P_ITEM_NM: ITEM_NM,
       P_ITEM_STATE: ITEM_STATE,
       P_VIEW_DIV: VIEW_DIV,
+      P_ITEM_DIV: ITEM_DIV,
+      P_SAP_ITEM_CD: SAP_ITEM_CD,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 
@@ -384,6 +410,8 @@ function _Inquiry() {
       P_ITEM_NM: ITEM_NM,
       P_ITEM_STATE: ITEM_STATE,
       P_VIEW_DIV: VIEW_DIV,
+      P_ITEM_DIV: ITEM_DIV,
+      P_SAP_ITEM_CD: SAP_ITEM_CD,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 
@@ -452,12 +480,26 @@ function grdT1MasterOnGetColumns() {
 
   var columns = [ ];
   $NC.setGridColumn(columns, {
+    id: "ITEM_DIV",
+    field: "ITEM_DIV",
+    name: "상품구분",
+    minWidth: 80,
+    summaryTitle: "[합계]",
+    groupToggler: true
+  });
+  $NC.setGridColumn(columns, {
+    id: "SAP_ITEM_CD",
+    field: "SAP_ITEM_CD",
+    name: "SAP코드",
+    minWidth: 100,
+    groupDisplay: true
+  });
+  $NC.setGridColumn(columns, {
     id: "ITEM_CD",
     field: "ITEM_CD",
     name: "상품코드",
     minWidth: 100,
-    summaryTitle: "[합계]",
-    groupToggler: true
+    groupDisplay: true
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_NM",
@@ -693,12 +735,26 @@ function grdT2MasterOnGetColumns() {
 
   var columns = [ ];
   $NC.setGridColumn(columns, {
+    id: "ITEM_DIV",
+    field: "ITEM_DIV",
+    name: "상품구분",
+    minWidth: 80,
+    summaryTitle: "[합계]",
+    groupToggler: true
+  });
+  $NC.setGridColumn(columns, {
+    id: "SAP_ITEM_CD",
+    field: "SAP_ITEM_CD",
+    name: "SAP코드",
+    minWidth: 100,
+    groupDisplay: true
+  });
+  $NC.setGridColumn(columns, {
     id: "ITEM_CD",
     field: "ITEM_CD",
     name: "상품코드",
     minWidth: 100,
-    summaryTitle: "[합계]",
-    groupToggler: true
+    groupDisplay: true
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_NM",
@@ -911,11 +967,24 @@ function grdT3MasterOnGetColumns() {
 
   var columns = [ ];
   $NC.setGridColumn(columns, {
+    id: "ITEM_DIV",
+    field: "ITEM_DIV",
+    name: "상품코드",
+    minWidth: 80,
+    cssClass: "align-center",
+    summaryTitle: "[합계]"
+  });
+  $NC.setGridColumn(columns, {
+    id: "SAP_ITEM_CD",
+    field: "SAP_ITEM_CD",
+    name: "SAP코드",
+    minWidth: 100
+  });
+  $NC.setGridColumn(columns, {
     id: "ITEM_CD",
     field: "ITEM_CD",
     name: "상품코드",
-    minWidth: 100,
-    summaryTitle: "[합계]"
+    minWidth: 100
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_NM",

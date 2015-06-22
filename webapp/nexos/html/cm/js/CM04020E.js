@@ -446,7 +446,7 @@ function _Inquiry() {
 //     $NC.setFocus("#edtQBrand_Cd");
 //     return;
 //   }
-   
+
   var BU_CD = $NC.getValue("#edtQBu_Cd");
   
   // var BRAND_NM = $NC.getValue("#edtQBrand_Nm");
@@ -582,7 +582,7 @@ function _New() {
     ITEM_CBM: null,
     DELIVERY_TYPE1: null,
     DELIVERY_TYPE2: null,
-    DELIVERY_BOX: null,  
+    DELIVERY_BOX: null,
     HAS_TYPE: null,
     id: $NC.getGridNewRowId(),
     
@@ -685,7 +685,7 @@ function _Save() {
         P_ITEM_CBM: rowData.ITEM_CBM,
         P_DELIVERY_TYPE1: rowData.DELIVERY_TYPE1,
         P_DELIVERY_TYPE2: rowData.DELIVERY_TYPE2,
-        P_DELIVERY_BOX: rowData.DELIVERY_BOX,  
+        P_DELIVERY_BOX: rowData.DELIVERY_BOX,
         P_HAS_TYPE: rowData.HAS_TYPE,
         P_CAUTION: rowData.CAUTION,
         P_CRUD: rowData.CRUD
@@ -838,7 +838,7 @@ function setInputValue(grdSelector, rowData) {
     if (rowData.VALID_DIV != "1") {
       $("#divTermInfo").hide();
     }
-
+    
     if(rowData.ITEM_DIV == "9"){
       $NC.setEnable("#cboIn_Unit_Cd", false);
       $NC.setEnable("#cboOut_Unit_Cd", false);
@@ -988,7 +988,7 @@ function grdMasterOnBeforePost(row) {
         $NC.setFocus("#cboHas_Type");
         $NC.setGridSelectRow(G_GRDMASTER, row);
         return false;
-  }
+      }
   }
 
   if (rowData.CRUD == "N") {
@@ -1377,7 +1377,7 @@ function grdMasterInitialize() {
   });
 
   G_GRDMASTER.view.onSelectedRowsChanged.subscribe(grdMasterOnAfterScroll);
-  }
+}
 
 function grdMasterOnAfterScroll(e, args) {
 
@@ -1742,7 +1742,7 @@ function grdMasterOnCellChange(e, args) {
     case "HAS_TYPE":
       rowData.HAS_TYPE = args.val;
       rowData.HAS_TYPE_F = $NC.getValueCombo("#cboHas_Type", "F");
-      break; 
+      break;
       /*
     case "HAS_TYPE":
       rowData.HAS_TYPE = args.val;
@@ -1926,14 +1926,14 @@ function setBox_Cbm() {
 
 function onGetMaster(ajaxData) {
 
-    $NC.setInitGridData(G_GRDMASTER, ajaxData);
+  $NC.setInitGridData(G_GRDMASTER, ajaxData);
 
   if (G_GRDMASTER.data.getLength() > 0) {
     if ($NC.G_USERINFO.CERTIFY_DIV !== '4') {
       $NC.setEnableGroup("#divMasterInfoView", true);
     }
     if ($NC.isNull(G_GRDMASTER.lastKeyVal)) {
-        $NC.setGridSelectRow(G_GRDMASTER, 0);
+      $NC.setGridSelectRow(G_GRDMASTER, 0);
     } else {
       $NC.setGridSelectRow(G_GRDMASTER, {
         selectKey: new Array("BRAND_CD", "ITEM_CD"),

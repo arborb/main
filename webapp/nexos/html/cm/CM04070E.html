@@ -28,65 +28,65 @@
 <script src="js/CM04070E.js"></script>
 </head>  
 <body>
-  <div id="divTopLine" class="ui-top-line"></div>
-  <div id="divConditionView" class="ui-ctnr-condition">
-    <table class="ui-tbl-condition">
-      <tr>  
-        <td>
-          <div id="lblQReq_Date" class="ui-lbl-condition">요청일자</div>
-          <input class="ui-dtp-key" type="text" id="dtpQReq_Date1" style="width: 80px;" />
-          <span class="ui-span-normal">▶</span>
-          <input class="ui-dtp-key" type="text" id="dtpQReq_Date2" style="width: 80px;" />
-        </td>
-        <td id="tdQDsp_Brand_Cd">
-          <div id="lblQPopup_Brand_Cd" class="ui-lbl-condition">판매사</div> 
-          <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 60px;" /> 
+ <div id="divTopLine" class="ui-top-line"></div>
+ <div id="divConditionView" class="ui-ctnr-condition">
+  <table class="ui-tbl-condition">
+   <tr>
+    <td>
+     <div id="lblQReq_Date" class="ui-lbl-condition">요청일자</div>
+     <input class="ui-dtp-key" type="text" id="dtpQReq_Date1" style="width: 80px;" />
+     <span class="ui-span-normal">▶</span>
+     <input class="ui-dtp-key" type="text" id="dtpQReq_Date2" style="width: 80px;" />
+    </td>
+    <td id="tdQDsp_Brand_Cd">
+     <div id="lblQPopup_Brand_Cd" class="ui-lbl-condition">판매사</div>
+     <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 60px;" />
      <input class="ui-btn-popup" type="button" id="btnQBrand_Cd" />
      <input class="ui-edt-display" type="text" id="edtQBrand_Nm" disabled="disabled" style="width: 120px;" />
-          <input type="hidden" id="edtQCust_Cd" />
-        </td>
-        <td>
-          <div id="lblQItem_Nm" class="ui-lbl-condition">상품명</div> 
-          <input class="ui-edt-normal" type="text" id="edtQItem_Nm" style="width: 144px;" />
-        </td>
-        <td>
-            <div id="lblQCreate_Yn_Div" class="ui-lbl-condition">승인여부</div>
-            <div class="ui-gbox-normal">
-              <input class="ui-rgb-normal" type="radio" name="rgbQCreate_Yn_Div" id="rgbQCreate_Yn_Div0" value="%" style="width: 10px;" checked />
-              전체
-              <input class="ui-rgb-normal" type="radio" name="rgbQCreate_Yn_Div" id="rgbQCreate_Yn_Div1" value="Y" style="width: 10px;" />
-              승인
-              <input class="ui-rgb-normal" type="radio" name="rgbQCreate_Yn_Div" id="rgbQCreate_Yn_Div2" value="N" style="width: 10px;" />
-              미승인
-            </div>
-        </td>  
-      </tr>
-    </table>
+     <input type="hidden" id="edtQCust_Cd" />
+    </td>
+    <td>
+     <div id="lblQItem_Nm" class="ui-lbl-condition">상품명</div>
+     <input class="ui-edt-normal" type="text" id="edtQItem_Nm" style="width: 144px;" />
+    </td>
+    <td>
+     <div id="lblQCreate_Yn_Div" class="ui-lbl-condition">승인여부</div>
+     <div class="ui-gbox-normal">
+      <input class="ui-rgb-normal" type="radio" name="rgbQCreate_Yn_Div" id="rgbQCreate_Yn_Div0" value="%" style="width: 10px;" checked />
+      전체
+      <input class="ui-rgb-normal" type="radio" name="rgbQCreate_Yn_Div" id="rgbQCreate_Yn_Div1" value="Y" style="width: 10px;" />
+      승인
+      <input class="ui-rgb-normal" type="radio" name="rgbQCreate_Yn_Div" id="rgbQCreate_Yn_Div2" value="N" style="width: 10px;" />
+      미승인
+     </div>
+    </td>
+   </tr>
+  </table>
+ </div>
+ <div id="divMasterView" class="ui-ctnr-normal">
+  <div>
+   <table class="ui-tbl-grid">
+    <tr>
+     <td id="divTitle_grdMaster" class="ui-grd-title">상품검색 내역</td>
+     <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+    </tr>
+   </table>
+   <div id="grdMaster"></div>
   </div>
-  <div id="divMasterView" class="ui-ctnr-normal">
-    <div>
-      <table class="ui-tbl-grid">
-        <tr>
-          <td id="divTitle_grdMaster" class="ui-grd-title">상품검색 내역</td>
-          <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
-        </tr>
-      </table>
-      <div id="grdMaster"></div>
-    </div>
-    <div>
-      <table class="ui-tbl-grid">
-        <tr>
-          <td id="divTitle_grdDetail" class="ui-grd-title">상품등록 요청내역</td>
+  <div>
+   <table class="ui-tbl-grid">
+    <tr>
+     <td id="divTitle_grdDetail" class="ui-grd-title">상품등록 요청내역</td>
      <td>
       <input type="button" id="btnReqNew" class="ui-grd-btnnew" style="width: 30px; height: 20px;" />
       <input type="button" id="btnReqDelete" class="ui-grd-btndelete" style="width: 30px; height: 20px;" />
       <input type="button" id="btnReqSave" class="ui-grd-btnsave" style="width: 30px; height: 20px;" />
      </td>
-          <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
-        </tr>
-      </table>
-      <div id="grdDetail"></div>
-    </div>
+     <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
+    </tr>
+   </table>
+   <div id="grdDetail"></div>
   </div>
+ </div>
 </body>
 </html>

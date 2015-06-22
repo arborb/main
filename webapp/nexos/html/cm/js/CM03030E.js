@@ -678,12 +678,12 @@ function grdMasterOnCellChange(e, args) {
 
 function onGetMaster(ajaxData) {
 
-    $NC.setInitGridData(G_GRDMASTER, ajaxData);
+  $NC.setInitGridData(G_GRDMASTER, ajaxData);
 
   if (G_GRDMASTER.data.getLength() > 0) {
     $NC.setEnableGroup("#divMasterInfoView", true);
     if ($NC.isNull(G_GRDMASTER.lastKeyVal)) {
-        $NC.setGridSelectRow(G_GRDMASTER, 0);
+      $NC.setGridSelectRow(G_GRDMASTER, 0);
     } else {
       $NC.setGridSelectRow(G_GRDMASTER, {
         selectKey: "VENDOR_CD",

@@ -197,7 +197,8 @@ function _Inquiry() {
     P_ORDERER_NM: ORDERER_NM,
     P_SHIPPER_NM: SHIPPER_NM,
     P_WB_NO: WB_NO,
-    P_DELIVERY_TYPE: DELIVERY_TYPE
+    P_DELIVERY_TYPE: DELIVERY_TYPE,
+    P_USER_ID: $NC.G_USERINFO.USER_ID
   });
 
   // 데이터 조회
@@ -395,10 +396,16 @@ function grdMasterOnGetColumns() {
     minWidth: 120
   });
   $NC.setGridColumn(columns, {
-    id: "SHIPPER_ADDR",
-    field: "SHIPPER_ADDR",
-    name: "주소",
-    minWidth: 200
+    id: "SHIPPER_ADDR_BASIC",
+    field: "SHIPPER_ADDR_BASIC",
+    name: "기본주소",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "SHIPPER_ADDR_DETAIL",
+    field: "SHIPPER_ADDR_DETAIL",
+    name: "상세주소",
+    minWidth: 100
   });
   $NC.setGridColumn(columns, {
     id: "REMARK1",

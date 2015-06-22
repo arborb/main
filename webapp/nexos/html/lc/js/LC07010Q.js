@@ -12,6 +12,7 @@ function _Initialize() {
     tabIndex: 0,
     onActivate: tabOnActivate
   });
+  
 
   // 추가 조회조건 사용
   // $NC.setInitAdditionalCondition();
@@ -19,10 +20,6 @@ function _Initialize() {
   // 팝업 클릭 이벤트 부여
   $("#btnQBu_Cd").click(showUserBuPopup);
   $("#btnQT3_Outbound_Batch").click(setOutboundBatchCombo);
-  $("#btnQDepart_Cd").click(showItemGroupDepartPopup);
-  $("#btnQLine_Cd").click(showItemGroupLinePopup);
-  $("#btnQClass_Cd").click(showItemGroupClassPopup);
-
 
   $("#btnQBrand_Cd").click(showOwnBranPopup);
   // 그리드 초기화
@@ -53,43 +50,7 @@ function _Initialize() {
       setOutboundBatchCombo();
     }
   });
- 
-  // 조회조건 - 운송사 세팅
-  $NC.setInitCombo("/WC/getDataSet.do", {
-    P_QUERY_ID: "WC.POP_CMCODE",
-    P_QUERY_PARAMS: $NC.getParams({
-      P_CODE_GRP: "WMP_CARRIER_CD",
-      P_CODE_CD: "%",
-      P_SUB_CD1: "",
-      P_SUB_CD2: ""
-    })
-  }, {
-    selector: "#cboCarrier_Cd",
-    codeField: "CODE_CD",
-    nameField: "CODE_NM",
-    fullNameField: "CODE_CD_F",
-    addAll: true
-  });
-  
-  // 상품사이즈 
-  $NC.setInitCombo("/WC/getDataSet.do", {
-    P_QUERY_ID: "WC.POP_CMCODE",
-    P_QUERY_PARAMS: $NC.getParams({
-      P_CODE_GRP: "ITEM_SIZE_DIV",
-      P_CODE_CD: "%",
-      P_SUB_CD1: "",
-      P_SUB_CD2: ""
-    })
-  }, {
-    selector: "#cboItem_Size",
-    codeField: "CODE_CD",
-    nameField: "CODE_NM",
-    fullNameField: "CODE_CD_F",
-    addAll: true
-  });
 }
-
-
 
 /**
  * 화면 리사이즈 Offset 세팅
@@ -187,97 +148,10 @@ function _OnConditionChange(e, view, val) {
         }, onOwnBrandPopup, onOwnBrandPopup);
       }
       return;
-  case "ORDER_DATE":
+  case "ORDER_DATE2":
     $NC.setValueDatePicker(view, val, "예정일자를 정확히 입력하십시오.");
     setOutboundBatchCombo();
     break;
-  case "DEPART_CD":
-    var BRAND_CD = $NC.getValue("#edtQBrand_Cd");
-    if ($NC.isNull(BRAND_CD)) {
-      alert("위탁사 코드를 먼저 선택하시기 바랍니다.");
-      $NC.setFocus("#edtQOwn_Brand_Cd", true);
-      $NC.setValue("edtQDepart_Cd", null);
-      return;
-    }
-
-    var P_QUERY_PARAMS;
-    var O_RESULT_DATA = [ ];
-    if (!$NC.isNull(val)) {
-      P_QUERY_PARAMS = {
-        P_BRAND_CD: $NC.getValue("#edtQBrand_Cd")
-      };
-      O_RESULT_DATA = $NP.getItemGroupDepartInfo({
-        queryParams: P_QUERY_PARAMS
-      });
-    }
-    if (O_RESULT_DATA.length <= 1) {
-      onItemGroupDepartPopup(O_RESULT_DATA[0]);
-    } else {
-      $NP.showItemGroupDepartPopup({
-        queryParams: P_QUERY_PARAMS,
-        queryData: O_RESULT_DATA
-      }, onItemGroupDepartPopup, onItemGroupDepartPopup);
-    }
-    return;
-  case "LINE_CD":
-    var DEPART_CD = $NC.getValue("#edtQDepart_Cd");
-    if ($NC.isNull(DEPART_CD)) {
-      alert("대분류 코드를 먼저 선택하시기 바랍니다.");
-      $NC.setFocus("#edtQDepart_Cd", true);
-      $NC.setValue("edtQLine_Cd", null);
-      return;
-    }
-
-    var P_QUERY_PARAMS;
-    var O_RESULT_DATA = [ ];
-    if (!$NC.isNull(val)) {
-      P_QUERY_PARAMS = {
-        P_BRAND_CD: $NC.getValue("#edtQBrand_Cd"),
-        P_DEPART_CD: $NC.getValue("#edtQDepart_Cd")
-      };
-      O_RESULT_DATA = $NP.getItemGroupLineInfo({
-        queryParams: P_QUERY_PARAMS
-      });
-    }
-    if (O_RESULT_DATA.length <= 1) {
-      onItemGroupLinePopup(O_RESULT_DATA[0]);
-    } else {
-      $NP.showItemGroupLinePopup({
-        queryParams: P_QUERY_PARAMS,
-        queryData: O_RESULT_DATA
-      }, onItemGroupLinePopup, onItemGroupLinePopup);
-    }
-    return;
-  case "CLASS_CD":
-    var LINE_CD = $NC.getValue("#edtQLine_Cd");
-    if ($NC.isNull(LINE_CD)) {
-      alert("중분류 코드를 먼저 선택하시기 바랍니다.");
-      $NC.setFocus("#edtQLine_Cd", true);
-      $NC.setValue("edtQClass_Cd", null);
-      return;
-    }
-
-    var P_QUERY_PARAMS;
-    var O_RESULT_DATA = [ ];
-    if (!$NC.isNull(val)) {
-      P_QUERY_PARAMS = {
-        P_BRAND_CD: $NC.getValue("#edtQBrand_Cd"),
-        P_DEPART_CD: $NC.getValue("#edtQDepart_Cd"),
-        P_LINE_CD: $NC.getValue("#edtQLine_Cd")
-      };
-      O_RESULT_DATA = $NP.getItemGroupClassInfo({
-        queryParams: P_QUERY_PARAMS
-      });
-    }
-    if (O_RESULT_DATA.length <= 1) {
-      onItemGroupClassPopup(O_RESULT_DATA[0]);
-    } else {
-      $NP.showItemGroupClassPopup({
-        queryParams: P_QUERY_PARAMS,
-        queryData: O_RESULT_DATA
-      }, onItemGroupClassPopup, onItemGroupClassPopup);
-    }
-    return;
   }
 
   onChangingCondition();
@@ -330,12 +204,6 @@ function _Inquiry() {
   var OUTBOUND_BATCH = $NC.getValue("#cboQT3_Outbound_Batch");
   var DEAL_ID = $NC.getValue("#edtQT3_Deal_Id");
 
-  var DEPART_CD = $NC.getValue("#edtQDepart_Cd", true);
-  var LINE_CD = $NC.getValue("#edtQLine_Cd", true);
-  var CLASS_CD = $NC.getValue("#edtQClass_Cd", true);
-  var ITEM_SIZE = $NC.getValue("#cboItem_Size");
-  var CARRIER_CD = $NC.getValue("#cboCarrier_Cd");
-
   switch ($("#divMasterView").tabs("option", "active")) {
   case 0:
     // 조회시 전역 변수 값 초기화
@@ -350,12 +218,6 @@ function _Inquiry() {
       P_BU_NO: BU_NO,
       P_BU_KEY: BU_KEY,
       P_BRAND_CD: BRAND_CD,
-
-      P_CARRIER_CD: CARRIER_CD,
-      P_ITEM_SIZE: ITEM_SIZE,
-      P_DEPART_CD: DEPART_CD,
-      P_LINE_CD: LINE_CD,
-      P_CLASS_CD: CLASS_CD, 
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 
@@ -375,11 +237,6 @@ function _Inquiry() {
       P_BU_NO: BU_NO,
       P_BU_KEY: BU_KEY,
       P_BRAND_CD: BRAND_CD,
-      P_CARRIER_CD: CARRIER_CD,
-      P_ITEM_SIZE: ITEM_SIZE,
-      P_DEPART_CD: DEPART_CD,
-      P_LINE_CD: LINE_CD,
-      P_CLASS_CD: CLASS_CD, 
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 
@@ -401,11 +258,6 @@ function _Inquiry() {
       P_OUTBOUND_BATCH: OUTBOUND_BATCH,
       P_DEAL_ID: DEAL_ID,
       P_BRAND_CD: BRAND_CD,
-      P_CARRIER_CD: CARRIER_CD,
-      P_ITEM_SIZE: ITEM_SIZE,
-      P_DEPART_CD: DEPART_CD,
-      P_LINE_CD: LINE_CD,
-      P_CLASS_CD: CLASS_CD, 
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 
@@ -593,36 +445,6 @@ function grdMasterT1OnGetColumns() {
     id: "ITEM_NM",
     field: "ITEM_NM",
     name: "상품명",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
-    id: "ITEM_SIZE",
-    field: "ITEM_SIZE",
-    name: "상품사이즈",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
-    id: "DEPART_CD",
-    field: "DEPART_CD",
-    name: "대분류",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
-    id: "LINE_CD",
-    field: "LINE_CD",
-    name: "중분류",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
-    id: "CLASS_CD",
-    field: "CLASS_CD",
-    name: "소분류",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
-    id: "CARRIER_CD",
-    field: "CARRIER_CD",
-    name: "운송사",
     minWidth: 150
   });
   $NC.setGridColumn(columns, {
@@ -885,36 +707,6 @@ function grdMasterT2OnGetColumns() {
     minWidth: 150
   });
   $NC.setGridColumn(columns, {
-    id: "ITEM_SIZE",
-    field: "ITEM_SIZE",
-    name: "상품사이즈",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
-    id: "DEPART_CD",
-    field: "DEPART_CD",
-    name: "대분류",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
-    id: "LINE_CD",
-    field: "LINE_CD",
-    name: "중분류",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
-    id: "CLASS_CD",
-    field: "CLASS_CD",
-    name: "소분류",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
-    id: "CARRIER_CD",
-    field: "CARRIER_CD",
-    name: "운송사",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
     id: "BU_KEY",
     field: "BU_KEY",
     name: "전표ID",
@@ -1123,36 +915,6 @@ function grdMasterT3OnGetColumns() {
     minWidth: 150
   });
   $NC.setGridColumn(columns, {
-    id: "ITEM_SIZE",
-    field: "ITEM_SIZE",
-    name: "상품사이즈",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
-    id: "DEPART_CD",
-    field: "DEPART_CD",
-    name: "대분류",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
-    id: "LINE_CD",
-    field: "LINE_CD",
-    name: "중분류",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
-    id: "CLASS_CD",
-    field: "CLASS_CD",
-    name: "소분류",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
-    id: "CARRIER_CD",
-    field: "CARRIER_CD",
-    name: "운송사",
-    minWidth: 150
-  });
-  $NC.setGridColumn(columns, {
     id: "BU_KEY",
     field: "BU_KEY",
     name: "전표ID",
@@ -1170,6 +932,12 @@ function grdMasterT3OnGetColumns() {
     field: "BU_NO",
     name: "전표번호",
     minWidth: 120
+  });
+  $NC.setGridColumn(columns, {
+    id: "BU_DATETIME1",
+    field: "BU_DATETIME",
+    name: "주문일시",
+    minWidth: 150
   });
   $NC.setGridColumn(columns, {
     id: "ORDERER_CD1",
@@ -1360,7 +1128,7 @@ function setOutboundBatchCombo() {
    P_QUERY_PARAMS: $NC.getParams({
      P_CENTER_CD: $NC.getValue("#cboQCenter_Cd"),
      P_BU_CD: $NC.getValue("#edtQBu_Cd"),
-     P_OUTBOUND_DATE: $NC.getValue("#dtpQOrder_Date"),
+     P_OUTBOUND_DATE: $NC.getValue("#dtpQOrder_Date2"),
      P_OUTBOUND_DIV: "2" // 출고작업구분(1:기본출고, 2:온라인출고)
    })
  }, {
@@ -1433,112 +1201,6 @@ function onOwnBrandPopup(resultInfo) {
     $NC.setValue("#edtQBrand_Cd");
     $NC.setValue("#edtQBrand_Nm");
     $NC.setFocus("#edtQBrand_Cd", true);
-  }
-  onChangingCondition();
-}
-
-
-/**
- * 검색조건의 상품그룹 대분류 검색 이미지 클릭
- */
-function showItemGroupDepartPopup() {
-  var BRAND_CD = $NC.getValue("#edtQBrand_Cd");
-  if ($NC.isNull(BRAND_CD)) {
-    alert("위탁사 코드를 먼저 선택하시기 바랍니다.");
-    $NC.setFocus("#edtQBrand_Cd", true);
-    return;
-  }
-
-  $NP.showItemGroupDepartPopup({
-    P_BRAND_CD: $NC.getValue("#edtQBrand_Cd")
-  }, onItemGroupDepartPopup, function() {
-    $NC.setFocus("#edtQDeptart_Cd", true);
-  });
-}
-
-/**
- * 상품그룹 대분류 검색 결과 / 검색 실패 했을 경우(not found)
- */
-function onItemGroupDepartPopup(resultInfo) {
-
-  if (!$NC.isNull(resultInfo)) {
-    $NC.setValue("#edtQDepart_Cd", resultInfo.DEPART_CD);
-    $NC.setValue("#edtQDepart_Nm", resultInfo.DEPART_NM);
-  } else {
-    $NC.setValue("#edtQDepart_Cd");
-    $NC.setValue("#edtQDepart_Nm");
-    $NC.setFocus("#edtQDepart_Cd", true);
-  }
-  onChangingCondition();
-}
-
-/**
- * 검색조건의 상품그룹 중분류 검색 이미지 클릭
- */
-function showItemGroupLinePopup() {
-  var DEPART_CD = $NC.getValue("#edtQDepart_Cd");
-  if ($NC.isNull(DEPART_CD)) {
-    alert("대분류 코드를 먼저 선택하시기 바랍니다.");
-    $NC.setFocus("#edtQDepart_Cd", true);
-    return;
-  }
-
-  $NP.showItemGroupLinePopup({
-    P_BRAND_CD: $NC.getValue("#edtQBrand_Cd"),
-    P_DEPART_CD: $NC.getValue("#edtQDepart_Cd")
-  }, onItemGroupLinePopup, function() {
-    $NC.setFocus("#edtQLine_Cd", true);
-  });
-}
-
-/**
- * 상품그룹 중분류 검색 결과 / 검색 실패 했을 경우(not found)
- */
-function onItemGroupLinePopup(resultInfo) {
-
-  if (!$NC.isNull(resultInfo)) {
-    $NC.setValue("#edtQLine_Cd", resultInfo.LINE_CD);
-    $NC.setValue("#edtQLine_Nm", resultInfo.LINE_NM);
-  } else {
-    $NC.setValue("#edtQLine_Cd");
-    $NC.setValue("#edtQLine_Nm");
-    $NC.setFocus("#edtQLine_Cd", true);
-  }
-  onChangingCondition();
-}
-
-/**
- * 검색조건의 상품그룹 소분류 검색 이미지 클릭
- */
-function showItemGroupClassPopup() {
-  var LINE_CD = $NC.getValue("#edtQLine_Cd");
-  if ($NC.isNull(LINE_CD)) {
-    alert("중분류 코드를 먼저 선택하시기 바랍니다.");
-    $NC.setFocus("#edtQLine_Cd", true);
-    return;
-  }
-
-  $NP.showItemGroupClassPopup({
-    P_BRAND_CD: $NC.getValue("#edtQBrand_Cd"),
-    P_DEPART_CD: $NC.getValue("#edtQDepart_Cd"),
-    P_LINE_CD: $NC.getValue("#edtQLine_Cd")
-  }, onItemGroupClassPopup, function() {
-    $NC.setFocus("#edtQClass_Cd", true);
-  });
-}
-
-/**
- * 상품그룹 소분류 검색 결과 / 검색 실패 했을 경우(not found)
- */
-function onItemGroupClassPopup(resultInfo) {
-
-  if (!$NC.isNull(resultInfo)) {
-    $NC.setValue("#edtQClass_Cd", resultInfo.CLASS_CD);
-    $NC.setValue("#edtQClass_Nm", resultInfo.CLASS_NM);
-  } else {
-    $NC.setValue("#edtQClass_Cd");
-    $NC.setValue("#edtQClass_Nm");
-    $NC.setFocus("#edtQClass_Cd", true);
   }
   onChangingCondition();
 }

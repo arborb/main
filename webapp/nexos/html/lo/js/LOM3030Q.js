@@ -5,7 +5,7 @@ function _Initialize() {
 
   // 단위화면에서 사용될 일반 전역 변수 정의
   // $NC.setGlobalVar({ });
-
+  
   // 탭 초기화
   $NC.setInitTab("#divMasterView", {
     tabIndex: 0,
@@ -67,14 +67,14 @@ function _Initialize() {
     addAll: true
   });
 
-    // 조회조건 - 몰구분 세팅
-    $NC.setInitCombo("/WC/getDataSet.do", {
+  // 조회조건 - 몰구분 세팅
+  $NC.setInitCombo("/WC/getDataSet.do", {
     P_QUERY_ID: "WC.POP_CMMALL",
-      P_QUERY_PARAMS: $NC.getParams({
+    P_QUERY_PARAMS: $NC.getParams({
       P_MALL_CD: "%"
-      })
-    }, {
-      selector: "#cboQMall_Cd",
+    })
+  }, {
+    selector: "#cboQMall_Cd",
     codeField: "MALL_CD",
     nameField: "MALL_NM",
     fullNameField: "MALL_CD_F",
@@ -97,7 +97,7 @@ function _Initialize() {
     fullNameField: "CODE_CD_F",
     addAll: true
   });
-
+  
   // 조회조건 - 진행상태 세팅
   /*
   $NC.setInitCombo("/WC/getDataSet.do", {
@@ -139,13 +139,13 @@ function _OnResize(parent) {
   var clientHeight = parent.height() - $NC.G_OFFSET.nonClientHeight;
 
   $NC.resizeContainer("#divMasterView", clientWidth, clientHeight);
-
+  
   clientWidth -= $NC.G_LAYOUT.border1;
   
   if ($("#divMasterView").tabs("option", "active") === 0) {
     clientHeight = parent.height() - $NC.G_OFFSET.gridHeightOffset;
 
-  // Grid 사이즈 조정
+    // Grid 사이즈 조정
     $NC.resizeGrid("#grdT1Master", clientWidth, clientHeight);
 
   } else {
@@ -153,7 +153,7 @@ function _OnResize(parent) {
 
     // Grid 사이즈 조정
     $NC.resizeGrid("#grdT2Master", clientWidth, clientHeight);
-}
+  }
 }
 
 /**
@@ -255,7 +255,7 @@ function onChangingCondition() {
  */
 function _Inquiry() {
 
-  var CENTER_CD = $NC.getValue("#cboQCenter_Cd");
+  var CENTER_CD = $NC.getValue("#cboQCenter_Cd");  
   var BU_CD = $NC.getValue("#edtQBu_Cd", true);
   
   var BU_DATE1 = $NC.getValue("#dtpQBu_Date1");
@@ -275,7 +275,7 @@ function _Inquiry() {
     $NC.setFocus("#dtpQBu_Date1");
     return;
   }
-
+  
   var INOUT_CD = $NC.getValue("#cboQInout_Cd");
 //  var ORDER_STATUS = $NC.getValue("#cboQStat02");
   var DEAL_ID = $NC.getValue("#edtQDeal_Id", true);
@@ -285,25 +285,25 @@ function _Inquiry() {
 
   if ($("#divMasterView").tabs("option", "active") === 0) {
     // 1.주문별 출고현황 화면
-
-  // 조회시 전역 변수 값 초기화
+    
+    // 조회시 전역 변수 값 초기화
     $NC.setInitGridVar(G_GRDT1MASTER);
 
-  // 파라메터 세팅
+    // 파라메터 세팅
     G_GRDT1MASTER.queryParams = $NC.getParams({
-    P_CENTER_CD: CENTER_CD,
-    P_BU_CD: BU_CD,
+      P_CENTER_CD: CENTER_CD,
+      P_BU_CD: BU_CD,
       P_BU_DATE1: BU_DATE1,
       P_BU_DATE2: BU_DATE2,
-    P_INOUT_CD: INOUT_CD,
-    P_DEAL_ID: DEAL_ID,
-    P_DELIVERY_TYPE: DELIVERY_TYPE,
+      P_INOUT_CD: INOUT_CD,
+      P_DEAL_ID: DEAL_ID,
+      P_DELIVERY_TYPE: DELIVERY_TYPE,
       P_BU_NO: BU_NO,
       P_BU_KEY: BU_KEY
 //      P_ORDER_STATUS: ORDER_STATUS
-  });
-
-  // 데이터 조회
+    });
+    
+    // 데이터 조회
     $NC.serviceCall("/LOM3030Q/getDataSet.do", $NC.getGridParams(G_GRDT1MASTER), onGetT1Master);
   } else {
     // 2.주문상세 출고현황 화면
@@ -325,7 +325,7 @@ function _Inquiry() {
     });
     // 데이터 조회
     $NC.serviceCall("/LOM3030Q/getDataSet.do", $NC.getGridParams(G_GRDT2MASTER), onGetT2Master);
-}
+  }
 
 }
 
@@ -824,7 +824,7 @@ function onGetT1Master(ajaxData) {
     
   } else {
     $NC.setGridDisplayRows("#grdT1Master", 0, 0);
-}
+  }
 
   // 버튼 활성화 처리
   $NC.G_VAR.buttons._inquiry = "1";
@@ -842,15 +842,15 @@ function onGetT1Master(ajaxData) {
  * @param ajaxData
  */
 function onGetT2Master(ajaxData) {
-
+  
   $NC.setInitGridData(G_GRDT2MASTER, ajaxData);
-
+  
   if (G_GRDT2MASTER.data.getLength() > 0) {
     $NC.setGridSelectRow(G_GRDT2MASTER, 0);
   } else {
     $NC.setGridDisplayRows("#grdT2Master", 0, 0);
   }
-
+  
   // 버튼 활성화 처리
   $NC.G_VAR.buttons._inquiry = "1";
   $NC.G_VAR.buttons._new = "0";

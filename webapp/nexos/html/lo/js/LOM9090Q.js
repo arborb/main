@@ -17,13 +17,11 @@ function _Initialize() {
       P_CENTER_CD: "%"
     })
   }, {
-    selector: ["#cboQCenter_Cd", "#cboQCenter_Cd"],
+    selector: "#cboQCenter_Cd",
     codeField: "CENTER_CD",
     nameField: "CENTER_NM",
     onComplete: function() {
       $("#cboQCenter_Cd").val($NC.G_USERINFO.CENTER_CD);
-      $NC.setValue("#cboQCenter_Cd", $NC.G_USERINFO.CENTER_CD);
-      setOutboundBatchCombo();
     }
   });
 
@@ -40,6 +38,23 @@ function _Initialize() {
   $NC.setValue("#edtQCust_Cd", $NC.G_USERINFO.CUST_CD);
 
   $NC.setInitDatePicker("#dtpQOutbound_Date");
+
+  // 조회조건 - 물류센터 초기화
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CSUSERCENTER",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_USER_ID: $NC.G_USERINFO.USER_ID,
+      P_CENTER_CD: "%"
+    })
+  }, {
+    selector: "#cboQCenter_Cd",
+    codeField: "CENTER_CD",
+    nameField: "CENTER_NM",
+    onComplete: function() {
+      $NC.setValue("#cboQCenter_Cd", $NC.G_USERINFO.CENTER_CD);
+      setOutboundBatchCombo();
+    }
+  });
 }
 
 /**
@@ -173,6 +188,7 @@ function _Inquiry() {
     return;
   }
 
+  var ORDERER_NM = $NC.getValue("#edtQOrderer_Nm", true);
   var OUTBOUND_BATCH = $NC.getValue("#cboQOutbound_Batch", true);
   var OWN_BRAND_CD = $NC.getValue("#edtQOwn_Brand_Cd", true);
 
@@ -186,10 +202,13 @@ function _Inquiry() {
     P_OUTBOUND_DATE: OUTBOUND_DATE,
     P_OUTBOUND_BATCH: OUTBOUND_BATCH,
     P_OWN_BRAND_CD: OWN_BRAND_CD,
-    P_USER_ID: $NC.G_USERINFO.USER_ID
+    P_USER_ID: $NC.G_USERINFO.USER_ID,
+    P_ORDERER_NM: ORDERER_NM,
+    P_SCPKEY : 'A0AAFF1AB23CD43E55DFDFEBADB212874891AF18491591A98981249182AFD091'
 
   });
 
+  
   // 데이터 조회
   $NC.serviceCall("/LOM9090Q/getDataSet.do", $NC.getGridParams(G_GRDMASTER), onGetMaster);
 }
@@ -264,8 +283,8 @@ function grdMasterOnGetColumns() {
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
-    id: "OUTBOUND_BATCH",
-    field: "OUTBOUND_BATCH",
+    id: "PACKING_BATCH",
+    field: "PACKING_BATCH",
     name: "출고차수",
     minWidth: 80,
     cssClass: "align-center"
@@ -297,19 +316,19 @@ function grdMasterOnGetColumns() {
     minWidth: 100
   });
   $NC.setGridColumn(columns, {
-    id: "BU_DATETIME1",
+    id: "BU_DATETIME",
     field: "BU_DATETIME",
     name: "결제일시",
     minWidth: 140
   });
   $NC.setGridColumn(columns, {
-    id: "ORDERER_NM1",
+    id: "ORDERER_NM",
     field: "ORDERER_NM",
     name: "주문자명",
     minWidth: 100
   });
   $NC.setGridColumn(columns, {
-    id: "SHIPPER_NM1",
+    id: "SHIPPER_NM",
     field: "SHIPPER_NM",
     name: "수령자명",
     minWidth: 100
@@ -341,9 +360,27 @@ function grdMasterOnGetColumns() {
     minWidth: 170
   });
   $NC.setGridColumn(columns, {
+    id: "OPTION_PRICE",
+    field: "OPTION_PRICE",
+    name: "옵션단가",
+    minWidth: 80,
+    cssClass: "align-right",
+    formatter: Slick.Formatters.Number,
+    aggregator: "SUM"
+  });
+  $NC.setGridColumn(columns, {
     id: "OPTION_QTY",
     field: "OPTION_QTY",
     name: "구매수량",
+    minWidth: 80,
+    cssClass: "align-right",
+    formatter: Slick.Formatters.Number,
+    aggregator: "SUM"
+  });
+  $NC.setGridColumn(columns, {
+    id: "OPTION_AMT",
+    field: "OPTION_AMT",
+    name: "구매금액",
     minWidth: 80,
     cssClass: "align-right",
     formatter: Slick.Formatters.Number,

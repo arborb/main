@@ -31,7 +31,7 @@ function _Initialize() {
   $("#btnRecv").click(onBtnRecvClick);
   $("#btnLoOrder").click(onBtnLoOrderProc);
   $("#btnReOrder").click(onBtnReOrderProc);
-  $("#btnDeOrder").click(onBtnDeOrderProc);
+ // $("#btnDeOrder").click(onBtnDeOrderProc);
 
 }
 
@@ -272,6 +272,7 @@ function _Save() {
 /**
  * Delete Button Event - 메인 상단 삭제 버튼 클릭시 호출 됨
  */
+/*
 function onBtnDeOrderProc(e) {
 
   if (G_GRDMASTER.data.getLength() == 0) {
@@ -302,6 +303,7 @@ function onBtnDeOrderProc(e) {
     }, onGetDelete, onSaveError);
   }
 }
+*/
 
 /**
  * Cancel Button Event - 메인 상단 취소 버튼 클릭시 호출 됨
@@ -921,6 +923,7 @@ function onGetLoCreate(ajaxData) {
   G_GRDMASTER.lastKeyVal = [lastRowData.RECV_DATE, lastRowData.RECV_NO];
   alert("정상적으로 처리되었습니다.\n출고예정정보를 확인해주십시오.");
 
+  $("#btnLoOrder").prop("disabled", false);
 }
 
 /**
@@ -941,6 +944,7 @@ function onGetDelete(ajaxData) {
 function onSaveError(ajaxData) {
 
   $NC.onError(ajaxData);
+  $("#btnLoOrder").prop("disabled", false);
 }
 
 /**
@@ -1078,14 +1082,18 @@ function onBtnRecvClick(e) {
 
 function onBtnLoOrderProc(e) {
 
+  
+  $("#btnLoOrder").prop("disabled", true);
   // 저장권한
   if (!$NC.getProgramPermission().canSave) {
     alert("해당 프로그램의 저장권한이 없습니다.");
+    $("#btnLoOrder").prop("disabled", false);
     return;
   }
 
   if (G_GRDMASTER.data.getLength() === 0) {
-    alert("처리할 대상을 선택하십시오.");
+    alert("처리할 대상을 선택하십시오11.");
+    $("#btnLoOrder").prop("disabled", false);
     return;
   }
 
@@ -1099,7 +1107,7 @@ function onBtnLoOrderProc(e) {
 
   // ER_PROCESSING 호출
   $NC.serviceCall("/ED03120E/callEROrdertoReal.do", {
-    P_QUERY_ID: "ER_LOORDER_TO_REAL",
+    P_QUERY_ID: "ER_LOORDER_TO_REAL_EX",
     P_QUERY_PARAMS: $NC.getParams({
       P_BU_CD: rowData.BU_CD,
       P_EDI_DIV: rowData.EDI_DIV,
@@ -1148,6 +1156,7 @@ function onBtnReOrderProc(e) {
 
 
 
+/*
 function onBtnDeOrderProc(e) {
 
   
@@ -1168,12 +1177,12 @@ function onBtnDeOrderProc(e) {
   if (!result) {
     return;
   }
-  /*
+  
   if (Number(rowData.RECV_CNT0) + Number(rowData.RECV_CNT1) + Number(rowData.RECV_CNT2) + Number(rowData.RECV_CNT3) == 0) {
     alert("정상 수신 데이터입니다. 오류 데이터를 선택하십시오.");
     return;
   }
-  */
+  
 
   // ER_PROCESSING 호출
   $NC.serviceCall("/ED03120E/callDelete.do", {
@@ -1189,6 +1198,7 @@ function onBtnDeOrderProc(e) {
   }, onGetDelete, onSaveError);
 }
 
+*/
 /**
  * 저장에 성공했을 경우의 처리
  * 

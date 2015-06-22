@@ -2693,7 +2693,7 @@ public class EDCommonDAOImpl implements EDCommonDAO, Comparator<Vector<Object>> 
           
           for (int col = 0; col < columnCount; col++) {
             vtColumn = columns.get(col);
-
+           
             COLUMN_NM = (String)vtColumn.get(0);
             txtPosition = (Integer)vtColumn.get(1);
             txtLength = (Integer)vtColumn.get(2);
@@ -2706,7 +2706,7 @@ public class EDCommonDAOImpl implements EDCommonDAO, Comparator<Vector<Object>> 
               txtLineBytes[0] = 32;
             } else {
               txtLineBytes = COLUMN_VAL.getBytes(KR_CHARSET);
-            }
+            } 
             if (txtLineBytes.length > txtLength) {
               sbWriteBuffer.append(new String(txtLineBytes, 0, txtLength, KR_CHARSET));
             } else {

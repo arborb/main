@@ -188,19 +188,19 @@ public class LI01010EDAOImpl implements LI01010EDAO {
 
     sp_Chk_Flag = (String)masterDS.get("P_SP_CHK_FLAG");
     if (Consts.YES.equals(sp_Chk_Flag)) {
-    newParams.clear();
-    newParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
+      newParams.clear();
+      newParams.put("P_CENTER_CD", masterDS.get("P_CENTER_CD"));
       newParams.put("P_CENTER_CD_ORG", masterDS.get("P_CENTER_CD"));
-    newParams.put("P_BU_CD", masterDS.get("P_BU_CD"));
-    newParams.put("P_ORDER_DATE", masterDS.get("P_ORDER_DATE"));
-    newParams.put("P_ORDER_NO", order_No);
+      newParams.put("P_BU_CD", masterDS.get("P_BU_CD"));
+      newParams.put("P_ORDER_DATE", masterDS.get("P_ORDER_DATE"));
+      newParams.put("P_ORDER_NO", order_No);
       newParams.put("P_ORDER_DATE_ORG", masterDS.get("P_ORDER_DATE"));
-    newParams.put("P_USER_ID", user_Id);
+      newParams.put("P_USER_ID", user_Id);
 
-    HashMap<String, Object> mapResult3 = nexosDAO.callSP(LI_ORDER_UPD_PROC_ID, newParams);
-    String oMsg = (String)mapResult3.get(Consts.PK_O_MSG);
-    if (!Consts.OK.equals(oMsg)) {
-      throw new RuntimeException(oMsg);
+      HashMap<String, Object> mapResult3 = nexosDAO.callSP(LI_ORDER_UPD_PROC_ID, newParams);
+      String oMsg = (String)mapResult3.get(Consts.PK_O_MSG);
+      if (!Consts.OK.equals(oMsg)) {
+        throw new RuntimeException(oMsg);
       }
     }
   }

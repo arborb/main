@@ -28,292 +28,292 @@
 <script src="js/CM04020E.js"></script>
 </head>
 <body>
-  <div id="divTopLine" class="ui-top-line"></div>
-  <div id="divConditionView" class="ui-ctnr-condition">
-    <table class="ui-tbl-condition">
-      <tr>
-        <td>
-          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
-          <input class="ui-edt-normal" type="text" id="edtQBu_Cd" style="width: 60px;" />
-          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
-          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 120px;" />
-          <input type="hidden" id="edtQCust_Cd" />
-        </td>
-        <td>
-          <div id="lblQPopup_Brand_Cd1" class="ui-lbl-condition">위탁사</div> 
-          <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 60px;" /> 
-          <input class="ui-btn-popup" type="button" id="btnQBrand_Cd" /> 
-          <input class="ui-edt-display" type="text" id="edtQBrand_Nm" disabled="disabled" style="width: 118px;" /> 
-          <input type="hidden" id="edtQCust_Cd" />
-        </td>
-        <td>
-          <div id="lblQDeal_Div" class="ui-lbl-condition">거래구분</div>
-          <div class="ui-gbox-normal">
+ <div id="divTopLine" class="ui-top-line"></div>
+ <div id="divConditionView" class="ui-ctnr-condition">
+  <table class="ui-tbl-condition">
+   <tr>
+    <td>
+     <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+     <input class="ui-edt-normal" type="text" id="edtQBu_Cd" style="width: 60px;" />
+     <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+     <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 120px;" />
+     <input type="hidden" id="edtQCust_Cd" />
+    </td>
+    <td>
+     <div id="lblQPopup_Brand_Cd1" class="ui-lbl-condition">위탁사</div>
+     <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 60px;" />
+     <input class="ui-btn-popup" type="button" id="btnQBrand_Cd" />
+     <input class="ui-edt-display" type="text" id="edtQBrand_Nm" disabled="disabled" style="width: 118px;" />
+     <input type="hidden" id="edtQCust_Cd" />
+    </td>
+    <td>
+     <div id="lblQDeal_Div" class="ui-lbl-condition">거래구분</div>
+     <div class="ui-gbox-normal">
       <input class="ui-chk-normal" type="checkbox" name="chkQDeal_Div" id="chkQDeal_Div1" value="1" />
       거래진행
       <input class="ui-chk-normal" type="checkbox" name="chkQDeal_Div" id="chkQDeal_Div2" value="2" />
       거래종료
       <input class="ui-chk-normal" type="checkbox" name="chkQDeal_Div" id="chkQDeal_Div3" value="3" />
       조회종료
-          </div>
-        </td>
-        <td>
-          <div id="lblQItem_Div" class="ui-lbl-condition">상품구분</div>
-            <select class="ui-cbo-normal" id="cboQItem_Div" style="width: 126px;" tabindex="5"></select>
-        </td>
+     </div>
+    </td>
+    <td>
+     <div id="lblQItem_Div" class="ui-lbl-condition">상품구분</div>
+     <select class="ui-cbo-normal" id="cboQItem_Div" style="width: 126px;" tabindex="5"></select>
+    </td>
     <td></td>
-      </tr>
-      <tr>
-        <td>
+   </tr>
+   <tr>
+    <td>
      <div id="lblQItem_Cd" class="ui-lbl-condition">상품코드</div>
      <input class="ui-edt-normal" type="text" id="edtQItem_Cd" style="width: 214px;" />
-        </td>
-        <td>
+    </td>
+    <td>
      <div id="lblQItem_Bar_Cd" class="ui-lbl-condition">상품바코드</div>
      <input class="ui-edt-normal" type="text" id="edtQItem_Bar_Cd" style="width: 227px;" />
-        </td>
-        <td>
+    </td>
+    <td>
      <div id="lblQItem_Nm" class="ui-lbl-condition">상품명</div>
      <input class="ui-edt-normal" type="text" id="edtQItem_Nm" style="width: 214px;" />
-        </td>
-        <td>
-          <div id="lblQSap_Item_Cd" class="ui-lbl-condition">SAP상품코드</div> 
-          <input class="ui-edt-normal" type="text" id="edtQSap_Item_Cd" style="width: 214px;" />
-        </td>
-      </tr>
-    </table>
+    </td>
+    <td>
+     <div id="lblQSap_Item_Cd" class="ui-lbl-condition">SAP상품코드</div>
+     <input class="ui-edt-normal" type="text" id="edtQSap_Item_Cd" style="width: 214px;" />
+    </td>
+   </tr>
+  </table>
+ </div>
+ <div id="divLeftView" class="ui-ctnr-left">
+  <table class="ui-tbl-grid">
+   <tr>
+    <td id="divTitle_grdMaster" class="ui-grd-title">상품</td>
+    <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+   </tr>
+  </table>
+  <div id="grdMaster"></div>
+ </div>
+ <div id="divRightView" class="ui-ctnr-right">
+  <div class="ui-gbox-header">
+   <div class="ui-lbl-header">기본정보</div>
   </div>
-  <div id="divLeftView" class="ui-ctnr-left">
-    <table class="ui-tbl-grid">
-      <tr>
-        <td id="divTitle_grdMaster" class="ui-grd-title">상품</td>
-        <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
-      </tr>
-    </table>
-    <div id="grdMaster"></div>
-  </div>
-  <div id="divRightView" class="ui-ctnr-right">
-    <div class="ui-gbox-header">
-      <div class="ui-lbl-header">기본정보</div>
-    </div>
-    <div id="divMasterInfoView">
-      <div>
-        <div class="ui-ctnr-row">
-          <div id="lblBrand_Cd1" class="ui-lbl-key">위탁사</div>
+  <div id="divMasterInfoView">
+   <div>
+    <div class="ui-ctnr-row">
+     <div id="lblBrand_Cd1" class="ui-lbl-key">위탁사</div>
      <input class="ui-edt-key" type="text" id="edtBrand_Cd" style="width: 60px;" tabindex="0" />
      <input class="ui-btn-popup" type="button" id="btnBrand_Cd" tabindex="37" />
      <input class="ui-edt-display" type="text" id="edtBrand_Nm" disabled="disabled" style="width: 120px;" />
-        </div>
+    </div>
 
-        
-        <div class="ui-ctnr-row">
-          <div id="lblItem_Cd" class="ui-lbl-key">상품코드</div>
-          <input class="ui-edt-key" type="text" id="edtItem_Cd" maxlength="30" style="width: 120px;" tabindex="1" />
+
+    <div class="ui-ctnr-row">
+     <div id="lblItem_Cd" class="ui-lbl-key">상품코드</div>
+     <input class="ui-edt-key" type="text" id="edtItem_Cd" maxlength="30" style="width: 120px;" tabindex="1" />
      <div id="lblCaution" class="ui-lbl-normal" style="margin-left: 129px;">주의사항</div>
      <input class="ui-edt-normal"  type="text" id="edtCaution" style="width: 126px;" tabindex="6"/>
-        </div>
-         <div class="ui-ctnr-row">
-          <div id="lblSap_Item_Cd" class="ui-lbl-key">SAP상품코드</div>
-          <input class="ui-edt-key" type="text" id="edtSap_Item_Cd" maxlength="30" style="width: 120px;" tabindex="1" />
+    </div>
+    <div class="ui-ctnr-row">
+     <div id="lblSap_Item_Cd" class="ui-lbl-key">SAP상품코드</div>
+     <input class="ui-edt-key" type="text" id="edtSap_Item_Cd" maxlength="30" style="width: 120px;" tabindex="1" />
      <div id="lblKeep_Div" class="ui-lbl-normal" style="margin-left: 129px;">보관구분</div>
      <select class="ui-cbo-normal" id="cboKeep_Div" style="width: 126px;" tabindex="6"></select>
-        </div>
+    </div>
 
-        <div class="ui-ctnr-row">
-          <div id="lblItem_Nm" class="ui-lbl-key">상품명</div>
-          <input class="ui-edt-key" type="text" id="edtItem_Nm" maxlength="200" style="width: 229px;" tabindex="2" />
+    <div class="ui-ctnr-row">
+     <div id="lblItem_Nm" class="ui-lbl-key">상품명</div>
+     <input class="ui-edt-key" type="text" id="edtItem_Nm" maxlength="200" style="width: 229px;" tabindex="2" />
      <div id="lblIn_Unit_Cd" class="ui-lbl-normal" style="margin-left: 20px;">입고단위</div>
      <select class="ui-cbo-normal" id="cboIn_Unit_Cd" style="width: 126px;" tabindex="7"></select>
-        </div>
-        <div class="ui-ctnr-row">
-          <div id="lblItem_Full_Nm" class="ui-lbl-normal">정식명칭</div>
-          <input class="ui-edt-normal" type="text" id="edtItem_Full_Nm" maxlength="200" style="width: 229px;" tabindex="3" />
+    </div>
+    <div class="ui-ctnr-row">
+     <div id="lblItem_Full_Nm" class="ui-lbl-normal">정식명칭</div>
+     <input class="ui-edt-normal" type="text" id="edtItem_Full_Nm" maxlength="200" style="width: 229px;" tabindex="3" />
      <div id="lblOut_Unit_Cd" class="ui-lbl-normal" style="margin-left: 20px;">출고단위</div>
      <select class="ui-cbo-normal" id="cboOut_Unit_Cd" style="width: 120px;" tabindex="8"></select>
-        </div>
-        <div class="ui-ctnr-row">
-          <div id="lblItem_Spec" class="ui-lbl-normal">상품규격</div>
-          <input class="ui-edt-normal" type="text" id="edtItem_Spec" maxlength="100" style="width: 120px;" tabindex="4" />
+    </div>
+    <div class="ui-ctnr-row">
+     <div id="lblItem_Spec" class="ui-lbl-normal">상품규격</div>
+     <input class="ui-edt-normal" type="text" id="edtItem_Spec" maxlength="100" style="width: 120px;" tabindex="4" />
      <div id="lblItem_Bar_Cd" class="ui-lbl-normal" style="margin-left: 129px;">상품바코드</div>
      <input class="ui-edt-normal" type="text" id="edtItem_Bar_Cd" maxlength="50" style="width: 120px;" tabindex="9" />
     </div>
     <div class="ui-ctnr-row">
      <div id="lblItem_Color" class="ui-lbl-normal">색상</div>
-          <input class="ui-edt-normal" type="text" id="edtItem_Color" maxlength="100" style="width: 120px;" tabindex="4" />
+     <input class="ui-edt-normal" type="text" id="edtItem_Color" maxlength="100" style="width: 120px;" tabindex="4" />
      <div id="lblBox_Bar_Cd" class="ui-lbl-normal" style="margin-left: 129px;">박스바코드</div>
      <input class="ui-edt-normal" type="text" id="edtBox_Bar_Cd" maxlength="50" style="width: 120px;" tabindex="10" />
-        </div>
-        <div class="ui-ctnr-row">
-          <div id="lblItem_Model" class="ui-lbl-normal">모델</div>
-          <input class="ui-edt-normal" type="text" id="edtItem_Model" maxlength="100" style="width: 120px;" tabindex="4" />
+    </div>
+    <div class="ui-ctnr-row">
+     <div id="lblItem_Model" class="ui-lbl-normal">모델</div>
+     <input class="ui-edt-normal" type="text" id="edtItem_Model" maxlength="100" style="width: 120px;" tabindex="4" />
      <div id="lblCase_Bar_Cd" class="ui-lbl-normal" style="margin-left: 129px;">소박스바코드</div>
      <input class="ui-edt-normal" type="text" id="edtCase_Bar_Cd" maxlength="50" style="width: 120px;" tabindex="11" />
-            </div>
-            <div class="ui-ctnr-row">
+    </div>
+    <div class="ui-ctnr-row">
      <div id="lblItem_Div" class="ui-lbl-key">상품구분</div>
      <select class="ui-cbo-key" id="cboItem_Div" style="width: 126px;" tabindex="5"></select>
      <div id="lblItem_Weight" class="ui-lbl-normal" style="margin-left: 129px;">상품중량</div>
      <input class="ui-edt-normal" type="text" id="edtItem_Weight" maxlength="20" style="width: 120px;" tabindex="12" />
      &nbsp;㎏
-         </div>
-        <div class="ui-ctnr-row">
-          <div style="display: inline-block;">
-            <div class="ui-gbox-title">상품그룹정보</div>
-            <div class="ui-gbox-content" style="margin-top: 0;">
-              <div class="ui-ctnr-row">
-        <div id="lblDepart_Cd" class="ui-lbl-normal" style="padding-right: 0px; min-width: 36px; width: 35px">대분류</div>
-                <select class="ui-cbo-normal" id="cboDepart_Cd" style="width: 175px;" tabindex="13"></select>
-              </div>
-              <div class="ui-ctnr-row">
-        <div id="lblLine_Cd" class="ui-lbl-normal" style="padding-right: 0px; min-width: 36px; width: 35px">중분류</div>
-                <select class="ui-cbo-normal" id="cboLine_Cd" style="width: 175px;" tabindex="14"></select>
-              </div>
-              <div class="ui-ctnr-row">
-        <div id="lblClass_Cd" class="ui-lbl-normal" style="padding-right: 0px; min-width: 36px; width: 35px">소분류</div>
-                <select class="ui-cbo-normal" id="cboClass_Cd" style="width: 175px;" tabindex="15"></select>
-              </div>
-            </div>
-            <div class="ui-gbox-title">박스정보</div>
+    </div>
+    <div class="ui-ctnr-row">
+     <div style="display: inline-block;">
+      <div class="ui-gbox-title">상품그룹정보</div>
       <div class="ui-gbox-content" style="margin-top: 0;">
-              <div class="ui-ctnr-row">
-                <div id="lblQty_In_Box" class="ui-lbl-key">박스입수</div>
+       <div class="ui-ctnr-row">
+        <div id="lblDepart_Cd" class="ui-lbl-normal" style="padding-right: 0px; min-width: 36px; width: 35px">대분류</div>
+        <select class="ui-cbo-normal" id="cboDepart_Cd" style="width: 175px;" tabindex="13"></select>
+       </div>
+       <div class="ui-ctnr-row">
+        <div id="lblLine_Cd" class="ui-lbl-normal" style="padding-right: 0px; min-width: 36px; width: 35px">중분류</div>
+        <select class="ui-cbo-normal" id="cboLine_Cd" style="width: 175px;" tabindex="14"></select>
+       </div>
+       <div class="ui-ctnr-row">
+        <div id="lblClass_Cd" class="ui-lbl-normal" style="padding-right: 0px; min-width: 36px; width: 35px">소분류</div>
+        <select class="ui-cbo-normal" id="cboClass_Cd" style="width: 175px;" tabindex="15"></select>
+       </div>
+      </div>
+      <div class="ui-gbox-title">박스정보</div>
+      <div class="ui-gbox-content" style="margin-top: 0;">
+       <div class="ui-ctnr-row">
+        <div id="lblQty_In_Box" class="ui-lbl-key">박스입수</div>
         <input class="ui-edt-key" type="text" id="edtQty_In_Box" maxlength="10" style="width: 70px;" tabindex="16" />
         &nbsp;ea
-              </div>
-              <div class="ui-ctnr-row">
-                <div id="lblQty_In_Case" class="ui-lbl-normal">소박스입수</div>
+       </div>
+       <div class="ui-ctnr-row">
+        <div id="lblQty_In_Case" class="ui-lbl-normal">소박스입수</div>
         <input class="ui-edt-normal" type="text" id="edtQty_In_Case" maxlength="10" style="width: 70px;" tabindex="17" />
         &nbsp;ea
-              </div>
-              <div class="ui-ctnr-row">
-                <div id="lblBox_Weight" class="ui-lbl-normal">중량(WEIGHT)</div>
+       </div>
+       <div class="ui-ctnr-row">
+        <div id="lblBox_Weight" class="ui-lbl-normal">중량(WEIGHT)</div>
         <input class="ui-edt-normal" type="text" id="edtBox_Weight" maxlength="20" style="width: 70px;" tabindex="18" />
         &nbsp;㎏
-              </div>
-              <div class="ui-ctnr-row">
-                <div id="lblBox_Width" class="ui-lbl-normal">가로(WIDTH)</div>
+       </div>
+       <div class="ui-ctnr-row">
+        <div id="lblBox_Width" class="ui-lbl-normal">가로(WIDTH)</div>
         <input class="ui-edt-normal" type="text" id="edtBox_Width" maxlength="20" style="width: 70px;" tabindex="19" />
         &nbsp;㎜
-              </div>
-              <div class="ui-ctnr-row">
-                <div id="lblBox_Length" class="ui-lbl-normal">세로(DEPTH)</div>
+       </div>
+       <div class="ui-ctnr-row">
+        <div id="lblBox_Length" class="ui-lbl-normal">세로(DEPTH)</div>
         <input class="ui-edt-normal" type="text" id="edtBox_Length" maxlength="20" style="width: 70px;" tabindex="20" />
         &nbsp;㎜
-              </div>
-              <div class="ui-ctnr-row">
-                <div id="lblBox_Height" class="ui-lbl-normal">높이(HEIGHT)</div>
+       </div>
+       <div class="ui-ctnr-row">
+        <div id="lblBox_Height" class="ui-lbl-normal">높이(HEIGHT)</div>
         <input class="ui-edt-normal" type="text" id="edtBox_Height" maxlength="20" style="width: 70px;" tabindex="21" />
         &nbsp;㎜
-              </div>
-              <div class="ui-ctnr-row">
-                <div id="lblBox_Cbm" class="ui-lbl-normal">용적(CBM)</div>
+       </div>
+       <div class="ui-ctnr-row">
+        <div id="lblBox_Cbm" class="ui-lbl-normal">용적(CBM)</div>
         <input class="ui-edt-normal" type="text" id="edtBox_Cbm" maxlength="20" style="width: 70px;" tabindex="22" />
         &nbsp;㎥
-              </div>
-            </div>
-          </div>
-          <div style="display: inline-block; vertical-align: top;">
-            <div style="display: inline-block;">
-              <div class="ui-gbox-title">단가정보</div>
-              <div class="ui-gbox-content" style="margin-top: 0; margin-bottom: 15px;">
-                <div class="ui-ctnr-row">
-                  <div id="lblBuy_Price" class="ui-lbl-normal">매입단가</div>
-                  <input class="ui-edt-normal" type="text" id="edtBuy_Price" maxlength="20" style="width: 65px;" tabindex="23" />
-                </div>
-                <div class="ui-ctnr-row">
-                  <div id="lblSupply_Price" class="ui-lbl-normal">공급단가</div>
-                  <input class="ui-edt-normal" type="text" id="edtSupply_Price" maxlength="20" style="width: 65px;" tabindex="24" />
-                </div>
-                <div class="ui-ctnr-row">
-                  <div id="lblSale_Price" class="ui-lbl-normal">판매단가</div>
-                  <input class="ui-edt-normal" type="text" id="edtSale_Price" maxlength="20" style="width: 65px;" tabindex="25" />
-                </div>
-                <div class="ui-ctnr-row">
-                  <div id="lblVat_Yn" class="ui-lbl-normal">과세여부</div>
-                  <input class="ui-chk-normal" type="checkbox" id="chkVat_Yn" name="chkVat_Yn" tabindex="26" />
-                </div>
-              </div>
-            </div>
-            <div style="display: inline-block;">
-              <div class="ui-gbox-title">팔레트정보</div>
-              <div class="ui-gbox-content" style="margin-top: 0; margin-bottom: 15px;">
-                <div class="ui-ctnr-row">
-                  <div id="lblBox_In_Plt" class="ui-lbl-key">팔레트입수</div>
+       </div>
+      </div>
+     </div>
+     <div style="display: inline-block; vertical-align: top;">
+      <div style="display: inline-block;">
+       <div class="ui-gbox-title">단가정보</div>
+       <div class="ui-gbox-content" style="margin-top: 0; margin-bottom: 15px;">
+        <div class="ui-ctnr-row">
+         <div id="lblBuy_Price" class="ui-lbl-normal">매입단가</div>
+         <input class="ui-edt-normal" type="text" id="edtBuy_Price" maxlength="20" style="width: 65px;" tabindex="23" />
+        </div>
+        <div class="ui-ctnr-row">
+         <div id="lblSupply_Price" class="ui-lbl-normal">공급단가</div>
+         <input class="ui-edt-normal" type="text" id="edtSupply_Price" maxlength="20" style="width: 65px;" tabindex="24" />
+        </div>
+        <div class="ui-ctnr-row">
+         <div id="lblSale_Price" class="ui-lbl-normal">판매단가</div>
+         <input class="ui-edt-normal" type="text" id="edtSale_Price" maxlength="20" style="width: 65px;" tabindex="25" />
+        </div>
+        <div class="ui-ctnr-row">
+         <div id="lblVat_Yn" class="ui-lbl-normal">과세여부</div>
+         <input class="ui-chk-normal" type="checkbox" id="chkVat_Yn" name="chkVat_Yn" tabindex="26" />
+        </div>
+       </div>
+      </div>
+      <div style="display: inline-block;">
+       <div class="ui-gbox-title">팔레트정보</div>
+       <div class="ui-gbox-content" style="margin-top: 0; margin-bottom: 15px;">
+        <div class="ui-ctnr-row">
+         <div id="lblBox_In_Plt" class="ui-lbl-key">팔레트입수</div>
          <input class="ui-edt-key" type="text" id="edtBox_In_Plt" maxlength="10" style="width: 40px; margin-left: -14px;" tabindex="27" />
          &nbsp;box
-                </div>
-                <div class="ui-ctnr-row"></div>
-                <div class="ui-ctnr-row">
-                  <div id="lblPlt_Place" class="ui-lbl-normal">면박스수</div>
+        </div>
+        <div class="ui-ctnr-row"></div>
+        <div class="ui-ctnr-row">
+         <div id="lblPlt_Place" class="ui-lbl-normal">면박스수</div>
          <input class="ui-edt-normal" type="text" id="edtPlt_Place" maxlength="10" style="width: 40px; margin-left: -14px;" tabindex="28" />
          &nbsp;box
-                </div>
-                <div class="ui-ctnr-row">
-                  <div id="lblPlt_Stair" class="ui-lbl-normal">단수</div>
-                  <input class="ui-edt-normal" type="text" id="edtPlt_Stair" maxlength="10" style="width: 40px; margin-left: -14px;" tabindex="29" />
-                </div>
-              </div>
-            </div>
-            <div class="ui-gbox-title">기타정보</div>
+        </div>
+        <div class="ui-ctnr-row">
+         <div id="lblPlt_Stair" class="ui-lbl-normal">단수</div>
+         <input class="ui-edt-normal" type="text" id="edtPlt_Stair" maxlength="10" style="width: 40px; margin-left: -14px;" tabindex="29" />
+        </div>
+       </div>
+      </div>
+      <div class="ui-gbox-title">기타정보</div>
       <div class="ui-gbox-content" style="margin-top: 0; margin-bottom: 15px;">
-              <div class="ui-ctnr-row">
-                <div id="lblPlt_Split_Div" class="ui-lbl-key">팔레트분할</div>
-                <select class="ui-cbo-key" id="cboPlt_Split_Div" style="width: 130px;" tabindex="30"></select>
-              </div>
-              <div class="ui-ctnr-row">
-                <div id="lblSet_Item_Yn" class="ui-lbl-normal">세트상품여부</div>
-                <input class="ui-chk-normal" type="checkbox" id="chkSet_Item_Yn" name="chkSet_Item_Yn" tabindex="31" />
-                <div id="lblFill_Unit_Qty" class="ui-lbl-normal" style="margin-left: 58px;">보충단위수량</div>
+       <div class="ui-ctnr-row">
+        <div id="lblPlt_Split_Div" class="ui-lbl-key">팔레트분할</div>
+        <select class="ui-cbo-key" id="cboPlt_Split_Div" style="width: 130px;" tabindex="30"></select>
+       </div>
+       <div class="ui-ctnr-row">
+        <div id="lblSet_Item_Yn" class="ui-lbl-normal">세트상품여부</div>
+        <input class="ui-chk-normal" type="checkbox" id="chkSet_Item_Yn" name="chkSet_Item_Yn" tabindex="31" />
+        <div id="lblFill_Unit_Qty" class="ui-lbl-normal" style="margin-left: 58px;">보충단위수량</div>
         <input class="ui-edt-normal" type="text" id="edtFill_Unit_Qty" maxlength="10" style="width: 50px;" tabindex="32" />
         &nbsp;ea
-              </div>
-            </div>
-            <div class="ui-gbox-title">유통기한정보</div>
+       </div>
+      </div>
+      <div class="ui-gbox-title">유통기한정보</div>
       <div class="ui-gbox-content" style="margin-top: 0;">
-              <div class="ui-ctnr-row">
-                <div id="lblValid_Div" class="ui-lbl-normal">기한구분</div>
-                <select class="ui-cbo-normal" id="cboValid_Div" style="width: 130px;" tabindex="33"></select>
-              </div>
-              <div class="ui-ctnr-row" id="divTermInfo">
-                <div id="lblTerm_Div" class="ui-lbl-normal">적용단위</div>
-                <select class="ui-cbo-normal" id="cboTerm_Div" style="width: 70px;" tabindex="34"></select>
-                <div id="lblTerm_Val" class="ui-lbl-normal" style="margin-left: 8px;">적용값</div>
-                <input class="ui-edt-normal" type="text" id="edtTerm_Val" maxlength="10" style="width: 50px;" tabindex="35" />
-              </div>
-            </div>
-          </div>
-        </div>
+       <div class="ui-ctnr-row">
+        <div id="lblValid_Div" class="ui-lbl-normal">기한구분</div>
+        <select class="ui-cbo-normal" id="cboValid_Div" style="width: 130px;" tabindex="33"></select>
+       </div>
+       <div class="ui-ctnr-row" id="divTermInfo">
+        <div id="lblTerm_Div" class="ui-lbl-normal">적용단위</div>
+        <select class="ui-cbo-normal" id="cboTerm_Div" style="width: 70px;" tabindex="34"></select>
+        <div id="lblTerm_Val" class="ui-lbl-normal" style="margin-left: 8px;">적용값</div>
+        <input class="ui-edt-normal" type="text" id="edtTerm_Val" maxlength="10" style="width: 50px;" tabindex="35" />
+       </div>
+      </div>
+     </div>
+    </div>
     <div class="ui-gbox-title">출고(배송)</div>
-            <div class="ui-gbox-content" style="margin-top: 0;">
-       
-              <div class="ui-ctnr-row" id="divTermInfo" style="padding-left: 8px">
-                <div id="lblItem_Cbm" class="ui-lbl-normal" style="width: 99px;">상품CBM</div>
+    <div class="ui-gbox-content" style="margin-top: 0;">
+
+     <div class="ui-ctnr-row" id="divTermInfo" style="padding-left: 8px">
+      <div id="lblItem_Cbm" class="ui-lbl-normal" style="width: 99px;">상품CBM</div>
       <input class="ui-edt-normal" type="text" id="edtItem_Cbm" maxlength="10" style="width: 124px" tabindex="35" />
       <div id="lblDelivery_Type1" class="ui-lbl-key" style="padding-right: 10px; width: 90px">사이즈구분</div>
-                <select class="ui-cbo-key" id="cboDelivery_Type1" style="width: 140px;" tabindex="34"></select>
-              </div>
+      <select class="ui-cbo-key" id="cboDelivery_Type1" style="width: 140px;" tabindex="34"></select>
+     </div>
      <div style="padding-left: 8px" class="ui-ctnr-row">
       <div id="lblDelivery_Box" class="ui-lbl-normal" style="width: 99px;">기본배송박스</div>
-                <select class="ui-cbo-normal" id="cboDelivery_Box" style="width: 130px;" tabindex="33"></select>
-                
+      <select class="ui-cbo-normal" id="cboDelivery_Box" style="width: 130px;" tabindex="33"></select>
+
       <div id="lblDelivery_Type2" class="ui-lbl-key" style="padding-right: 10px; width: 90px">송장출력구분</div>
-                <select class="ui-cbo-key" id="cboDelivery_Type2" style="width: 140px;" tabindex="34"></select>
-              </div>
+      <select class="ui-cbo-key" id="cboDelivery_Type2" style="width: 140px;" tabindex="34"></select>
+     </div>
      <div style="padding-left: 8px" class="ui-ctnr-row">
       <div id="lblBoxing_Yn" class="ui-lbl-key">합포장가능여부</div>
-                <select class="ui-cbo-key" id="cboBoxing_Yn" style="width: 130px;" tabindex="40"></select>
-                
+      <select class="ui-cbo-key" id="cboBoxing_Yn" style="width: 130px;" tabindex="40"></select>
+
       <div id="lblDelivery_Yn_Cd" class="ui-lbl-key" style="padding-right: 10px; width: 90px">당일배송가능여부</div>
-                <select class="ui-cbo-key" id="cboDelivery_Yn" style="width: 130px;" tabindex="40"></select>
+      <select class="ui-cbo-key" id="cboDelivery_Yn" style="width: 130px;" tabindex="40"></select>
      </div>
      <div style="padding-left: 8px" class="ui-ctnr-row">
       <div id="lblHas_Type" class="ui-lbl-key" style="width: 100px;">합포장대상구분</div>
       <select class="ui-cbo-key" id=cboHas_Type style="width: 130px;" tabindex="40"></select>
 
-              </div>
-              </div>
-            </div>
-        <!-- 
+     </div>
+    </div>
+   </div>
+   <!-- 
         <div class="ui-ctnr-row">
           <div id="lblPopup_Vendor_Cd" class="ui-lbl-normal" style="width: 30px">공급처</div>
           <input class="ui-edt-normal" type="text" id="edtVendor_Cd" style="width: 60px;" tabindex="38" /> 

@@ -386,7 +386,7 @@ function _Inquiry() {
   // 입고진행현황 화면
   if ($("#divMasterView").tabs("option", "active") === 0) {
 
-
+    
     // 조회시 전역 변수 값 초기화
     $NC.setInitGridVar(G_GRDT1MASTER);
 

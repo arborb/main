@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig
+  PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+  <!-- 사용하는 properties -->
+  <properties resource="nexos/config/globals.properties" />
+  <settings useStatementNamespaces="true" />
+  <!--
+    기본값으로 운영이 되도록 주석처리
+    <settings useStatementNamespaces="true"
+    cacheModelsEnabled="true"
+    enhancementEnabled="false"
+    lazyLoadingEnabled="true"
+    defaultStatementTimeout="600"
+    />
+  -->
+
+  <!--
+    lazyLoadingEnabled : 적재 지연
+    cacheModelsEnabled : 캐시 사용여부.
+    enhancementEnabled : CGLIB사용여부(실행 시간에 코드를 생성하는 라이브러리(CGLIB))
+    useStatementNamespace : SQL Map을 정의할 때 매핑 구분을 사용시 namespace(dot(.)로 구분하는 namespze)를
+    사용할지여부.
+    maxRequest : 모든 SQL작업을 의미. 기본값(512)
+    maxSession : Request < Session < Transaction 순의 의미내포.
+    maxTransactions : DataBase Transaction을 의미.
+
+  -->
+
+  <!-- Data Type Handler -->
+  <typeHandler callback="nexos.common.ibatis.DataTypeHandler" javaType="java.lang.Object" />
+
+  <!-- 사용 SqlMap 정의 -->
+  <!-- 파일명 규칙은 [화면명]_sqlmap.xml -->
+  <!-- [S] - WMS Common -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/common/wc_sqlmap.xml" /><!-- WMS 공통 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/common/wr_sqlmap.xml" /><!-- WMS 공통 Report -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/common/procedure_sqlmap.xml" /><!-- WMS 공통 Procedure -->
+  <!-- [E] - WMS Common -->
+  <!-- [S] - 시스템관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs01000e_sqlmap.xml" /><!-- 공지사항관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs01010e_sqlmap.xml" /><!-- 사용자관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs01020e_sqlmap.xml" /><!-- 프로그램관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs01040q_sqlmap.xml" /><!-- 사용자별부가정보 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs01050e_sqlmap.xml" /><!-- 자동출력프린터설정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs01060q_sqlmap.xml" /><!-- 전체메뉴가져오기 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs01070q_sqlmap.xml" /><!-- 즐겨찾기하이어키 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs02010q_sqlmap.xml" /><!-- 테이블정보조회하기 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs03010e_sqlmap.xml" /><!-- 프로세스관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs03020e_sqlmap.xml" /><!-- 브랜드별프로세스관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs04010e_sqlmap.xml" /><!-- 정책관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs04020e_sqlmap.xml" /><!-- 브랜드별정책관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs04030e_sqlmap.xml" /><!-- 물류센터별정책관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs04040q_sqlmap.xml" /><!-- 정책조회 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs05010e_sqlmap.xml" /><!-- 상용코드관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs06010e_sqlmap.xml" /><!-- 화면표시관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/cs06020e_sqlmap.xml" /><!-- 메세지관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cs/procedure_sqlmap.xml" /><!-- 시스템관리 Procedure -->
+  <!-- [E] - 시스템관리 -->
+  <!-- [S] - 마스터관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm01010e_sqlmap.xml" /><!-- 물류센터관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm01020e_sqlmap.xml" /><!-- 물류센터별 존관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm01030e_sqlmap.xml" /><!-- 로케이션관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm01040q_sqlmap.xml" /><!-- 로케이션라벨출력 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm01050e_sqlmap.xml" /><!-- 도크관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm02010e_sqlmap.xml" /><!-- 운송권역관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm02020e_sqlmap.xml" /><!-- 차량관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm02030e_sqlmap.xml" /><!-- 관련사관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm02040e_sqlmap.xml" /><!-- 물류센터별 차량관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm02050e_sqlmap.xml" /><!-- 운송사관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm02060e_sqlmap.xml" /><!-- MALL관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm03010e_sqlmap.xml" /><!-- 위탁사관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm03020e_sqlmap.xml" /><!-- 브랜드관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm03070e_sqlmap.xml" /><!-- 로고이미지관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm03030e_sqlmap.xml" /><!-- 공급처관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm03040e_sqlmap.xml" /><!-- 배송처관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm03050e_sqlmap.xml" /><!-- 물류센터별 배송처관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm03060e_sqlmap.xml" /><!-- 사업부관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm03080e_sqlmap.xml" /><!-- 대표위탁사관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm03090e_sqlmap.xml" /><!-- 대표위탁사매칭관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm04010e_sqlmap.xml" /><!-- 상품그룹관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm04020e_sqlmap.xml" /><!-- 상품관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm04030e_sqlmap.xml" /><!-- 세트상품관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm04040e_sqlmap.xml" /><!-- 딜상품관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm04040q_sqlmap.xml" /><!-- 딜상품관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm04050e_sqlmap.xml" /><!-- 물류센터별상품관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm04060e_sqlmap.xml" /><!-- 공급처별상품관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm04070e_sqlmap.xml" /><!-- 상품등록요청-->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm04070q_sqlmap.xml" /><!-- 상품라벨출력-->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm04080e_sqlmap.xml" /><!-- 상품등록승인 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm04090e_sqlmap.xml" /><!-- 상품등록승인관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm05010e_sqlmap.xml" /><!-- 상품별로케이션관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm05020e_sqlmap.xml" /><!-- 반품로케이션관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm05030q_sqlmap.xml" /><!-- 고정로케이션라벨출력 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm06010e_sqlmap.xml" /><!-- 안전재고관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm07010e_sqlmap.xml" /><!-- 우편번호관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm07020e_sqlmap.xml" /><!-- 택배운송장마스터 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm07030e_sqlmap.xml" /><!-- 상품사업부관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm09010e_sqlmap.xml" /><!-- 작업일자관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm10010e_sqlmap.xml" /><!-- 딜옵션관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm10020e_sqlmap.xml" /><!-- 이벤트관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm06020e_sqlmap.xml" /><!-- 일자별안전재고관리 -->
+  
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm09090e_sqlmap.xml" /><!-- TEST -->
+ 
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm20010e_sqlmap.xml" /><!-- 용기관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/cm20020e_sqlmap.xml" /><!-- 주문유형관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/cm/procedure_sqlmap.xml" /><!-- 마스터 Procedure -->
+  <!-- [E] - 마스터관리 -->
+  <!-- [S] - 발주관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/la/la01010e_sqlmap.xml"  /><!-- 발주등록 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/la/la01020e_sqlmap.xml"  /><!-- 발주확정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/la/la01030q_sqlmap.xml"  /><!-- 발주내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/la/la02010e_sqlmap.xml"  /><!-- 납품예약관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/la/la02020q_sqlmap.xml"  /><!-- 납품내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/la/la02030e_sqlmap.xml"  /><!-- 납품예약승인 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/la/procedure_sqlmap.xml" /><!-- 발주관리 Procedure -->
+  <!-- [E] - 발주관리 -->
+  <!-- [S] - 입고관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/li/li01010e_sqlmap.xml" /><!-- 입고예정작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/li/li02010e_sqlmap.xml" /><!-- 입고작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/li/li03010q_sqlmap.xml" /><!-- 입고진행현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/li/li03020q_sqlmap.xml" /><!-- 입고내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/li/li03030q_sqlmap.xml" /><!-- 입고내역(전체합계) -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/li/li03040q_sqlmap.xml" /><!-- 입고내역(통합) -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/li/li04010e_sqlmap.xml" /><!-- 미입고사유등록 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/li/li05010e_sqlmap.xml" /><!-- 입고팔레트재분할 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/li/li05020e_sqlmap.xml" /><!-- 입고중량관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/li/procedure_sqlmap.xml" /><!-- 입고 Procedure -->
+  <!-- [E] - 입고관리 -->
+  <!-- [S] - 배차관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ld/ld01010e_sqlmap.xml" /><!-- 배차조정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ld/ld02010e_sqlmap.xml" /><!-- 도크조정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ld/procedure_sqlmap.xml" /><!-- 배차조정 Procedure -->
+  <!-- [E] - 배차관리 -->
+  <!-- [S] - 출고관리 -->
+  <!-- 기본출고 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lo01010e_sqlmap.xml" /><!-- 출고예정작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lo01020q_sqlmap.xml" /><!-- 미출예상내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lo01030q_sqlmap.xml" /><!-- 출고예정내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lo02010e_sqlmap.xml" /><!-- 출고작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lo03010q_sqlmap.xml" /><!-- 출고진행현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lo03020q_sqlmap.xml" /><!-- 출고내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lo03030q_sqlmap.xml" /><!-- 예정대비출고현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lo03040q_sqlmap.xml" /><!-- 출고내역(전체합계) -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom3010q_sqlmap.xml" /><!-- 온라인출고내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom3020q_sqlmap.xml" /><!-- 온라인출고내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lo04010e_sqlmap.xml" /><!-- 미출고사유등록 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lo04030e_sqlmap.xml" /><!-- 배분등록 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lo05010q_sqlmap.xml" /><!-- 배송완료관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lo05020e_sqlmap.xml" /><!-- 출고중량관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lo07010e_sqlmap.xml" /><!-- 출고스캔검수 -->
+  
+  <!-- 온라인출고 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom1010e_sqlmap.xml" /><!-- 출고예정작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom1020q_sqlmap.xml" /><!-- 미출예상내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom1030q_sqlmap.xml" /><!-- 출고예정내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom1110e_sqlmap.xml" /><!-- 출고예정작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom2010e_sqlmap.xml" /><!-- 출고작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom3030q_sqlmap.xml" /><!-- 예정대비출고현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom3040q_sqlmap.xml" /><!-- 온라인출고집계내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom3050q_sqlmap.xml" /><!-- 통합온라인출고내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom3060e_sqlmap.xml" /><!-- 출고개인정보변경 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom4010e_sqlmap.xml" /><!-- 미출고사유관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom5010q_sqlmap.xml" /><!-- 미배송내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom6010q_sqlmap.xml" /><!-- 적재팔레트출력및내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7010e_sqlmap.xml" /><!-- 출고스캔검수 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7020e_sqlmap.xml" /><!-- 출고단품검수 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7030e_sqlmap.xml" /><!-- 출고단품검수 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7040e_sqlmap.xml" /><!-- 백화점집하장스캔 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7050e_sqlmap.xml" /><!-- 센터입고스캔 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7080e_sqlmap.xml" /><!-- 출고피킹검수-->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7090e_sqlmap.xml" /><!-- new출고작업-->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom8010e_sqlmap.xml" /><!-- 팔레타이징 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom8010q_sqlmap.xml" /><!-- 주문보류관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom8020q_sqlmap.xml" /><!-- 배송진행상태 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom8030q_sqlmap.xml" /><!-- 인수인계등록내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9010e_sqlmap.xml" /><!-- 출고취소처리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9020q_sqlmap.xml" /><!-- 출고운송장발행 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9030e_sqlmap.xml" /><!-- 상차검수처리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9040q_sqlmap.xml" /><!-- 합포장불가상품 송장발행 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9050q_sqlmap.xml" /><!-- 운송장재발행 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9060q_sqlmap.xml" /><!-- 출고상차내역조회 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9070q_sqlmap.xml" /><!-- 출고 운송장출력조회 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9070e_sqlmap.xml" /><!-- 출고 운송장출력조회 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9080q_sqlmap.xml" /><!-- 출고 현황관제 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9080e_sqlmap.xml" /><!-- 출고 합포장관리1 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9090e_sqlmap.xml" /><!-- 출고 합포장조회 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9110e_sqlmap.xml" /><!-- 출고 합포장관리2-->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9140q_sqlmap.xml" /><!-- 출고 합포장관리2-->
+ <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom9130q_sqlmap.xml" /><!-- 출고 합포장관리2-->
+ <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/lom7230e_sqlmap.xml" /><!-- 출고 합포장관리2-->
+ 
+  
+  <!-- 출고공통 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/loc2010e_sqlmap.xml" /><!-- 선출고로케이션변경 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lo/procedure_sqlmap.xml" /><!-- 출고 Procedure -->
+  <!-- [E] - 출고관리 -->
+  <!-- [S] - Cross-Dock 관리-->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lx/lx02010e_sqlmap.xml" /><!-- Cross-Dock작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lx/lx03010q_sqlmap.xml" /><!-- CD진행현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lx/lx03020q_sqlmap.xml" /><!-- CD내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lx/lx03030q_sqlmap.xml" /><!-- 집계CD내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lx/lx04010e_sqlmap.xml" /><!-- 팔레트 등록 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lx/procedure_sqlmap.xml" /><!-- Cross-Dock Procedure -->
+  <!-- [E] - Cross-Dock 관리-->
+  <!-- [S] - 반입관리 -->
+  <!-- 기본반입 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ri/ri01010e_sqlmap.xml" /><!-- 반입예정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ri/ri02010e_sqlmap.xml" /><!-- 반입작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ri/ri03020q_sqlmap.xml" /><!-- 반입내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ri/ri03030q_sqlmap.xml" /><!-- 집계반입내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ri/procedure_sqlmap.xml" /><!-- 반입 Procedure -->
+  <!-- 온라인반입 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ri/rim1010e_sqlmap.xml" /><!-- 반입예정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ri/rim5010e_sqlmap.xml" /><!-- 반입예정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ri/rim2010e_sqlmap.xml" /><!-- 반입작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ri/rim3020q_sqlmap.xml" /><!-- 반입내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ri/rim3030q_sqlmap.xml" /><!-- 집계반입내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ri/rim3040q_sqlmap.xml" /><!-- 임의반입내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ri/rim6010e_sqlmap.xml" /><!-- 고객반품스캔검수 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ri/rim6020q_sqlmap.xml" /><!-- 고객반품스캔검수 -->
+   <!-- [E] - 반입관리 -->
+  <!-- [S] - 반출관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ro/ro01010e_sqlmap.xml" /><!-- 반출작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ro/ro02010e_sqlmap.xml" /><!-- 반출작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ro/ro03010e_sqlmap.xml" /><!-- 반출작업[롯데] -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ro/ro03020q_sqlmap.xml" /><!-- 반출내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ro/ro03030q_sqlmap.xml" /><!-- 집계반출내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ro/ro04040e_sqlmap.xml" /><!-- 운송장관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ro/ro04050e_sqlmap.xml" /><!-- 센터출고스캔 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ro/ro04060e_sqlmap.xml" /><!-- 운송장관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ro/procedure_sqlmap.xml" /><!-- 반출 Procedure -->
+  <!-- [E] - 반출관리 -->
+  <!-- [S] - 센터운영 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/lc01010e_sqlmap.xml" /><!-- 기타입출고관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/lc02010e_sqlmap.xml" /><!-- 상태변환관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/lc02020e_sqlmap.xml" /><!-- 상품변환관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/lc02030e_sqlmap.xml" /><!-- 브랜드이관관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/lc02040e_sqlmap.xml" /><!-- 세트상품관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/lc03010e_sqlmap.xml" /><!-- 재고이동관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/lc03020e_sqlmap.xml" /><!-- 로케이션ID병합관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/lc04010e_sqlmap.xml" /><!-- 재고실사관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/lc04020e_sqlmap.xml" /><!-- 센터별재고실사관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/lc05010e_sqlmap.xml" /><!-- 재고속성관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/lc06010e_sqlmap.xml" /><!-- 유통가공관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/lc07010q_sqlmap.xml" /><!-- 운영현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/lc08010e_sqlmap.xml" /><!-- 부자재입출고관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lc/procedure_sqlmap.xml" /><!-- 센터운영 Procedure -->
+  <!-- [E] - 센터운영 -->
+  <!-- [S] - 재고/수불 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ls/ls01010q_sqlmap.xml" /><!-- 재고현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ls/ls01020q_sqlmap.xml" /><!-- 통합재고현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ls/ls01030q_sqlmap.xml" /><!-- 상품별재고현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ls/ls02010q_sqlmap.xml" /><!-- 수불현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ls/ls02020q_sqlmap.xml" /><!-- 집계수불현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ls/ls03010q_sqlmap.xml" /><!-- 재고분석현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ls/ls04010q_sqlmap.xml" /><!-- 로케이션적치현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ls/ls05010q_sqlmap.xml" /><!-- 재고운영현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ls/ls06010q_sqlmap.xml" /><!-- 딜별재고현황 --> 
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ls/ls08010q_sqlmap.xml" /><!-- 주문현황 --> 
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ls/procedure_sqlmap.xml" /><!-- 재고/수불 Procedure -->
+  <!-- [E] - 재고/수불 -->
+  <!-- [S] - 정산 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf01010e_sqlmap.xml" /><!-- 보안설정/해제 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf01020e_sqlmap.xml" /><!-- 월마감관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf01030e_sqlmap.xml" /><!-- 수정중 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf01130e_sqlmap.xml" /><!-- 수정중 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf02010e_sqlmap.xml" /><!-- 정산마스터관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf02020e_sqlmap.xml" /><!-- 위탁수수료 기준관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf02030e_sqlmap.xml" /><!-- 임대수수료 기준관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf02040e_sqlmap.xml" /><!-- 약정수수료 기준관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf02050e_sqlmap.xml" /><!-- 배송청구수수료 기준관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf02060e_sqlmap.xml" /><!-- 배송지급수수료 기준관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf02090e_sqlmap.xml" /><!-- 위탁사별청구단가표관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf03010e_sqlmap.xml" /><!-- 위탁청구수수료 조정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf03020e_sqlmap.xml" /><!-- 운송청구수수료 조정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf03030e_sqlmap.xml" /><!-- 운송지급수수료 조정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf03040e_sqlmap.xml" /><!-- 청구수수료 합계조정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf04010q_sqlmap.xml" /><!-- 위탁수수료 내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf04020q_sqlmap.xml" /><!-- 배송청구수수료 내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf04030q_sqlmap.xml" /><!-- 배송지급수수료 내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf04040q_sqlmap.xml" /><!-- 배송지급수수료 내역 -->
+  
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf05010e_sqlmap.xml" /><!-- 예외운송비 작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf05030e_sqlmap.xml" /><!-- 예외운송비 작업 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf06010q_sqlmap.xml" /><!-- 청구수수료 합계내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf06020q_sqlmap.xml" /><!-- 지급수수료 합계내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf06030q_sqlmap.xml" /><!-- 수정중 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf06040q_sqlmap.xml" /><!-- 수정중 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf06050q_sqlmap.xml" /><!-- 수정중 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf06060q_sqlmap.xml" /><!-- 수정중 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf06070q_sqlmap.xml" /><!-- 위탁사 딜별 청구내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf06080q_sqlmap.xml" /><!-- 운송사별지급정산내역 -->
+  
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf07010q_sqlmap.xml" /><!-- 물류센터별 청구내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf08010q_sqlmap.xml" /><!-- 일마감처리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf02080e_sqlmap.xml" /><!-- 정산마스터관리2 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/lf02091e_sqlmap.xml" /><!-- 위탁사별청구단가표관리 -->
+  
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lf/procedure_sqlmap.xml" /><!-- 정산/마감 Procedure -->
+  <!-- [E] - 정산 -->
+  <!-- [S] - Visibility -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lv/lv01000q_sqlmap.xml" /><!-- Dashboard -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lv/lv01010q_sqlmap.xml" /><!-- 주문분석 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lv/lv02010q_sqlmap.xml" /><!-- 재고Capa 현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lv/lv02020q_sqlmap.xml" /><!-- 재고보유 현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lv/lv02040q_sqlmap.xml" /><!-- 재고분석(2) -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lv/lv02050q_sqlmap.xml" /><!-- 재고위치파악 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lv/lv02060q_sqlmap.xml" /><!-- Traceability -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lv/lv03010q_sqlmap.xml" /><!-- 입고추이 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lv/lv03020q_sqlmap.xml" /><!-- 전년대비 입고추이 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lv/lv04010q_sqlmap.xml" /><!-- 출고추이 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lv/lv04020q_sqlmap.xml" /><!-- 전년대비 출고추이 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lv/lv04030q_sqlmap.xml" /><!-- 출고분석 -->
+  <!-- [E] - Visibility -->
+  <!-- [S] - KPI -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lk/lk01010q_sqlmap.xml" /><!-- [일별]입출고추이 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lk/lk02010q_sqlmap.xml" /><!-- [월별]입출고추이 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lk/lk03010q_sqlmap.xml" /><!-- 입출고실적 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lk/lk04010q_sqlmap.xml" /><!-- 월별 재고실사 오차율 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/lk/lk05010q_sqlmap.xml" /><!-- 재고분석현황 -->
+  <!-- [E] - KPI -->
+  <!-- [S] - EDI -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed01010e_sqlmap.xml" /><!-- 수신체크리스트관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed01020e_sqlmap.xml" /><!-- 인터페이스 코드매핑 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed02010e_sqlmap.xml" /><!-- 인터페이스 수신관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed02020e_sqlmap.xml" /><!-- 인터페이스 송신관리 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed02030e_sqlmap.xml" /><!-- 송수신 스케줄링 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed03010e_sqlmap.xml" /><!-- [수신]상품마스터 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed03020e_sqlmap.xml" /><!-- [수신]공급처마스터 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed03030e_sqlmap.xml" /><!-- [수신]배송처마스터 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed03040e_sqlmap.xml" /><!-- [수신]입고예정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed03050e_sqlmap.xml" /><!-- [수신]출고예정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed03060e_sqlmap.xml" /><!-- [수신]반입예정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed03070e_sqlmap.xml" /><!-- [수신]반출예정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed03080e_sqlmap.xml" /><!-- [수신]유통가공 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed03090e_sqlmap.xml" /><!-- [수신]예외운송비 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed03100e_sqlmap.xml" /><!-- [수신]판매사 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed03110e_sqlmap.xml" /><!-- [수신]딜마스터 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed03120e_sqlmap.xml" /><!-- [수신]주문리스트 출고예정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed04010e_sqlmap.xml" /><!-- [송신]입고확정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed04020e_sqlmap.xml" /><!-- [송신]출고확정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed04030e_sqlmap.xml" /><!-- [송신]반입확정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed04040e_sqlmap.xml" /><!-- [송신]반출확정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed04050e_sqlmap.xml" /><!-- [송신]기타입출고 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed04060e_sqlmap.xml" /><!-- [송신]주문정보/송장매칭 엑셀다운 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed05010q_sqlmap.xml" /><!-- 사업부별송수신현황 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed06010e_sqlmap.xml" /><!-- [수신]안전재고마스터 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed06020e_sqlmap.xml" /><!-- [수신]우편번호마스터 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed06030e_sqlmap.xml" /><!-- [수신]출고주문상태 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed07010e_sqlmap.xml" /><!-- [수신]CJ대한통운 배송결과 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed08010e_sqlmap.xml" /><!-- [송신]CJ대한통운 택배송장 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed09010e_sqlmap.xml" /><!-- [송신]변동가용재고 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed09020e_sqlmap.xml" /><!-- [송신]전체가용재고 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed09030e_sqlmap.xml" /><!-- [송신]출고주문상태 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed09040e_sqlmap.xml" /><!-- [송신]브랜드별가용재고 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed09050e_sqlmap.xml" /><!-- [재송신]출고확정 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed09060e_sqlmap.xml" /><!-- [송신]변동가용재고 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed09070q_sqlmap.xml" /><!-- [송신]출고지시내역 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/ed09080q_sqlmap.xml" /><!-- [송신]출고취소내역조회 -->
+  
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/edcommon_sqlmap.xml" /><!-- EDI 공통 -->
+  <sqlMap resource="nexos/sqlmap/${Globals.dbType}/ed/procedure_sqlmap.xml" /><!-- EDI Procedure -->
+  <!-- [E] - EDI -->
+</sqlMapConfig>

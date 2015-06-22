@@ -318,7 +318,7 @@ public class LC03010EService {
         // SP 내에서 오류가 아니면 Exit
         transactionManager.rollback(ts);
         throw new RuntimeException(e.getMessage());
-  }
+      }
     }
 
     if (sbResult.length() == 0) {

@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- IE8 이하 버전에서 HTML5 엘리먼트 인식 -->
+<!-- Upgrade MSIE5.5-8 to be compatible with modern browsers -->
+<!--[if lt IE 9]>
+<script src="../common/js/misc/html5shiv.js"></script>
+<script src="../common/js/misc/IE9.js"></script>
+<![endif]-->
+<!-- Normalize CSS -->
+
+<link rel="stylesheet" href="../../layout/common/redmond/normalize.css" />
+<!-- JQuery CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/jquery-ui.custom.css" />
+<!-- Slick Grid CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/slick.grid.css" />
+<!-- Common CSS -->
+<link rel="stylesheet" href="../../layout/common/redmond/common.css" />
+<!-- JQuery JS -->
+<script src="../common/js/jquery/jquery.js"></script>
+<script src="../common/js/jquery/i18n/jquery.ui.datepicker-ko.js"></script>
+<script src="../common/js/jquery/jquery.mousewheel.js"></script>
+<script src="../common/js/jquery/jquery-ui.custom.js"></script>
+<script src="../common/js/jquery/jquery.splitter.js"></script>
+<script src="../common/js/jquery/jquery.event.drag.js"></script>
+<!-- Slick JS -->
+<script src="../common/js/slickgrid/slick.core.js"></script>
+<script src="../common/js/slickgrid/slick.formatters.js"></script>
+<script src="../common/js/slickgrid/slick.grid.js"></script>
+<script src="../common/js/slickgrid/slick.dataview.js"></script>
+<script src="../common/js/slickgrid/slick.rowselectionmodel.js"></script>
+<script src="../common/js/slickgrid/slick.editors.js"></script>
+<!-- Common JS -->
+<script src="../common/js/common.js"></script>
+<!--  Popup JS : 팝업 JS - 사용시 추가 -->
+<script src="../popup/js/popup.js"></script>
+<!-- CS01010E CSS/JS -->
+<link rel="stylesheet" href="../../layout/submain/cs/CS01010E.css" />
+<script src="js/CS01010E.js"></script>
+</head>
+<body>
+  <div id="divTopLine" class="ui-top-line"></div>
+  <!-- 조회조건 -->
+  <div id="divConditionView" class="ui-ctnr-condition">
+    <table class="ui-tbl-condition">
+      <tr>
+        <td>
+          <div id="lblQCenter_Cd" class="ui-lbl-condition">물류센터</div>
+          <select id="cboQCenter_Cd" class="ui-cbo-normal" style="width: 150px;"></select>
+        </td>
+        <td>
+          <div id="lblQBu_Cd1" class="ui-lbl-condition" style="margin-left: 10px;">사업구분</div>
+          <input class="ui-edt-normal" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 120px;" />
+          <input type="hidden" id="edtQCust_Cd" />
+        </td>
+        <td>
+          <div id="lblQCertify_Div" class="ui-lbl-condition" style="margin-left: 10px;">사용자구분</div>
+          <select id="cboQCertify_Div" class="ui-cbo-normal" style="width: 120px;"></select>
+        </td>
+        <td style="width: 100%; text-align: right;">
+          <input type="button" id="btnEntryUser" value="사용자간편등록" class="ui-btn-cmd" style="width: 100px;" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="lblPopup_User_Id" class="ui-lbl-condition">사용자ID</div>
+          <input class="ui-edt-normal" type="text" id="edtQUser_Id" style="width: 100px;" />
+          <input class="ui-btn-popup" type="button" id="btnQUser_Id" />
+          <input class="ui-edt-display" type="text" id="edtQUser_Nm" style="width: 120px;" disabled="disabled" />
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- 사용자정보 그리드 Master View -->
+  <div id="divMasterView" class="ui-ctnr-left">
+    <table class="ui-tbl-grid">
+      <tr>
+        <td id="divTitle_grdMaster" class="ui-grd-title">사용자정보</td>
+        <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+      </tr>
+    </table>
+    <div id="grdMaster"></div>
+  </div>
+  <!-- Detail View -->
+  <div id="divDetailView" class="ui-ctnr-right">
+    <!-- header -->
+    <div class="ui-gbox-header">
+      <div class="ui-lbl-header">사용자상세정보</div>
+    </div>
+    <!-- main -->
+    <div id="divDetailInfoView" class="ui-gbox-content ui-noborder">
+      <div class="ui-ctnr-row">
+        <div id="lblUser_Id" class="ui-lbl-key">사용자ID</div>
+        <input class="ui-edt-key" type="text" id="edtUser_Id" style="width: 150px;" tabindex="1" />
+        <div id="lblCenter_Cd_B" class="ui-lbl-key" style="margin-left: 10px;">기본물류센터</div>
+        <input class="ui-edt-display" type="text" id="edtCenter_Cd" style="width: 60px;" disabled="disabled" />
+        <input class="ui-edt-display" type="text" id="edtCenter_Nm" style="width: 132px;" disabled="disabled" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblUser_Nm" class="ui-lbl-key">사용자명</div>
+        <input class="ui-edt-key" type="text" id="edtUser_Nm" style="width: 150px;" tabindex="2" />
+        <div id="lblBu_Cd_B" class="ui-lbl-key" style="margin-left: 10px;">기본사업부</div>
+        <input class="ui-edt-display" type="text" id="edtBu_Cd" style="width: 60px;" disabled="disabled" />
+        <input class="ui-edt-display" type="text" id="edtBu_Nm" style="width: 132px;" disabled="disabled" />
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblUser_Pwd" class="ui-lbl-key">패스워드</div>
+        <input class="ui-edt-key" type="password" id="edtUser_Pwd" maxlength="20" style="width: 150px;" tabindex="3" />
+        <div id="lblSys_Lang" class="ui-lbl-key" style="margin-left: 10px;">기본언어</div>
+        <select id="cboSys_Lang" class="ui-cbo-key" style="width: 208px;" tabindex="5"></select>
+      </div>
+      <div class="ui-ctnr-row">
+        <div id="lblCertify_Div" class="ui-lbl-key">사용자구분</div>
+        <select id="cboCertify_Div" class="ui-cbo-key" style="width: 156px;" tabindex="4"></select>
+        <div id="lblGroup_Notice_Div"  class="ui-lbl-key" style="margin-left: 10px;">공지그룹구분</div>
+        <select id="cboGroup_Notice_Div" class="ui-cbo-key" style="width: 156px;" tabindex="6"></select>
+      </div>
+    </div>
+    <!-- 관리 센터, 브랜드 그리드 View -->
+    <div id="divGrdView">
+      <!-- Top -->
+      <div>
+        <div id="divSubView1" class="ui-ctnr-left" style="border-left-width: 0px;">
+          <table class="ui-tbl-grid">
+            <tr>
+              <td id="divTitle_grdDetail1" class="ui-grd-title">관리물류센터</td>
+              <td id="divRowCount_grdDetail1" class="ui-grd-rowcount">0/0 Rows</td>
+            </tr>
+          </table>
+          <div id="grdDetail1"></div>
+        </div>
+        <!-- Button -->
+        <div id="divBtnCenter" class="ui-ctnr-left" style="text-align: center; border-width: 0;">
+          <div>
+            <input type="button" id="btnAddCenter" value="◀" class="ui-btn-cmd" style="width: 40px;" />
+          </div>
+          <div>
+            <input type="button" id="btnDeleteCenter" value="▶" class="ui-btn-cmd" style="width: 40px; margin-top: 10px" />
+          </div>
+        </div>
+        <div id="divSubView2" class="ui-ctnr-right" style="margin-left: 0; border-right-width: 0px;">
+          <table class="ui-tbl-grid">
+            <tr>
+              <td id="divTitle_grdDetail2" class="ui-grd-title">물류센터</td>
+              <td id="divRowCount_grdDetail2" class="ui-grd-rowcount">0/0 Rows</td>
+            </tr>
+          </table>
+          <div id="grdDetail2"></div>
+        </div>
+      </div>
+      <!-- Bottom -->
+      <div>
+        <div id="divSubView3" class="ui-ctnr-left" style="margin-top: 5px; border-width: 1px 1px 0 0;">
+          <table class="ui-tbl-grid">
+            <tr>
+              <td id="divTitle_grdDetail3" class="ui-grd-title">관리사업부</td>
+              <td id="divRowCount_grdDetail3" class="ui-grd-rowcount">0/0 Rows</td>
+            </tr>
+          </table>
+          <div id="grdDetail3"></div>
+        </div>
+        <!-- Button -->
+        <div id="divBtnBu" class="ui-ctnr-left" style="text-align: center; border-width: 0; margin-top: 5px;">
+          <div>
+            <input type="button" id="btnAddBu" value="◀" class="ui-btn-cmd" style="width: 40px;" />
+          </div>
+          <div>
+            <input type="button" id="btnDeleteBu" value="▶" class="ui-btn-cmd" style="width: 40px; margin-top: 10px" />
+          </div>
+        </div>
+        <div id="divSubView4" class="ui-ctnr-right" style="margin-left: 0; margin-top: 5px; border-width: 1px 0 0 1px;">
+          <table class="ui-tbl-grid">
+            <tr>
+              <td id="divTitle_grdDetail4" class="ui-grd-title">사업부</td>
+              <td id="divRowCount_grdDetail4" class="ui-grd-rowcount">0/0 Rows</td>
+            </tr>
+          </table>
+          <div id="grdDetail4"></div>
+        </div>
+      </div>        
+      <!-- Bottom -->
+      
+      <div id="divMasterInfoView">
+        <div id="divSubView7" class="ui-ctnr-left" style="margin-top: 5px; border-width: 0px 0px 0px 0px;">
+          <table>
+            <tr>
+              <td>
+                <div id="lblQPopup_Own_Brand_Cd" class="ui-lbl-normal" style="margin-left: 36px;">위탁사</div>
+                <input class="ui-edt-normal" type="text" id="edtOwn_Brand_Cd" style="width: 155px;" />
+                <!-- 
+                <div id="lblPopup_Brand_Cd" class="ui-lbl-normal" style="margin-left: 36px;">판매사</div> 
+                <input class="ui-edt-normal" type="text" id="edtBrand_Cd" style="width: 155px;" /> 
+                -->
+              </td>
+            </tr>
+          </table>
+          
+        </div>
+        <!-- Button -->
+        <div id="divSubView8" class="ui-ctnr-right" style="margin-left: 0; margin-top: 5px; border-width: 0px 0px 0px 0px;">
+          <table>
+            <tr>
+              <td>
+                <input class="ui-btn-popup" type="button" id="btnOwn_Brand_Cd" style="margin-left: 3px;"/>
+                <input class="ui-edt-display" type="text" id="edtOwn_Brand_Nm" disabled="disabled" style="width: 128px;" />
+                <!-- 
+                <input class="ui-btn-popup" type="button" id="btnBrand_Cd" style="margin-left: 3px;"/> 
+                <input class="ui-edt-display" type="text" id="edtBrand_Nm" disabled="disabled" style="width: 300 px;" /> 
+                -->
+              </td>   
+              <td>         
+                <input type="button" id="Inquiry_Md" value="적용" class="ui-btn-cmd" style="width: 40px; margin-left: 5px;" />
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      
+      
+        <!-- Bottom -->
+      <div>
+        <div id="divSubView5" class="ui-ctnr-left" style="margin-top: 5px; border-width: 1px 1px 0 0;">
+          <table class="ui-tbl-grid">
+            <tr>
+              <td id="divTitle_grdDetail5" class="ui-grd-title">관리위탁사</td>
+              <td id="divRowCount_grdDetail5" class="ui-grd-rowcount">0/0 Rows</td>
+            </tr>
+          </table>
+          <div id="grdDetail5"></div>
+        </div>
+        <!-- Button -->
+        <div id="divBtnMd" class="ui-ctnr-left" style="text-align: center; border-width: 0; margin-top: 5px;">
+          <div>
+            <input type="button" id="btnAddMd" value="◀" class="ui-btn-cmd" style="width: 40px;margin-top: 10px" />
+          </div>
+          <div>
+            <input type="button" id="btnDeleteMd" value="▶" class="ui-btn-cmd" style="width: 40px; margin-top: 10px" />
+          </div>
+        </div>
+        <div id="divSubView6" class="ui-ctnr-right" style="margin-left: 0; margin-top: 5px; border-width: 1px 0 0 1px;">
+          <table class="ui-tbl-grid">
+            <tr>
+              <td id="divTitle_grdDetail6" class="ui-grd-title">위탁사</td>
+              <td id="divRowCount_grdDetail6" class="ui-grd-rowcount">0/0 Rows</td>
+            </tr>
+          </table>
+          <div id="grdDetail6"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

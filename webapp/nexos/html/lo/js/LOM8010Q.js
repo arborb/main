@@ -11,6 +11,7 @@ function _Initialize() {
   grdMasterInitialize();
   // 하단그리드 초기화
   grdDetailInitialize();
+  
 
   $NC.setInitDatePicker("#dtpQOutbound_Date1");
   $NC.setInitDatePicker("#dtpQOutbound_Date2");
@@ -116,6 +117,23 @@ function _Initialize() {
     addAll: true
   });
 
+//조회조건 - 보류여부 세팅
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "INOUT_CD",
+      P_CODE_CD: "%",
+      P_SUB_CD1: "DM",
+      P_SUB_CD2: "%"
+    })
+  }, {
+    selector: "#cboQInout_Cd",
+    codeField: "CODE_CD",
+    nameField: "CODE_NM",
+    fullNameField: "CODE_CD_F",
+    addAll: true
+  });
+  
   // 입력조건 - 취소사유 세팅
   $NC.setInitCombo("/WC/getDataSet.do", {
     P_QUERY_ID: "WC.POP_CMCODE",
@@ -382,8 +400,8 @@ function _Inquiry() {
   var ITEM_CD = $NC.getValue("#edtQItem_Cd", true);
   var DEAL_ID = $NC.getValue("#edtQDeal_Id");
   var BU_NO = $NC.getValue("#edtQBu_No");
-  var ORDERER_NM = $NC.getValue("#edtQOrderer_Nm");
-  var SHIPPER_NM = $NC.getValue("#edtShipper_Nm");
+  var ORDERER_NM = $NC.getValue("#edtQOrderer_Nm", true);
+  var SHIPPER_NM = $NC.getValue("#edtShipper_Nm", true);
   var HOLD_YN = $NC.getValue("#cboHold_Yn_Cd");
   var BU_DATE = $NC.getValue("#edtQBu_Date");
   var OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
@@ -399,7 +417,7 @@ function _Inquiry() {
   var BU_KEY = $NC.getValue("#edtQBu_Key");
   var CANCEL_STATE = $NC.getValue("#cboQCancel_State");
   var PACKING_BATCH = $NC.getValue("#edtQBox_No");
-
+  var INOUT_CD = $NC.getValue("#cboQInout_Cd");
   var SCAN_DATA = PACKING_BATCH.substr(2).split("-");
 
   // 조회시 전역 변수 값 초기화
@@ -437,6 +455,7 @@ function _Inquiry() {
     P_PACKING_BATCH: SCAN_DATA[3],
     P_BU_KEY: BU_KEY,
     P_CANCEL_STATE: CANCEL_STATE,
+    P_INOUT_CD: INOUT_CD,
     P_USER_ID: $NC.G_USERINFO.USER_ID
   });
 
@@ -521,6 +540,14 @@ function grdMasterOnGetColumns() {
     minWidth: 160,
     cssClass: "align-center"
   });
+  $NC.setGridColumn(columns, {
+    id: "INOUT_NM",
+    field: "INOUT_NM",
+    name: "입출고구분",
+    minWidth: 90,
+    cssClass: "align-center"
+  });
+  
  
   $NC.setGridColumn(columns, {
     id: "HOLD_YN",
@@ -860,6 +887,13 @@ function grdDetailOnGetColumns(policyLI420) {
   $NC.setGridColumn(columns, {
     id: "ORDER_QTY",
     field: "ORDER_QTY",
+    name: "수량",
+    minWidth: 80,
+    cssClass: "align-right"
+  });
+  $NC.setGridColumn(columns, {
+    id: "CONFIRM_QTY",
+    field: "CONFIRM_QTY",
     name: "수량",
     minWidth: 80,
     cssClass: "align-right"

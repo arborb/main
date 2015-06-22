@@ -338,7 +338,7 @@ public class WCDAOImpl implements WCDAO {
       String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );
         //
         //System.out.println("\n outKey : " +outKey );
-
+        
         queryParams.put("P_SCPKEY", outKey);
       
       int listCount = nexosDAO.listToExcel(queryId, queryParams, xlsWorkbook, columnInfo, xlsExportType, xlsTitle);

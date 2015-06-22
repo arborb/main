@@ -1,0 +1,1404 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!--
+  //====================================================================================================================
+  // 
+  // Author : ASETEC
+  // Date : 2012-11-15
+  // Description
+  // PROCEDURE 관련 SqlMap
+  //
+  // ※ 작성은 반드시 알파벳 순서로 작성
+  // ※ 파일명은 [destination name]_sqlmap.xml 로 합니다
+  // ※ namespace = destination name으로 설정합니다
+  //====================================================================================================================
+-->
+<sqlMap>
+
+ 
+  <!--
+    //==================================================================================================================
+    // PROCEDURE SQLMAP
+    //==================================================================================================================
+  -->
+  <!-- [S] - LO_020ND_QTY_UPDATE -->
+  <parameterMap id="paramLO_020ND_QTY_UPDATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_020ND_QTY_UPDATE" parameterMap="paramLO_020ND_QTY_UPDATE" resultClass="java.util.HashMap">
+      { call LO_020ND_QTY_UPDATE(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_020ND_QTY_UPDATE -->
+
+  <!-- [S] - LO_BW_CONFIRM -->
+  <parameterMap id="paramLO_BW_CONFIRM" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_CONFIRM" parameterMap="paramLO_BW_CONFIRM" resultClass="java.util.HashMap">
+      { call LO_BW_CONFIRM(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_CONFIRM -->
+
+  <!-- [S] - LO_BW_DELIVERY -->
+  <parameterMap id="paramLO_BW_DELIVERY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_DELIVERY" parameterMap="paramLO_BW_DELIVERY" resultClass="java.util.HashMap">
+      { call LO_BW_DELIVERY(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_DELIVERY -->
+
+  <!-- [S] - LO_BW_DIRECTIONS -->
+  <parameterMap id="paramLO_BW_DIRECTIONS" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_DIRECTIONS" parameterMap="paramLO_BW_DIRECTIONS" resultClass="java.util.HashMap">
+      { call LO_BW_DIRECTIONS(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_DIRECTIONS -->
+
+  <!-- [S] - LO_BW_DPS_BATCH -->
+  <parameterMap id="paramLO_BW_DPS_BATCH" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_DPS_BATCH" parameterMap="paramLO_BW_DPS_BATCH" resultClass="java.util.HashMap">
+      { call LO_BW_DPS_BATCH(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_DPS_BATCH -->
+
+  <!-- [S] - LO_BW_ENTRY -->
+  <parameterMap id="paramLO_BW_ENTRY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_ENTRY" parameterMap="paramLO_BW_ENTRY" resultClass="java.util.HashMap">
+      { call LO_BW_ENTRY(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_ENTRY -->
+
+  <!-- [S] - LO_BW_ENTRY_BATCH -->
+  <parameterMap id="paramLO_BW_ENTRY_BATCH" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_DELIVERY_BATCH"          mode="IN" />
+    <parameter property="P_INOUT_CD"                mode="IN" />
+    <parameter property="P_BU_NO"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_NM"                 mode="IN" />
+    <parameter property="P_OUTBOUND_DIV"            mode="IN" />
+    <parameter property="P_DELIVERY_CD"             mode="IN" />
+    <parameter property="P_RDELIVERY_CD"            mode="IN" />
+    <parameter property="P_ORDERER_NM"              mode="IN" />
+    <parameter property="P_SHIPPER_NM"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_ENTRY_BATCH" parameterMap="paramLO_BW_ENTRY_BATCH" resultClass="java.util.HashMap">
+      { call LO_BW_ENTRY_BATCH(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_ENTRY_BATCH -->
+
+  <!-- [S] - LO_BW_SCAN_CONFIRM -->
+  <parameterMap id="paramLO_BW_SCAN_CONFIRM" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_SCAN_CONFIRM" parameterMap="paramLO_BW_SCAN_CONFIRM" resultClass="java.util.HashMap">
+      { call LO_BW_SCAN_CONFIRM(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_SCAN_CONFIRM -->
+  
+  <!-- [S] - LO_BW_SCAN_CONFIRM_BATCH -->
+  <parameterMap id="paramLO_BW_SCAN_CONFIRM_BATCH" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_PACKING_BATCH"           mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_SCAN_CONFIRM_BATCH" parameterMap="paramLO_BW_SCAN_CONFIRM_BATCH" resultClass="java.util.HashMap">
+      { call LO_BW_SCAN_CONFIRM_BATCH(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_SCAN_CONFIRM_BATCH -->
+
+  <!-- [S] - LO_DELIVERYBATCH_UPDATE -->
+  <parameterMap id="paramLO_DELIVERYBATCH_UPDATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_DELIVERY_BATCH"          mode="IN" />
+    <parameter property="P_DELIVERY_BATCH_NM"       mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_DELIVERY_BATCH"          mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_DELIVERYBATCH_UPDATE" parameterMap="paramLO_DELIVERYBATCH_UPDATE" resultClass="java.util.HashMap">
+      { call LO_DELIVERYBATCH_UPDATE(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_DELIVERYBATCH_UPDATE -->
+
+  <!-- [S] - LO_FW_CONFIRM -->
+  <parameterMap id="paramLO_FW_CONFIRM" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_CONFIRM" parameterMap="paramLO_FW_CONFIRM" resultClass="java.util.HashMap">
+      { call LO_FW_CONFIRM(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_CONFIRM -->
+
+  <!-- [S] - LO_FW_DELIVERY -->
+  <parameterMap id="paramLO_FW_DELIVERY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_DELIVERY" parameterMap="paramLO_FW_DELIVERY" resultClass="java.util.HashMap">
+      { call LO_FW_DELIVERY(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_DELIVERY -->
+
+  <!-- [S] - LO_FW_DIRECTIONS -->
+  <parameterMap id="paramLO_FW_DIRECTIONS" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_DIRECTIONS" parameterMap="paramLO_FW_DIRECTIONS" resultClass="java.util.HashMap">
+      { call LO_FW_DIRECTIONS(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_DIRECTIONS -->
+
+  <!-- [S] - LO_FW_DIRECTIONS_BATCH -->
+  <parameterMap id="paramLO_FW_DIRECTIONS_BATCH" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_BATCH"          mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_DIRECTIONS_BATCH" parameterMap="paramLO_FW_DIRECTIONS_BATCH" resultClass="java.util.HashMap">
+      { call LO_FW_DIRECTIONS_BATCH(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_DIRECTIONS_BATCH -->
+
+  <!-- [S] - LO_FW_DPS_BATCH -->
+  <parameterMap id="paramLO_FW_DPS_BATCH" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_DPS_BATCH" parameterMap="paramLO_FW_DPS_BATCH" resultClass="java.util.HashMap">
+      { call LO_FW_DPS_BATCH(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_DPS_BATCH -->
+
+  <!-- [S] - LO_FW_ENTRY -->
+  <parameterMap id="paramLO_FW_ENTRY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_OUTBOUND_NO"             mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_ENTRY" parameterMap="paramLO_FW_ENTRY" resultClass="java.util.HashMap">
+      { call LO_FW_ENTRY(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_ENTRY -->
+
+  <!-- [S] - LO_FW_ENTRY_BATCH -->
+  <parameterMap id="paramLO_FW_ENTRY_BATCH" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE1"             mode="IN" />
+    <parameter property="P_ORDER_DATE2"             mode="IN" />
+    <parameter property="P_INOUT_CD"                mode="IN" />
+    <parameter property="P_BU_NO"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_NM"                 mode="IN" />
+    <parameter property="P_OUTBOUND_DIV"            mode="IN" />
+    <parameter property="P_DELIVERY_CD"             mode="IN" />
+    <parameter property="P_RDELIVERY_CD"            mode="IN" />
+    <parameter property="P_ORDERER_NM"              mode="IN" />
+    <parameter property="P_SHIPPER_NM"              mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_DELIVERY_BATCH"          mode="IN" />
+    <parameter property="P_DELIVERY_BATCH_NM"       mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_BU_TIME"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_ENTRY_BATCH" parameterMap="paramLO_FW_ENTRY_BATCH" resultClass="java.util.HashMap">
+      { call LO_FW_ENTRY_BATCH(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_ENTRY_BATCH -->
+
+  <!-- [S] - LO_FW_ENTRY_PROCESSING -->
+  <parameterMap id="paramLO_FW_ENTRY_PROCESSING" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_DELIVERY_BATCH"          mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_OUTBOUND_DATE"           mode="OUT" javaType="java.util.Date"       jdbcType="TIMESTAMP" />
+    <parameter property="O_OUTBOUND_NO"             mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_ENTRY_PROCESSING" parameterMap="paramLO_FW_ENTRY_PROCESSING" resultClass="java.util.HashMap">
+      { call LO_FW_ENTRY_PROCESSING(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_ENTRY_PROCESSING -->
+
+  <!-- [S] - LO_FW_SCAN_CONFIRM -->
+  <parameterMap id="paramLO_FW_SCAN_CONFIRM" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_SCAN_CONFIRM" parameterMap="paramLO_FW_SCAN_CONFIRM" resultClass="java.util.HashMap">
+      { call LO_FW_SCAN_CONFIRM(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_SCAN_CONFIRM -->
+  
+  <!-- [S] - LO_FW_SCAN_CONFIRM_BATCH -->
+  <parameterMap id="paramLO_FW_SCAN_CONFIRM_BATCH" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_PACKING_BATCH"           mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_SCAN_CONFIRM_BATCH" parameterMap="paramLO_FW_SCAN_CONFIRM_BATCH" resultClass="java.util.HashMap">
+      { call LO_FW_SCAN_CONFIRM_BATCH(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_SCAN_CONFIRM_BATCH -->
+
+  <!-- [S] - LO_OUTBOUNDBATCH_UPDATE -->
+  <parameterMap id="paramLO_OUTBOUNDBATCH_UPDATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_BATCH"          mode="IN" />
+    <parameter property="P_OUTBOUND_BATCH_NM"       mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_OUTBOUND_BATCH"          mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_OUTBOUNDBATCH_UPDATE" parameterMap="paramLO_OUTBOUNDBATCH_UPDATE" resultClass="java.util.HashMap">
+      { call LO_OUTBOUNDBATCH_UPDATE(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_OUTBOUNDBATCH_UPDATE -->
+
+  <!-- [S] - LO_OUTBOUNDSTATE_UPDATE -->
+  <parameterMap id="paramLO_OUTBOUNDSTATE_UPDATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_DIRECTION"               mode="IN" />
+    <parameter property="P_END_PROCESS_CD"          mode="IN" />
+    <parameter property="P_OUTBOUND_STATE"          mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_OUTBOUNDSTATE_UPDATE" parameterMap="paramLO_OUTBOUNDSTATE_UPDATE" resultClass="java.util.HashMap">
+      { call LO_OUTBOUNDSTATE_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_OUTBOUNDSTATE_UPDATE -->
+
+  <!-- [S] - LO_POLICY_ASSIGN_ADJUSTMENT -->
+  <parameterMap id="paramLO_POLICY_ASSIGN_ADJUSTMENT" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_INOUT_CD"                mode="IN" />
+    <parameter property="P_OUTBOUND_BATCH"          mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_DELIVERY_CD"             mode="IN" />
+    <parameter property="P_PICK_QTY"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_ASSIGN_ADJUSTMENT" parameterMap="paramLO_POLICY_ASSIGN_ADJUSTMENT" resultClass="java.util.HashMap">
+      { call LO_POLICY_ASSIGN_ADJUSTMENT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_ASSIGN_ADJUSTMENT -->
+
+  <!-- [S] - LO_POLICY_BACKORDER_T1 -->
+  <parameterMap id="paramLO_POLICY_BACKORDER_T1" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_PRE_STATE"               mode="IN" />
+    <parameter property="P_CUR_STATE"               mode="IN" />
+    <parameter property="P_NXT_STATE"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_BACKORDER_T1" parameterMap="paramLO_POLICY_BACKORDER_T1" resultClass="java.util.HashMap">
+      { call LO_POLICY_BACKORDER_T1(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_BACKORDER_T1 -->
+
+  <!-- [S] - LO_POLICY_BACKORDER_T2 -->
+  <parameterMap id="paramLO_POLICY_BACKORDER_T2" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_PRE_STATE"               mode="IN" />
+    <parameter property="P_CUR_STATE"               mode="IN" />
+    <parameter property="P_NXT_STATE"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_BACKORDER_T2" parameterMap="paramLO_POLICY_BACKORDER_T2" resultClass="java.util.HashMap">
+      { call LO_POLICY_BACKORDER_T2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_BACKORDER_T2 -->
+
+  <!-- [S] - LO_POLICY_BACKORDER_T3 -->
+  <parameterMap id="paramLO_POLICY_BACKORDER_T3" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_BACKORDER_T3" parameterMap="paramLO_POLICY_BACKORDER_T3" resultClass="java.util.HashMap">
+      { call LO_POLICY_BACKORDER_T3(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_BACKORDER_T3 -->
+
+  <!-- [S] - LO_POLICY_BACKORDER_T4 -->
+  <parameterMap id="paramLO_POLICY_BACKORDER_T4" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_BACKORDER_T4" parameterMap="paramLO_POLICY_BACKORDER_T4" resultClass="java.util.HashMap">
+      { call LO_POLICY_BACKORDER_T4(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_BACKORDER_T4 -->
+
+  <!-- [S] - LO_POLICY_BACKORDER_T5 -->
+  <parameterMap id="paramLO_POLICY_BACKORDER_T5" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_BACKORDER_T5" parameterMap="paramLO_POLICY_BACKORDER_T5" resultClass="java.util.HashMap">
+      { call LO_POLICY_BACKORDER_T5(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_BACKORDER_T5 -->
+
+  <!-- [S] - LO_POLICY_BACKORDER_T6 -->
+  <parameterMap id="paramLO_POLICY_BACKORDER_T6" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_BACKORDER_T6" parameterMap="paramLO_POLICY_BACKORDER_T6" resultClass="java.util.HashMap">
+      { call LO_POLICY_BACKORDER_T6(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_BACKORDER_T6 -->
+
+  <!-- [S] - LO_POLICY_BACKORDER_T7 -->
+  <parameterMap id="paramLO_POLICY_BACKORDER_T7" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_BACKORDER_T7" parameterMap="paramLO_POLICY_BACKORDER_T7" resultClass="java.util.HashMap">
+      { call LO_POLICY_BACKORDER_T7(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_BACKORDER_T7 -->
+
+  <!-- [S] - LO_POLICY_CARPLAN_CREATE -->
+  <parameterMap id="paramLO_POLICY_CARPLAN_CREATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_DELIVERY_BATCH"          mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_CARPLAN_CREATE" parameterMap="paramLO_POLICY_CARPLAN_CREATE" resultClass="java.util.HashMap">
+      { call LO_POLICY_CARPLAN_CREATE(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_CARPLAN_CREATE -->
+
+  <!-- [S] - LO_POLICY_CARPLAN_DELETE -->
+  <parameterMap id="paramLO_POLICY_CARPLAN_DELETE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_CARPLAN_DELETE" parameterMap="paramLO_POLICY_CARPLAN_DELETE" resultClass="java.util.HashMap">
+      { call LO_POLICY_CARPLAN_DELETE(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_CARPLAN_DELETE -->
+
+  <!-- [S] - LO_POLICY_CARPLAN_UPDATE -->
+  <parameterMap id="paramLO_POLICY_CARPLAN_UPDATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_CARPLAN_UPDATE" parameterMap="paramLO_POLICY_CARPLAN_UPDATE" resultClass="java.util.HashMap">
+      { call LO_POLICY_CARPLAN_UPDATE(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_CARPLAN_UPDATE -->
+
+  <!-- [S] - LO_POLICY_ENTRY_INIT -->
+  <parameterMap id="paramLO_POLICY_ENTRY_INIT" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_ENTRY_INIT" parameterMap="paramLO_POLICY_ENTRY_INIT" resultClass="java.util.HashMap">
+      { call LO_POLICY_ENTRY_INIT(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_ENTRY_INIT -->
+
+  <!-- [S] - LO_POLICY_ORDER_ADJUSTMENT_T1 -->
+  <parameterMap id="paramLO_POLICY_ORDER_ADJUSTMENT_T1" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE1"             mode="IN" />
+    <parameter property="P_ORDER_DATE2"             mode="IN" />
+    <parameter property="P_INOUT_CD"                mode="IN" />
+    <parameter property="P_BU_NO"                   mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_NM"                 mode="IN" />
+    <parameter property="P_OUTBOUND_DIV"            mode="IN" />
+    <parameter property="P_DELIVERY_CD"             mode="IN" />
+    <parameter property="P_RDELIVERY_CD"            mode="IN" />
+    <parameter property="P_ORDERER_NM"              mode="IN" />
+    <parameter property="P_SHIPPER_NM"              mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="P_BU_TIME"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_ORDER_ADJUSTMENT_T1" parameterMap="paramLO_POLICY_ORDER_ADJUSTMENT_T1" resultClass="java.util.HashMap">
+      { call LO_POLICY_ORDER_ADJUSTMENT_T1(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_ORDER_ADJUSTMENT_T1 -->
+
+  <!-- [S] - LO_POLICY_ORDER_ADJUSTMENT_T2 -->
+  <parameterMap id="paramLO_POLICY_ORDER_ADJUSTMENT_T2" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_POLICY_LO220"            mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_ORDER_ADJUSTMENT_T2" parameterMap="paramLO_POLICY_ORDER_ADJUSTMENT_T2" resultClass="java.util.HashMap">
+      { call LO_POLICY_ORDER_ADJUSTMENT_T2(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_ORDER_ADJUSTMENT_T2 -->
+
+  <!-- [S] - LO_POLICY_ORDER_CLOSING -->
+  <parameterMap id="paramLO_POLICY_ORDER_CLOSING" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_POLICY_ORDER_CLOSING" parameterMap="paramLO_POLICY_ORDER_CLOSING" resultClass="java.util.HashMap">
+      { call LO_POLICY_ORDER_CLOSING(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_POLICY_ORDER_CLOSING -->
+
+  <!-- [S] - LO_PROCESSING -->
+  <parameterMap id="paramLO_PROCESSING" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="P_DIRECTION"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_PROCESSING" parameterMap="paramLO_PROCESSING" resultClass="java.util.HashMap">
+      { call LO_PROCESSING(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_PROCESSING -->
+
+  <!-- [S] - LO_PROCESSING_RESULT -->
+  <parameterMap id="paramLO_PROCESSING_RESULT" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_PROCESS_CD"              mode="IN" />
+    <parameter property="P_DIRECTION"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_OUTBOUND_DATE"           mode="OUT" javaType="java.util.Date"       jdbcType="TIMESTAMP" />
+    <parameter property="O_OUTBOUND_NO"             mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_PROCESSING_RESULT" parameterMap="paramLO_PROCESSING_RESULT" resultClass="java.util.HashMap">
+      { call LO_PROCESSING_RESULT(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_PROCESSING_RESULT -->
+
+  <!-- [S] - LO_RECV_DPS_BATCH -->
+  <parameterMap id="paramLO_RECV_DPS_BATCH" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_RECV_DPS_BATCH" parameterMap="paramLO_RECV_DPS_BATCH" resultClass="java.util.HashMap">
+      { call LO_RECV_DPS_BATCH(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_RECV_DPS_BATCH -->
+
+  <!-- [S] - LO_SCAN_BOX_COMPLETE -->
+  <parameterMap id="paramLO_SCAN_BOX_COMPLETE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_CARRIER_CD"              mode="IN" />
+    <parameter property="P_BOX_NO"                  mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_SCAN_BOX_COMPLETE" parameterMap="paramLO_SCAN_BOX_COMPLETE" resultClass="java.util.HashMap">
+      { call LO_SCAN_BOX_COMPLETE(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_SCAN_BOX_COMPLETE -->
+  
+  <!-- [S] - LO_SCAN_BOX_COMPLETE_BATCH -->
+  <parameterMap id="paramLO_SCAN_BOX_COMPLETE_BATCH" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_PACKING_BATCH"           mode="IN" />
+    <parameter property="P_CARRIER_CD"              mode="IN" />
+    <parameter property="P_BOX_NO"                  mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_SCAN_BOX_COMPLETE_BATCH" parameterMap="paramLO_SCAN_BOX_COMPLETE_BATCH" resultClass="java.util.HashMap">
+      { call LO_SCAN_BOX_COMPLETE_BATCH(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_SCAN_BOX_COMPLETE_BATCH -->
+
+  <!-- [S] - LO_SCAN_BOX_DELETE -->
+  <parameterMap id="paramLO_SCAN_BOX_DELETE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_BOX_NO"                  mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_SCAN_BOX_DELETE" parameterMap="paramLO_SCAN_BOX_DELETE" resultClass="java.util.HashMap">
+      { call LO_SCAN_BOX_DELETE(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_SCAN_BOX_DELETE -->
+
+  <!-- [S] - LO_SCAN_BOX_MERGE -->
+  <parameterMap id="paramLO_SCAN_BOX_MERGE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_BOX_NO_TO"               mode="IN" />
+    <parameter property="P_BOX_NO_FROM"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_SCAN_BOX_MERGE" parameterMap="paramLO_SCAN_BOX_MERGE" resultClass="java.util.HashMap">
+      { call LO_SCAN_BOX_MERGE(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_SCAN_BOX_MERGE -->
+
+  <!-- [S] - LO_SCAN_BOX_SAVE_T1 -->
+  <parameterMap id="paramLO_SCAN_BOX_SAVE_T1" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_BOX_NO"                  mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_CONFIRM_QTY"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_SCAN_BOX_SAVE_T1" parameterMap="paramLO_SCAN_BOX_SAVE_T1" resultClass="java.util.HashMap">
+      { call LO_SCAN_BOX_SAVE_T1(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_SCAN_BOX_SAVE_T1 -->
+
+  <!-- [S] - LO_SCAN_BOX_SAVE_T2 -->
+  <parameterMap id="paramLO_SCAN_BOX_SAVE_T2" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_BOX_NO"                  mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_CONFIRM_QTY"             mode="IN" />
+    <parameter property="P_BOX_TYPE"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_SCAN_BOX_SAVE_T2" parameterMap="paramLO_SCAN_BOX_SAVE_T2" resultClass="java.util.HashMap">
+      { call LO_SCAN_BOX_SAVE_T2(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_SCAN_BOX_SAVE_T2 -->
+  
+  <!-- [S] - LO_SCAN_BOX_SAVE_T3 -->
+  <parameterMap id="paramLO_SCAN_BOX_SAVE_T3" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_CARRIER_CD"              mode="IN" />
+    <parameter property="P_BOX_NO"                  mode="IN" />
+    <parameter property="P_BRAND_CD"                mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_ITEM_STATE"              mode="IN" />
+    <parameter property="P_ITEM_LOT"                mode="IN" />
+    <parameter property="P_CONFIRM_QTY"             mode="IN" />
+    <parameter property="P_BOX_TYPE"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_SCAN_BOX_SAVE_T3" parameterMap="paramLO_SCAN_BOX_SAVE_T3" resultClass="java.util.HashMap">
+      { call LO_SCAN_BOX_SAVE_T3(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_SCAN_BOX_SAVE_T3 -->
+
+  <!-- [S] - LO_FW_DIRECTIONS_INVNO_PROC -->
+  <parameterMap id="paramLO_FW_DIRECTIONS_INVNO_PROC" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_DIRECTION_INVNO"         mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_ERRMSG"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_DIRECTIONS_INVNO_PROC" parameterMap="paramLO_FW_DIRECTIONS_INVNO_PROC" resultClass="java.util.HashMap">
+      { call LO_FW_DIRECTIONS_INVNO_PROC(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_DIRECTIONS_INVNO_PROC -->
+  
+  <!-- [S] - LO_FW_DIRECTIONS_INVNO_PROC2 -->
+  <parameterMap id="paramLO_FW_DIRECTIONS_INVNO_PROC2" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_WB_NO"                   mode="IN" />
+    <parameter property="P_DIRECTION_INVNO"         mode="IN" />
+    <parameter property="P_USER_ID"                mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_ERRMSG"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_DIRECTIONS_INVNO_PROC2" parameterMap="paramLO_FW_DIRECTIONS_INVNO_PROC2" resultClass="java.util.HashMap">
+      { call LO_FW_DIRECTIONS_INVNO_PROC2(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_DIRECTIONS_INVNO_PROC2 -->
+  
+  <!-- [S] - LO_FW_DIRECTIONS_INVNO_LINE -->
+  <parameterMap id="paramLO_FW_DIRECTIONS_INVNO_LINE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_DIRECTION_INVNO"         mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_ERRMSG"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_DIRECTIONS_INVNO_LINE" parameterMap="paramLO_FW_DIRECTIONS_INVNO_LINE" resultClass="java.util.HashMap">
+      { call LO_FW_DIRECTIONS_INVNO_LINE(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_DIRECTIONS_INVNO_LINE -->
+  
+  <!-- [S] - LO_FW_DIRECTIONS_INV_PROC -->
+  <parameterMap id="paramLO_FW_DIRECTIONS_INV_PROC" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_DIRECTION_INVNO"         mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_ERRMSG"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_DIRECTIONS_INV_PROC" parameterMap="paramLO_FW_DIRECTIONS_INV_PROC" resultClass="java.util.HashMap">
+      { call LO_FW_DIRECTIONS_INV_PROC(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_DIRECTIONS_INV_PROC -->
+  
+  
+  <!-- [S] - LO_FW_DIRECTIONS_SHIPTYPE_PROC -->
+  <parameterMap id="paramLO_FW_DIRECTIONS_SHIPTYPE_PROC" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_SHIP_TYPE"               mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_ERRMSG"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_DIRECTIONS_SHIPTYPE_PROC" parameterMap="paramLO_FW_DIRECTIONS_SHIPTYPE_PROC" resultClass="java.util.HashMap">
+      { call LO_FW_DIRECTIONS_SHIPTYPE_PROC(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_DIRECTIONS_SHIPTYPE_PROC -->
+  
+  
+  <!-- [S] - LO_FW_DIRECTIONS_ORDER_PROC -->
+  <parameterMap id="paramLO_FW_DIRECTIONS_ORDER_PROC" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_BATCH"          mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_DIRECTIONS_ORDER_PROC" parameterMap="paramLO_FW_DIRECTIONS_ORDER_PROC" resultClass="java.util.HashMap">
+      { call LO_FW_DIRECTIONS_ORDER_PROC(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_DIRECTIONS_ORDER_PROC -->
+  
+  <!-- [S] - LO_BW_ORDER_PROC -->
+  <parameterMap id="paramLO_BW_ORDER_PROC" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_CLOSE_COMMENT"           mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_ORDER_PROC" parameterMap="paramLO_BW_ORDER_PROC" resultClass="java.util.HashMap">
+      { call LO_BW_ORDER_PROC(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_ORDER_PROC -->
+  
+  <!-- [S] - LO_BW_ORDER_PROC_IF -->
+  <parameterMap id="paramLO_BW_ORDER_PROC_IF" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_ORDER_PROC_IF" parameterMap="paramLO_BW_ORDER_PROC_IF" resultClass="java.util.HashMap">
+      { call LO_BW_ORDER_PROC_IF(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_ORDER_PROC_IF -->
+  
+  <!-- [S] - LO_BW_ORDER_PROC_TYPE1 -->
+  <parameterMap id="paramLO_BW_ORDER_PROC_TYPE1" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_ORDER_PROC_TYPE1" parameterMap="paramLO_BW_ORDER_PROC_TYPE1" resultClass="java.util.HashMap">
+      { call LO_BW_ORDER_PROC_TYPE1(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_ORDER_PROC_TYPE1 -->
+  
+  <!-- [S] - LO_BW_ORDER_PROC_ENTRY -->
+  <parameterMap id="paramLO_BW_ORDER_PROC_ENTRY" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_ORDER_PROC_ENTRY" parameterMap="paramLO_BW_ORDER_PROC_ENTRY" resultClass="java.util.HashMap">
+      { call LO_BW_ORDER_PROC_ENTRY(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_ORDER_PROC_ENTRY -->
+  
+  <!-- [S] - LO_BW_ORDER_PROC_CLOSE -->
+  <parameterMap id="paramLO_BW_ORDER_PROC_CLOSE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_ORDER_PROC_CLOSE" parameterMap="paramLO_BW_ORDER_PROC_CLOSE" resultClass="java.util.HashMap">
+      { call LO_BW_ORDER_PROC_CLOSE(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_ORDER_PROC_CLOSE -->
+  
+  <!-- [S] - LO_WB_CHK_UPDATE -->
+  <parameterMap id="paramLO_WB_CHK_UPDATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_WB_NO"                   mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_WB_CHK_UPDATE" parameterMap="paramLO_WB_CHK_UPDATE" resultClass="java.util.HashMap">
+      { call LO_WB_CHK_UPDATE(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_WB_CHK_UPDATE -->
+  
+  
+  <!-- [S] - LO_SCAN_LT_STEP1 -->
+  <parameterMap id="paramLO_SCAN_LT_STEP1" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_SCAN_LT_STEP1" parameterMap="paramLO_SCAN_LT_STEP1" resultClass="java.util.HashMap">
+      { call LO_SCAN_LT_STEP1(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_SCAN_LT_STEP1 -->
+  
+  
+  <!-- [S] - LO_SCAN_LT_STEP2 -->
+  <parameterMap id="paramLO_SCAN_LT_STEP2" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_SCAN_LT_STEP2" parameterMap="paramLO_SCAN_LT_STEP2" resultClass="java.util.HashMap">
+      { call LO_SCAN_LT_STEP2(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_SCAN_LT_STEP2 -->
+  
+  
+  <!-- [S] - LO_HAS_CHK_PROC -->
+  <parameterMap id="paramLO_HAS_CHK_PROC" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_WB_NO"                   mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_HAS_CHK_PROC" parameterMap="paramLO_HAS_CHK_PROC" resultClass="java.util.HashMap">
+      { call LO_HAS_CHK_PROC(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_HAS_CHK_PROC -->
+  
+  
+  <!-- [S] - LO_HAS_SCAN_CHK -->
+  <parameterMap id="paramLO_HAS_SCAN_CHK" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_WB_NO"                   mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_HAS_SCAN_CHK" parameterMap="paramLO_HAS_SCAN_CHK" resultClass="java.util.HashMap">
+      { call LO_HAS_SCAN_CHK(?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_HAS_SCAN_CHK -->
+  
+  
+  <!-- [S] - LO_HAS_PROC_BW -->
+  <parameterMap id="paramLO_HAS_PROC_BW" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_HAS_NO"                  mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_HAS_PROC_BW" parameterMap="paramLO_HAS_PROC_BW" resultClass="java.util.HashMap">
+      { call LO_HAS_PROC_BW(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_HAS_PROC_BW -->
+  
+  
+  <!-- [S] - CM_PRINT_YN -->
+  <parameterMap id="paramCM_PRINT_YN" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_OUTBOUND_BATCH"          mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CM_PRINT_YN" parameterMap="paramCM_PRINT_YN" resultClass="java.util.HashMap">
+      { call CM_PRINT_YN(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CM_PRINT_YN -->
+  
+  <!-- [S] - LO_PRINT_YN -->
+  <parameterMap id="paramLO_PRINT_YN" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_WB_NO"                   mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_PRINT_YN" parameterMap="paramLO_PRINT_YN" resultClass="java.util.HashMap">
+      { call LO_PRINT_YN(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_PRINT_YN -->
+  
+   
+  <!-- [S] - CMISPRINT_HIS -->
+  <parameterMap id="paramCMISPRINT_HIS" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="CMISPRINT_HIS" parameterMap="paramCMISPRINT_HIS" resultClass="java.util.HashMap">
+      { call CMISPRINT_HIS(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - CMISPRINT_HIS -->
+  
+  
+  <!-- [S] - LO_BW_CONFIRM_TOTAL -->
+  <parameterMap id="paramLO_BW_CONFIRM_TOTAL" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_CONFIRM_TOTAL" parameterMap="paramLO_BW_CONFIRM_TOTAL" resultClass="java.util.HashMap">
+      { call LO_BW_CONFIRM_TOTAL(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_CONFIRM_TOTAL -->
+  
+  
+  <!-- [S] - LO_HAS_UPDATE_PROC -->
+  <parameterMap id="paramLO_HAS_UPDATE_PROC" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_HAS_NO"                  mode="IN" />
+    <parameter property="P_PROC_GUBN"                  mode="IN" />
+    <parameter property="P_USER_ID"                  mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_HAS_UPDATE_PROC" parameterMap="paramLO_HAS_UPDATE_PROC" resultClass="java.util.HashMap">
+      { call LO_HAS_UPDATE_PROC(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_HAS_UPDATE_PROC -->
+  
+  
+  <!-- [S] - LO_HAS_END_PROC -->
+  <parameterMap id="paramLO_HAS_END_PROC" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_HAS_NO"                  mode="IN" />
+    <parameter property="P_PROC_GUBN"                  mode="IN" />
+    <parameter property="P_USER_ID"                  mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_HAS_END_PROC" parameterMap="paramLO_HAS_END_PROC" resultClass="java.util.HashMap">
+      { call LO_HAS_END_PROC(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_HAS_END_PROC -->
+  
+  
+  <!-- [S] - LO_FW_ORDER_HOLD -->
+  <parameterMap id="paramLO_FW_ORDER_HOLD" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_DEAL_ID"                 mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_CLOSE_COMMENT"           mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_ORDER_HOLD" parameterMap="paramLO_FW_ORDER_HOLD" resultClass="java.util.HashMap">
+      { call LO_FW_ORDER_HOLD(?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_ORDER_HOLD -->
+  
+  <!-- [S] - LO_BW_ORDER_HOLD -->
+  <parameterMap id="paramLO_BW_ORDER_HOLD" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_DEAL_ID"                 mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_ORDER_HOLD" parameterMap="paramLO_BW_ORDER_HOLD" resultClass="java.util.HashMap">
+      { call LO_BW_ORDER_HOLD(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_ORDER_HOLD -->
+  
+  
+  <!-- [S] - LO_BW_ORDER_CLOSE -->
+  <parameterMap id="paramLO_BW_ORDER_CLOSE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_BW_ORDER_CLOSE" parameterMap="paramLO_BW_ORDER_CLOSE" resultClass="java.util.HashMap">
+      { call LO_BW_ORDER_CLOSE(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_BW_ORDER_CLOSE -->
+ 
+
+  <!-- [S] - RS_LABEL_LOM13 -->
+  <parameterMap id="paramRS_LABEL_LOM13" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM13" parameterMap="paramRS_LABEL_LOM13" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM13(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM13 -->
+  
+  
+  <!-- [S] - RS_LABEL_LOM15 -->
+  <parameterMap id="paramRS_LABEL_LOM15" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM15" parameterMap="paramRS_LABEL_LOM15" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM15(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM15 -->
+   
+   
+  <!-- [S] - LO_HAS_LINE_PROC -->
+  <parameterMap id="paramLO_HAS_LINE_PROC" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_HAS_NO"                  mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_HAS_NO"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG2"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_HAS_LINE_PROC" parameterMap="paramLO_HAS_LINE_PROC" resultClass="java.util.HashMap">
+      { call LO_HAS_LINE_PROC(?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_HAS_LINE_PROC -->
+  
+  
+  <!-- [S] - LO_HAS_EXIT_PROC -->
+  <parameterMap id="paramLO_HAS_EXIT_PROC" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_PROC_GUBN"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_HAS_EXIT_PROC" parameterMap="paramLO_HAS_EXIT_PROC" resultClass="java.util.HashMap">
+      { call LO_HAS_EXIT_PROC(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_HAS_LINE_PROC -->
+  
+  
+  <!-- [S] - LO_HAS_CONFIRM_PROC -->
+  <parameterMap id="paramLO_HAS_CONFIRM_PROC" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_HAS_NO"                  mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_HAS_CONFIRM_PROC" parameterMap="paramLO_HAS_CONFIRM_PROC" resultClass="java.util.HashMap">
+      { call LO_HAS_CONFIRM_PROC(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_HAS_CONFIRM_PROC -->
+  
+  
+  <!-- [S] - LO_HAS_CANCEL_PROC -->
+  <parameterMap id="paramLO_HAS_CANCEL_PROC" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_HAS_NO"                  mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_HAS_CANCEL_PROC" parameterMap="paramLO_HAS_CANCEL_PROC" resultClass="java.util.HashMap">
+      { call LO_HAS_CANCEL_PROC(?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_HAS_CANCEL_PROC -->
+  
+  
+  <!-- [S] - WF.GET_OUTBOUND_YN -->
+  <parameterMap id="paramLOM_OUTBOUND_YN" class="java.util.Map">
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_CHK_YN"                  mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LOM_OUTBOUND_YN" parameterMap="paramLOM_OUTBOUND_YN" resultClass="java.util.HashMap">
+      { call LOM_OUTBOUND_YN(?, ?, ?) }
+    </procedure>
+  <!-- [E] - WF.GET_OUTBOUND_YN -->
+  
+  
+  <!-- [S] - TEMP_LOCNT_30_UPDATE -->
+  <parameterMap id="paramTEMP_LOCNT_30_UPDATE" class="java.util.Map">
+    <parameter property="P_ERR_CNT"                    mode="IN" />
+    <parameter property="O_MSG"                        mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="TEMP_LOCNT_30_UPDATE" parameterMap="paramTEMP_LOCNT_30_UPDATE" resultClass="java.util.HashMap">
+      { call TEMP_LOCNT_30_UPDATE(?, ?) }
+    </procedure>
+  <!-- [E] - TEMP_LOCNT_30_UPDATE -->
+  
+    
+  <!-- [S] - TEMP_LOCNT_40_UPDATE -->
+  <parameterMap id="paramTEMP_LOCNT_40_UPDATE" class="java.util.Map">
+    <parameter property="P_ERR_CNT"                    mode="IN" />
+    <parameter property="O_MSG"                        mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="TEMP_LOCNT_40_UPDATE" parameterMap="paramTEMP_LOCNT_40_UPDATE" resultClass="java.util.HashMap">
+      { call TEMP_LOCNT_40_UPDATE(?, ?) }
+    </procedure>
+  <!-- [E] - TEMP_LOCNT_40_UPDATE -->
+  
+  
+  <!-- [S] - LO_FW_SCAN_ORDER_TP -->
+  <parameterMap id="paramLO_FW_SCAN_ORDER_TP" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_BATCH"          mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_SCAN_ORDER_TP" parameterMap="paramLO_FW_SCAN_ORDER_TP" resultClass="java.util.HashMap">
+      { call LO_FW_SCAN_ORDER_TP(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_SCAN_ORDER_TP -->
+    
+    
+  <!-- [S] - LO_FW_SCAN_ORDER_TP2 -->
+  <parameterMap id="paramLO_FW_SCAN_ORDER_TP2" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_ITEM_CD"                 mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_FW_SCAN_ORDER_TP2" parameterMap="paramLO_FW_SCAN_ORDER_TP2" resultClass="java.util.HashMap">
+      { call LO_FW_SCAN_ORDER_TP2(?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_FW_SCAN_ORDER_TP2 -->
+  
+  
+    
+  <!-- [S] - LO_LOTTE_BATCH -->
+  <parameterMap id="paramLO_LOTTE_BATCH" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_LOTTE_BATCH" parameterMap="paramLO_LOTTE_BATCH" resultClass="java.util.HashMap">
+      { call LO_LOTTE_BATCH(?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_LOTTE_BATCH -->
+  
+  
+    <!-- [S] - LO_SHIPPER_UPDATE -->
+  <parameterMap id="paramLO_SHIPPER_UPDATE" class="java.util.Map">
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_ORDER_DATE"              mode="IN" />
+    <parameter property="P_ORDER_NO"                mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_OUTBOUND_NO"             mode="IN" />
+    <parameter property="P_SHIPPER_ZIP_CD"          mode="IN" />
+    <parameter property="P_SHIPPER_ADDR_BASIC"      mode="IN" />
+    <parameter property="P_SHIPPER_ADDR_DETAIL"     mode="IN" />
+    <parameter property="P_SHIPPER_HP"              mode="IN" />
+    <parameter property="P_SHIPPER_NM"              mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_SHIPPER_UPDATE" parameterMap="paramLO_SHIPPER_UPDATE" resultClass="java.util.HashMap">
+      { call LO_SHIPPER_UPDATE(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_SHIPPER_UPDATE -->
+ 
+ 
+  <!-- [S] - LO_HAS_CALL_PROC_T1 -->
+  <parameterMap id="paramLO_HAS_CALL_PROC_T1" class="java.util.Map">
+    <parameter property="P_SCAN_INFO"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_HAS_CALL_PROC_T1" parameterMap="paramLO_HAS_CALL_PROC_T1" resultClass="java.util.HashMap">
+      { call LO_HAS_CALL_PROC_T1(?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_HAS_CALL_PROC_T2 -->
+ 
+   <!-- [S] - LO_HAS_CALL_PROC_T2 -->
+  <parameterMap id="paramLO_HAS_CALL_PROC_T2" class="java.util.Map">
+    <parameter property="P_SCAN_INFO"               mode="IN" />
+    <parameter property="P_USER_ID"                 mode="IN" />
+    <parameter property="O_MSG"                     mode="OUT" javaType="java.lang.String"     jdbcType="VARCHAR" />
+  </parameterMap>
+    <procedure id="LO_HAS_CALL_PROC_T2" parameterMap="paramLO_HAS_CALL_PROC_T2" resultClass="java.util.HashMap">
+      { call LO_HAS_CALL_PROC_T2(?, ?, ?) }
+    </procedure>
+  <!-- [E] - LO_HAS_CALL_PROC_T2 -->
+ 
+</sqlMap>

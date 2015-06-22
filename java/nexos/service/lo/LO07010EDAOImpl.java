@@ -41,7 +41,7 @@ public class LO07010EDAOImpl implements LO07010EDAO {
     final String LO_BW_SCAN_CONFIRM_ORDER_ID = "LO_BW_SCAN_CONFIRM";
 
     return nexosDAO.callSP(LO_BW_SCAN_CONFIRM_ORDER_ID, params);
-    }
+  }
 
   @SuppressWarnings("rawtypes")
   @Override
@@ -131,8 +131,8 @@ public class LO07010EDAOImpl implements LO07010EDAO {
           throw new RuntimeException(oMsg);
         }
       }
-  }
-  
+    }
+
     // 박스완료 처리
     if (Consts.YES.equals(COMPLETE_YN)) {
 

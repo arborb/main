@@ -704,7 +704,7 @@ function grdMasterT2Initialize() {
     dataGroupOptions: dataGroupOptions
   });
 
-  G_GRDMASTERT2.view.onSelectedRowsChanged.subscribe(grdMasterT2OnAfterScroll);  
+  G_GRDMASTERT2.view.onSelectedRowsChanged.subscribe(grdMasterT2OnAfterScroll);
 }
 
 /**

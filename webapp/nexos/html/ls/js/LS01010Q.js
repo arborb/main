@@ -633,6 +633,14 @@ function grdT1MasterOnGetColumns() {
     aggregator: "SUM"
   });
   $NC.setGridColumn(columns, {
+    id: "PSTOCK_QTY",
+    field: "PSTOCK_QTY",
+    name: "출고가능량",
+    minWidth: 80,
+    cssClass: "align-right",
+    aggregator: "SUM"
+  });
+  $NC.setGridColumn(columns, {
     id: "STOCK_BOX",
     field: "STOCK_BOX",
     name: "재고BOX",
@@ -791,13 +799,14 @@ function grdT1DetailOnGetColumns() {
     minWidth: 80,
     cssClass: "align-right"
   });
-/*  $NC.setGridColumn(columns, {
+  $NC.setGridColumn(columns, {
     id: "PSTOCK_QTY",
     field: "PSTOCK_QTY",
     name: "가용재고",
     minWidth: 80,
     cssClass: "align-right"
   });
+  /*
   $NC.setGridColumn(columns, {
     id: "ITEM_LOT",
     field: "ITEM_LOT",
@@ -904,8 +913,7 @@ function grdT2MasterOnGetColumns() {
     },
     aggregator: "SUM"
   });
-/*  
- * $NC.setGridColumn(columns, {
+  $NC.setGridColumn(columns, {
     id: "PSTOCK_QTY",
     field: "PSTOCK_QTY",
     name: "가용재고",
@@ -913,6 +921,7 @@ function grdT2MasterOnGetColumns() {
     cssClass: "align-right",
     aggregator: "SUM"
   });
+  /*  
   $NC.setGridColumn(columns, {
     id: "STOCK_WEIGHT",
     field: "STOCK_WEIGHT",
@@ -1040,6 +1049,13 @@ function grdT2DetailOnGetColumns() {
     cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
+    id: "PSTOCK_QTY",
+    field: "PSTOCK_QTY",
+    name: "가용재고",
+    minWidth: 80,
+    cssClass: "align-right"
+  });
+  $NC.setGridColumn(columns, {
     id: "STOCK_BOX",
     field: "STOCK_BOX",
     name: "재고BOX",
@@ -1071,15 +1087,6 @@ function grdT2DetailOnGetColumns() {
     minWidth: 80,
     cssClass: "align-right"
   });
-  /*
-  $NC.setGridColumn(columns, {
-    id: "PSTOCK_QTY",
-    field: "PSTOCK_QTY",
-    name: "가용재고",
-    minWidth: 80,
-    cssClass: "align-right"
-  });
-  */
   $NC.setGridColumn(columns, {
     id: "VALID_DATE",
     field: "VALID_DATE",
@@ -1659,6 +1666,14 @@ function grdT5MasterOnGetColumns() {
     aggregator: "SUM"
   });
   $NC.setGridColumn(columns, {
+    id: "PSTOCK_QTY",
+    field: "PSTOCK_QTY",
+    name: "가용재고",
+    minWidth: 80,
+    cssClass: "align-right",
+    aggregator: "SUM"
+  });
+  $NC.setGridColumn(columns, {
     id: "STOCK_BOX",
     field: "STOCK_BOX",
     name: "재고BOX",
@@ -1675,14 +1690,6 @@ function grdT5MasterOnGetColumns() {
     aggregator: "SUM"
   });
   /*
-  $NC.setGridColumn(columns, {
-    id: "PSTOCK_QTY",
-    field: "PSTOCK_QTY",
-    name: "가용재고",
-    minWidth: 80,
-    cssClass: "align-right",
-    aggregator: "SUM"
-  });
   $NC.setGridColumn(columns, {
     id: "SAFETY_QTY",
     field: "SAFETY_QTY",

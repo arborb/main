@@ -75,7 +75,7 @@ public class LOM1010EDAOImpl implements LOM1010EDAO {
         
 
     
-
+    
 
         // 등록자ID 입력
         masterDS.put(Consts.PK_USER_ID, user_Id);
@@ -122,7 +122,7 @@ public class LOM1010EDAOImpl implements LOM1010EDAO {
           
           Encryption EncStr = new Encryption();
 
-
+          
           subDS.put(Consts.DK_SCP_DATA_11, EncStr.aesEncode(ScpMasterEncStr1));
           subDS.put(Consts.DK_SCP_DATA_7, EncStr.aesEncode(ScpMasterEncStr2));
           subDS.put(Consts.DK_SCP_DATA_6, EncStr.aesEncode(ScpMasterEncStr3));
@@ -157,7 +157,7 @@ public class LOM1010EDAOImpl implements LOM1010EDAO {
           String ScpMasterEncStr9 =  (String)subDS.get(Consts.DK_SCP_DATA_2);  //P_SHIPPER_ADDR_DETAIL
           String ScpMasterEncStr10 =  (String)subDS.get(Consts.DK_SCP_DATA_5);  //P_ORDERER_NM
           String ScpMasterEncStr11 =  (String)subDS.get(Consts.DK_SCP_DATA_8);  //P_SHIPPER_NM
-
+          
 
           
           Encryption EncStr = new Encryption();

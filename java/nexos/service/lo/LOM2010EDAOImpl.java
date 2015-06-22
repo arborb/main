@@ -197,7 +197,7 @@ public class LOM2010EDAOImpl implements LOM2010EDAO {
 
   
 
-
+    
     Map<String, Object> newParams;
     // 등록 처리 -> 예정 > 등록, 신규 등록
     if (Consts.PROCESS_ORDER.equals(process_Cd) || Consts.PROCESS_ENTRY_NEW.equals(process_Cd)) {
@@ -236,7 +236,7 @@ public class LOM2010EDAOImpl implements LOM2010EDAO {
       String ScpMasterEncStr9 =  (String)subDS.get(Consts.DK_SCP_DATA_2);  //P_SHIPPER_ADDR_DETAIL
       String ScpMasterEncStr10 =  (String)subDS.get(Consts.DK_SCP_DATA_5);  //P_ORDERER_NM
       String ScpMasterEncStr11 =  (String)subDS.get(Consts.DK_SCP_DATA_8);  //P_SHIPPER_NM
-
+      
 
       
       Encryption EncStr = new Encryption();

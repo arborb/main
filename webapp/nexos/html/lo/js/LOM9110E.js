@@ -38,11 +38,7 @@ function _Initialize() {
   $("#RePrint").click(doPrint4);
   $("#Ts1").click(TS1);
   $("#btnERPSend").click(Hassend);
-  $('#btnGoHap').click(function(){
-    var rowData = parent.G_GRDPROGRAMMENU.data.getItems();
-    parent.showProgramPopup(rowData[106]);
-  });
-  
+
   // 조회조건 - 물류센터 초기화
   $NC.setInitCombo("/WC/getDataSet.do", {
     P_QUERY_ID: "WC.POP_CSUSERCENTER",
@@ -98,12 +94,11 @@ function _Initialize() {
 
 
 function _OnLoaded() {
-  $NC.setInitSplitter("#divT1DetailView", "v", 750);
+  $NC.setInitSplitter("#divT1DetailView", "v", 800);
   $NC.setInitSplitter("#test", "h", 200);
   // 미처리/오류 내역 탭 화면에 splitter 설정
   $NC.setInitSplitter("#divT2DetailView", "v", 800);
   $NC.setInitSplitter("#divT3DetailView", "v", 700);
-  
 }
 
 /**
@@ -135,8 +130,7 @@ function _OnResize(parent) {
 
     // var clientWidth = parent.width() - $NC.G_LAYOUT.border1;
     // var clientHeight = parent.height() - $NC.G_OFFSET.nonClientHeight;
-    $("#lblQEND_YN").show();
-    $("#cboQEND_YN").show();
+
     // Splitter 컨테이너 크기 조정
     var container = $("#divT1DetailView");
     $NC.resizeContainer(container, clientWidth, clientHeight);
@@ -171,9 +165,6 @@ function _OnResize(parent) {
     $NC.resizeGrid("#grdT1Detail", $("#grdT1Detail").parent().width(), clientHeight - $NC.G_LAYOUT.header);
     */
   } else if ($("#divMasterView").tabs("option", "active") === 1) {
-    
-    $("#lblQEND_YN").hide();
-    $("#cboQEND_YN").hide();
 
     // Splitter 컨테이너 크기 조정
     var container = $("#divT2DetailView");
@@ -186,8 +177,6 @@ function _OnResize(parent) {
     $NC.resizeGrid("#grdT2Detail", $("#grdT2Detail").parent().width(), clientHeight - $NC.G_LAYOUT.header);
 
   } else if ($("#divMasterView").tabs("option", "active") === 2) {
-    $("#lblQEND_YN").hide();
-    $("#cboQEND_YN").hide();
     // Splitter 컨테이너 크기 조정
     var container = $("#divT3DetailView");
     $NC.resizeContainer(container, clientWidth, clientHeight);
@@ -331,7 +320,6 @@ function _Inquiry() {
   // 상품별 출고내역 화면
   if ($("#divMasterView").tabs("option", "active") === 0) {
 
-    var END_YN = $NC.getValue("#cboQEND_YN");
     // 조회시 전역 변수 값 초기화
     $NC.setInitGridVar(G_GRDT1MASTER);
     // $NC.setInitGridVar(G_GRDT1DETAIL);
@@ -349,7 +337,6 @@ function _Inquiry() {
       P_QUERY_ID: "LOM9110E.RS_SUB",
       P_QUERY_PARAMS: $NC.getParams({
         P_CENTER_CD: CENTER_CD,
-        P_LOC_DIV: LOC_DIV
       })
     }, onGetNonSendCnt);
     G_GRDT1MASTER.queryParams = $NC.getParams({
@@ -359,10 +346,10 @@ function _Inquiry() {
       P_BU_NO: BU_NO,
       P_ORDERER_NM: ORDERER_NM,
       P_SHIPPER_NM: SHIPPER_NM,
+      P_END_YN: '%',
       P_LOCATION_CD: HASLOCATION_CD,
       P_OUTBOUND_NO: OUTBOUND_NO,
-      P_LOC_DIV: LOC_DIV,
-      P_END_YN: END_YN
+      P_LOC_DIV: LOC_DIV
     });
 
     // 데이터 조회
@@ -506,12 +493,6 @@ function grdT1MasterOnGetColumns() {
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
-    id: "LOC_DIV_F1",
-    field: "LOC_DIV_F",
-    name: "층 구분",
-    minWidth: 80
-  });  
-  $NC.setGridColumn(columns, {
     id: "LOCATION_CD",
     field: "LOCATION_CD",
     name: "로케이션코드",
@@ -528,8 +509,8 @@ function grdT1MasterOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "END_YN",
     field: "END_YN",
-    name: "합포장구분",
-    minWidth: 80,
+    name: "처리구분",
+    minWidth: 60,
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
@@ -542,6 +523,12 @@ function grdT1MasterOnGetColumns() {
     id: "SHIPPER_NM",
     field: "SHIPPER_NM",
     name: "수령자명",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "LOC_DIV_F",
+    field: "LOC_DIV_F",
+    name: "LOC 층 구분",
     minWidth: 80
   });
   $NC.setGridColumn(columns, {
@@ -689,16 +676,16 @@ function grdT1DetailOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "END_YN",
     field: "END_YN",
-    name: "합포장구분",
+    name: "처리구분",
     minWidth: 100,
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
     id: "BU_NO",
     field: "BU_NO",
-    name: "주문번호",
+    name: "전표번호",
     cssClass: "align-center",
-    minWidth: 100
+    minWidth: 60
   });
   $NC.setGridColumn(columns, {
     id: "OUTBOUND_DATE",
@@ -715,20 +702,6 @@ function grdT1DetailOnGetColumns() {
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
-    id: "PICK_BOX_NO",
-    field: "PICK_BOX_NO",
-    name: "용기번호",
-    minWidth: 70,
-    cssClass: "align-center"
-  });
-  $NC.setGridColumn(columns, {
-    id: "PICK_SEQ",
-    field: "PICK_SEQ",
-    name: "피킹라벨",
-    minWidth: 70,
-    cssClass: "align-center"
-  });
-  $NC.setGridColumn(columns, {
     id: "ZONE_CD",
     field: "ZONE_CD",
     name: "존코드",
@@ -739,7 +712,7 @@ function grdT1DetailOnGetColumns() {
     id: "HAS_DATETIME",
     field: "HAS_DATETIME",
     name: "합포장분류시간",
-    minWidth: 140
+    minWidth: 120
   });
   return $NC.setGridColumnDefaultFormatter(columns);
 }
@@ -809,8 +782,6 @@ function grdT1DetailOnAfterScroll(e, args) {
     P_OUTBOUND_DATE: rowData.OUTBOUND_DATE,
     P_OUTBOUND_NO: rowData.OUTBOUND_NO,
     P_ZONE_CD: rowData.ZONE_CD,
-    P_PICK_SEQ: rowData.PICK_SEQ,
-    P_ITEM_CD: rowData.ITEM_CD
   });
 
   // 데이터 조회
@@ -868,12 +839,7 @@ function grdT2MasterOnGetColumns() {
     minWidth: 90,
     cssClass: "align-center"
   });
-  $NC.setGridColumn(columns, {
-    id: "LOC_DIV_F1",
-    field: "LOC_DIV_F",
-    name: "층 구분",
-    minWidth: 80
-  });
+
   $NC.setGridColumn(columns, {
     id: "LOCATION_CD",
     field: "LOCATION_CD",
@@ -911,8 +877,8 @@ function grdT2MasterOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "END_YN",
     field: "END_YN",
-    name: "합포장구분",
-    minWidth: 80,
+    name: "처리구분",
+    minWidth: 60,
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
@@ -925,6 +891,12 @@ function grdT2MasterOnGetColumns() {
     id: "SHIPPER_NM",
     field: "SHIPPER_NM",
     name: "수령자명",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "LOC_DIV_F",
+    field: "LOC_DIV_F",
+    name: "LOC층 구분",
     minWidth: 80
   });
   return $NC.setGridColumnDefaultFormatter(columns);
@@ -989,7 +961,7 @@ function grdT2DetailOnGetColumns() {
     id: "ITEM_CD",
     field: "ITEM_CD",
     name: "상품코드",
-    minWidth: 70
+    minWidth: 100
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_NM",
@@ -1103,19 +1075,7 @@ function grdT3MasterOnGetColumns() {
     minWidth: 90,
     cssClass: "align-center"
   });
-  $NC.setGridColumn(columns, {
-    id: "LOC_DIV_F1",
-    field: "LOC_DIV_F",
-    name: "층 구분",
-    minWidth: 80
-  });  
-  $NC.setGridColumn(columns, {
-    id: "LOCATION_CD",
-    field: "LOCATION_CD",
-    name: "로케이션코드",
-    minWidth: 80,
-    cssClass: "align-center"
-  });
+
   $NC.setGridColumn(columns, {
     id: "HAS_NO",
     field: "HAS_NO",
@@ -1140,8 +1100,8 @@ function grdT3MasterOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "END_YN",
     field: "END_YN",
-    name: "합포장구분",
-    minWidth: 80,
+    name: "처리구분",
+    minWidth: 60,
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
@@ -1154,6 +1114,12 @@ function grdT3MasterOnGetColumns() {
     id: "SHIPPER_NM",
     field: "SHIPPER_NM",
     name: "수령자명",
+    minWidth: 80
+  });
+  $NC.setGridColumn(columns, {
+    id: "LOC_DIV_F",
+    field: "LOC_DIV_F",
+    name: "LOC층 구분",
     minWidth: 80
   });
   return $NC.setGridColumnDefaultFormatter(columns);
@@ -1292,7 +1258,7 @@ function grdT3DetailOnGetColumns() {
     id: "ITEM_CD",
     field: "ITEM_CD",
     name: "상품코드",
-    minWidth: 70
+    minWidth: 100
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_NM",
@@ -1363,7 +1329,7 @@ function grdSubOnGetColumns() {
     id: "ITEM_CD",
     field: "ITEM_CD",
     name: "상품코드",
-    minWidth: 70
+    minWidth: 100
   });
   $NC.setGridColumn(columns, {
     id: "ITEM_NM",
@@ -1384,8 +1350,8 @@ function grdSubOnGetColumns() {
     minWidth: 90
   });
   $NC.setGridColumn(columns, {
-    id: "CONFIRM_QTY",
-    field: "CONFIRM_QTY",
+    id: "ENTRY_QTY",
+    field: "ENTRY_QTY",
     name: "구성수량",
     minWidth: 70,
     cssClass: "align-right"
@@ -1844,13 +1810,11 @@ function onExecSP(ajaxData) {
 
   var resultData = $NC.toArray(ajaxData);
 
-//  if (!$NC.isNull(resultData)) {
-//    if (resultData === "OK") {
-//    }else{
-//      alert(resultData);
-//    }
-//
-//  }
+  if (!$NC.isNull(resultData)) {
+    if (resultData.O_MSG === "OK") {
+    }
+
+  }
 
   doPrint1();
 }
@@ -1886,19 +1850,12 @@ function doPrint1() {
 
   $NC.G_MAIN.silentPrint({
     printParams: [{
-      //reportDoc: "lo/LABEL_LOM12",
-      //queryId: "WR.RS_LABEL_LOM13",
       reportDoc: "lo/LABEL_LOM12",
-      queryId: "WR.RS_LABEL_LOM13_NEW",      
+      queryId: "WR.RS_LABEL_LOM13",
       queryParams: {
         P_CENTER_CD: CENTER_CD,
         P_BU_CD: BU_CD,
-        P_HAS_DATE: HAS_DATE,
-        P_HAS_NO : "",
-        P_LINE_NO: "",
-        P_PICK_SEQ: "",
-        P_PICK_BOX_NO: "",
-        P_INQUERY_DIV: "6"        
+        P_HAS_DATE: HAS_DATE
       },
       checkedValue: checkedValueDS.toString(),
       iFrameNo: 1,
@@ -1928,19 +1885,12 @@ function doPrint2(resultData) {
   $NC.G_MAIN.silentPrint({
 
     printParams: [{
-      //reportDoc: "lo/LABEL_LOM14",
-      //queryId: "WR.RS_LABEL_LOM13",
-      reportDoc: "lo/LABEL_LOM12",
-      queryId: "WR.RS_LABEL_LOM13_NEW",          
+      reportDoc: "lo/LABEL_LOM14",
+      queryId: "WR.RS_LABEL_LOM13",
       queryParams: {
         P_CENTER_CD: CENTER_CD,
         P_BU_CD: BU_CD,
-        P_HAS_DATE: HAS_DATE,
-        P_HAS_NO : "",
-        P_LINE_NO: "",
-        P_PICK_SEQ: "",
-        P_PICK_BOX_NO: "",
-        P_INQUERY_DIV: "6" 
+        P_HAS_DATE: HAS_DATE
       },
       checkedValue: resultData,
       iFrameNo: 1,
@@ -1984,19 +1934,12 @@ function doPrint3() {
 
   $NC.G_MAIN.silentPrint({
     printParams: [{
-      //reportDoc: "lo/LABEL_LOM15",
-      //queryId: "WR.RS_LABEL_LOM16",
-      reportDoc: "lo/LABEL_LOM12",
-      queryId: "WR.RS_LABEL_LOM13_NEW",          
+      reportDoc: "lo/LABEL_LOM15",
+      queryId: "WR.RS_LABEL_LOM16",
       queryParams: {
         P_CENTER_CD: CENTER_CD,
         P_BU_CD: BU_CD,
-        P_HAS_DATE: HAS_DATE,
-        P_HAS_NO : "",
-        P_LINE_NO: "",
-        P_PICK_SEQ: "",
-        P_PICK_BOX_NO: "",
-        P_INQUERY_DIV: "4" 
+        P_HAS_DATE: HAS_DATE
       },
       checkedValue: checkedValueDS.toString(),
       iFrameNo: 1,
@@ -2038,19 +1981,12 @@ function doPrint4() {
 
   $NC.G_MAIN.silentPrint({
     printParams: [{
-      //reportDoc: "lo/LABEL_LOM12",
-      //queryId: "WR.RS_LABEL_LOM17",
       reportDoc: "lo/LABEL_LOM12",
-      queryId: "WR.RS_LABEL_LOM13_NEW",             
+      queryId: "WR.RS_LABEL_LOM17",
       queryParams: {
         P_CENTER_CD: CENTER_CD,
         P_BU_CD: BU_CD,
-        P_HAS_DATE: HAS_DATE,
-        P_HAS_NO : "",
-        P_LINE_NO: "",
-        P_PICK_SEQ: "",
-        P_PICK_BOX_NO: "",
-        P_INQUERY_DIV: "5"
+        P_HAS_DATE: HAS_DATE
       },
       checkedValue: checkedValueDS.toString(),
       iFrameNo: 1,
@@ -2121,14 +2057,14 @@ function _OnGridCheckBoxFormatterClick(e, view, args) {
 function onGetNonSendCnt(ajaxData) {
   var resultRows = $NC.toArray(ajaxData);
   if (resultRows.length > 0) {
-    $NC.setValue("#lblLo_Cnt_A", "총 셀수 : " + resultRows[0].TOTAL_LOC_CNT);
-    $NC.setValue("#lblLo_Cnt_B", "사용중 셀수  : " + resultRows[0].HAS_CNT);
-    $NC.setValue("#lblLo_Cnt_C", "빈 셀수  : " + resultRows[0].REMAIN_CNT);
+    $NC.setValue("#lblLo_Cnt_A", "총 셀 : " + resultRows[0].TOTAL_LOC_CNT + "수");
+    $NC.setValue("#lblLo_Cnt_B", "사용중 셀  : " + resultRows[0].HAS_CNT + "수");
+    $NC.setValue("#lblLo_Cnt_C", "빈 셀  : " + resultRows[0].REMAIN_CNT + "수");
 
   } else {
-    $NC.setValue("#lblLo_Cnt_A", "총 셀수  : ");
-    $NC.setValue("#lblLo_Cnt_B", "사용중 셀수  : ");
-    $NC.setValue("#lblLo_Cnt_C", "빈 셀수  : ");
+    $NC.setValue("#lblLo_Cnt_A", "총 셀  : ");
+    $NC.setValue("#lblLo_Cnt_B", "사용중 셀  : ");
+    $NC.setValue("#lblLo_Cnt_C", "빈 셀  : ");
   }
 }
 

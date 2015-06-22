@@ -71,7 +71,7 @@ public class LOM1010EController extends CommonController {
         params.put("P_SCPKEY", outKey);
 
         
-
+        
         try {
             result = getResponseEntity(request, service.getDataSet(queryId, params));
         } catch (Exception e) {

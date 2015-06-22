@@ -58,7 +58,7 @@ public class RO01010EDAOImpl implements RO01010EDAO {
     final String RO_INSERT_ID1 = "RO_1010PM_INSERT";
     final String RO_UPDATE_ID1 = "RO_1010PM_UPDATE";
     
-
+    
     final String RO010NM_GETNO_ID = "WT.RO_010NM_GETNO";
     final String RO010ND_GETNO_ID = "WT.RO_010ND_GETNO";
     final String RO_PROCESSING_ID = "RO_PROCESSING";
@@ -124,7 +124,7 @@ public class RO01010EDAOImpl implements RO01010EDAO {
       
       
 
-
+      
       // 마스터 생성, CRUD 체크 안함
       nexosDAO.insert(MASTER_INSERT_ID, masterDS);
   //    nexosDAO.insert(RO_INSERT_ID, subDS);
@@ -173,7 +173,7 @@ public class RO01010EDAOImpl implements RO01010EDAO {
       String ScpMasterEncStr8 =  (String)subDS.get(Consts.DK_SCP_DATA_1);  //P_SHIPPER_ADDR_BASIC
       String ScpMasterEncStr9 =  (String)subDS.get(Consts.DK_SCP_DATA_2);  //P_SHIPPER_ADDR_DETAIL
       String ScpMasterEncStr11 =  (String)subDS.get(Consts.DK_SCP_DATA_8);  //P_SHIPPER_NM
-
+      
 
       
       Encryption EncStr = new Encryption();

@@ -11,8 +11,7 @@ function _Initialize() {
     tabIndex: 0,
     onActivate: tabOnActivate
   });
-  
-  
+
   // 추가 조회조건 사용
   $NC.setInitAdditionalCondition();
 
@@ -31,7 +30,7 @@ function _Initialize() {
   $NC.setInitDatePicker("#dtpQMove_Date1");
   $NC.setInitDatePicker("#dtpQMove_Date2");
   $NC.setInitDatePicker("#dtpOutbound_Date");
-  
+
   // 진행상태 콤보박스 세팅
   var cboObj = $("#cboQConfirm_Check").empty();
   var optionStr = "";
@@ -732,6 +731,13 @@ function grdT1DetailOnGetColumns() {
     cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
+    id: "OUT_WAIT_QTY",
+    field: "OUT_WAIT_QTY",
+    name: "가용재고",
+    minWidth: 80,
+    cssClass: "align-right"
+  });
+  $NC.setGridColumn(columns, {
     id: "MLOCATION_CD",
     field: "MLOCATION_CD",
     name: "이동로케이션",
@@ -1115,14 +1121,13 @@ function showOwnBranPopup() {
   var BU_CD = $NC.getValue("#edtQBu_Cd");
 
   $NP.showOwnBranPopup({
-    P_CUST_CD:  $NC.G_USERINFO.CUST_CD,   
+    P_CUST_CD: $NC.G_USERINFO.CUST_CD,
     P_BU_CD: BU_CD,
     P_OWN_BRAND_CD: '%'
   }, onOwnBrandPopup, function() {
     $NC.setFocus("#edtQBrand_Cd", true);
   });
 }
-
 
 /**
  * 사업부 검색 결과
@@ -1144,7 +1149,6 @@ function onUserBuPopup(resultInfo) {
   }
   onChangingCondition();
 }
-
 
 /**
  * 브랜드 검색 결과
@@ -1222,6 +1226,61 @@ function setUserProgramPermission() {
  */
 function onProcessNxt() {
 
+  var rowCount = G_GRDT1DETAIL.data.getLength();
+  if (rowCount === 0) {
+    alert("조회 후 처리하십시오.");
+    return;
+  }
+
+  if (G_GRDT1DETAIL.lastRow == null) {
+    alert("재고이동 처리할 데이터를 선택하십시오.");
+    return;
+  }
+  var rowData1 = G_GRDT1MASTER.data.getItem(G_GRDT1MASTER.lastRow);
+
+  if (rowData1.CONFIRM_YN == "Y") {
+    alert("이미 확정 처리한 데이터입니다.");
+    return;
+  }
+
+  var result = confirm("확정 처리하시겠습니까?");
+  if (!result) {
+    return;
+  }
+  
+  /*---------------------------------*/
+
+  closingDS = [ ];
+  var chkCnt = 0;
+  for ( var row = 0; row < rowCount; row++) {
+    var rowData = G_GRDT1DETAIL.data.getItem(row);
+        chkCnt++;
+        var Ms = {
+          P_CENTER_CD: rowData.CENTER_CD,
+          P_BU_CD: rowData.BU_CD,
+          P_MOVE_DATE: rowData.MOVE_DATE,
+          P_MOVE_NO: rowData.MOVE_NO,
+          P_LINE_NO: rowData.LINE_NO,
+          P_USER_ID: $NC.G_USERINFO.USER_ID
+
+        };
+        closingDS.push(Ms);
+  }
+  if (chkCnt == 0) {
+    alert("처리대상이 없습니다. 선택하십시오.");
+    return;
+  }
+
+  $NC.serviceCall("/LC03010E/callStock_Move.do", {
+    P_DS_MASTER: $NC.getParams(closingDS),
+    P_USER_ID: $NC.G_USERINFO.USER_ID
+  }, onSave, onSaveError);
+
+}
+
+/*
+function onProcessNxt() {
+
   var rowCount = G_GRDT1MASTER.data.getLength();
   if (rowCount === 0) {
     alert("조회 후 처리하십시오.");
@@ -1243,7 +1302,7 @@ function onProcessNxt() {
   if (!result) {
     return;
   }
-
+  
   $NC.serviceCall("/LC03010E/callLcMoveConfirm.do", {
     P_QUERY_PARAMS: $NC.getParams({
       P_CENTER_CD: rowData.CENTER_CD,
@@ -1254,7 +1313,7 @@ function onProcessNxt() {
     })
   }, onSave, onSaveError);
 }
-
+*/
 /**
  * 긴급보충
  */
@@ -1275,7 +1334,7 @@ function onEmergencyEnter() {
 
   var MOVE_DATE = $NC.getValue("#dtpOutbound_Date");
   if ($NC.isNull(MOVE_DATE)) {
-    alert("출고일자를 입력하십시오.");
+    alert("이동일자를 입력하십시오.");
     $NC.setFocus("#dtpOutbound_Date");
     return;
   }
@@ -1315,7 +1374,7 @@ function onSafetyEnter() {
 
   var MOVE_DATE = $NC.getValue("#dtpOutbound_Date");
   if ($NC.isNull(MOVE_DATE)) {
-    alert("출고일자를 입력하십시오.");
+    alert("이동일자를 입력하십시오.");
     $NC.setFocus("#dtpOutbound_Date");
     return;
   }
@@ -1344,8 +1403,8 @@ function onSave(ajaxData) {
 
   var resultData = $NC.toArray(ajaxData);
   if (!$NC.isNull(resultData)) {
-    if (resultData.O_MSG !== "OK") {
-      alert(resultData.O_MSG);
+    if (resultData.RESULT_DATA !== "OK") {
+      alert(resultData.RESULT_DATA);
       return;
     }
   }

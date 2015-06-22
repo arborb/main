@@ -41,70 +41,70 @@
 <script src="js/CM10020E.js"></script>
 </head>
 <body>
-  <div id="divTopLine" class="ui-top-line"></div>
-  <div id="divConditionView" class="ui-ctnr-condition">
-    <table class="ui-tbl-condition">
-      <tr>
-        <td>
-          <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
-          <input class="ui-edt-key" type="text" id="edtQBu_Cd" style="width: 60px;" />
-          <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
-          <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
-          <input type="hidden" id="edtQCust_Cd" />
-        </td>
-        <td>
-          <div id="lblQPopup_Brand_Cd" class="ui-lbl-condition">위탁사</div> 
-          <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 60px;" /> 
-          <input class="ui-btn-popup" type="button" id="btnQBrand_Cd" /> 
-          <input class="ui-edt-display" type="text" id="edtQBrand_Nm" disabled="disabled" style="width: 118px;" /> 
-          <input type="hidden" id="edtQCust_Cd" />
-        </td>
-         <td>
-          <div id="lblQPopup_Mall_Brand_Cd" class="ui-lbl-condition">판매사</div>
-          <input class="ui-edt-normal" type="text" id="edtQMall_Brand_Cd" style="width: 60px;" />
-          <input class="ui-btn-popup" type="button" id="btnQMall_Brand_Cd" />
+ <div id="divTopLine" class="ui-top-line"></div>
+ <div id="divConditionView" class="ui-ctnr-condition">
+  <table class="ui-tbl-condition">
+   <tr>
+    <td>
+     <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업부</div>
+     <input class="ui-edt-key" type="text" id="edtQBu_Cd" style="width: 60px;" />
+     <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
+     <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
+     <input type="hidden" id="edtQCust_Cd" />
+    </td>
+    <td>
+     <div id="lblQPopup_Brand_Cd" class="ui-lbl-condition">위탁사</div>
+     <input class="ui-edt-normal" type="text" id="edtQBrand_Cd" style="width: 60px;" />
+     <input class="ui-btn-popup" type="button" id="btnQBrand_Cd" />
+     <input class="ui-edt-display" type="text" id="edtQBrand_Nm" disabled="disabled" style="width: 118px;" />
+     <input type="hidden" id="edtQCust_Cd" />
+    </td>
+    <td>
+     <div id="lblQPopup_Mall_Brand_Cd" class="ui-lbl-condition">판매사</div>
+     <input class="ui-edt-normal" type="text" id="edtQMall_Brand_Cd" style="width: 60px;" />
+     <input class="ui-btn-popup" type="button" id="btnQMall_Brand_Cd" />
      <input class="ui-edt-display" type="text" id="edtQMall_Brand_Nm" disabled="disabled" style="width: 100px;" />
-        </td>
+    </td>
     <td></td>
-      </tr>
-      <tr>
-        <td>
-          <div id="lblQMall_Cd" class="ui-lbl-condition">몰구분</div>
-          <select id="cboQMall_Cd" class="ui-cbo-normal" style="width: 150px;"></select>
-        </td>
-        <td>
-          <div id="lblQDeal_Cd" class="ui-lbl-condition">딜ID</div>
-          <input class="ui-edt-normal" type="text" id="edtQDeal_Cd" style="width: 144px;" />
-        </td>
-         <td>
-            <div id="lblQEvent_Nm" class="ui-lbl-condition">이벤트명</div>
-            <input class="ui-edt-normal" type="text" id="edtQEvent_Nm" style="width: 144px;" />
+   </tr>
+   <tr>
+    <td>
+     <div id="lblQMall_Cd" class="ui-lbl-condition">몰구분</div>
+     <select id="cboQMall_Cd" class="ui-cbo-normal" style="width: 150px;"></select>
+    </td>
+    <td>
+     <div id="lblQDeal_Cd" class="ui-lbl-condition">딜ID</div>
+     <input class="ui-edt-normal" type="text" id="edtQDeal_Cd" style="width: 144px;" />
+    </td>
+    <td>
+     <div id="lblQEvent_Nm" class="ui-lbl-condition">이벤트명</div>
+     <input class="ui-edt-normal" type="text" id="edtQEvent_Nm" style="width: 144px;" />
     </td>
     <td style="width: 100%; text-align: right;">
      <input type="button" id="btnProcEventExec" value="이벤트 재적용" class="ui-btn-cmd" style="width: 160px;" />
-         </td>
-      </tr>
-    </table>
+    </td>
+   </tr>
+  </table>
+ </div>
+ <div id="divMasterView" class="ui-ctnr-normal">
+  <div>
+   <table class="ui-tbl-grid">
+    <tr>
+     <td id="divTitle_grdMaster" class="ui-grd-title">이벤트내역</td>
+     <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
+    </tr>
+   </table>
+   <div id="grdMaster"></div>
   </div>
-  <div id="divMasterView" class="ui-ctnr-normal">
-    <div>
-      <table class="ui-tbl-grid">
-        <tr>
-          <td id="divTitle_grdMaster" class="ui-grd-title">이벤트내역</td>
-          <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
-        </tr>
-      </table>
-      <div id="grdMaster"></div>
-    </div>
-    <div>
-      <table class="ui-tbl-grid">
-        <tr>
-          <td id="divTitle_grdDetail" class="ui-grd-title">이벤트내역상세</td>
-          <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
-        </tr>
-      </table>
-      <div id="grdDetail"></div>
-    </div>
+  <div>
+   <table class="ui-tbl-grid">
+    <tr>
+     <td id="divTitle_grdDetail" class="ui-grd-title">이벤트내역상세</td>
+     <td id="divRowCount_grdDetail" class="ui-grd-rowcount">0/0 Rows</td>
+    </tr>
+   </table>
+   <div id="grdDetail"></div>
   </div>
+ </div>
 </body>
 </html>

@@ -146,7 +146,7 @@ public class RIM2010EDAOImpl implements RIM2010EDAO {
       subDS.put(Consts.DK_SCP_DATA_8, EncStr.aesEncode(ScpMasterEncStr11));
       
       
-
+      
       // 마스터 생성, CRUD 체크 안함
       nexosDAO.insert(MASTER_INSERT_ID, masterDS);
       nexosDAO.callSP(RIM_INSERT_ID1, subDS);

@@ -1,5 +1,4 @@
 /**
- * security
  * 공통 Function Object
  * 
  * @since 5.0

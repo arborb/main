@@ -811,9 +811,9 @@ function _Save() {
       }
 
       // 비밀번호 유효성 검사
-          var varidPw = $NC.varidationPw(rowData.USER_PWD, $NC.G_USERINFO2);
-          if (!varidPw) {
-            return false;
+      var varidPw = $NC.varidationPw(rowData.USER_PWD, $NC.G_USERINFO2);
+      if (!varidPw) {
+        return false;
       }
       if ($NC.isNull(rowData.CERTIFY_DIV)) {
         alert("사용자구분을 선택하십시오.");

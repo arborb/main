@@ -560,7 +560,7 @@ function _Inquiry() {
   var ITEM_NM = $NC.getValue("#edtQItem_Nm");
   var STATE_PRE_YN = "Y";
   var STATE_CUR_YN = "Y";
-
+  
 
   var OWN_BRAND_CD = $NC.getValue("#edtQOwn_Brand_Cd", true);
   var BRAND_CD = $NC.getValue("#edtQBrand_Cd", true);

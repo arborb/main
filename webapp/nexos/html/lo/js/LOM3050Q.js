@@ -120,7 +120,7 @@ function _Initialize() {
     }
   });
   
-
+  
   $NC.setInitCombo("/WC/getDataSet.do", {
     P_QUERY_ID: "WC.POP_CMCARRIER",
     P_QUERY_PARAMS: $NC.getParams({

@@ -345,9 +345,9 @@ public class LOM2010EService {
         spParams.put("P_CENTER_CD", checkParams.get("P_CENTER_CD"));
         spParams.put("P_BU_CD", checkParams.get("P_BU_CD"));
         spParams.put("P_OUTBOUND_DATE", checkParams.get("P_OUTBOUND_DATE"));
-        spParams.put("P_OUTBOUND_BATCH", outbound_batch); 
+        spParams.put("P_OUTBOUND_BATCH", outbound_batch);
 
-        HashMap<String, Object> mapResult = callSP(FW_DIRECTIONS_PROC, spParams); 
+        HashMap<String, Object> mapResult = callSP(FW_DIRECTIONS_PROC, spParams);
         String oMsg = (String)mapResult.get(Consts.PK_O_MSG);
 
         // 오류면 Rollback

@@ -147,7 +147,7 @@ function _OnPopupOpen() {
     // 예정 -> 등록, 등록 수정
     var CRUD = "R";
     var masterDS = $NC.G_VAR.userData.P_MASTER_DS;
-
+    
     if ((masterDS.ORDER_USER_ID === "WMS_JOB" || masterDS.ORDER_USER_ID === "INTERFACE")
       && masterDS.INOUT_CD === "DM0") {
       $NC.setEnable("#btnEntryNew", false);
@@ -1031,7 +1031,7 @@ function _Save() {
   if ( $NC.isNull($NC.G_VAR.subData.SHIPPER_ADDR_DETAIL) ){
     $NC.G_VAR.subData.SHIPPER_ADDR_DETAIL = ' ';
   }    
-
+  
   $NC.serviceCall("/LOM1010E/save.do", {
     P_DS_MASTER: $NC.toJson({
       P_CENTER_CD: $NC.G_VAR.masterData.CENTER_CD,

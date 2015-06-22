@@ -59,7 +59,7 @@ public class LOM3060EController extends CommonController {
     String iniFilePath = "/usr/scp/scpdb_agent_unix.ini";
     String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );
     params.put("P_SCPKEY", outKey);
-
+   
     try {
       result = getResponseEntity(request, service.getDataSet(queryId, params));
     } catch (Exception e) {

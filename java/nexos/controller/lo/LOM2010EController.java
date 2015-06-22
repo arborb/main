@@ -295,7 +295,7 @@ public class LOM2010EController extends CommonController {
     params.put(Consts.PK_USER_ID, user_Id);
 
     try {
-        result = getResponseEntity(request, service.Cksave(params));                
+      result = getResponseEntity(request, service.Cksave(params));
     } catch (Exception e) {
       result = getResponseEntityError(request, e);
     }
@@ -331,7 +331,7 @@ public class LOM2010EController extends CommonController {
     String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );
     params.put("P_SCPKEY", outKey);
    
-
+   
     
     try {
       result = getResponseEntity(request, service.getDataSet(queryId, params));
@@ -436,7 +436,7 @@ public class LOM2010EController extends CommonController {
 
     return result;
   }
-  
+
   /**
    * 출고확정 저장 처리
    *
@@ -478,7 +478,7 @@ public class LOM2010EController extends CommonController {
 
     return result;
   }
-  
+
   /**
    * 배송완료 저장 처리
    *
@@ -511,7 +511,7 @@ public class LOM2010EController extends CommonController {
 
     return result;
   }
-  
+
   /**
    * 출고등록 (일괄) 저장 처리
    *

@@ -86,7 +86,7 @@ public class RIM1010EController extends CommonController {
       result = getResponseEntityError(request, e);
     }
 
-
+    
     return result;
   }
 

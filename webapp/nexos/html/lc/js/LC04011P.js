@@ -18,7 +18,6 @@ function _Initialize() {
     CONSTS_DIV_LOC: "_____"// '_' 다섯개
   });
 
-  
   $NC.setInitDatePicker("#dtpInvest_Date");
   $NC.setInitDatePicker("#dtpInvest_Start_Date");
   $NC.setInitDatePicker("#dtpInvest_End_Date");
@@ -111,7 +110,7 @@ function onGetDetail(ajaxData) {
       resultData = resultRows[i];
       resultData.CRUD = "C";
       resultData.LINE_NO = "";
-      resultData.INVEST_QTY = resultData.STOCK_QTY;
+      resultData.INVEST_QTY = "";
 
       var searchVal = [resultData.LOCATION_CD, resultData.BRAND_CD, resultData.ITEM_CD, resultData.ITEM_STATE,
           resultData.ITEM_LOT, resultData.VALID_DATE, resultData.BATCH_NO];
@@ -163,7 +162,7 @@ function _OnPopupOpen() {
       INVEST_DATE: INVEST_DATE,
       INVEST_NO: "",
       INVEST_DIV: "",
-      INVEST_TYPE:"",
+      INVEST_TYPE: "",
       INVEST_START_DATE: INVEST_DATE,
       INVEST_END_DATE: INVEST_DATE,
       MANAGER_ID: $NC.G_USERINFO.USER_ID,
@@ -184,20 +183,20 @@ function _OnPopupOpen() {
     $NC.setValue("#edtInvest_No", masterDS.INVEST_NO);
     $NC.setValue("#dtpInvest_Start_Date", masterDS.INVEST_START_DATE);
     $NC.setValue("#dtpInvest_End_Date", masterDS.INVEST_END_DATE);
-    $NC.setValue("#cboInvest_Div",masterDS.INVEST_DIV);
-    
-    $NC.setValue("#edtInvest_Div_Org",masterDS.INVEST_DIV);
-//    $NC.setValue("#cboInvest_Type",masterDS.INVEST_TYPE);
+    $NC.setValue("#cboInvest_Div", masterDS.INVEST_DIV);
+
+    $NC.setValue("#edtInvest_Div_Org", masterDS.INVEST_DIV);
+    // $NC.setValue("#cboInvest_Type",masterDS.INVEST_TYPE);
     $NC.setValue("#edtManager_Id", masterDS.MANAGER_ID);
     $NC.setValue("#edtManager_Nm", masterDS.MANAGER_NM);
 
     $NC.setValue("#edtRemark1", masterDS.REMARK1);
 
-//    $("#grpInoutInfo").hide(); // 입출고정보
-//    $("#grpLocationInfo").hide(); // 로케이션정보
-//    $("#grpItemGroupInfo").hide(); // 상품그룹정보
-//    $("#grpItemInfo").hide(); // 상품&로케이션
-//    $("#grpItemStateInfo").hide(); // 상품&로케이션
+    // $("#grpInoutInfo").hide(); // 입출고정보
+    // $("#grpLocationInfo").hide(); // 로케이션정보
+    // $("#grpItemGroupInfo").hide(); // 상품그룹정보
+    // $("#grpItemInfo").hide(); // 상품&로케이션
+    // $("#grpItemStateInfo").hide(); // 상품&로케이션
     switch (masterDS.INVEST_DIV) {
     case "1":
       $("#grpKeyBrandInfo").hide();
@@ -314,19 +313,19 @@ function _OnPopupOpen() {
       BU_CD: masterDS.BU_CD,
       INVEST_DATE: masterDS.INVEST_DATE,
       INVEST_NO: masterDS.INVEST_NO,
-      INVEST_TYPE:masterDS.INVEST_TYPE,
+      INVEST_TYPE: masterDS.INVEST_TYPE,
       INVEST_DIV: masterDS.INVEST_DIV,
       INVEST_DIV_F: masterDS.INVEST_DIV_F,
       INVEST_START_DATE: masterDS.INVEST_START_DATE,
       INVEST_END_DATE: masterDS.INVEST_END_DATE,
       MANAGER_ID: masterDS.MANAGER_ID,
       MANAGER_NM: masterDS.MANAGER_NM,
-//      INVEST_DIV: null,
-//      INVEST_DIV_F: null,
-//      INVEST_START_DATE: null,
-//      INVEST_END_DATE: null,
-//      MANAGER_ID: null,
-//      MANAGER_NM: null,
+      // INVEST_DIV: null,
+      // INVEST_DIV_F: null,
+      // INVEST_START_DATE: null,
+      // INVEST_END_DATE: null,
+      // MANAGER_ID: null,
+      // MANAGER_NM: null,
       REMARK1: masterDS.REMARK1,
       CRUD: CRUD
     };
@@ -527,7 +526,7 @@ function _New() {
     var ITEM_STATE = $NC.getValue("#cboQItem_State");
 
     $NC.serviceCall("/LC04010E/getDataSet.do", {
-//      P_QUERY_ID: "LC04010E.RS_POP_SUB1",
+      // P_QUERY_ID: "LC04010E.RS_POP_SUB1",
       P_QUERY_ID: "LC04010E.RS_POP_SUB7",
       P_QUERY_PARAMS: $NC.getParams({
         P_CENTER_CD: CENTER_CD,
@@ -538,7 +537,6 @@ function _New() {
         P_POLICY_LC120: $NC.G_VAR.userData.P_POLICY_LC120,
         P_USER_ID: $NC.G_USERINFO.USER_ID
 
-        
       })
     }, onGetDetail);
     break;
@@ -817,83 +815,153 @@ function _Save() {
       return;
     }
   }
-  
-  var detailDS = [ ];
-  var rows = G_GRDDETAIL.data.getItems();
-  var rowCount = rows.length;
-  for ( var row = 0; row < rowCount; row++) {
-    var rowData = rows[row];
-    var GAP_DIV = "";
-    if (rowData.CRUD !== "R") {
-      //실사수량 체크로직
-      if (rowData.CRUD !== "D") {
-        var INVEST_QTY = Number(rowData.INVEST_QTY);
-        if (INVEST_QTY < 1){
-          alert("실사수량은 1보다 작게 등록할 수 없습니다.");
-          G_GRDDETAIL.data.updateItem(rowData.id, rowData);
-          $NC.setGridSelectRow(G_GRDDETAIL, {
-            selectRow: row,
-            activeCell: G_GRDDETAIL.view.getColumnIndex("INVEST_QTY"),
-            editMode: true
-          });
-          return;
+  if ($NC.G_VAR.masterData.INVEST_DIV !== '1') {
+    var detailDS = [ ];
+    var rows = G_GRDDETAIL.data.getItems();
+    var rowCount = rows.length;
+    for ( var row = 0; row < rowCount; row++) {
+      var rowData = rows[row];
+      var GAP_DIV = "";
+      if (rowData.CRUD !== "R") {
+        // 실사수량 체크로직
+        if (rowData.CRUD !== "D") {
+          var INVEST_QTY = Number(rowData.INVEST_QTY);
+          if (INVEST_QTY < 1) {
+            alert("실사수량은 1보다 작게 등록할 수 없습니다.");
+            // G_GRDDETAIL.data.updateItem(rowData.id, rowData);
+            $NC.setGridSelectRow(G_GRDDETAIL, {
+              selectRow: row,
+              activeCell: G_GRDDETAIL.view.getColumnIndex("INVEST_QTY"),
+              editMode: true
+            });
+            return;
+          }
         }
+        var saveData = {
+          // P_CENTER_CD: $NC.G_VAR.masterData.CENTER_CD,
+          // P_BU_CD: $NC.G_VAR.masterData.BU_CD,
+          // P_INVEST_DATE: $NC.G_VAR.masterData.INVEST_DATE,
+          // P_INVEST_NO: $NC.G_VAR.masterData.INVEST_NO,
+          P_LINE_NO: rowData.LINE_NO,
+          P_BRAND_CD: rowData.BRAND_CD,
+          P_LOCATION_CD: rowData.LOCATION_CD,
+          P_ITEM_CD: rowData.ITEM_CD,
+          P_ITEM_STATE: rowData.ITEM_STATE,
+          // P_ITEM_LOT: rowData.ITEM_LOT,
+          P_STOCK_QTY: rowData.STOCK_QTY,
+          P_INVEST_QTY: rowData.INVEST_QTY,
+          P_CRUD: rowData.CRUD
+        };
+        detailDS.push(saveData);
       }
-      //
-      if (rowData.STOCK_QTY != rowData.INVEST_QTY) {
-        GAP_DIV = "99";
-      }
-      var saveData = {
+    }
+
+    if ($NC.G_VAR.masterData.CRUD === "R" && detailDS.length === 0) {
+      alert("수정 후 저장하십시오.");
+      return;
+    }
+
+    var INVEST_DIV = $NC.G_VAR.masterData.INVEST_DIV;
+
+    if ($NC.G_VAR.userData.P_PROCESS_CD === "N") {
+      INVEST_DIV = $NC.G_VAR.masterData.INVEST_DIV;
+    } else {
+      INVEST_DIV = $NC.getValue("#edtInvest_Div_Org");
+    }
+
+    $NC.serviceCall("/LC04010E/callLcsave.do", {
+      P_DS_MASTER: $NC.toJson({
         P_CENTER_CD: $NC.G_VAR.masterData.CENTER_CD,
         P_BU_CD: $NC.G_VAR.masterData.BU_CD,
         P_INVEST_DATE: $NC.G_VAR.masterData.INVEST_DATE,
         P_INVEST_NO: $NC.G_VAR.masterData.INVEST_NO,
-        P_LINE_NO: rowData.LINE_NO,
-        P_LOCATION_CD: rowData.LOCATION_CD,
-        P_BRAND_CD: rowData.BRAND_CD,
-        P_ITEM_CD: rowData.ITEM_CD,
-        P_ITEM_STATE: rowData.ITEM_STATE,
-        P_ITEM_LOT: rowData.ITEM_LOT,
-        P_VALID_DATE: rowData.VALID_DATE,
-        P_BATCH_NO: rowData.BATCH_NO,
-        P_STOCK_QTY: rowData.STOCK_QTY,
-        P_INVEST_QTY: rowData.INVEST_QTY,
-        P_GAP_DIV: GAP_DIV,
-        P_CRUD: rowData.CRUD
-      };
-      detailDS.push(saveData);
+        // P_INVEST_TYPE:$NC.G_VAR.masterData.INVEST_TYPE,
+        P_INVEST_DIV: INVEST_DIV,
+        P_INVEST_START_DATE: $NC.G_VAR.masterData.INVEST_START_DATE,
+        // P_INVEST_END_DATE: $NC.G_VAR.masterData.INVEST_END_DATE,
+        // P_MANAGER_ID: $NC.G_VAR.masterData.MANAGER_ID,
+        P_REMARK1: $NC.G_VAR.masterData.REMARK1,
+        P_CRUD: $NC.G_VAR.masterData.CRUD
+      }),
+      P_DS_DETAIL: $NC.toJson(detailDS),
+      P_PROCESS_CD: $NC.G_VAR.userData.P_PROCESS_CD,
+      P_USER_ID: $NC.G_USERINFO.USER_ID
+    }, onSave);
+  } else {
+
+    if ($NC.G_VAR.masterData.CRUD === "C") {
+      $NC.serviceCall("/LC04010E/callSP.do", {
+        P_QUERY_ID: "LC_040_ALLSAVE",
+        P_QUERY_PARAMS: $NC.getParams({
+          P_CENTER_CD: $NC.G_VAR.masterData.CENTER_CD,
+          P_BU_CD: $NC.G_VAR.masterData.BU_CD,
+          P_BRAND_CD: '%',
+          P_ITEM_STATE: '%',
+          P_INVEST_DATE: $NC.G_VAR.masterData.INVEST_DATE,
+          P_INVEST_DIV: $NC.G_VAR.masterData.INVEST_DIV,
+          P_INVEST_START_DATE: $NC.G_VAR.masterData.INVEST_START_DATE,
+          P_REMARK1: $NC.G_VAR.masterData.REMARK1,
+          P_USER_ID: $NC.G_USERINFO.USER_ID
+        })
+      }, onSave1);
+    } else {
+      var detailDS = [ ];
+      var rows = G_GRDDETAIL.data.getItems();
+      var rowCount = rows.length;
+      for ( var row = 0; row < rowCount; row++) {
+        var rowData = rows[row];
+        //var GAP_DIV = "";
+        if (rowData.CRUD !== 'R' ) {
+          // 실사수량 체크로직
+          var saveData = {
+            // P_CENTER_CD: $NC.G_VAR.masterData.CENTER_CD,
+            // P_BU_CD: $NC.G_VAR.masterData.BU_CD,
+            // P_INVEST_DATE: $NC.G_VAR.masterData.INVEST_DATE,
+            // P_INVEST_NO: $NC.G_VAR.masterData.INVEST_NO,
+            P_LINE_NO: rowData.LINE_NO,
+            P_BRAND_CD: rowData.BRAND_CD,
+            P_LOCATION_CD: rowData.LOCATION_CD,
+            P_ITEM_CD: rowData.ITEM_CD,
+            P_ITEM_STATE: rowData.ITEM_STATE,
+            // P_ITEM_LOT: rowData.ITEM_LOT,
+            P_STOCK_QTY: rowData.STOCK_QTY,
+            P_INVEST_QTY: rowData.INVEST_QTY,
+            P_CRUD: rowData.CRUD
+          };
+          detailDS.push(saveData);
+        }
+      }
+
+
+
+      var INVEST_DIV = $NC.G_VAR.masterData.INVEST_DIV;
+
+      if ($NC.G_VAR.userData.P_PROCESS_CD === "N") {
+        INVEST_DIV = $NC.G_VAR.masterData.INVEST_DIV;
+      } else {
+        INVEST_DIV = $NC.getValue("#edtInvest_Div_Org");
+      }
+
+      $NC.serviceCall("/LC04010E/callLcsave.do", {
+        P_DS_MASTER: $NC.toJson({
+          P_CENTER_CD: $NC.G_VAR.masterData.CENTER_CD,
+          P_BU_CD: $NC.G_VAR.masterData.BU_CD,
+          P_INVEST_DATE: $NC.G_VAR.masterData.INVEST_DATE,
+          P_INVEST_NO: $NC.G_VAR.masterData.INVEST_NO,
+          // P_INVEST_TYPE:$NC.G_VAR.masterData.INVEST_TYPE,
+          P_INVEST_DIV: INVEST_DIV,
+          P_INVEST_START_DATE: $NC.G_VAR.masterData.INVEST_START_DATE,
+          // P_INVEST_END_DATE: $NC.G_VAR.masterData.INVEST_END_DATE,
+          // P_MANAGER_ID: $NC.G_VAR.masterData.MANAGER_ID,
+          P_REMARK1: $NC.G_VAR.masterData.REMARK1,
+          P_CRUD: $NC.G_VAR.masterData.CRUD
+        }),
+        P_DS_DETAIL: $NC.toJson(detailDS),
+        P_PROCESS_CD: $NC.G_VAR.userData.P_PROCESS_CD,
+        P_USER_ID: $NC.G_USERINFO.USER_ID
+      }, onSave);
     }
   }
-
-  if ($NC.G_VAR.masterData.CRUD === "R" && detailDS.length === 0) {
-    alert("수정 후 저장하십시오.");
-    return;
-  }
-  
-  if ($NC.G_VAR.userData.P_PROCESS_CD === "N") {
-   var INVEST_DIV = $NC.G_VAR.masterData.INVEST_DIV;
-  } else {
-   INVEST_DIV = $NC.getValue("#edtInvest_Div_Org");
-  }
-
-  $NC.serviceCall("/LC04010E/save.do", {
-    P_DS_MASTER: $NC.toJson({
-      P_CENTER_CD: $NC.G_VAR.masterData.CENTER_CD,
-      P_BU_CD: $NC.G_VAR.masterData.BU_CD,
-      P_INVEST_DATE: $NC.G_VAR.masterData.INVEST_DATE,
-      P_INVEST_NO: $NC.G_VAR.masterData.INVEST_NO,
-      P_INVEST_TYPE:$NC.G_VAR.masterData.INVEST_TYPE,
-      P_INVEST_DIV: INVEST_DIV,
-      P_INVEST_START_DATE: $NC.G_VAR.masterData.INVEST_START_DATE,
-      P_INVEST_END_DATE: $NC.G_VAR.masterData.INVEST_END_DATE,
-      P_MANAGER_ID: $NC.G_VAR.masterData.MANAGER_ID,
-      P_REMARK1: $NC.G_VAR.masterData.REMARK1,
-      P_CRUD: $NC.G_VAR.masterData.CRUD
-    }),
-    P_DS_DETAIL: $NC.toJson(detailDS),
-    P_PROCESS_CD: $NC.G_VAR.userData.P_PROCESS_CD,
-    P_USER_ID: $NC.G_USERINFO.USER_ID
-  }, onSave);
 }
 
 /**
@@ -996,6 +1064,7 @@ function grdDetailOnGetColumns() {
     minWidth: 80,
     cssClass: "align-right"
   });
+
   $NC.setGridColumn(columns, {
     id: "INVEST_QTY",
     field: "INVEST_QTY",
@@ -1264,10 +1333,10 @@ function masterDataOnChange(e, args) {
     $NC.setValueDatePicker(args.view, args.val, "실사일자를 정확히 입력하십시오.");
     $NC.G_VAR.masterData.OUTBOUND_DATE = $NC.getValue("#dtpInvest_Date");
     break;
-    
+
   case "INVEST_TYPE":
     $NC.G_VAR.masterData.INVEST_TYPE = args.val;
-    break; 
+    break;
   case "INVEST_START_DATE":
     $NC.setValueDatePicker(args.view, args.val, "실사기간 시작일자를 정확히 입력하십시오.");
     $NC.G_VAR.masterData.OUTBOUND_DATE = $NC.getValue("#dtpInvest_Start_Date");
@@ -1492,7 +1561,7 @@ function _OnConditionChange(e, view, val) {
     var P_QUERY_PARAMS;
     var O_RESULT_DATA = [ ];
     if (!$NC.isNull(val)) {
-      
+
       var BU_CD = $NC.getValue("#edtBu_Cd");
       P_QUERY_PARAMS = {
         P_CUST_CD: $NC.G_USERINFO.CUST_CD,
@@ -1583,6 +1652,18 @@ function onSave(ajaxData) {
   var resultData = $NC.toArray(ajaxData);
   if (!$NC.isNull(resultData)) {
     if (resultData.RESULT_DATA !== "OK") {
+      alert(resultData.RESULT_DATA);
+      return;
+    }
+  }
+
+  onClose();
+}
+function onSave1(ajaxData) {
+
+  var resultData = $NC.toArray(ajaxData);
+  if (!$NC.isNull(resultData)) {
+    if (resultData.O_MSG !== "OK") {
       alert(resultData.RESULT_DATA);
       return;
     }
@@ -1885,9 +1966,9 @@ function showKBuBrandPopup() {
   var BU_CD = $NC.getValue("#edtBu_Cd");
 
   $NP.showOwnBranPopup({
-    P_CUST_CD:  $NC.G_USERINFO.CUST_CD,
+    P_CUST_CD: $NC.G_USERINFO.CUST_CD,
     P_BU_CD: BU_CD,
-    P_OWN_BRAND_CD:"%",
+    P_OWN_BRAND_CD: "%",
     P_USER_ID: $NC.G_USERINFO.USER_ID
   }, onKBuBrandPopup, function() {
     $NC.setFocus("#edtKBrand_Cd", true);
@@ -1902,9 +1983,9 @@ function showQBuBrandPopup() {
   var BU_CD = $NC.getValue("#edtBu_Cd");
 
   $NP.showOwnBranPopup({
-    P_CUST_CD:  $NC.G_USERINFO.CUST_CD,
+    P_CUST_CD: $NC.G_USERINFO.CUST_CD,
     P_BU_CD: BU_CD,
-    P_OWN_BRAND_CD:"%",
+    P_OWN_BRAND_CD: "%",
     P_USER_ID: $NC.G_USERINFO.USER_ID
   }, onQBuBrandPopup, function() {
     $NC.setFocus("#edtQBrand_Cd", true);

@@ -116,21 +116,21 @@ public class LOM7110EController extends CommonController {
     @RequestParam(Consts.PK_QUERY_PARAMS) String queryParams) {
 
     ResponseEntity<String> result = null;
-    
+
     Map<String, Object> params = getParameter(queryParams);
     String oMsg = getResultMessage(params);
     if (!Consts.OK.equals(oMsg)) {
       result = getResponseEntityError(request, oMsg);
       return result;
     }
-    
+
     try {
       Map mapResult = service.callFWScanConfirm(params);
       result = getResponseEntity(request, mapResult);
     } catch (Exception e) {
       result = getResponseEntityError(request, e);
     }
-    
+
     return result;
   }
 
@@ -194,5 +194,5 @@ public class LOM7110EController extends CommonController {
 
     return result;
   }
-  
+
 }

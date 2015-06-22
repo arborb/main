@@ -63,6 +63,10 @@
           <span class="ui-span-normal">▶</span>
           <input class="ui-dtp-key" type="text" id="dtpQInout_Date2" style="width: 80px;" />
         </td>
+        <td>
+          <div id="lblQItem_State" class="ui-lbl-condition">상품상태</div>
+          <select class="ui-cbo-normal" id="cboQItem_State" style="width: 150px;"></select>
+        </td>
       </tr>
       <tr>
           <td id="tdQDspOwn_Brand_Cd">
@@ -72,12 +76,16 @@
           <input class="ui-edt-display" type="text" id="edtQOwn_Brand_Nm" disabled="disabled" style="width: 118px;" />
         </td>
         <td>
-          <div id="lblQItem_State" class="ui-lbl-condition">상품상태</div>
-          <select class="ui-cbo-normal" id="cboQItem_State" style="width: 150px;"></select>
+          <div id="lblQSap_Item_Cd" class="ui-lbl-condition">SAP상품코드</div> 
+          <input class="ui-edt-normal" type="text" id="edtQSap_Item_Cd" style="width: 214px;" />
         </td>
         <td>
           <div id="lblQView_Div" class="ui-lbl-condition">데이터구분</div>
           <select class="ui-cbo-normal" id="cboQView_Div" style="width: 120px;"></select>
+        </td>
+        <td>
+          <div id="lblQItem_Div" class="ui-lbl-condition">상품구분</div>
+            <select class="ui-cbo-normal" id="cboQItem_Div" style="width: 126px;" tabindex="5"></select>
         </td>
       </tr>
     </table>

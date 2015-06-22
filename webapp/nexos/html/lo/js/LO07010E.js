@@ -864,25 +864,25 @@ function onBtnFWScanConfirm(e) {
       })
     }, onFWScanConfirm, onError);
   } else {
-  showMessage({
-    message: message,
-    onYesFn: function() {
+    showMessage({
+      message: message,
+      onYesFn: function() {
 
-      // 데이터 조회
-      $NC.serviceCall("/LO07010E/callFWScanConfirm.do", {
-        P_QUERY_PARAMS: $NC.getParams({
-          P_CENTER_CD: CENTER_CD,
-          P_BU_CD: BU_CD,
-          P_OUTBOUND_DATE: OUTBOUND_DATE,
-          P_OUTBOUND_NO: OUTBOUND_NO,
-          P_USER_ID: $NC.G_USERINFO.USER_ID
-        })
-      }, onFWScanConfirm, onError);
-    },
-    onNoFn: function() {
-      setFocusScan();
-    }
-  });
+        // 데이터 조회
+        $NC.serviceCall("/LO07010E/callFWScanConfirm.do", {
+          P_QUERY_PARAMS: $NC.getParams({
+            P_CENTER_CD: CENTER_CD,
+            P_BU_CD: BU_CD,
+            P_OUTBOUND_DATE: OUTBOUND_DATE,
+            P_OUTBOUND_NO: OUTBOUND_NO,
+            P_USER_ID: $NC.G_USERINFO.USER_ID
+          })
+        }, onFWScanConfirm, onError);
+      },
+      onNoFn: function() {
+        setFocusScan();
+      }
+    });
   }
 }
 
@@ -1063,21 +1063,21 @@ function doPrint() {
   } else {
     CARRIER_CD = rowData.CARRIER_CD;
   }
-
+  
   // 택배송장출력
   if (CARRIER_CD == '0020') {
-  $NC.G_MAIN.silentPrint({
-    printParams: [{
+    $NC.G_MAIN.silentPrint({
+      printParams: [{
         reportDoc: "lo/LABEL_LO01",
         queryId: "WR.RS_LABEL_LO02",
-      queryParams: {
+        queryParams: {
           P_CENTER_CD: rowData.CENTER_CD,
           P_BU_CD: rowData.BU_CD,
           P_OUTBOUND_DATE: rowData.OUTBOUND_DATE,
           P_OUTBOUND_NO: rowData.OUTBOUND_NO,
           P_PRINT_YN: ""
-      },
-      iFrameNo: 1,
+        },
+        iFrameNo: 1,
         checkedValue: checkedValueDS.toString(),
         silentPrinterName: $NC.G_USERINFO.PRINT_WB_NO,
         internalQueryYn: "N"
@@ -1091,22 +1091,22 @@ function doPrint() {
       printParams: [{
         reportDoc: "lo/LABEL_LO01",
         queryId: "WR.RS_LABEL_LO01",
-      queryParams: {
+        queryParams: {
           P_CENTER_CD: rowData.CENTER_CD,
           P_BU_CD: rowData.BU_CD,
           P_OUTBOUND_DATE: rowData.OUTBOUND_DATE,
           P_OUTBOUND_NO: rowData.OUTBOUND_NO,
           P_PRINT_YN: ""
-      },
+        },
         iFrameNo: 1,
         checkedValue: checkedValueDS.toString(),
         silentPrinterName: $NC.G_USERINFO.PRINT_WB_NO,
         internalQueryYn: "N"
-    }],
-    onAfterPrint: function() {
-      setFocusScan();
-    }
-  });
+      }],
+      onAfterPrint: function() {
+        setFocusScan();
+      }
+    });
   }
 }
 
@@ -1118,7 +1118,7 @@ function onShowBoxManage(ajaxData) {
       showMessage(resultData.O_MSG);
       return;
     }
-    }
+  }
   
   var rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
   
@@ -1174,9 +1174,9 @@ function onBoxComplete(ajaxData) {
   if ($NC.G_VAR.INSPECT_CHK) {
     onBtnFWScanConfirm();
   } else {
-  doPrint();
+    doPrint();
   
-  _Cancel();
+    _Cancel();
   }
 //  doPrint();
 //  _Cancel();

@@ -57,7 +57,7 @@ public class LOM9020QController extends CommonController {
     ResponseEntity<String> result = null;
 
     Map<String, Object> params = getParameter(queryParams);
-
+    
     String oMsg = getResultMessage(params);
     if (!Consts.OK.equals(oMsg)) {
       result = getResponseEntityError(request, oMsg);
@@ -70,7 +70,7 @@ public class LOM9020QController extends CommonController {
     String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );
     params.put("P_SCPKEY", outKey);
  
-
+    
     try {
       result = getResponseEntity(request, service.getDataSet(queryId, params));
     } catch (Exception e) {

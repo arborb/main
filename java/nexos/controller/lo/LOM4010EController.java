@@ -67,8 +67,8 @@ public class LOM4010EController extends CommonController {
         // Scp 복호화 키 파라미터 송신
 
         ScpDbAgent agt = new ScpDbAgent();
-        String iniFilePath = "/usr/scp/scpdb_agent_unix.ini"; 
-        String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );  
+        String iniFilePath = "/usr/scp/scpdb_agent_unix.ini";
+        String outKey = agt.ScpExportKey( iniFilePath, "KEY1", "" );
         params.put("P_SCPKEY", outKey);
 
         

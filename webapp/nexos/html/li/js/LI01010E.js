@@ -28,7 +28,7 @@ function _Initialize() {
   $NC.setValue("#edtQBu_Cd", $NC.G_USERINFO.BU_CD);
   $NC.setValue("#edtQBu_Nm", $NC.G_USERINFO.BU_NM);
   $NC.setValue("#edtQCust_Cd", $NC.G_USERINFO.CUST_CD);
-
+  
   if($NC.G_USERINFO.CERTIFY_DIV === "1"){
     $NC.setEnable("#btnProcClose", true);
   } else {
@@ -266,7 +266,7 @@ function _Inquiry() {
     $NC.setFocus("#dtpQOrder_Date1");
     return;
   }
-
+  
 
   var BU_NO = $NC.getValue("#edtQBu_No", true);
   var BRAND_CD = $NC.getValue("#edtQOwnBrand_Cd", true);

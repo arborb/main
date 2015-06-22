@@ -1267,7 +1267,7 @@ function _Save() {
   if ( $NC.isNull($NC.G_VAR.subData.SHIPPER_ADDR_DETAIL) ){
     $NC.G_VAR.subData.SHIPPER_ADDR_DETAIL = ' ';
   }    
-
+  
   
   $NC.serviceCall("/LOM2010E/save.do", {
     P_DS_MASTER: $NC.toJson({

@@ -44,7 +44,6 @@ function _Initialize() {
   $NC.setValue("#edtQBu_Nm", $NC.G_USERINFO.BU_NM);
   $NC.setValue("#edtQBoxY");
   $NC.setValue("#edtQBoxN");
-  $NC.setValue("#edtQDockNm");
 
   // 조회조건 - 출고예정일자 달력이미지 설정
   $NC.setInitDatePicker("#dtpQOutbound_Date");
@@ -251,7 +250,6 @@ function onChangingCondition() {
 
   $NC.setValue("#edtQBoxY");
   $NC.setValue("#edtQBoxN");
-  $NC.setValue("#edtQDockNm");
 }
 
 /**
@@ -371,8 +369,8 @@ function grdMasterOnGetColumns() {
   $NC.setGridColumn(columns, {
     id: "SHIPPER_ADDR",
     field: "SHIPPER_ADDR",
-    name: "주소",
-    minWidth: 200
+    name: "수령자기본주소",
+    minWidth: 160
   });
   $NC.setGridColumn(columns, {
     id: "WB_CHK_YN",
@@ -419,7 +417,6 @@ function grdMasterOnGetColumns() {
 function grdMasterInitialize() {
 
   var options = {
-    frozenColumn: 4,
     rowHeight: 32,
     specialRow: {
       compareKey: "WB_CHK_YN",
@@ -488,7 +485,6 @@ function setItemInfoValue(rowData) {
   
   $NC.setValue("#edtQBoxY", rowData.Y_BOX_CNT);
   $NC.setValue("#edtQBoxN", rowData.N_BOX_CNT);
-  $NC.setValue("#edtQDockNm", rowData.DOCK_NM);
   
   if(rowData.WB_CHK_YN && rowData.SHIP_TYPE !== "1"){
     alert("[" + rowData.SHIP_TYPE_D + "] 상품입니다.\n\n 포장 후 사무실로 전달바랍니다.");

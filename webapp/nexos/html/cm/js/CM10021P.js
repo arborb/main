@@ -215,7 +215,7 @@ function _OnPopupOpen() {
       for (var i = 0; i < inoutCombo.length;  i++) {
         if (inoutCombo.options[i].value == "6") {
           inoutCombo.remove(i);
-    }
+        }
       }
     }
   });

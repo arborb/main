@@ -344,7 +344,7 @@ function _New() {
       RESALE_DEAL_YN: "0",
       OPEN_DATE: "",
       CLOSE_DATE: "",
-      REMARK1: null,
+      REMARK1: null,      
       RESALE_DEAL_YN_F: $NC.getGridComboName(G_GRDMASTER, {
         colFullNameField: "RESALE_DEAL_YN_F",
         searchVal: "0",
@@ -464,8 +464,8 @@ function _New() {
           if (resultData.O_DEAL_MESSEGE === "N") {
             alert("판매사" + "[" + groupDataM.BRAND_CD + "]" + "  "+ groupDataM.SELLER_NM  + "  " +"의 위탁사를 등록해주시기 바랍니다..");
             _Cancel();
-      return;
-    }
+            return;
+          }
         }
       }
     });
@@ -896,7 +896,7 @@ function grdMasterOnGetColumns() {
     });
 
     
-
+    
     $NC.setGridColumn(columns, {
       id: "DEAL_DIV_F",
       field: "DEAL_DIV_F",
@@ -1606,7 +1606,7 @@ function grdSubOnAfterScroll(e, args) {
     if (!grdSubOnBeforePost(G_GRDSUB.lastRow)) {
       e.stopImmediatePropagation();
       return;
-  }
+    }
   }
 
   // 상단 현재로우/총건수 업데이트
@@ -1754,22 +1754,22 @@ function grdSubOnPopup(e, args) {
       BRAND_CD = "000000";
     } else {
       BRAND_CD = $NC.G_VAR.itemPopupParam.COMPANYID;
-  }
+    }
   */
   switch (args.column.field) {
   case "DEAL_ITEM_CD":
-        $NP.showItemPopup({
-          P_BU_CD: rowData.BU_CD,
-          P_BRAND_CD: rowData.OWN_BRAND_CD,
-          P_ITEM_CD: "%",
-          P_VIEW_DIV: "1",
-          P_DEPART_CD: "%",
-          P_LINE_CD: "%",
-          P_CLASS_CD: "%"
-        }, onItemPopup, function(ajaxData) {
-          $NC.setFocusGrid(G_GRDSUB, G_GRDSUB.lastRow, G_GRDSUB.view.getColumnIndex("DEAL_ITEM_CD"), true, true);
-        });
-        break;
+    $NP.showItemPopup({
+      P_BU_CD: rowData.BU_CD,
+      P_BRAND_CD: rowData.OWN_BRAND_CD,
+      P_ITEM_CD: "%",
+      P_VIEW_DIV: "1",
+      P_DEPART_CD: "%",
+      P_LINE_CD: "%",
+      P_CLASS_CD: "%"
+    }, onItemPopup, function(ajaxData) {
+      $NC.setFocusGrid(G_GRDSUB, G_GRDSUB.lastRow, G_GRDSUB.view.getColumnIndex("DEAL_ITEM_CD"), true, true);
+    });
+    break;
   }
 }
 
@@ -1978,8 +1978,8 @@ function onItemPopup(resultInfo) {
       G_GRDSUB.data.updateItem(rowData.id, rowData);
       G_GRDSUB.view.gotoCell(G_GRDSUB.lastRow, G_GRDSUB.view.getColumnIndex("DEAL_ITEM_CD"), true);
       $NC.setFocusGrid(G_GRDSUB, G_GRDSUB.lastRow, G_GRDSUB.view.getColumnIndex("DEAL_ITEM_CD"), true, true);
-    return;
-  }
+      return;
+    }
   });
   */
 

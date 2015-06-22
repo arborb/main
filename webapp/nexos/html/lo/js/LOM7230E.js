@@ -252,9 +252,8 @@ function _OnInputKeyUp(e, view) {
     var id = view.prop("id").substr(3).toUpperCase();
     if (id === 'SCAN') {
       var scanVal = $NC.getValue(view).toUpperCase()
-        ,scanType = scanValueType(scanVal);
+        ,scanType = scanValueType(scanVal)
 
-      $('#btnBoxManage').addClass('disabled');
       if (scanType == $NC.G_CONSTS.SCAN_TOTAL) {
         //onScanOrder(scanVal, scanType);
         e.stopImmediatePropagation();
@@ -283,14 +282,15 @@ function _OnInputKeyUp(e, view) {
  * 스캔라벨 타입을 리턴한다.
  */
 function scanValueType(scanVal) {
-//  if (scanVal.substr(0, 2) === 'TP' && scanVal.length == 5) {
-//    $NC.G_VAR.LAST_SCAN_TOTAL = scanVal;
-//    $NC.G_VAR.PICK_SEQ = scanArr[scanArr.length-1];
-//    return $NC.G_CONSTS.SCAN_TOTAL; // 0
-//  }
-  if (scanVal.substr(0, 2) === 'OP' && scanVal.length == 11) {
+  var scanArr = scanVal.split('-')
+  if (scanVal.substr(0, 2) === 'TP' && scanArr.length == 5) {
+    $NC.G_VAR.LAST_SCAN_TOTAL = scanVal;
+    $NC.G_VAR.PICK_SEQ = scanArr[scanArr.length-1];
+    return $NC.G_CONSTS.SCAN_TOTAL; // 0
+  }
+  if (scanVal.substr(0, 2) === 'OP' && scanArr.length == 4) {
     $NC.G_VAR.LAST_SCAN_PICKING = scanVal;
-    $NC.G_VAR.PICK_SEQ = scanVal.substr(2, scanVal.length);
+    $NC.G_VAR.PICK_SEQ = scanArr[scanArr.length-1];
     return $NC.G_CONSTS.SCAN_PICKING; // 1
   }
   if (isNaN(Number(scanVal)) && scanVal.length === 6 ||
@@ -377,7 +377,7 @@ function onChangingCondition() {
   $NC.G_VAR.SUM_ENTRY_QTY = 0;
   $NC.G_VAR.SUM_CONFIRM_QTY = 0;
   $NC.G_VAR.SUM_INSPECT_QTY = 0;
-  $NC.G_VAR.INSPECT_YN = "N";
+  //$NC.G_VAR.INSPECT_YN = "N";
   $NC.G_VAR.SCANCOMPLETE = true;
 
   $NC.setEnable("#cboQCenter_Cd");
@@ -448,13 +448,13 @@ function _Inquiry() {
     return;
   }
   
-//  var OUTBOUND_BATCH = $NC.getValue("#cboQOutbound_Batch");
-//  if ($NC.isNull(OUTBOUND_BATCH)) {
-//    showMessage("대물주문건에 해당하는 출고차수가 없습니다.");
-//    return;
-//  }
+  var OUTBOUND_BATCH = $NC.getValue("#cboQOutbound_Batch");
+  if ($NC.isNull(OUTBOUND_BATCH)) {
+    showMessage("단품주문건이 해당하는 출고차수가 없습니다.");
+    return;
+  }
 
-  //var ITEM_BAR_CD = $NC.getValue("#edtQItem_Barcd");
+  var ITEM_BAR_CD = $NC.getValue("#edtQItem_Barcd");
 
   // 파라메터 세팅
   G_GRDMASTER.queryParams = $NC.getParams({
@@ -468,7 +468,7 @@ function _Inquiry() {
   G_GRDMASTER.queryId = "LOM7230E.RS_MASTER1";
   // 데이터 조회
   $NC.serviceCall("/LOM7230E/getDataSet.do", 
-      $NC.getGridParams(G_GRDMASTER), onGetMaster, onError, null, '7230E_RS_MASTER1');
+      $NC.getGridParams(G_GRDMASTER), onGetMaster, onError, null, '7030E_GET_ITEM_INFO');
 
 }
 
@@ -571,7 +571,7 @@ function _Save(saveType) {
   */
  
   var rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
-  //var COMPLETE_YN = "N";
+  var COMPLETE_YN = "N";
   var onSucessFn;
   switch (saveType) {
   case "onBoxComplete":
@@ -580,7 +580,7 @@ function _Save(saveType) {
 //      return;
 //    }
 
-    //COMPLETE_YN = "Y";
+    COMPLETE_YN = "Y";
     onSucessFn = onBoxComplete;
     break;
   case "onBoxSave":
@@ -592,14 +592,11 @@ function _Save(saveType) {
     onSucessFn = onBoxSave;
     break;
   case "onShowBoxManage":
-//    if (detailDS.length === 0) {
-//      onShowBoxManage();
-//      return;
-//    }
+    if (detailDS.length === 0) {
+      onShowBoxManage();
+      return;
+    }
 
-    onShowBoxManage();
-    return;
-    
     onSucessFn = onShowBoxManage;
     break;
   default:
@@ -661,11 +658,6 @@ function _Cancel() {
       rd.INSPECT_YN = 'Y';
       G_GRDMASTER.data.updateItem(rd.id, rd);
     }
-    if (getInspectYn()) {
-      $NC.setValue("#edtBox_No", "검수완료");
-      $("#edtBox_No").addClass("inspected");
-      $('#btnBoxManage').removeClass('disabled');
-    }
     //_Inquiry();
   }, 400);
   // _Inquiry();
@@ -719,12 +711,6 @@ function grdMasterOnGetColumns() {
     name: "취소수량",
     minWidth: 85,
     cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
-    id: "ITEM_CD",
-    field: "ITEM_CD",
-    name: "상품코드",
-    minWidth: 100
   });
   $NC.setGridColumn(columns, {
     id: "OUTBOUND_NO",
@@ -840,7 +826,7 @@ function onBtnBoxComplete(e) {
 
   if ($NC.isNull($NC.G_USERINFO.PRINT_WB_NO) || $NC.isNull($NC.G_USERINFO.PRINT_LO_BILL)
       || $NC.isNull($NC.G_USERINFO.PRINT_CARD)) {
-    alert("설정한 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
+    alert("설정하신 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
     return;
   }
 
@@ -1074,7 +1060,7 @@ function onBtnInit(e) {
     if ($NC.G_VAR.INSPECT_YN == "Y") {
       processFn.call(this);
     } else {
-      showMessage("현재 검수 작업 중 입니다.");
+      showMessage("현재 검수 작업 중 입니다.  " +$NC.G_VAR.INSPECT_YN);
     }
     return;
   }
@@ -1082,39 +1068,10 @@ function onBtnInit(e) {
 }
 
 function onGetMaster(ajaxData) {
-  var rowData = $NC.toArray(ajaxData);
-  
-  if (rowData.length > 0){
-    if (rowData[0].HAS_DIV == '1') {
-      $NC.setValue('#edtShipper_Nm');
-      $NC.setValue('#edtBu_No');
-      $NC.setValue('#edtOutbound_No');
-      $NC.setValue('#edtPacking_Batch');
-      $NC.setValue('#edtDelivery_Type');
-      $NC.setValue('#edtShip_Type');
-      $NC.setValue('#edtItem_Cd');
-      $NC.setValue('#edtItem_Barcd');
-      $NC.setValue('#edtItem_Nm');
-      $NC.setValue('#edtItem_Spec');
-      $NC.setValue('#edtQty_In_Box');
-      $NC.setValue('#edtItem_State');
-      
-      $NC.setValue("#edtQPaper_No", rowData.PAPER_NO);
 
-      var msg = '합포장대상 (' + rowData[0].FLOOR_DIV + ') ' + rowData[0].LOCATION_CD;
-      $NC.setValue("#edtBox_No", msg);
-      $('#edtBox_No').addClass('inspected');
-      doPrint4(rowData[0]);
-      return false;
-    } else if (rowData[0].HAS_DIV == '2') {
-      $NC.setInitGridData(G_GRDMASTER, ajaxData);
-    }    
-  }else{
-    showMessage("대물주문이 아니거나 유효하지 않은 전표입니다.\n출고일자를 확인하시거나, 일반주문은 출고스캔검수에서 작업하세요.");
-    onCalcSummary();
-    return;
-  }
+  $NC.setInitGridData(G_GRDMASTER, ajaxData);
 
+  var rowData;
   if (G_GRDMASTER.data.getLength() > 0) {
 
     if ($NC.isNull(G_GRDMASTER.lastKeyVal)) {
@@ -1134,7 +1091,7 @@ function onGetMaster(ajaxData) {
 
 //    onChangingCondition();
     // showMessage("존재하지 않는 출고전표입니다. 확인 후 작업하십시오.");
-    showMessage("출고확정되었거나 대물주문이 아닙니다. 확인 후 작업하십시오.");
+    showMessage("조회된 데이터가 없습니다. 확인 후 작업하십시오.");
     rowData = G_GRDMASTER.data.getItem(0);
     setOrderInfoValue(rowData);
     onCalcSummary();
@@ -1202,7 +1159,7 @@ function onGetMaster(ajaxData) {
     } else if (rowData.HAS_DIV == '2') {
       $NC.setValue("#edtBox_No", rowData.BOX_NO);
     } else {
-      showMessage("대물주문이 아니거나 출고데이터가 없습니다. 확인 후 작업하십시오.");
+      showMessage("오류입니다.");
     }
   }
 
@@ -1218,8 +1175,7 @@ function doPrint1() {
   checkedValueDS.push($NC.getValue("#edtBox_No"));
 
   // 택배송장출력
-  //if (rowData.CARRIER_CD == '0020') {
-  if (rowData.DELIVERY_TYPE == '1') {
+  if ($NC.G_VAR.CARRIER_CD == '0020') {
     /*var reportDoc = "lo/LABEL_LOM09_1";
     var queryId = "WR.RS_LABEL_LOM03_1";
     var queryParams = {
@@ -1243,16 +1199,14 @@ function doPrint1() {
     });*/
     $NC.G_MAIN.silentPrint({
       printParams: [{
-        //reportDoc: "lo/LABEL_LOM09_1",
-        reportDoc: "lo/LABEL_LOM08_NEW",
-        //queryId: "WR.RS_LABEL_LOM03_2",
-        queryId: "WR.RS_LABEL_LOM03_A",
+        reportDoc: "lo/LABEL_LOM09_1",
+        queryId: "WR.RS_LABEL_LOM03_2",
         queryParams: {
           P_CENTER_CD: rowData.CENTER_CD,
           P_BU_CD: rowData.BU_CD,
           P_OUTBOUND_DATE: rowData.OUTBOUND_DATE,
-          P_PICK_SEQ: rowData.PICK_SEQ
-          //P_PRINT_YN: ""
+          P_PICK_SEQ: rowData.PICK_SEQ,
+          P_PRINT_YN: ""
         },
         iFrameNo: 1,
         //checkedValue: checkedValueDS.toString(),
@@ -1288,16 +1242,14 @@ function doPrint1() {
     });*/
     $NC.G_MAIN.silentPrint({
       printParams: [{
-        //reportDoc: "lo/LABEL_LOM09_1",
-        reportDoc: "lo/LABEL_LOM08_NEW",
-        //queryId: "WR.RS_LABEL_LOM02_3",
-        queryId: "WR.RS_LABEL_LOM02_A",
+        reportDoc: "lo/LABEL_LOM09_1",
+        queryId: "WR.RS_LABEL_LOM02_3",
         queryParams: {
           P_CENTER_CD: rowData.CENTER_CD,
           P_BU_CD: rowData.BU_CD,
           P_OUTBOUND_DATE: rowData.OUTBOUND_DATE,
-          P_PICK_SEQ: rowData.PICK_SEQ
-          //P_PRINT_YN: ""
+          P_PICK_SEQ: rowData.PICK_SEQ,
+          P_PRINT_YN: ""
         },
         iFrameNo: 1,
         //checkedValue: checkedValueDS.toString(),
@@ -1387,23 +1339,19 @@ function doPrint3() {
 /**
  * 합포장 대상일경우 출력
  */
-function doPrint4(rd) {
-  var rowData = rd || G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
+function doPrint4() {
+  var rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
   $NC.G_MAIN.silentPrint({
     printParams: [{
-      //reportDoc: "lo/LABEL_LOM12_1",
-      //queryId: "WR.RS_LABEL_LOM12_1",
-      reportDoc: "lo/LABEL_LOM12",
-      queryId: "WR.RS_LABEL_LOM13_NEW",
+      reportDoc: "lo/LABEL_LOM12_1",
+      queryId: "WR.RS_LABEL_LOM12_1",
       queryParams: {
         P_CENTER_CD: rowData.CENTER_CD,
         P_BU_CD: rowData.BU_CD,
         P_HAS_DATE: rowData.HAS_DATE,
         P_HAS_NO: rowData.HAS_NO,
         P_LINE_NO: rowData.HAS_LINE_NO,
-        P_PICK_SEQ: rowData.PICK_SEQ,
-        P_PICK_BOX_NO: "",
-        P_INQUERY_DIV: "2"
+        P_PICK_SEQ: rowData.PICK_SEQ
       },
       iFrameNo: 1,
       silentPrinterName: $NC.G_USERINFO.PRINT_CARD,
@@ -1431,14 +1379,12 @@ function onShowBoxManage(ajaxData) {
   var BU_CD = $NC.getValue("#edtQBu_Cd");
   var OUTBOUND_DATE = $NC.getValue("#dtpQOutbound_Date");
   var OUTBOUND_NO = $NC.getValue("#edtQOutbound_No");
-  //var ITEM_CD = $NC.getValue("#edtQItem_Barcd");
+  var ITEM_CD = $NC.getValue("#edtQItem_Barcd");
 
-  var rowData = G_GRDMASTER.data.getItem(G_GRDMASTER.lastRow);
-  
   $NC.G_MAIN.showProgramSubPopup({
-    PROGRAM_ID: "LOM7231P",
+    PROGRAM_ID: "LOM7031P",
     PROGRAM_NM: "박스통합",
-    url: "lo/LOM7231P.html",
+    url: "lo/LOM7031P.html",
     width: 870,
     height: 450,
     userData: {
@@ -1446,9 +1392,8 @@ function onShowBoxManage(ajaxData) {
       P_BU_CD: BU_CD,
       P_OUTBOUND_DATE: OUTBOUND_DATE,
       P_OUTBOUND_NO: OUTBOUND_NO,
-      P_ITEM_CD: rowData.PICK_SEQ,
-      //P_CARRIER_CD: $NC.G_VAR.CARRIER_CD,
-      P_CARRIER_CD: rowData.DELIVERY_TYPE,
+      P_ITEM_CD: ITEM_CD,
+      P_CARRIER_CD: $NC.G_VAR.CARRIER_CD,
       P_POLICY_LO450: $NC.G_VAR.policyVal.LO450,
       P_INSPECT_YN: $NC.G_VAR.INSPECT_YN === "Y" ? false : true,
       P_CARD_MSG_YN: $NC.isNull($NC.getValue("#edtCard_Msg")) === true ? false : true,
@@ -1483,11 +1428,6 @@ function onBoxComplete(ajaxData) {
   var rowDatas = G_GRDMASTER.data.getItems();
   var isAllComfirm = false;
   
-  /*
-   * rowData.REMAIN_QTY  : 미검수수량
-   * rowData.ENTRY_QTY   : 등록수량
-   * rowData.CONFIRM_QTY : 확정수량
-   */
   if (rowData.REMAIN_QTY == 0 && (rowData.ENTRY_QTY == rowData.CONFIRM_QTY)) {
     $NC.G_VAR.SCANCOMPLETE = false;
     if (!$NC.isNull($NC.G_USERINFO.PRINT_WB_NO) && !$NC.isNull($NC.G_USERINFO.PRINT_LO_BILL)
@@ -1499,7 +1439,6 @@ function onBoxComplete(ajaxData) {
           isAllComfirm = true;
         } else {
           isAllComfirm = false;
-          break;
         }
       }
       if (isAllComfirm) {
@@ -1640,7 +1579,7 @@ function onChkFWScanConfirm() {
       doPrint1();
       _Cancel();
     } else {
-      alert("설정한 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
+      alert("설정하신 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
       return;
     }
     return;
@@ -1657,7 +1596,7 @@ function setUpdateOrderCan(center_Cd, bu_Cd, outbound_Date, outbound_No, item_Cd
   
   if ($NC.isNull($NC.G_USERINFO.PRINT_WB_NO) || $NC.isNull($NC.G_USERINFO.PRINT_LO_BILL)
       || $NC.isNull($NC.G_USERINFO.PRINT_CARD)) {
-    alert("설정한 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
+    alert("설정하신 프린터가 없습니다.\n\n자동출력프린터를 먼저 등록하십시오.");
     return;
   }
 
@@ -1825,27 +1764,27 @@ function onScanOrder(scanVal, flag) {
     onChangingCondition();
 
     // 바코드 파싱
-    var SCAN_DATA = scanVal;
+    var SCAN_DATA = scanVal.substr(2).split($NC.G_VAR.BARCD_DATA_DIV);
 
-//    var SCAN_CENTER_CD = SCAN_DATA[0];
-//    var SCAN_BU_CD = SCAN_DATA[1];
-//    var SCAN_OUTBOUND_DATE = $NC.getDate(SCAN_DATA[2]);
-//    var SCAN_OUTBOUND_BATCH = SCAN_DATA[3];
-//    var SCAN_ITEM_CD = SCAN_DATA[4];
-    $NC.G_VAR.COMPARE_SCAN = SCAN_DATA;
+    var SCAN_CENTER_CD = SCAN_DATA[0];
+    var SCAN_BU_CD = SCAN_DATA[1];
+    var SCAN_OUTBOUND_DATE = $NC.getDate(SCAN_DATA[2]);
+    var SCAN_OUTBOUND_BATCH = SCAN_DATA[3];
+    var SCAN_ITEM_CD = SCAN_DATA[4];
+    $NC.G_VAR.COMPARE_SCAN = SCAN_DATA[4];
 
-//    $NC.setValue("#cboQCenter_Cd", SCAN_CENTER_CD);
-//    $NC.setValue("#edtQBu_Cd", SCAN_BU_CD);
-//    $NC.setValue("#dtpQOutbound_Date", SCAN_OUTBOUND_DATE);
-//    $NC.setValue("#cboQOutbound_Batch", SCAN_OUTBOUND_BATCH);
-    $NC.setValue("#edtQItem_Barcd", SCAN_DATA);
+    $NC.setValue("#cboQCenter_Cd", SCAN_CENTER_CD);
+    $NC.setValue("#edtQBu_Cd", SCAN_BU_CD);
+    $NC.setValue("#dtpQOutbound_Date", SCAN_OUTBOUND_DATE);
+    $NC.setValue("#cboQOutbound_Batch", SCAN_OUTBOUND_BATCH);
+    $NC.setValue("#edtQItem_Barcd", SCAN_ITEM_CD);
 
     _Inquiry();
   };
 
   if (G_GRDMASTER.data.getLength() > 0) {
     if ($NC.G_VAR.INSPECT_YN == "N") {
-      showMessage("현재 검수 작업 중 입니다.");
+      showMessage("현재 검수 작업 중 입니다.  " +$NC.G_VAR.INSPECT_YN);
     } else {
       processFn.call(this);
     }
@@ -2075,7 +2014,7 @@ function onScanFnNumDivide(scanVal) {
   var ENTRY_QTY = Number(rowData.ENTRY_QTY);
   var CONFIRM_QTY = Number(rowData.CONFIRM_QTY);
   var INSPECT_QTY = Number(rowData.INSPECT_QTY);
-  //var ORG_INSPECT_QTY = INSPECT_QTY;
+  var ORG_INSPECT_QTY = INSPECT_QTY;
   var ITEM_QTY = 0;
 
   var scanLen = scanVal.length;
@@ -2304,21 +2243,8 @@ function onScanItemCounting(scanVal, column_Nm, item_Cd) {
   if ($NC.isNull(rowData.ORDER_CAN) || rowData.ORDER_CAN == "N") {
     onBtnBoxComplete();
   }
-
   setFocusScan();
   return true;
-}
-
-function getInspectYn() {
-  var rowDatas = G_GRDMASTER.data.getItems();
-  for (var i in rowDatas) {
-    if (rowDatas[i].INSPECT_YN == 'Y') {
-      $NC.G_VAR.INSPECT_YN = 'Y';
-      return true;
-    }
-  }
-  $NC.G_VAR.INSPECT_YN = 'N';
-  return false;
 }
 
 /**
@@ -2375,7 +2301,6 @@ function setItemInfoValue(rowData) {
   $NC.setValue("#edtItem_Spec", rowData.ITEM_SPEC);
   $NC.setValue("#edtQty_In_Box", rowData.QTY_IN_BOX);
   $NC.setValue("#edtQPaper_No", rowData.PAPER_NO);
-  $NC.setValue("#edtItem_State", rowData.ITEM_STATE_F);
 //  $NC.setValue("#edtEntry_Qty", rowData.ENTRY_QTY);
 //  $NC.setValue("#edtConfirm_Qty", rowData.CONFIRM_QTY);
 //  $NC.setValue("#edtInspect_Qty", rowData.INSPECT_QTY);
@@ -2426,7 +2351,7 @@ function setOrderInfoValue(rowData) {
   $('#edtBu_No').removeClass('inspected');
   $NC.setValue("#edtShipper_Nm", rowData.SHIPPER_NM);
   $NC.setValue("#edtOrderer_Msg", rowData.ORDERER_MSG);
-  $NC.setValue("#edtOrder_Div", rowData.ORDER_DIV_F);
+  $NC.setValue("#edtPacking_Batch", rowData.PACKING_BATCH);
   $NC.setValue("#edtDelivery_Type", rowData.DELIVERY_TYPE_D);
   $NC.setValue("#edtShip_Type", rowData.SHIP_TYPE_D);
   $NC.setValue("#edtOutbound_No", rowData.OUTBOUND_NO);
@@ -2498,8 +2423,8 @@ function setProgressBar(val) {
   }
 
   $NC.G_VAR.SUM_INSPECT_QTY = $NC.G_VAR.SUM_INSPECT_QTY + Number(val);
-  //var TOTAL_INSPECT_QTY = $NC.G_VAR.SUM_CONFIRM_QTY + $NC.G_VAR.SUM_INSPECT_QTY;
-  //var CONFIRM_RATE = $NC.getRoundVal((TOTAL_INSPECT_QTY / $NC.G_VAR.SUM_ENTRY_QTY) * 100);
+  var TOTAL_INSPECT_QTY = $NC.G_VAR.SUM_CONFIRM_QTY + $NC.G_VAR.SUM_INSPECT_QTY;
+  var CONFIRM_RATE = $NC.getRoundVal((TOTAL_INSPECT_QTY / $NC.G_VAR.SUM_ENTRY_QTY) * 100);
 
 //  $NC.setValue("#divProgressVal", TOTAL_INSPECT_QTY + " / " + $NC.G_VAR.SUM_ENTRY_QTY + " [ " + CONFIRM_RATE + "%]");
 //  $("#divProgressbar").progressbar("value", CONFIRM_RATE);

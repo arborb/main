@@ -399,10 +399,16 @@ function grdMasterOnGetColumns() {
     minWidth: 150
   });
   $NC.setGridColumn(columns, {
-    id: "SHIPPER_ADDR",
-    field: "SHIPPER_ADDR",
-    name: "주소",
-    minWidth: 200
+    id: "SHIPPER_ADDR_BASIC",
+    field: "SHIPPER_ADDR_BASIC",
+    name: "수령자기본주소",
+    minWidth: 160
+  });
+  $NC.setGridColumn(columns, {
+    id: "SHIPPER_ADDR_DETAIL",
+    field: "SHIPPER_ADDR_DETAIL",
+    name: "수령자상세주소",
+    minWidth: 160
   });
   $NC.setGridColumn(columns, {
     id: "ORDERER_MSG",

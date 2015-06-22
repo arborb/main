@@ -22,13 +22,11 @@ function _Initialize() {
       P_CENTER_CD: "%"
     })
   }, {
-    selector: ["#cboQCenter_Cd", "#cboQCenter_Cd"],
+    selector: "#cboQCenter_Cd",
     codeField: "CENTER_CD",
     nameField: "CENTER_NM",
     onComplete: function() {
       $("#cboQCenter_Cd").val($NC.G_USERINFO.CENTER_CD);
-      $NC.setValue("#cboQCenter_Cd", $NC.G_USERINFO.CENTER_CD);
-      setOutboundBatchCombo();
     }
   });
 
@@ -51,6 +49,23 @@ function _Initialize() {
   optionStr += "<option value='N'>미완료</option>";
   cboObj.append(optionStr);
   $NC.setValue("#cboQSave_Yn", 0);
+
+  // 조회조건 - 물류센터 초기화
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CSUSERCENTER",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_USER_ID: $NC.G_USERINFO.USER_ID,
+      P_CENTER_CD: "%"
+    })
+  }, {
+    selector: "#cboQCenter_Cd",
+    codeField: "CENTER_CD",
+    nameField: "CENTER_NM",
+    onComplete: function() {
+      $NC.setValue("#cboQCenter_Cd", $NC.G_USERINFO.CENTER_CD);
+      setOutboundBatchCombo();
+    }
+  });
 }
 
 /**
@@ -177,8 +192,8 @@ function _Inquiry() {
   
   var DEAL_ID = $NC.getValue("#edtQDeal_Id", true);
   var BU_NO = $NC.getValue("#edtQBu_No");
-  var ORDERER_NM = $NC.getValue("#edtQOrderer_Nm");
-  var SHIPPER_NM = $NC.getValue("#edtQShipper_Nm");
+  var ORDERER_NM = $NC.getValue("#edtQOrderer_Nm",true);
+  var SHIPPER_NM = $NC.getValue("#edtQShipper_Nm",true);
   var OUTBOUND_BATCH = $NC.getValue("#cboQOutbound_Batch");
 
   // 조회시 전역 변수 값 초기화

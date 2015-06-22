@@ -881,7 +881,7 @@ function _Save() {
 
   if ( $NC.isNull($NC.G_VAR.subData.DELIVERY_ADDR_BASIC) ){
     $NC.G_VAR.subData.DELIVERY_ADDR_BASIC = ' ';
-  }
+  }    
 
   if ( $NC.isNull($NC.G_VAR.subData.DELIVERY_ADDR_DETAIL) ){
     $NC.G_VAR.subData.DELIVERY_ADDR_DETAIL = ' ';

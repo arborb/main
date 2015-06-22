@@ -130,9 +130,9 @@ function _Save() {
   }
 
   // 비밀번호 유효성 검사
-    var varidPw = $NC.varidationPw(NEW_USER_PWD1); 
-    if (!varidPw) {
-      return false;
+  var varidPw = $NC.varidationPw(NEW_USER_PWD1); 
+  if (!varidPw) {
+    return false;
   }
   $NC.serviceCall("/WC/setUserPassword.do", {
     P_USER_ID: $NC.G_USERINFO.USER_ID,

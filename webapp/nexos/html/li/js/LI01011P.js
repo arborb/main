@@ -363,7 +363,7 @@ function _OnPopupOpen() {
 //      }
     }
   });
-
+  
   // 운송사구분 세팅
   $NC.setInitCombo("/WC/getDataSet.do", {
     P_QUERY_ID: "WC.POP_CMCODE",

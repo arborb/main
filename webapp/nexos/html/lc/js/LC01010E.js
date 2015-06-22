@@ -29,6 +29,15 @@ function _Initialize() {
 
   // 기타입출고 확정/취소 버튼 권한 체크 및 클릭 이벤트 연결
   setUserProgramPermission();
+  
+  // 진행상태 콤보박스 세팅
+  var cboObj = $("#cboQConfirm_Check").empty();
+  var optionStr = "";
+  optionStr += "<option value='%'>% - 전체</option>";
+  optionStr += "<option value='Y'>Y - 확정</option>";
+  optionStr += "<option value='N'>N - 미확정</option>";
+  cboObj.append(optionStr);
+  $NC.setValue("#cboQConfirm_Check", 0);
 
   // 조회조건 - 물류센터 초기화
   $NC.setInitCombo("/WC/getDataSet.do", {
@@ -78,6 +87,26 @@ function _Initialize() {
     fullNameField: "CODE_CD_F",
     addAll: true
   });
+  
+  // 검색조건 상품구분 콤보
+  $NC.setInitCombo("/WC/getDataSet.do", {
+    P_QUERY_ID: "WC.POP_CMCODE",
+    P_QUERY_PARAMS: $NC.getParams({
+      P_CODE_GRP: "ITEM_DIV",
+      P_CODE_CD: "%",
+      P_SUB_CD1: "",
+      P_SUB_CD2: ""
+    })
+  }, {
+    selector: "#cboQItem_Div",
+    codeField: "CODE_CD",
+    fullNameField: "CODE_CD_F",
+    addAll: true,
+    onComplete: function() {
+      $NC.setValue("#cboQItem_Div", 0);
+    }
+  });
+  
   // 조회조건 - 출고구분 세팅
   $NC.setInitCombo("/WC/getDataSet.do", {
     P_QUERY_ID: "WC.POP_CMCODE",
@@ -142,7 +171,8 @@ function _OnResize(parent) {
 
     // Grid 사이즈 조정
     $NC.resizeGrid("#grdT1Detail", clientWidth, $("#grdT1Detail").parent().height() - $NC.G_LAYOUT.header);
-
+    $("#tdQDsp_Confirm_Check").show();
+    
   } else {
 
     clientHeight = parent.height() - $NC.G_OFFSET.gridHeightOffset;
@@ -283,6 +313,8 @@ function _Inquiry() {
   var BRAND_CD = $NC.getValue("#edtQBrand_Cd", true);
   var ITEM_CD = $NC.getValue("#edtQItem_Cd");
   var ITEM_NM = $NC.getValue("#edtQItem_Nm");
+  var CONFIRM_CHK = $NC.getValue("#cboQConfirm_Check");
+  var ITEM_DIV = $NC.getValueCombo("cboQItem_Div");
 
   // 기타입출고등록 화면
   if ($("#divMasterView").tabs("option", "active") === 0) {
@@ -300,6 +332,8 @@ function _Inquiry() {
       P_BRAND_CD: BRAND_CD,
       P_ITEM_CD: ITEM_CD,
       P_ITEM_NM: ITEM_NM,
+      P_CONFIRM_CHK: CONFIRM_CHK,
+      P_ITEM_DIV: ITEM_DIV,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 
@@ -319,6 +353,7 @@ function _Inquiry() {
       P_BRAND_CD: BRAND_CD,
       P_ITEM_CD: ITEM_CD,
       P_ITEM_NM: ITEM_NM,
+      P_ITEM_DIV: ITEM_DIV,
       P_USER_ID: $NC.G_USERINFO.USER_ID
     });
 
@@ -539,6 +574,7 @@ function tabOnActivate(event, ui) {
   var id = ui.newTab.prop("id").substr(3).toUpperCase();
   if (id === "TAB1") {
 
+    $("#tdQDsp_Confirm_Check").show();
     // 스플리터가 초기화가 되어 있으면 _OnResize 호출
     if ($NC.isSplitter("#divDetailViewT1")) {
       // 스필리터를 통한 _OnResize 호출
@@ -549,6 +585,7 @@ function tabOnActivate(event, ui) {
     }
   } else {
 
+    $("#tdQDsp_Confirm_Check").hide();
     _OnResize($(window));
   }
   // 화면상단의 공통 메뉴 버튼 이미지 표시 : true인 경우는 조회 버튼만 활성화 한다.
@@ -837,6 +874,12 @@ function grdT1DetailOnGetColumns() {
     cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
+    id: "ITEM_DIV",
+    field: "ITEM_DIV",
+    name: "상품구분",
+    minWidth: 70
+  });
+  $NC.setGridColumn(columns, {
     id: "ITEM_CD",
     field: "ITEM_CD",
     name: "상품코드",
@@ -866,12 +909,6 @@ function grdT1DetailOnGetColumns() {
     name: "상태",
     minWidth: 80,
     cssClass: "align-center"
-  });
-  $NC.setGridColumn(columns, {
-    id: "ITEM_LOT",
-    field: "ITEM_LOT",
-    name: "LOT번호",
-    minWidth: 80
   });
   $NC.setGridColumn(columns, {
     id: "QTY_IN_BOX",
@@ -905,13 +942,6 @@ function grdT1DetailOnGetColumns() {
     id: "CONFIRM_EA",
     field: "CONFIRM_EA",
     name: "확정EA",
-    minWidth: 80,
-    cssClass: "align-right"
-  });
-  $NC.setGridColumn(columns, {
-    id: "CONFIRM_WEIGHT",
-    field: "CONFIRM_WEIGHT",
-    name: "확정중량",
     minWidth: 80,
     cssClass: "align-right"
   });
@@ -1007,6 +1037,12 @@ function grdT2MasterOnGetColumns() {
     cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
+    id: "ITEM_DIV",
+    field: "ITEM_DIV",
+    name: "상품구분",
+    minWidth: 70
+  });
+  $NC.setGridColumn(columns, {
     id: "ITEM_CD",
     field: "ITEM_CD",
     name: "상품코드",
@@ -1038,12 +1074,6 @@ function grdT2MasterOnGetColumns() {
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
-    id: "ITEM_LOT",
-    field: "ITEM_LOT",
-    name: "LOT번호",
-    minWidth: 80
-  });
-  $NC.setGridColumn(columns, {
     id: "QTY_IN_BOX",
     field: "QTY_IN_BOX",
     name: "입수",
@@ -1070,14 +1100,6 @@ function grdT2MasterOnGetColumns() {
     id: "CONFIRM_EA",
     field: "CONFIRM_EA",
     name: "확정EA",
-    minWidth: 80,
-    cssClass: "align-right",
-    aggregator: "SUM"
-  });
-  $NC.setGridColumn(columns, {
-    id: "CONFIRM_WEIGHT",
-    field: "CONFIRM_WEIGHT",
-    name: "확정중량",
     minWidth: 80,
     cssClass: "align-right",
     aggregator: "SUM"

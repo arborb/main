@@ -16,10 +16,10 @@ import org.springframework.stereotype.Repository;
  * Description: LI02010E DAO (Data Access Object)<br>
  * Copyright: Copyright (c) 2013 ASETEC Corporation. All rights reserved.<br>
  * Company : ASETEC<br>
- * 
+ *
  * @author ASETEC
  * @version 1.0
- * 
+ *
  * <pre style="font-family: NanumGothicCoding, GulimChe">
  * ---------------------------------------------------------------------------------------------------------------------
  *  Version    Date          Author           Description
@@ -207,11 +207,11 @@ public class LI02010EDAOImpl implements LI02010EDAO {
       oMsg = (String)mapResult2.get(Consts.PK_O_MSG);
       if (!Consts.OK.equals(oMsg)) {
         throw new RuntimeException(oMsg);
-  }
+      }
     }
   }
-  
-  
+
+
   /**
    * 입고확정/적치 - 입고지시 저장
    * @param params
@@ -272,9 +272,9 @@ public class LI02010EDAOImpl implements LI02010EDAO {
         if (!Consts.OK.equals(oMsg)) {
           throw new RuntimeException(oMsg);
         }
-        }
       }
     }
+  }
 
   /**
    * 입고지시 - 입고지시 저장

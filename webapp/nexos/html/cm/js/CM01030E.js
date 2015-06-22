@@ -250,7 +250,7 @@ function _New() {
       PICK_AREA: null,
       CELL_CHKDIGIT: null,
       ITEM_CBM: 0,
-      REMARK1: null,      
+      REMARK1: null,
       PUTAWAY_AREA_F: $NC.getGridComboName(G_GRDSUB, {
         colFullNameField: "PUTAWAY_AREA_F",
         searchVal: "1",
@@ -272,7 +272,7 @@ function _New() {
       id: $NC.getGridNewRowId(),
       CRUD: "N"
     };
-    
+
     G_GRDSUB.data.addItem(newRowData);
     $NC.setGridSelectRow(G_GRDSUB, rowCount);
     // 수정 상태로 변경
@@ -439,27 +439,27 @@ function _Delete() {
     }
 
     if ($NC.G_USERINFO.USER_ID == 'WMS7') {
-    messageAnswer = confirm("로케이션을 삭제 하시겠습니까?");
-    if (messageAnswer) {
-      var rowData = G_GRDSUB.data.getItem(G_GRDSUB.lastRow);
+      messageAnswer = confirm("로케이션을 삭제 하시겠습니까?");
+      if (messageAnswer) {
+        var rowData = G_GRDSUB.data.getItem(G_GRDSUB.lastRow);
 
-      // 신규 데이터일 경우 그냥 삭제
-      if (rowData.CRUD === "C" || rowData.CRUD === "N") {
-        // 마지막 선택 Row 수정 상태 복원
-        G_GRDSUB.lastRowModified = false;
+        // 신규 데이터일 경우 그냥 삭제
+        if (rowData.CRUD === "C" || rowData.CRUD === "N") {
+          // 마지막 선택 Row 수정 상태 복원
+          G_GRDSUB.lastRowModified = false;
 
-        G_GRDSUB.data.deleteItem(rowData.id);
-        // 데이터가 있을 경우 삭제 Row 이전 데이터 선택
-        if (G_GRDSUB.lastRow > 1) {
-          $NC.setGridSelectRow(G_GRDSUB, G_GRDSUB.lastRow - 1);
+          G_GRDSUB.data.deleteItem(rowData.id);
+          // 데이터가 있을 경우 삭제 Row 이전 데이터 선택
+          if (G_GRDSUB.lastRow > 1) {
+            $NC.setGridSelectRow(G_GRDSUB, G_GRDSUB.lastRow - 1);
+          } else {
+            $NC.setGridSelectRow(G_GRDSUB, 0);
+          }
         } else {
-          $NC.setGridSelectRow(G_GRDSUB, 0);
+          rowData.CRUD = "D";
+          G_GRDSUB.data.updateItem(rowData.id, rowData);
+          _Save();
         }
-      } else {
-        rowData.CRUD = "D";
-        G_GRDSUB.data.updateItem(rowData.id, rowData);
-        _Save();
-      }
       }
     } else {
       alert("로케이션 관리자 외에 삭제불가 합니다.");
@@ -851,7 +851,7 @@ function grdSubOnGetColumns() {
       isKeyField: true
     },
     cssClass: "align-center"
-  });  
+  });
   $NC.setGridColumn(columns, {
     id: "PUTAWAY_AREA_F",
     field: "PUTAWAY_AREA_F",
@@ -1163,7 +1163,7 @@ function grdSubOnBeforePost(row) {
       $NC.setFocusGrid(G_GRDSUB, row, G_GRDSUB.view.getColumnIndex("LOC_DIV_F"), true);
       return false;
     }
-    
+
     if ($NC.isNull(rowData.CELL_DIV)) {
       alert("셀구분구분을 선택하십시오.");
       $NC.setFocusGrid(G_GRDSUB, row, G_GRDSUB.view.getColumnIndex("CELL_DIV_F"), true);

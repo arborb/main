@@ -16,10 +16,11 @@ function _Initialize() {
       CM123: "", // 로케이션 열 길이
       CM124: "", // 로케이션 단 길이
     },
-    CONSTS_DIV_LOC: "_____"// '_' 다섯개
+    CONSTS_DIV_LOC: "_____",// '_' 다섯개
+    STOP: ""// '_' 다섯개
+
   });
 
-  
   // 버튼 클릭 이벤트 연결
   $("#btnClose").click(onCancel);
   // 닫기버튼
@@ -28,6 +29,8 @@ function _Initialize() {
   $("#btnEntryDelete").click(_Delete);
   // 그리드 행 삭제버튼
   $("#btnSave").click(_Save);
+
+  $("#btnUpdate").click(_Update);
   // 저장 버튼
   $("#btnQItem_Cd").click(showItemPopup); // 현재고 검색의 상품검색 버튼 클릭
 
@@ -95,8 +98,13 @@ function _OnPopupOpen() {
       MOVE_NO: "",
       CRUD: "C"
     };
+
+    $NC.setEnable("#btnUpdate", false);
   } else {
     $NC.setEnable("#dtpMove_Date", false);
+    $NC.setEnable("#btnSearchStock", false);
+    $NC.setEnable("#btnEntryNew", false);
+    $NC.setEnable("#btnSave", false);
     // 예정 -> 등록, 등록 수정
 
     var CRUD = "R";
@@ -151,6 +159,7 @@ function _OnPopupOpen() {
           VALID_DATE: rowData.VALID_DATE,
           BATCH_NO: rowData.BATCH_NO,
           LOCATION_ID: rowData.LOCATION_ID,
+          OUT_WAIT_QTY: rowData.OUT_WAIT_QTY,
           STOCK_QTY: rowData.STOCK_QTY,
           MLOCATION_CD: rowData.MLOCATION_CD,
           MSTOCK_ID: rowData.MSTOCK_ID,
@@ -509,7 +518,6 @@ function _New() {
     }
     if (LOCATION_CD == rowDetailData.LOCATION_CD) {
       chkLocation++;
-      continue;
     }
 
     var rowSubData = $NC.getParams({
@@ -525,7 +533,8 @@ function _New() {
       LOCATION_ID: rowDetailData.LOCATION_ID,
       STOCK_QTY: rowDetailData.STOCK_QTY,
       PSTOCK_QTY: rowDetailData.PSTOCK_QTY,
-      MSTOCK_QTY: rowDetailData.PSTOCK_QTY,
+      // MSTOCK_QTY: rowDetailData.PSTOCK_QTY,
+      MSTOCK_QTY: 1,
       ITEM_NM: rowDetailData.ITEM_NM,
       ITEM_SPEC: rowDetailData.ITEM_SPEC,
       QTY_IN_BOX: rowDetailData.QTY_IN_BOX,
@@ -539,8 +548,13 @@ function _New() {
 
   }
 
-  if (rowsDetailData.length < 1) {
-    alert("이동할 상품을 선택하여 주십시오.");
+  // if (rowsDetailData.length < 1) {
+  // alert("이동할 상품을 선택하여 주십시오.");
+  // return;
+  // }
+
+  if (chkLocation > 0) {
+    alert("이동할 상품의 적치로케이션과 이동하려는 로케이션은 같을 수 없습니다.");
     return;
   }
   var insCnt = 0;
@@ -556,6 +570,7 @@ function _New() {
     return;
   }
 
+  /* 2014/12/08 디테일 그리드 내역 서브그리드로 추가시 searchKey값과 동일한 값 체크 주석처리
   var searchKey = ["LOCATION_CD", "BRAND_CD", "ITEM_CD", "ITEM_STATE", "ITEM_LOT", "VALID_DATE", "BATCH_NO"];
 
   G_GRDSUB.data.beginUpdate();
@@ -564,7 +579,6 @@ function _New() {
       var rowSubData = rowsDetailData[i];
       var searchVal = [rowSubData.LOCATION_CD, rowSubData.BRAND_CD, rowSubData.ITEM_CD, rowSubData.ITEM_STATE,
           rowSubData.ITEM_LOT, rowSubData.VALID_DATE, rowSubData.BATCH_NO];
-
       if ($NC.getGridSearchVal(G_GRDSUB, {
         searchKey: searchKey,
         searchVal: searchVal
@@ -583,7 +597,22 @@ function _New() {
     alert("선택한 상품은 이미 추가된 재고내역입니다.");
     return;
   }
+  */
 
+  G_GRDSUB.data.beginUpdate();
+  try {
+    for ( var i = 0; i < rowsDetailData.length; i++) {
+      var rowSubData = rowsDetailData[i];
+
+      G_GRDSUB.data.addItem(rowSubData);
+      insCnt++;
+
+    }
+  } finally {
+    G_GRDSUB.data.endUpdate();
+  }
+
+  onCalcSummary(rowsDetailData);
   G_GRDSUB.lastRow = null;
   $NC.setGridSelectRow(G_GRDSUB, G_GRDSUB.data.getLength() - 1);
 }
@@ -681,6 +710,137 @@ function _Save() {
   }, onSave, onSaveError, 2);
 }
 
+/**
+ * 저장버튼 클릭 이벤트 처리
+ */
+function _Update() {
+  $NC.G_VAR.STOP = '';
+  if (G_GRDSUB.data.getLength() == 0) {
+    alert("저장할 데이터가 없습니다.");
+    return;
+  }
+
+  // 현재 수정모드면
+  if (G_GRDSUB.view.getEditorLock().isActive()) {
+    G_GRDSUB.view.getEditorLock().commitCurrentEdit();
+  }
+  // 현재 선택된 로우 Validation 체크
+  if (G_GRDSUB.lastRow != null) {
+    if (!grdSubOnBeforePost(G_GRDSUB.lastRow)) {
+      return;
+    }
+  }
+
+  if ($NC.isNull($NC.G_VAR.masterData.CENTER_CD)) {
+    alert("물류센터를 입력하십시오.");
+    return;
+  }
+
+  if ($NC.isNull($NC.G_VAR.masterData.MOVE_DATE)) {
+    alert("먼저 이동일자를 입력하십시오.");
+    $NC.setFocus("#dtpMove_Date");
+    return;
+  }
+
+  var d_DS = [ ];
+  var cu_DS = [ ];
+  var rows = G_GRDSUB.data.getItems();
+  var rowCount = rows.length;
+  for ( var row = 0; row < rowCount; row++) {
+
+    $NC.G_VAR.STOP = '';
+    var rowData = rows[row];
+    // 조회후 상태가 바꾸었는지 한번더 상태 체크
+    $NC.serviceCallAndWait("/LC03010E/getMoveoutwaitqty.do", {
+      P_QUERY_PARAMS: $NC.getParams({
+        P_CENTER_CD: $NC.G_VAR.masterData.CENTER_CD,
+        P_BU_CD: $NC.G_VAR.masterData.BU_CD,
+        P_MOVE_DATE: $NC.G_VAR.masterData.MOVE_DATE,
+        P_MOVE_NO: $NC.G_VAR.masterData.MOVE_NO,
+        P_LINE_NO: rowData.LINE_NO,
+        P_LOCATION_CD: rowData.LOCATION_CD,
+        P_BRAND_CD: rowData.BRAND_CD,
+        P_ITEM_CD: rowData.ITEM_CD,
+        P_ITEM_STATE: rowData.ITEM_STATE,
+        P_ITEM_LOT: rowData.ITEM_LOT,
+        P_VALID_DATE: rowData.VALID_DATE,
+        P_BATCH_NO: rowData.BATCH_NO,
+        P_MSTOCK_QTY: rowData.MSTOCK_QTY
+
+      })
+    }, function(ajaxData) {
+
+      var resultData = $NC.toArray(ajaxData);
+      if (!$NC.isNull(resultData)) {
+        if (resultData.O_MSG === "OK") {
+          if (resultData.O_OUTWAIT_YN == "N") {
+            $NC.setFocusGrid(G_GRDSUB, row, G_GRDSUB.view.getColumnIndex("MSTOCK_QTY"), true);
+
+            alert("재고이동 가능한 가용재고 수량이 이동수량 보다 적습니다.");
+            $NC.G_VAR.STOP = 'STOP';
+            return;
+          }
+        }
+      }
+    });
+
+    if ($NC.G_VAR.STOP == 'STOP') {
+      return;
+    }
+
+    var rowData = rows[row];
+    if (rowData.CRUD == "R") {
+      continue;
+    }
+
+    if (!chkSubParameter(row, rowData)) {
+      return;
+    }
+    var saveData = {
+      P_CENTER_CD: $NC.G_VAR.masterData.CENTER_CD,
+      P_BU_CD: $NC.G_VAR.masterData.BU_CD,
+      P_MOVE_DATE: $NC.G_VAR.masterData.MOVE_DATE,
+      P_MOVE_NO: $NC.G_VAR.masterData.MOVE_NO,
+      P_LINE_NO: rowData.LINE_NO,
+      P_LOCATION_CD: rowData.LOCATION_CD,
+      P_BRAND_CD: rowData.BRAND_CD,
+      P_ITEM_CD: rowData.ITEM_CD,
+      P_ITEM_STATE: rowData.ITEM_STATE,
+      P_ITEM_LOT: rowData.ITEM_LOT,
+      P_VALID_DATE: rowData.VALID_DATE,
+      P_BATCH_NO: rowData.BATCH_NO,
+      P_STOCK_QTY: rowData.STOCK_QTY,
+      P_MSTOCK_QTY: rowData.MSTOCK_QTY,
+      P_CRUD: rowData.CRUD
+    };
+    if (rowData.CRUD == "D") {
+      d_DS.push(saveData);
+    } else {
+      cu_DS.push(saveData);
+    }
+  }
+
+  // 생성된 로케이션ID를 그대로 사용하기 위해
+  // 삭제할 데이터를 마지막에 추가
+  var saveDS = cu_DS.concat(d_DS);
+  if (saveDS.length == 0) {
+    alert("수정 후 저장하십시오.");
+    return;
+  }
+
+  $NC.serviceCall("/LC03010E/save1.do", {
+    P_DS_MASTER: $NC.toJson({
+      P_CENTER_CD: $NC.G_VAR.masterData.CENTER_CD,
+      P_BU_CD: $NC.G_VAR.masterData.BU_CD,
+      P_MOVE_DATE: $NC.G_VAR.masterData.MOVE_DATE,
+      P_MOVE_NO: $NC.G_VAR.masterData.MOVE_NO,
+      P_CRUD: $NC.G_VAR.masterData.CRUD
+    }),
+    P_DS_SUB: $NC.toJson(saveDS),
+    P_PROCESS_CD: $NC.G_VAR.userData.P_PROCESS_CD,
+    P_USER_ID: $NC.G_USERINFO.USER_ID
+  }, onSave, onSaveError, 2);
+}
 /**
  * 상품삭제 버튼 클릭 이벤트 처리
  */
@@ -848,12 +1008,6 @@ function grdDetailOnGetColumns() {
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
-    id: "BATCH_NO",
-    field: "BATCH_NO",
-    name: "제조배치번호",
-    minWidth: 90
-  });
-  $NC.setGridColumn(columns, {
     id: "QTY_IN_BOX",
     field: "QTY_IN_BOX",
     name: "입수",
@@ -872,7 +1026,7 @@ function grdDetailOnGetColumns() {
     field: "PSTOCK_QTY",
     name: "가용재고",
     cssClass: "align-right",
-    minWidth: 60
+    minWidth: 80
   });
   $NC.setGridColumn(columns, {
     id: "LOCATION_CD",
@@ -1003,7 +1157,6 @@ function chkSubParameter(row, rowData) {
     });
     return false;
   }
-
   if ($NC.isNull(rowData.MSTOCK_QTY) || Number(rowData.MSTOCK_QTY) < 1) {
     alert("이동수량에 0보다 큰 수량을 입력하십시오.");
     $NC.setGridSelectRow(G_GRDSUB, {
@@ -1013,8 +1166,10 @@ function chkSubParameter(row, rowData) {
     });
     return false;
   }
-  if (rowData.CRUD == "C" && Number(rowData.PSTOCK_QTY) < Number(rowData.MSTOCK_QTY)) {
+  if (rowData.CRUD !== "R" && Number(rowData.PSTOCK_QTY) < Number(rowData.MSTOCK_QTY)) {
     alert("재고수량 보다 많은 수량을 입력하실 수 없습니다.");
+    rowData.MSTOCK_QTY = rowData.PSTOCK_QTY;
+    G_GRDSUB.data.updateItem(rowData.id, rowData);
     $NC.setGridSelectRow(G_GRDSUB, {
       selectRow: row,
       activeCell: G_GRDSUB.view.getColumnIndex("MSTOCK_QTY"),
@@ -1033,8 +1188,6 @@ function chkSubParameter(row, rowData) {
  */
 function grdDetailOnAfterScroll(e, args) {
 
-  
-  
   var row = args.rows[0];
   if (G_GRDDETAIL.lastRow != null) {
     if (row == G_GRDDETAIL.lastRow) {
@@ -1042,7 +1195,7 @@ function grdDetailOnAfterScroll(e, args) {
       return;
     }
   }
-  
+
   var rowData = G_GRDDETAIL.data.getItem(row);
   $NC.setValue("#edtLocation_Cd", rowData.LOCATION_CD_M);
   // 상단 현재로우/총건수 업데이트
@@ -1091,8 +1244,8 @@ function grdSubOnGetColumns() {
     cssClass: "align-right"
   });
   $NC.setGridColumn(columns, {
-    id: "PSTOCK_QTY",
-    field: "PSTOCK_QTY",
+    id: "OUT_WAIT_QTY",
+    field: "OUT_WAIT_QTY",
     name: "가용재고",
     minWidth: 80,
     cssClass: "align-right"
@@ -1110,11 +1263,13 @@ function grdSubOnGetColumns() {
     field: "MLOCATION_CD",
     name: "이동로케이션",
     minWidth: 100,
-    editor: Slick.Editors.Popup,
-    editorOptions: {
-      onPopup: grdSubOnPopup,
-      isKeyField: true
-    },
+    /*
+      editor: Slick.Editors.Popup,
+      editorOptions: {
+        onPopup: grdSubOnPopup,
+        isKeyField: true
+      },
+      */
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
@@ -1125,23 +1280,17 @@ function grdSubOnGetColumns() {
     cssClass: "align-center"
   });
   $NC.setGridColumn(columns, {
-    id: "ITEM_LOT",
-    field: "ITEM_LOT",
-    name: "LOT번호",
-    minWidth: 70
-  });
-  $NC.setGridColumn(columns, {
-    id: "BATCH_NO",
-    field: "BATCH_NO",
-    name: "제조배치번호",
-    minWidth: 100
-  });
-  $NC.setGridColumn(columns, {
     id: "LOCATION_CD",
     field: "LOCATION_CD",
     name: "재고로케이션",
     minWidth: 100,
     cssClass: "align-center"
+  });
+  $NC.setGridColumn(columns, {
+    id: "ITEM_LOT",
+    field: "ITEM_LOT",
+    name: "LOT번호",
+    minWidth: 70
   });
 
   return $NC.setGridColumnDefaultFormatter(columns);
@@ -1214,9 +1363,10 @@ function grdSubOnBeforeEditCell(e, args) {
   var rowData = G_GRDSUB.data.getItem(args.row);
   if (rowData) {
     // 신규 데이터가 아니면 코드 수정 불가
-    if (rowData.CRUD === "R") {
-      return false;
-    }
+
+    // if (rowData.CRUD === "R") {
+    // return false;
+    // }
   }
   return true;
 }
@@ -1264,6 +1414,9 @@ function grdSubOnCellChange(e, args) {
   }
   G_GRDSUB.data.updateItem(rowData.id, rowData);
 
+  var rows = [ ];
+  rows[0] = rowData;
+  onCalcSummarySub(rows);
   // 마지막 선택 Row 수정 상태로 변경
   G_GRDSUB.lastRowModified = true;
 }
@@ -1500,6 +1653,120 @@ function onItemPopup(resultInfo) {
   }
 }
 
+function onCalcSummary(rowData) {
+
+  var rowCount = rowData.length;
+
+  var searchKey = ["LOCATION_CD", "BRAND_CD", "ITEM_CD", "ITEM_STATE", "ITEM_LOT", "VALID_DATE", "BATCH_NO"];
+
+  G_GRDSUB.data.beginUpdate();
+  try {
+    for ( var row = 0; row < rowCount; row++) {
+      var rowSubData = rowData[row];
+      var searchVal = [rowSubData.LOCATION_CD, rowSubData.BRAND_CD, rowSubData.ITEM_CD, rowSubData.ITEM_STATE,
+          rowSubData.ITEM_LOT, rowSubData.VALID_DATE, rowSubData.BATCH_NO];
+      var searchCount = $NC.getGridSearchRows(G_GRDSUB, {
+        searchKey: searchKey,
+        searchVal: searchVal
+      });
+
+      if (!$NC.isNull(searchCount)) {
+        var ORG_PSTOCK_QTY = 0;
+        var REMAIN_PSTOCK_QTY = 0;
+        var SUM_MSTOCK_QTY = 0;
+        for ( var i = 0; i < searchCount.length; i++) {
+          var rowSub = G_GRDSUB.data.getItem(searchCount[i]);
+          if (i == 0) {
+            ORG_PSTOCK_QTY = rowSub.PSTOCK_QTY;
+            REMAIN_PSTOCK_QTY = ORG_PSTOCK_QTY - rowSub.MSTOCK_QTY;
+            SUM_MSTOCK_QTY = SUM_MSTOCK_QTY + rowSub.MSTOCK_QTY;
+          } else {
+            rowSub.PSTOCK_QTY = REMAIN_PSTOCK_QTY;
+            if (rowSub.PSTOCK_QTY <= 0) {
+              alert("해당상품의 출고가능량을 넘었습니다.");
+              if (rowSub.CRUD === "C") {
+                G_GRDSUB.data.deleteItem(rowSub.id);
+              } else {
+                rowSub.CRUD = "D";
+                G_GRDSUB.data.updateItem(rowSub.id, rowSub);
+                G_GRDSUB.data.refresh();
+              }
+            } else {
+              REMAIN_PSTOCK_QTY = REMAIN_PSTOCK_QTY - rowSub.MSTOCK_QTY;
+              SUM_MSTOCK_QTY = rowSub.MSTOCK_QTY + SUM_MSTOCK_QTY;
+
+              if (rowSub.CRUD === "R") {
+                rowSub.CRUD = "U";
+              }
+
+              G_GRDSUB.data.updateItem(rowSub.id, rowSub);
+            }
+          }
+        }
+      }
+    }
+  } finally {
+    G_GRDSUB.data.endUpdate();
+  }
+}
+
+function onCalcSummarySub(rowData) {
+
+  var rowCount = rowData.length;
+
+  var searchKey = ["LOCATION_CD", "BRAND_CD", "ITEM_CD", "ITEM_STATE", "ITEM_LOT", "VALID_DATE", "BATCH_NO"];
+
+  G_GRDSUB.data.beginUpdate();
+  try {
+    for ( var row = 0; row < rowCount; row++) {
+      var rowSubData = rowData[row];
+      var searchVal = [rowSubData.LOCATION_CD, rowSubData.BRAND_CD, rowSubData.ITEM_CD, rowSubData.ITEM_STATE,
+          rowSubData.ITEM_LOT, rowSubData.VALID_DATE, rowSubData.BATCH_NO];
+      var searchCount = $NC.getGridSearchRows(G_GRDSUB, {
+        searchKey: searchKey,
+        searchVal: searchVal
+      });
+
+      if (!$NC.isNull(searchCount)) {
+        var ORG_PSTOCK_QTY = 0;
+        var REMAIN_PSTOCK_QTY = 0;
+        var SUM_MSTOCK_QTY = 0;
+        for ( var i = 0; i < searchCount.length; i++) {
+          var rowSub = G_GRDSUB.data.getItem(searchCount[i]);
+          if (i == 0) {
+            ORG_PSTOCK_QTY = rowSub.PSTOCK_QTY;
+            REMAIN_PSTOCK_QTY = ORG_PSTOCK_QTY - rowSub.MSTOCK_QTY;
+            SUM_MSTOCK_QTY = SUM_MSTOCK_QTY + rowSub.MSTOCK_QTY;
+          } else {
+            // 남은 출고가능량이 0이하인 로우는 화면에서 삭제
+            rowSub.PSTOCK_QTY = REMAIN_PSTOCK_QTY;
+            if (rowSub.PSTOCK_QTY <= 0) {
+              if (rowSub.CRUD === "C") {
+                G_GRDSUB.data.deleteItem(rowSub.id);
+              } else {
+                rowSub.CRUD = "D";
+                G_GRDSUB.data.updateItem(rowSub.id, rowSub);
+                G_GRDSUB.data.refresh();
+              }
+            } else {
+              REMAIN_PSTOCK_QTY = REMAIN_PSTOCK_QTY - rowSub.MSTOCK_QTY;
+              SUM_MSTOCK_QTY = rowSub.MSTOCK_QTY + SUM_MSTOCK_QTY;
+
+              if (rowSub.CRUD === "R") {
+                rowSub.CRUD = "U";
+              }
+
+              G_GRDSUB.data.updateItem(rowSub.id, rowSub);
+            }
+          }
+        }
+      }
+    }
+  } finally {
+    G_GRDSUB.data.endUpdate();
+  }
+}
+
 /**
  * 검색조건의 브랜드 검색 팝업 클릭
  */
@@ -1508,7 +1775,7 @@ function showOwnBranPopup() {
   var BU_CD = $NC.getValue("#edtBu_Cd");
 
   $NP.showOwnBranPopup({
-    P_CUST_CD:  $NC.G_USERINFO.CUST_CD,   
+    P_CUST_CD: $NC.G_USERINFO.CUST_CD,
     P_BU_CD: BU_CD,
     P_OWN_BRAND_CD: '%'
   }, onOwnBrandPopup, function() {
@@ -1526,7 +1793,6 @@ function onOwnBrandPopup(resultInfo) {
   if (!$NC.isNull(resultInfo)) {
     $NC.setValue("#edtQBrand_Cd", resultInfo.OWN_BRAND_CD);
     $NC.setValue("#edtQBrand_Nm", resultInfo.OWN_BRAND_NM);
-
 
     $NC.setValue("#edtQItem_Cd", resultInfo.ITEM_CD);
     $NC.setValue("#edtQItem_Nm", resultInfo.ITEM_NM);
