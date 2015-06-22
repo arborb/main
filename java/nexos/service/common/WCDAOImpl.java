@@ -2,6 +2,8 @@ package nexos.service.common;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,6 +12,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import nexos.common.Consts;
 import nexos.common.Util;
@@ -23,6 +26,8 @@ import org.springframework.orm.ibatis.SqlMapClientFactoryBean;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.penta.scpdb.ScpDbAgent;
 
@@ -59,7 +64,23 @@ public class WCDAOImpl implements WCDAO {
 
   @Resource
   private PlatformTransactionManager transactionManager;
+  
+  
+  /**
+	 * 즐겨찾기를 삭제
+	 * 
+	 * @param params
+	 *            조회조건
+	 */
+	@Override
+	public void deleteBookMark(Map<String, Object> params) {
+		final String PRORAM_ID = "WC";
+		final String TABLE_NM = "CSUSERPROGRAMBOOKMARK";
+		final String DELETE_ID = PRORAM_ID + ".DELETE_" + TABLE_NM;
 
+		nexosDAO.insert(DELETE_ID, params);
+	}
+	
   private String getEncryptUserPwd(String user_Pwd) {
 
     String result = user_Pwd;
@@ -149,24 +170,6 @@ public class WCDAOImpl implements WCDAO {
   }
 
   /**
-   * 사용자 비밀번호 변경
-   * 
-   * @param params
-   * @throws Exception
-   */
-  @Override
-  public void updateUserPassword(Map<String, Object> params) {
-
-    params.put("P_USER_PWD", getEncryptUserPwd((String)params.get("P_USER_PWD")));
-
-    int update = nexosDAO.update("WC.UPDATE_CSUSER_PASSWORD", params);
-
-    if (update == 0) {
-      throw new RuntimeException("사용자ID가 존재하지 않습니다.");
-    }
-  }
-
-  /**
    * sqlMap reload
    * 
    * @param factory
@@ -187,7 +190,73 @@ public class WCDAOImpl implements WCDAO {
 
     return result;
   }
+  
+  @SuppressWarnings("rawtypes")
+	@Override
+	public List getUserProgramBookMark(Map<String, Object> params) {
+		return nexosDAO.list("WC.GET_CSUSERPROGRAMBOOKMARK", params);
+	}
 
+	@Override
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List getUserProgramBookMarkTree(List list) {
+
+		List result = new ArrayList();
+		if (list == null || list.size() == 0) {
+			return result;
+		}
+
+		Iterator iterator = list.iterator();
+		Map<String, Object> rowData = null;
+
+		/*
+		 * Tree 데이터 구조 [{ "id": "id_1", "PROGRAM_ID": "CS00000M", .. ,
+		 * "EXE_LEVEL4": "Y", indent:"0", parent:"" }, { "id": "id_2",
+		 * "PROGRAM_ID": "CS01010E", .. , "EXE_LEVEL4": "Y", indent:"1",
+		 * parent:"1" }, { "id": "id_3", "PROGRAM_ID": "CM00000M", .. ,
+		 * "EXE_LEVEL4": "Y", indent:"0", parent:"" }, { "id": "id_4",
+		 * "PROGRAM_ID": "CM01010E", .. , "EXE_LEVEL4": "Y", indent:"1",
+		 * parent:"3" }, { "id": "id_5", "PROGRAM_ID": "CM01020E", .. ,
+		 * "EXE_LEVEL4": "Y", indent:"1", parent:"3" } ]
+		 */
+		while (iterator.hasNext()) {
+			rowData = (HashMap) iterator.next();
+
+			Map<String, Object> menuData = new HashMap<String, Object>();
+
+			menuData.put(Consts.DK_ID,
+					Consts.DV_ID_PREFIX + String.valueOf(rowData.get("ROW_ID")));
+			menuData.put("PROGRAM_ID", rowData.get("PROGRAM_ID"));
+			menuData.put("PROGRAM_NM", rowData.get("PROGRAM_NM"));
+			menuData.put("PROGRAM_GRP1", rowData.get("PROGRAM_GRP1"));
+			menuData.put("PROGRAM_GRP2", rowData.get("PROGRAM_GRP2"));
+			menuData.put("PROGRAM_GRP3", rowData.get("PROGRAM_GRP3"));
+			menuData.put("PROGRAM_GRP4", rowData.get("PROGRAM_GRP4"));
+			menuData.put("PROGRAM_DIV", rowData.get("PROGRAM_DIV"));
+			menuData.put("WIDE_YN", rowData.get("WIDE_YN"));
+			menuData.put("WEB_URL", rowData.get("WEB_URL"));
+			menuData.put("EXE_LEVEL1", rowData.get("EXE_LEVEL1"));
+			menuData.put("EXE_LEVEL2", rowData.get("EXE_LEVEL2"));
+			menuData.put("EXE_LEVEL3", rowData.get("EXE_LEVEL3"));
+			menuData.put("EXE_LEVEL4", rowData.get("EXE_LEVEL4"));
+			menuData.put("FAVORITE_YN", rowData.get("FAVORITE_YN"));
+			menuData.put("MENU_SHOW_YN", rowData.get("MENU_SHOW_YN"));
+			menuData.put("indent", String.valueOf(rowData.get("MENU_INDENT")));
+			String parent = String.valueOf(rowData.get("PARENT_ID"));
+			if (!Util.isNull(parent)) {
+				parent = Consts.DV_ID_PREFIX + parent;
+			} else {
+				parent = "";
+			}
+			menuData.put("parent", parent);
+			menuData.put("_collapsed", true);
+
+			result.add(menuData);
+		}
+
+		return result;
+	}
+	
   @SuppressWarnings("rawtypes")
   @Override
   public List getUserProgramMenu(Map<String, Object> params) {
@@ -392,7 +461,18 @@ public class WCDAOImpl implements WCDAO {
       logger.error(e.getMessage());
     }
   }
+  
+  @Override
+	public void getLogout(Map<String, Object> params) {
+		params.put("P_PROCESS_FLAG", Consts.SUCCESS_LOGOUT);
+		// params.put("P_CLIENT_IP", getClientIP());
+		params.put("P_CLIENT_IP", getClientIP().getRemoteAddr());
+		params.put("P_CLIENT_NAME", "");// getMachineInfo().getHostName());
 
+		// 로그인 성공여부를 기록한다.
+		nexosDAO.insert("WC.INSERT_CSUSERINFO", params);
+	}
+  
   @SuppressWarnings({"rawtypes", "unchecked"})
   @Override
   public Map getSysDate() {
@@ -413,7 +493,28 @@ public class WCDAOImpl implements WCDAO {
     }
     return mapResult;
   }
+  
+  /**
+	 * 즐겨찾기를 추가
+	 * 
+	 * @param params
+	 *            조회조건
+	 */
+	@Override
+	public void saveBookMark(Map<String, Object> params) {
+		final String PRORAM_ID = "WC";
+		final String TABLE_NM = "CSUSERPROGRAMBOOKMARK";
+		final String INSERT_ID = PRORAM_ID + ".INSERT_" + TABLE_NM;
+		// final String UPDATE_ID = PRORAM_ID + ".UPDATE_" + TABLE_NM;
+		// final String DELETE_ID = PRORAM_ID + ".DELETE_" + TABLE_NM;
 
+		nexosDAO.insert(INSERT_ID, params);
+		/*
+		 * int update = nexosDAO.update(UPDATE_ID, params); if (update == 0) {
+		 * nexosDAO.insert(INSERT_ID, params); }
+		 */
+	}
+	
   @Override
   public void saveGridColumnOrder(Map<String, Object> params) {
 
@@ -428,4 +529,59 @@ public class WCDAOImpl implements WCDAO {
       nexosDAO.insert(INSERT_ID, params);
     }
   }
+
+	/**
+	 * 사용자 비밀번호 변경
+	 * 
+	 * @param params
+	 * @throws Exception
+	 */
+	@Override
+	public void updateUserPassword(Map<String, Object> params) {
+
+		Map<String, String> resultMap = null;
+
+		String strUser_Pwd = getEncryptUserPwd((String) params
+				.get("P_USER_PWD"));
+		params.put("P_USER_PWD", strUser_Pwd);
+
+		// 1년이내 같은 같은 비밀번호가 있는지 조회
+		List listResult = nexosDAO.list("WC.GET_PASSHISTORY", params);
+		resultMap = (Map<String, String>) listResult.get(0);
+
+		if (!String.valueOf(resultMap.get("PWD_COUNT")).equals("0")) {
+			throw new RuntimeException("1년내 사용한 비밀번호는 재사용이 불가합니다.");
+		}
+
+		// 변경된 비밀번호를 업데이트 한다.
+		params.put("P_DEFAULT_PW", "N");
+		int update = nexosDAO.update("WC.UPDATE_CSUSER_PASSWORD", params);
+		if (update == 1) {
+			params.put("P_CLIENT_IP", getClientIP().getRemoteAddr());
+			params.put("P_CLIENT_NAME", "");// getMachineInfo().getHostName());
+			nexosDAO.insert("WC.INSERT_CSUSERPASSINFO", params);
+		}
+		if (update == 0) {
+			throw new RuntimeException("사용자ID가 존재하지 않습니다.");
+		}
+	}
+	
+	/**
+	 * 
+	 * 
+	 public String getClientIP(){ // CLIENT IP ServletRequestAttributes
+	 * requestAttrib =
+	 * (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes
+	 * (); HttpServletRequest request = requestAttrib.getRequest();
+	 * 
+	 * String remoteAddr; if (request != null) { remoteAddr =
+	 * request.getRemoteAddr(); } else { remoteAddr = "localhost"; } return
+	 * remoteAddr; }
+	 */
+	private HttpServletRequest getClientIP() {
+		ServletRequestAttributes requestAttrib = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest request = requestAttrib.getRequest();
+		return request;
+	}
 }

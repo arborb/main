@@ -4,10 +4,11 @@
 function _Initialize() {
 
   // 단위화면에서 사용될 일반 전역 변수 정의
-  // $NC.setGlobalVar({ });
+  $NC.setGlobalVar({
+    isPasswordChanged: null
+  });
   $NC.G_USERINFO2 = {};
   
-
   // 조회조건 - 물류센터 초기화
   $NC.setInitCombo("/WC/getDataSet.do", {
     P_QUERY_ID: "WC.POP_CSUSERCENTER",
@@ -35,29 +36,12 @@ function _Initialize() {
       P_SUB_CD2: ""
     })
   }, {
-    selector: "#cboQCertify_Div",
+    selector: ["#cboQCertify_Div", "#cboCertify_Div"],
     codeField: "CODE_CD",
     fullNameField: "CODE_CD_F",
     addAll: true,
     onComplete: function() {
       $NC.setValue("#cboQCertify_Div", "%");
-    }
-  });
-
-  // 사용자구분 세팅
-  $NC.setInitCombo("/WC/getDataSet.do", {
-    P_QUERY_ID: "WC.POP_CMCODE",
-    P_QUERY_PARAMS: $NC.getParams({
-      P_CODE_GRP: "CERTIFY_DIV",
-      P_CODE_CD: "%",
-      P_SUB_CD1: "",
-      P_SUB_CD2: ""
-    })
-  }, {
-    selector: "#cboCertify_Div",
-    codeField: "CODE_CD",
-    fullNameField: "CODE_CD_F",
-    onComplete: function() {
       $NC.setValue("#cboCertify_Div", -1);
     }
   });
@@ -453,6 +437,8 @@ function _OnGridCheckBoxFormatterClick(e, view, args) {
     grdObject = G_GRDDETAIL3;
     selectorCd = "#edtBu_Cd";
     selectorNm = "#edtBu_Nm";
+  } else if (args.grid === "grdDetail5") {
+    return false;
   }
 
   if (grdObject.view.getEditorLock().isActive()) {
@@ -810,11 +796,16 @@ function _Save() {
         return;
       }
 
-      // 비밀번호 유효성 검사
+      if ($NC.G_VAR.isPasswordChanged) {
+        // 비밀번호을 수정함
+        if (typeof devMode == 'undefined') {
       var varidPw = $NC.varidationPw(rowData.USER_PWD, $NC.G_USERINFO2);
       if (!varidPw) {
         return false;
       }
+        }
+      }
+      
       if ($NC.isNull(rowData.CERTIFY_DIV)) {
         alert("사용자구분을 선택하십시오.");
         $NC.setGridSelectRow(G_GRDMASTER, row);
@@ -859,6 +850,7 @@ function _Save() {
         P_SYS_LANG: rowData.SYS_LANG,
         P_GROUP_NOTICE_DIV: rowData.GROUP_NOTICE_DIV,
         P_USER_ENABLE: rowData.ENABLE,
+        P_PW_CHANGED: $NC.G_VAR.isPasswordChanged ? 'Y' : 'N',
         P_REG_USER_ID: null,
         P_REG_DATETIME: null,
         P_CRUD: rowData.CRUD
@@ -1233,6 +1225,7 @@ function grdMasterOnAfterScroll(e, args) {
 
   var rowData = G_GRDMASTER.data.getItem(row);
   $NC.G_USERINFO2 = G_GRDMASTER.data.getItem(row);
+  $NC.G_VAR.isPasswordChanged = null;
   // 에디터 값 세팅
   setInputValue("#grdMaster", rowData);
 
@@ -1328,6 +1321,7 @@ function grdMasterOnCellChange(e, args) {
       break;
     case "USER_PWD":
       rowData.USER_PWD = args.val;
+      $NC.G_VAR.isPasswordChanged = true;
       break;
     case "CERTIFY_DIV":
       rowData.CERTIFY_DIV = args.val;
@@ -2038,7 +2032,7 @@ function onGetDetail6(ajaxData) {
  * @param ajaxData
  */
 function onSave(ajaxData) {
-
+  $NC.G_VAR.isPasswordChanged = null;
   var lastKeyVal = $NC.getGridLastKeyVal(G_GRDMASTER, {
     selectKey: "USER_ID"
   });

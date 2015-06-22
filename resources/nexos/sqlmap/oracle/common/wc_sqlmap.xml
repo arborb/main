@@ -843,7 +843,29 @@
        AND GRID_ID                  = #P_GRID_ID#
   </update>
   <!-- [E] - UPDATE_CSUSERPROGRAMLAYOUT [사용자별 화면레이아웃] -->
-
+	
+	<!-- [S] - INSERT_CSUSERSYSINFO -->
+  <insert id="INSERT_CSUSERSYSINFO" parameterClass="java.util.Map">
+    /*  로그인 기록 신규 생성 */
+    INSERT INTO CSUSERSYSINFO
+	            (
+	             USER_ID
+	            ,CLIENT_IP
+	            ,LOGIN_LAST_DATETIME         /* 로그인한 지난 일시   */
+	            ,LOGIN_FINAL_DATETIME        /* 로그인한 마지막 일시 */
+	            ,REG_USER_ID
+	            ,REG_DATETIME
+	            )
+	     VALUES (
+	             #P_USER_ID#
+	            ,#P_CLIENT_IP#
+	            ,SYSDATE
+	            ,SYSDATE
+	            ,#P_REG_USER_ID#
+	            ,SYSDATE
+	            )
+  </insert>
+  <!-- [E] - INSERT_CSUSERSYSINFO -->
 
   <!-- [S] - INSERT_CSUSERSYSINFO -->
   <insert id="INSERT_CSUSERPASSINFO" parameterClass="java.util.Map">

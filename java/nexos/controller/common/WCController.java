@@ -3,7 +3,9 @@ package nexos.controller.common;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,16 +17,26 @@ import javax.servlet.http.HttpSession;
 
 import nexos.common.Consts;
 import nexos.common.Util;
+import nexos.common.spring.security.SecurityUserAuthenticationToken;
 import nexos.service.common.WCService;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * Class: WMS 공통 컨트롤러<br>
@@ -47,66 +59,267 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/WC")
 public class WCController extends CommonController {
 
-  @Resource
-  private WCService service;
+	@Resource
+	private WCService service;
+	private InetAddress machineInfo;
+
+	@Resource
+	AuthenticationManager authenticationManager;
+
+	@Resource
+	SessionAuthenticationStrategy sessionAuthenticationStrategy;
+
+	@Resource
+	SecurityContextRepository securityContextRepository;
 
   /**
-   * 로그인 처리
-   * 
-   * @param request
-   * @param user_Id
-   * @param user_Pwd
-   * @return
-   */
-  @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
-  @RequestMapping(value = "/getLogin.do", method = RequestMethod.POST)
-  public ResponseEntity<String> getLogin(HttpServletRequest request, @RequestParam(Consts.PK_USER_ID) String user_Id,
-    @RequestParam("P_USER_PWD") String user_Pwd) {
+	 * 로그인 처리
+	 * 
+	 * @param request
+	 * @param user_Id
+	 * @param user_Pwd
+	 * @return
+	 */
+	@Secured("IS_AUTHENTICATED_ANONYMOUSLY")
+	@RequestMapping(value = "/getLogin.do", method = RequestMethod.POST)
+	public ResponseEntity<String> getLogin(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(Consts.PK_USER_ID) String user_Id,
+			@RequestParam("P_USER_PWD") String user_Pwd) {
 
-    ResponseEntity<String> result = null;
-    
+		// ResponseEntity<String> result = null;
+		//
+		// Map<String, Object> params = new HashMap<String, Object>();
+		// params.put(Consts.PK_USER_ID, user_Id);
+		// params.put("P_USER_PWD", user_Pwd);
+		//
+		// try {
+		// result = getResponseEntity(request, service.getLogin(params));
+		// HttpSession session = request.getSession();
+		// session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+		// SecurityContextHolder.getContext());
+		// } catch (Exception e) {
+		// result = getResponseEntityError(request, e);
+		// }
+		//
+		// return result;
+		ResponseEntity<String> result = null;
 
-    Map<String, Object> params = new HashMap<String, Object>();
-    params.put(Consts.PK_USER_ID, user_Id);
-    params.put("P_USER_PWD", user_Pwd);
+		ServletRequestAttributes requestAttrib = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		HttpServletRequest req = requestAttrib.getRequest();
+		Map<String, Object> params = new HashMap<String, Object>();
+		String remoteAddr = req.getLocalAddr();
+		params.put(Consts.PK_USER_ID, user_Id);
+		params.put("P_USER_PWD", user_Pwd);
+		params.put("P_CLIENT_IP", remoteAddr);
+		params.put("P_REG_USER_ID", user_Id);
 
-    try {
-      result = getResponseEntity(request, service.getLogin(params));
-      HttpSession session = request.getSession();
-      session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-        SecurityContextHolder.getContext());
-    } catch (Exception e) {
-      result = getResponseEntityError(request, e);
-    }
+		try {
+			Map<String, Object> resultMap = service.login(params);
 
-    return result;
-  }
+			// 다른 사용자로 로그인되어 있을 경우 logout후 로그인 처리
+			Authentication auth = SecurityContextHolder.getContext()
+					.getAuthentication();
+			if (auth != null
+					&& auth.getPrincipal() instanceof SecurityUserAuthenticationToken) {
+				if (!auth.getName().equals(user_Id)) {
+					throw new RuntimeException(
+							"해당 세션은 다른 사용자로 이미 로그인 되어 있습니다.\n\n로그아웃 후 로그인하십시오.");
+				}
+			}
 
+			if (auth == null || auth instanceof AnonymousAuthenticationToken) {
+				// 신규 로그인 처리
+				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+						user_Id, user_Pwd);
+				auth = authenticationManager.authenticate(authenticationToken);
+				SecurityContextHolder.getContext().setAuthentication(auth);
+				HttpSession session = request.getSession(true);
+				System.out.println("login session id: >>>>>>" + session.getId());
+				resultMap.put("_LOGIN_SESSION_ID", session.getId());
+				//
+				SecurityUserAuthenticationToken securityUserToken = (SecurityUserAuthenticationToken) auth
+						.getPrincipal();
+				securityUserToken.setUserInfo(resultMap);
+				sessionAuthenticationStrategy.onAuthentication(auth, request,
+						response);
+				securityContextRepository.saveContext(
+						SecurityContextHolder.getContext(), request, response);
+				System.out.println("getInitializeCount: "
+						+ String.valueOf(SecurityContextHolder
+								.getInitializeCount()));
+			} else {
+				// 이미 로그인되어 있을 경우 기존 정보 리턴
+				resultMap = ((SecurityUserAuthenticationToken) auth
+						.getPrincipal()).getUserInfo();
+			}
+
+			result = getResponseEntity(request, resultMap);
+		} catch (Exception e) {
+			result = getResponseEntityError(request, e);
+		}
+
+		return result;
+	}
+
+	/**
+	 * 로그아웃 처리
+	 * 
+	 * @param params
+	 *            조회조건
+	 */
+	@RequestMapping(value = "/getLogout.do", method = RequestMethod.POST)
+	public ResponseEntity<String> getLogout(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(Consts.PK_USER_ID) String user_Id) {
+
+		// ResponseEntity<String> result = null;
+		//
+		// Map<String, Object> params = new HashMap<String, Object>();
+		// params.put(Consts.PK_USER_ID, user_Id);
+		//
+		// try {
+		// result = getResponseEntity(request, service.getLogout(params) ?
+		// Consts.YES : Consts.NO);
+		// HttpSession session = request.getSession();
+		// session.removeAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+		// } catch (Exception e) {
+		// result = getResponseEntityError(request, e);
+		// }
+		//
+		// return result;
+	  
+	  
+		ResponseEntity<String> result = null;
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put(Consts.PK_USER_ID, user_Id);
+		
+		try{
+		  service.logout(params);  
+		}catch (Exception e){
+		  result = getResponseEntityError(request, e);
+		  return result;
+		}
+
+		try {
+			Authentication auth = SecurityContextHolder.getContext()
+					.getAuthentication();
+			if (auth != null) {
+				new SecurityContextLogoutHandler().logout(request, response,
+						auth);
+			}
+			result = getResponseEntity(request, Consts.OK);
+		} catch (Exception e) {
+			result = getResponseEntityError(request, e);
+		}
+
+		return result;
+	}
+	
+	/**
+	 * WAS 상태 체크
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/getServerStatus.do", method = RequestMethod.POST)
+	public ResponseEntity<String> getServerStatus(HttpServletRequest request) {
+
+		ResponseEntity<String> result = null;
+
+		try {
+			Authentication auth = SecurityContextHolder.getContext()
+					.getAuthentication();
+			if (auth != null
+					&& auth.getPrincipal() instanceof SecurityUserAuthenticationToken) {
+				result = getResponseEntity(request, Consts.OK);
+			} else {
+				throw new AccessDeniedException("로그인 세션 정보가 없습니다.");
+			}
+		} catch (Exception e) {
+			result = getResponseEntityError(request, e);
+		}
+
+		return result;
+	}
+	
+	/**
+	 * 시스템 정보를 반환하다.
+	 * 
+	 * @return InetAddress
+	 */
+	public InetAddress getMachineInfo() {
+		try {
+			machineInfo = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		return machineInfo;
+	}
+	
   /**
-   * 로그아웃 처리
-   * 
-   * @param params 조회조건
-   */
-  @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
-  @RequestMapping(value = "/getLogout.do", method = RequestMethod.POST)
-  public ResponseEntity<String> getLogout(HttpServletRequest request, @RequestParam(Consts.PK_USER_ID) String user_Id) {
+	 * 사용자 메뉴 가져오기
+	 * 
+	 * @param params
+	 *            조회조건
+	 */
+	@RequestMapping(value = "/getUserProgramBookMark.do", method = RequestMethod.POST)
+	public ResponseEntity<String> getUserProgramBookMark(
+			HttpServletRequest request,
+			@RequestParam(Consts.PK_USER_ID) String user_Id) {
 
-    ResponseEntity<String> result = null;
+		ResponseEntity<String> result = null;
 
-    Map<String, Object> params = new HashMap<String, Object>();
-    params.put(Consts.PK_USER_ID, user_Id);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put(Consts.PK_USER_ID, user_Id);
 
-    try {
-      result = getResponseEntity(request, service.getLogout(params) ? Consts.YES : Consts.NO);
-      HttpSession session = request.getSession();
-      session.removeAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
-    } catch (Exception e) {
-      result = getResponseEntityError(request, e);
-    }
+		try {
+			result = getResponseEntity(request,
+					service.getUserProgramBookMark(params));
+		} catch (Exception e) {
+			result = getResponseEntityError(request, e);
+		}
 
-    return result;
-  }
+		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/getSessionUserInfo.do", method = RequestMethod.POST)
+	public ResponseEntity<String> getSessionUserInfo(HttpServletRequest request) {
 
+		ResponseEntity<String> result = null;
+
+		try {
+			Authentication auth = SecurityContextHolder.getContext()
+					.getAuthentication();
+			if (auth != null
+					&& auth.getPrincipal() instanceof SecurityUserAuthenticationToken) {
+
+				SecurityUserAuthenticationToken securityUserToken = (SecurityUserAuthenticationToken) auth
+						.getPrincipal();
+				HttpSession session = request.getSession(false);
+				if (securityUserToken.getUserInfo().get("_LOGIN_SESSION_ID") == null) {
+					if (session != null) {
+						securityUserToken.getUserInfo().put(
+								"_LOGIN_SESSION_ID", session.getId());
+					}
+				}
+
+				result = getResponseEntity(request,
+						securityUserToken.getUserInfo());
+			} else {
+				throw new RuntimeException("로그인 세션 정보가 없습니다.");
+			}
+		} catch (Exception e) {
+			result = getResponseEntityError(request, e);
+		}
+
+		return result;
+	}
+	
   /**
    * 사용자 메뉴 가져오기
    * 
@@ -129,7 +342,46 @@ public class WCController extends CommonController {
 
     return result;
   }
+  
+  /**
+	 * 즐겨찾기 추가
+	 * 
+	 * @param user_Id
+	 * @param program_Id
+	 * @return
+	 */
+	@RequestMapping(value = "/saveUserBookMark.do", method = RequestMethod.POST)
+	public ResponseEntity<String> saveUserBookMark(HttpServletRequest request,
+			@RequestParam(Consts.PK_USER_ID) String user_id,
+			@RequestParam("P_PROGRAM_ID") String program_id,
+			@RequestParam("P_EXE_LEVEL1") String exe_level1,
+			@RequestParam("P_EXE_LEVEL2") String exe_level2,
+			@RequestParam("P_EXE_LEVEL3") String exe_level3,
+			@RequestParam("P_EXE_LEVEL4") String exe_level4,
+			@RequestParam("P_FAVORITE_YN") String favorite_yn,
+			@RequestParam("P_REG_USER_ID") String reg_user_id) {
 
+		ResponseEntity<String> result = null;
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put(Consts.PK_USER_ID, user_id);
+		params.put("P_PROGRAM_ID", program_id);
+		params.put("P_EXE_LEVEL1", exe_level1);
+		params.put("P_EXE_LEVEL2", exe_level2);
+		params.put("P_EXE_LEVEL3", exe_level3);
+		params.put("P_EXE_LEVEL4", exe_level4);
+		params.put("P_FAVORITE_YN", favorite_yn);
+		params.put("P_REG_USER_ID", reg_user_id);
+		try {
+			result = getResponseEntity(request,
+					service.saveUserBookMark(params));
+		} catch (Exception e) {
+			result = getResponseEntityError(request, e);
+		}
+
+		return result;
+	}
+	
   /**
    * 사용자 비밀번호 변경
    * 
@@ -283,6 +535,34 @@ public class WCController extends CommonController {
 
     return result;
   }
+  
+  /**
+	 * 즐겨찾기 삭제
+	 * 
+	 * @param user_Id
+	 * @param program_Id
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteUserBookMark.do", method = RequestMethod.POST)
+	public ResponseEntity<String> deleteUserBookMark(
+			HttpServletRequest request,
+			@RequestParam(Consts.PK_USER_ID) String user_id,
+			@RequestParam("P_PROGRAM_ID") String program_id) {
+
+		ResponseEntity<String> result = null;
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put(Consts.PK_USER_ID, user_id);
+		params.put("P_PROGRAM_ID", program_id);
+		try {
+			result = getResponseEntity(request,
+					service.deleteUserBookMark(params));
+		} catch (Exception e) {
+			result = getResponseEntityError(request, e);
+		}
+
+		return result;
+	}
 
   /**
    * 엑셀 다운로드

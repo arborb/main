@@ -36,22 +36,42 @@
     <!-- <security:intercept-url pattern="/nexos/html/main/**/*.js" access="permitAll" /> -->
     <!-- <security:intercept-url pattern="/**" access="permitAll" /> -->
     <!-- <security:intercept-url pattern="/**" access="hasRole('ROLE_USER')" /> -->
+     <security:custom-filter position="CONCURRENT_SESSION_FILTER" ref="sessionAuthenticationFilter" />
+    <security:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
   </security:http>
 
-  <!-- 보안처리를 위한 DAO 주입 -->
-  <bean id="userDAO" class="nexos.common.spring.security.UserDAO">
+   <!-- Session 관련 -->
+  <bean id="sessionAuthenticationFilter" class="nexos.common.spring.security.SecurityUserAuthenticationFilter">
+    <constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+  </bean>
+
+  <bean id="sessionAuthenticationStrategy" class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
+    <constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+    <property name="maximumSessions" value="1" />
+    <property name="exceptionIfMaximumExceeded" value="false" />
+  </bean>
+
+  <bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+  <bean id="securityContextRepository" class="org.springframework.security.web.context.HttpSessionSecurityContextRepository" />
+
+  <!-- Security 관련 -->
+  <security:authentication-manager alias="authenticationManager">
+    <security:authentication-provider ref="authenticationProvider" />
+  </security:authentication-manager>
+
+  <bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+    <property name="userDetailsService" ref="securityUserDetailsService" />
+    <property name="passwordEncoder" ref="securityUserPasswordEncoder" />
+    <!-- <property name="hideUserNotFoundExceptions" value="false" /> -->
+  </bean>
+
+  <bean id="securityUserDetailsService" class="nexos.common.spring.security.SecurityUserDetailsService">
     <property name="sqlMapClientTemplate" ref="sqlMapClientTemplate" />
   </bean>
 
-  <!-- 보안처리 서비스등록 -->
-  <bean id="customUserDetailsService" class="nexos.common.spring.security.UserDetailsServiceImpl">
-    <property name="userDAO" ref="userDAO" />
+  <bean id="securityUserPasswordEncoder" class="nexos.common.spring.security.SecurityUserPasswordEncoder">
+    <property name="commonEncryptor" ref="commonEncryptor" />
   </bean>
-
-  <security:authentication-manager alias="authenticationManager">
-    <!-- 보안처리 서비스등록 -->
-    <security:authentication-provider user-service-ref="customUserDetailsService" />
-  </security:authentication-manager>
 
   <!-- services 대해 ROLE_USER를 세팅 -->
   <security:global-method-security secured-annotations="enabled">

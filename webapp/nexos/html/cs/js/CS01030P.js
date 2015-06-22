@@ -9,6 +9,7 @@ function _Initialize() {
   // 버튼 클릭 이벤트 연결
   $("#btnOk").click(_Save);
   $("#btnCancel").click(onCancel);
+  $("#btnLogout").click(onLogout);
 }
 
 /**
@@ -45,6 +46,18 @@ function onCancel() {
 
   $NC.setPopupCloseAction("CANCEL");
   $NC.onPopupClose();
+}
+
+/**
+ * 로그아웃 버튼 클릭 이벤트
+ */
+function onLogout() {
+  $NC.serviceCall("/WC/getLogout.do", {
+    P_USER_ID: $NC.G_USERINFO.USER_ID
+  }, function(){
+    parent.location.reload();
+  });
+  $NC.G_USERINFO = null;
 }
 
 /**
@@ -130,9 +143,12 @@ function _Save() {
   }
 
   // 비밀번호 유효성 검사
+  var devMode = localStorage.getItem('_MODE')
+  if (devMode !== 'DEV') {
   var varidPw = $NC.varidationPw(NEW_USER_PWD1); 
   if (!varidPw) {
     return false;
+    }
   }
   $NC.serviceCall("/WC/setUserPassword.do", {
     P_USER_ID: $NC.G_USERINFO.USER_ID,
