@@ -139,7 +139,6 @@ public class LOM9070EController extends CommonController {
     ResponseEntity<String> result = null;
 
     Map<String, Object> params = getParameter(queryParams);
-
     String oMsg = getResultMessage(params);
     if (!Consts.OK.equals(oMsg)) {
       result = getResponseEntityError(request, oMsg);

@@ -1341,27 +1341,151 @@
   </procedure>
   <!-- [E] - RS_LABEL_CMPICKNO -->
   
- <parameterMap id="paramRS_LABEL_LOM02_3" class="java.util.Map">
- <parameter property="O_RTN" mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
- <parameter property="P_CENTER_CD" mode="IN" />
- <parameter property="P_BU_CD" mode="IN" />
- <parameter property="P_OUTBOUND_DATE" mode="IN" />
- <parameter property="P_PICK_SEQ" mode="IN" />
- <parameter property="P_PRINT_YN" mode="IN" />
- </parameterMap>
- <procedure id="RS_LABEL_LOM02_3" parameterMap="paramRS_LABEL_LOM02_3" resultClass="java.util.HashMap">
-  { ? = call WR.RS_LABEL_LOM02_3(?, ?, ?, ?, ?) }
-   </procedure>
- 
- <parameterMap id="paramRS_LABEL_LOM03_2" class="java.util.Map">
- <parameter property="O_RTN" mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
- <parameter property="P_CENTER_CD" mode="IN" />
- <parameter property="P_BU_CD" mode="IN" />
- <parameter property="P_OUTBOUND_DATE" mode="IN" />
- <parameter property="P_PICK_SEQ" mode="IN" />
- <parameter property="P_PRINT_YN" mode="IN" />
- </parameterMap>
- <procedure id="RS_LABEL_LOM03_2" parameterMap="paramRS_LABEL_LOM03_2" resultClass="java.util.HashMap">
- { ? = call WR.RS_LABEL_LOM03_2(?, ?, ?, ?, ?) }
- </procedure>
+  <!-- [S] - RS_LABEL_LOM_LABEL -->
+  <parameterMap id="paramRS_LABEL_LOM_LABEL" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM_LABEL" parameterMap="paramRS_LABEL_LOM_LABEL" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM_LABEL(?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM_LABEL -->  
+  
+  <!-- [S] - RS_LABEL_LOM_LABEL1 -->
+  <parameterMap id="paramRS_LABEL_LOM_LABEL1" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM_LABEL1" parameterMap="paramRS_LABEL_LOM_LABEL1" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM_LABEL1(?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM_LABEL1 -->
+    
+  <!-- [S] - RS_PAPER_LOM02_4 -->
+  <parameterMap id="paramRS_PAPER_LOM02_4" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+  </parameterMap>
+  <procedure id="RS_PAPER_LOM02_4" parameterMap="paramRS_PAPER_LOM02_4" resultClass="java.util.HashMap">
+    { ? = call WR.RS_PAPER_LOM02_4(?, ?) }
+  </procedure>
+  <!-- [E] - RS_PAPER_LOM02_4 -->
+
+  <!-- [S] - RS_LABEL_LOM12_1 -->
+  <parameterMap id="paramRS_LABEL_LOM12_1" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_HAS_NO"                  mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_PICK_SEQ"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM12_1" parameterMap="paramRS_LABEL_LOM12_1" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM12_1(?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM12_1 -->
+
+         <!-- [S] - RS_LABEL_LOM02_3 -->
+  <parameterMap id="paramRS_LABEL_LOM02_3" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_PICK_SEQ"                mode="IN" />
+    <parameter property="P_PRINT_YN"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM02_3" parameterMap="paramRS_LABEL_LOM02_3" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM02_3(?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM02_3 -->
+  
+  
+    <!-- [S] - RS_LABEL_LOM03_2 -->
+  <parameterMap id="paramRS_LABEL_LOM03_2" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_PICK_SEQ"                mode="IN" />
+    <parameter property="P_PRINT_YN"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM03_2" parameterMap="paramRS_LABEL_LOM03_2" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM03_2(?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM03_2 -->
+
+  <!-- [S] - RS_LABEL_LOM03_A -->
+  <parameterMap id="paramRS_LABEL_LOM03_A" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_PICK_SEQ"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM03_A" parameterMap="paramRS_LABEL_LOM03_A" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM03_A(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM03_A -->
+
+  <!-- [S] - RS_LABEL_LOM02_A -->
+  <parameterMap id="paramRS_LABEL_LOM02_A" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_PICK_SEQ"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM02_A" parameterMap="paramRS_LABEL_LOM02_A" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM02_A(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM02_A -->  
+
+  <!-- [S] - RS_LABEL_LOM13_NEW -->
+  <parameterMap id="paramRS_LABEL_LOM13_NEW" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_HAS_DATE"                mode="IN" />
+    <parameter property="P_HAS_NO"                  mode="IN" />
+    <parameter property="P_LINE_NO"                 mode="IN" />
+    <parameter property="P_PICK_SEQ"                mode="IN" />
+    <parameter property="P_PICK_BOX_NO"             mode="IN" />
+    <parameter property="P_INQUERY_DIV"             mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM13_NEW" parameterMap="paramRS_LABEL_LOM13_NEW" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM13_NEW(?, ?, ?, ?, ?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM13_NEW -->
+          
+  <!-- [S] - RS_LABEL_LOM02_A_BOX -->
+  <parameterMap id="paramRS_LABEL_LOM02_A_BOX" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_PICK_SEQ"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM02_A_BOX" parameterMap="paramRS_LABEL_LOM02_A_BOX" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM02_A_BOX(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM02_A_BOX -->  
+  
+
+  <!-- [S] - RS_LABEL_LOM03_A_BOX -->
+  <parameterMap id="paramRS_LABEL_LOM03_A_BOX" class="java.util.Map">
+    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
+    <parameter property="P_CENTER_CD"               mode="IN" />
+    <parameter property="P_BU_CD"                   mode="IN" />
+    <parameter property="P_OUTBOUND_DATE"           mode="IN" />
+    <parameter property="P_PICK_SEQ"                mode="IN" />
+  </parameterMap>
+  <procedure id="RS_LABEL_LOM03_A_BOX" parameterMap="paramRS_LABEL_LOM03_A_BOX" resultClass="java.util.HashMap">
+    { ? = call WR.RS_LABEL_LOM03_A_BOX(?, ?, ?, ?) }
+  </procedure>
+  <!-- [E] - RS_LABEL_LOM03_A_BOX -->            
 </sqlMap>

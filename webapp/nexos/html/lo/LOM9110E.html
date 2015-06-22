@@ -92,6 +92,15 @@
           <div id="lblShipper_Nm" class="ui-lbl-normal">수령자명</div>
           <input class="ui-edt-normal" type="text" id="edtShipper_Nm" style="width: 150px;" maxlength="255" />
         </td>
+        <td>
+          <div id="lblQEND_YN" class="ui-lbl-condition">합포장구분</div>
+          <select id="cboQEND_YN" class="ui-cbo-normal" style="width: 150px;">
+            <option value="%">%-전체 </option>
+            <option value="N">N-분류중 </option>
+            <option value="D">D-분류완료</option>
+            <option value="Y">Y-처리완료</option>
+          </select>
+        </td>
        </tr>
     </table>
   </div>
@@ -105,8 +114,9 @@
       <li id="divTab2"><a href="#divT2DetailView">합포장처리완료내역</a></li>
       <li id="divTab3"><a href="#divT3DetailView">합포장라벨재발행</a></li>
            
-        <div id="lblQLoc_Div" class="ui-lbl-key">LOC적치층 구분</div>
-          <select id="cboQLoc_Div" class="ui-cbo-key" style="width: 150px;"></select> 
+      <div id="lblQLoc_Div1" class="ui-lbl-key">층 구분</div>
+      <select id="cboQLoc_Div" class="ui-cbo-key" style="width: 150px;"></select>
+      <input type="button" id="btnGoHap" value="합포장분류작업" class="ui-btn-cmd" style="width: 130px;float:right">
     </ul>  
     <!-- 상품별 입고내역 -->
     <div id="divT1DetailView" style="padding: 0; border-width: 1px; border-style: solid;">
@@ -115,13 +125,13 @@
           <tr>
             <td id="divTitle_grdT1Master" class="ui-grd-title">합포장 내역</td>
             <td>
-              <div id="lblLo_Cnt_A" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">총 셀 :</div>
+              <div id="lblLo_Cnt_A" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">총 셀수 :</div>
             </td>
             <td>
-              <div id="lblLo_Cnt_B" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">사용중인 셀 :</div>
+              <div id="lblLo_Cnt_B" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">사용중인 셀수 :</div>
             </td>
             <td>
-              <div id="lblLo_Cnt_C" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">빈 셀 :</div>
+              <div id="lblLo_Cnt_C" class="ui-lbl-key" style="margin-left: 60px; min-width: 100px;">빈 셀수 :</div>
             </td>
             <td>
               <input type="button" id="btnERPSend" value="합포장처리" class="ui-btn-cmd" style="width: 130px;">

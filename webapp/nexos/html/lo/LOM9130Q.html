@@ -55,7 +55,7 @@
         </td>
         <td>
           <div id="lblQPopup_Bu_Cd" class="ui-lbl-condition">사업구분</div>
-          <input class="ui-edt-normal" type="text" id="edtQBu_Cd" style="width: 60px;" />
+          <input class="ui-edt-key" type="text" id="edtQBu_Cd" style="width: 60px;" />
           <input class="ui-btn-popup" type="button" id="btnQBu_Cd" />
           <input class="ui-edt-display" type="text" id="edtQBu_Nm" disabled="disabled" style="width: 118px;" />
           <input type="hidden" id="edtQCust_Cd" />
@@ -89,23 +89,19 @@
           <div id="lblQOrder_Div" class="ui-lbl-condition">주문유형</div>
           <select id=cboQOrder_Div class="ui-cbo-normal" style="width: 150px;"></select>
         </td>
-        <td>
-          <div id="lblQPick_Seq" class="ui-lbl-condition">라벨번호</div>
-          <input id=edtQPick_Seq class="ui-edt-normal" style="width: 150px;"></input>
-        </td>
       </tr>
       <tr>
         <td>
           <div id="lblQFloor_Div1" class="ui-lbl-condition">층구분</div>
-          <select id="cboQFloor_Div1" class="ui-cbo-key" style="width: 150px;"></select>
+          <select id="cboQFloor_Div1" class="ui-cbo-normal" style="width: 150px;"></select>
         </td>
+<!--         <td> -->
+<!--           <div id="lblQPrint_Seq1" class="ui-lbl-condition">출력순번</div> -->
+<!--           <input id=Print_Seq1 class="ui-edt-normal" style="width: 150px;"></input> -->
+<!--         </td> -->
         <td>
-          <div id="lblQFloor_Div2" class="ui-lbl-condition">존구분</div>
-          <select id="cboQFloor_Div2" class="ui-cbo-key" style="width: 150px;"></select>
-        </td>
-        <td>
-          <div id="lblQPrint_Seq1" class="ui-lbl-condition">출력구분</div>
-          <input id=Print_Seq1 class="ui-edt-normal" style="width: 150px;"></input>
+          <div id="lblQPick_Seq" class="ui-lbl-condition">라벨번호</div>
+          <input id=edtQPick_Seq class="ui-edt-normal" style="width: 250px;"></input>
         </td>
       </tr>
     </table>
@@ -113,7 +109,7 @@
   <div id="divMasterView" class="ui-ctnr-normal">
     <table class="ui-tbl-grid">
       <tr>
-        <td id="divTitle_grdMaster" class="ui-grd-title">합포장불가상품내역</td>
+        <td id="divTitle_grdMaster" class="ui-grd-title">라벨출력내역</td>
         <td id="divRowCount_grdMaster" class="ui-grd-rowcount">0/0 Rows</td>
       </tr>
     </table>
