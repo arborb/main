@@ -191,10 +191,10 @@
 		<band height="50">
 			<printWhenExpression><![CDATA[$F{FIRST_YN}.equals( "Y" )]]></printWhenExpression>
 			<componentElement>
-				<reportElement x="27" y="12" width="185" height="24" uuid="c9ba7194-5631-47fa-9eca-acd7d8f3f28a">
+				<reportElement x="72" y="12" width="82" height="24" uuid="c9ba7194-5631-47fa-9eca-acd7d8f3f28a">
 					<printWhenExpression><![CDATA[$F{END_YN}.equals( "Y" )]]></printWhenExpression>
 				</reportElement>
-				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="0" barHeight="0">
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="0" barHeight="85">
 					<jr:codeExpression><![CDATA[$F{PAPER_NO}]]></jr:codeExpression>
 				</jr:barbecue>
 			</componentElement>
@@ -207,7 +207,7 @@
 				<textFieldExpression><![CDATA[$F{HAS_END_YN}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="27" y="34" width="185" height="9" forecolor="#000000" backcolor="#FFFFFF" uuid="940be61f-fb9a-423c-91de-ac4c5dd00ac5">
+				<reportElement mode="Transparent" x="23" y="34" width="183" height="9" forecolor="#000000" backcolor="#FFFFFF" uuid="940be61f-fb9a-423c-91de-ac4c5dd00ac5">
 					<printWhenExpression><![CDATA[$F{END_YN}.equals( "Y" )]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">

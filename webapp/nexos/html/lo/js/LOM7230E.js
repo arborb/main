@@ -1074,7 +1074,12 @@ function onBtnInit(e) {
     if ($NC.G_VAR.INSPECT_YN == "Y") {
       processFn.call(this);
     } else {
-      showMessage("현재 검수 작업 중 입니다.");
+      if ($NC.G_VAR.ORDERCAN_CHK == "Y" || $NC.G_VAR.ORDERHOLD_CHK == "Y"){
+        processFn.call(this);  
+      } else {
+        showMessage("현재 검수 작업 중 입니다.");  
+      }
+      
     }
     return;
   }
@@ -1845,7 +1850,12 @@ function onScanOrder(scanVal, flag) {
 
   if (G_GRDMASTER.data.getLength() > 0) {
     if ($NC.G_VAR.INSPECT_YN == "N") {
-      showMessage("현재 검수 작업 중 입니다.");
+      if ($NC.G_VAR.ORDERCAN_CHK == "Y" || $NC.G_VAR.ORDERHOLD_CHK == "Y"){
+        processFn.call(this);  
+      } else{
+        showMessage("현재 검수 작업 중 입니다.");  
+      }
+      
     } else {
       processFn.call(this);
     }

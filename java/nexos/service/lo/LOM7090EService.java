@@ -418,7 +418,7 @@ public class LOM7090EService {
 				}
 
 				// 출고진행상태별 출고주문상태 송신 및 출고가용재고 송신 호출
-				oMsg = edCommonService.realtimeSendProcessing();
+				//oMsg = edCommonService.realtimeSendProcessing();
 				// 오류면 Rollback
 				if (!Consts.OK.equals(oMsg)) {
 					transactionManager.rollback(ts);
@@ -536,6 +536,8 @@ public class LOM7090EService {
 
 	  String user_Id = (String) params.get(Consts.PK_USER_ID);
 	  String outbound_batch    = "000"; // 출고차수
+	  String check_Outbound_Date = ""; // LO_FW_DIRECTIONS_PICK_PROC 를 호출하기 위한 OUTBOUND_DATE
+	  String check_Outbound_Batch = "000"; // LO_FW_DIRECTIONS_PICK_PROC 를 호출하기 위한 OUTBOUND_BATCH
 	  //String outbound_batch_nm = null; // 출고차수명
 
 	  // 처리할 수 있는 진행상태
@@ -594,7 +596,7 @@ public class LOM7090EService {
       checkParams.put("P_CENTER_CD", callParams.get("P_CENTER_CD"));
       checkParams.put("P_BU_CD", callParams.get("P_BU_CD"));
       checkParams.put("P_OUTBOUND_DATE",callParams.get("P_OUTBOUND_DATE1"));
-
+      
 	    TransactionStatus ts = transactionManager.getTransaction(td);
 	    try{
 	      //출고지시일 경우 확정처리시 Outbound_Batch 갱신후 처리
@@ -633,6 +635,46 @@ public class LOM7090EService {
 	      }
 
 	      transactionManager.commit(ts);
+
+	      if (dsCnt > 0 && Consts.PROCESS_DIRECTIONS.equals(process_Cd) && Consts.DIRECTION_FW.equals(direction)) {
+	        
+	        if (check_Outbound_Date == (String)checkParams.get("P_OUTBOUND_DATE") && check_Outbound_Batch == outbound_batch){
+	          continue;
+	        } else {
+	          try {
+	            HashMap<String, Object> spParams = new HashMap<String, Object>();
+
+	            spParams.put("P_CENTER_CD", checkParams.get("P_CENTER_CD"));
+	            spParams.put("P_BU_CD", checkParams.get("P_BU_CD"));
+	            spParams.put("P_OUTBOUND_DATE", check_Outbound_Date);
+	            spParams.put("P_OUTBOUND_BATCH", check_Outbound_Batch);
+	            spParams.put("P_USER_ID", user_Id);
+
+	            HashMap<String, Object> mapResult1 = callSP(FW_DIRECTIONS_PROC, spParams);
+	            String oMsg1 = (String) mapResult1.get(Consts.PK_O_MSG);
+
+	            // 오류면 Rollback
+	            if (!Consts.OK.equals(oMsg1)) {
+	              transactionManager.rollback(ts);
+	              sbResult.append(oMsg1);
+	              sbResult.append(Consts.CRLF);
+	            } else {
+	              transactionManager.commit(ts);
+	            }
+	          } catch (Exception e) {
+	            // SP 내에서 오류가 아니면 Exit
+	            transactionManager.rollback(ts);
+	            throw new RuntimeException(e.getMessage());
+	          }
+	        }
+	        
+	        // LO_FW_DIRECTIONS_PICK_PROC 를 호출하기 위한 check value
+	        check_Outbound_Date = (String)checkParams.get("P_OUTBOUND_DATE");
+	        check_Outbound_Batch = outbound_batch;
+
+	      }
+	      
+	      
 	    }catch(Exception e){
 	      // SP 내에서 오류가 아니면 Exit
 	      transactionManager.rollback(ts);
@@ -640,34 +682,6 @@ public class LOM7090EService {
 	    }
 	  }
 
-	  if (dsCnt > 0 && Consts.PROCESS_DIRECTIONS.equals(process_Cd) && Consts.DIRECTION_FW.equals(direction)) {
-	    TransactionStatus ts = transactionManager.getTransaction(td);
-	    try {
-	      HashMap<String, Object> spParams = new HashMap<String, Object>();
-
-	      spParams.put("P_CENTER_CD", checkParams.get("P_CENTER_CD"));
-	      spParams.put("P_BU_CD", checkParams.get("P_BU_CD"));
-	      spParams.put("P_OUTBOUND_DATE", checkParams.get("P_OUTBOUND_DATE"));
-	      spParams.put("P_OUTBOUND_BATCH", outbound_batch);
-	      spParams.put("P_USER_ID", user_Id);
-
-	      HashMap<String, Object> mapResult = callSP(FW_DIRECTIONS_PROC, spParams);
-	      String oMsg1 = (String) mapResult.get(Consts.PK_O_MSG);
-
-	      // 오류면 Rollback
-	      if (!Consts.OK.equals(oMsg1)) {
-	        transactionManager.rollback(ts);
-	        sbResult.append(oMsg1);
-	        sbResult.append(Consts.CRLF);
-	      } else {
-	        transactionManager.commit(ts);
-	      }
-	    } catch (Exception e) {
-	      // SP 내에서 오류가 아니면 Exit
-	      transactionManager.rollback(ts);
-	      throw new RuntimeException(e.getMessage());
-	    }
-	  }
 	  if (sbResult.length() == 0) {
 	    sbResult.append(Consts.OK);
 	  }

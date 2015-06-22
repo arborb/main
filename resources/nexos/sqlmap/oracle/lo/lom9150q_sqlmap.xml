@@ -39,8 +39,10 @@
     <parameter property="P_HAS_PROC_YN"             mode="IN" />
     <parameter property="P_INSPECT_YN"              mode="IN" />
     <parameter property="P_WB_CHK_YN"               mode="IN" />
+<!--     <parameter property="P_SCPKEY"                  mode="IN" /> -->
   </parameterMap>
   <procedure id="RS_MASTER" parameterMap="paramRS_MASTER" resultClass="java.util.HashMap">
+<!--     { ? = call LOM9150Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) } -->
     { ? = call LOM9150Q.RS_MASTER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
   </procedure>
   <!-- [E] - RS_MASTER -->
