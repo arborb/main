@@ -1375,22 +1375,7 @@
   </procedure>
   <!-- [E] - RS_PAPER_LOM02_4 -->
 
-  <!-- [S] - RS_LABEL_LOM12_1 -->
-  <parameterMap id="paramRS_LABEL_LOM12_1" class="java.util.Map">
-    <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
-    <parameter property="P_CENTER_CD"               mode="IN" />
-    <parameter property="P_BU_CD"                   mode="IN" />
-    <parameter property="P_HAS_DATE"                mode="IN" />
-    <parameter property="P_HAS_NO"                  mode="IN" />
-    <parameter property="P_LINE_NO"                 mode="IN" />
-    <parameter property="P_PICK_SEQ"                mode="IN" />
-  </parameterMap>
-  <procedure id="RS_LABEL_LOM12_1" parameterMap="paramRS_LABEL_LOM12_1" resultClass="java.util.HashMap">
-    { ? = call WR.RS_LABEL_LOM12_1(?, ?, ?, ?, ?, ?) }
-  </procedure>
-  <!-- [E] - RS_LABEL_LOM12_1 -->
-
-         <!-- [S] - RS_LABEL_LOM02_3 -->
+  <!-- [S] - RS_LABEL_LOM02_3 -->
   <parameterMap id="paramRS_LABEL_LOM02_3" class="java.util.Map">
     <parameter property="O_RTN"                     mode="OUT" javaType="java.sql.ResultSet" jdbcType="ORACLECURSOR" />
     <parameter property="P_CENTER_CD"               mode="IN" />
